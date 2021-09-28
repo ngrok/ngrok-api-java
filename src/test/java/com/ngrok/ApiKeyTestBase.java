@@ -39,10 +39,10 @@ public abstract class ApiKeyTestBase extends TestBase {
         Optional.of((String) API_KEY_JSON_FIELDS.get("token"))
     );
 
-    public static void assertApiKeyFields(final boolean useLiveApi, final ApiKey apiKey, final String expectedDescription, boolean shouldHaveToken) {
+    public static void assertApiKeyFields(final ApiKey apiKey, final String expectedDescription, boolean shouldHaveToken) {
         assertThat(apiKey).isNotNull();
 
-        if (useLiveApi) {
+        if (USE_LIVE_API) {
             assertThat(apiKey.getId()).isNotBlank();
             assertThat(apiKey.getUri().getHost()).isEqualTo(NgrokApiClient.DEFAULT_BASE_URI.getHost());
             assertThat(apiKey.getCreatedAt()).isAfter(OffsetDateTime.now().minus(Duration.ofMinutes(20)));
@@ -56,7 +56,7 @@ public abstract class ApiKeyTestBase extends TestBase {
         assertThat(apiKey.getMetadata()).isEqualTo(API_KEY_JSON_FIELDS.get("metadata"));
 
         if (shouldHaveToken) {
-            if (useLiveApi) {
+            if (USE_LIVE_API) {
                 assertThat(apiKey.getToken()).isNotEmpty();
                 assertThat(apiKey.getToken().get()).isNotBlank();
             } else {
@@ -67,11 +67,11 @@ public abstract class ApiKeyTestBase extends TestBase {
         }
     }
 
-    public static void assertApiKeyFields(final boolean useLiveApi, final ApiKey apiKey) {
-        assertApiKeyFields(useLiveApi, apiKey, (String) API_KEY_JSON_FIELDS.get("description"), true);
+    public static void assertApiKeyFields(final ApiKey apiKey) {
+        assertApiKeyFields(apiKey, (String) API_KEY_JSON_FIELDS.get("description"), true);
     }
 
-    public static void assertApiKeyFieldsNoToken(final boolean useLiveApi, final ApiKey apiKey) {
-        assertApiKeyFields(useLiveApi, apiKey, (String) API_KEY_JSON_FIELDS.get("description"), false);
+    public static void assertApiKeyFieldsNoToken(final ApiKey apiKey) {
+        assertApiKeyFields( apiKey, (String) API_KEY_JSON_FIELDS.get("description"), false);
     }
 }

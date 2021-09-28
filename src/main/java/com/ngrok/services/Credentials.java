@@ -17,6 +17,8 @@ import java.util.stream.Stream;
  *  the <code>ngrok authtoken</code> command or by specifying it in the
  * <code>ngrok.yml</code>
  *  configuration file with the <code>authtoken</code> property.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-credentials">https://ngrok.com/docs/api#api-credentials</a>.
  */
 public class Credentials {
     private final NgrokApiClient apiClient;
@@ -33,12 +35,12 @@ public class Credentials {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class CredentialsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private java.util.List<String> acl = null;
+        private java.util.List<String> acl = java.util.Collections.emptyList();
 
-        private CredentialsCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -49,7 +51,7 @@ public class Credentials {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public CredentialsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -61,7 +63,7 @@ public class Credentials {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CredentialsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -73,7 +75,7 @@ public class Credentials {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public CredentialsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -85,7 +87,7 @@ public class Credentials {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CredentialsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -106,7 +108,7 @@ public class Credentials {
          * @param acl the value of the acl parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CredentialsCreateCallBuilder acl(final java.util.List<String> acl) {
+        public CreateCallBuilder acl(final java.util.List<String> acl) {
             this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
@@ -127,8 +129,8 @@ public class Credentials {
          * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CredentialsCreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
-            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(null);
+        public CreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
+            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -172,21 +174,23 @@ public class Credentials {
      * the generated token is available. If you need it for future use, you must save
      * it securely yourself.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-credentials-create">https://ngrok.com/docs/api#api-credentials-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public CredentialsCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new CredentialsCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class CredentialsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private CredentialsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -224,13 +228,15 @@ public class Credentials {
     /**
      * Delete a tunnel authtoken credential by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-credentials-delete">https://ngrok.com/docs/api#api-credentials-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public CredentialsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new CredentialsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -238,10 +244,10 @@ public class Credentials {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class CredentialsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private CredentialsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -280,13 +286,15 @@ public class Credentials {
     /**
      * Get detailed information about a tunnel authtoken credential
      *
+     * See also <a href="https://ngrok.com/docs/api#api-credentials-get">https://ngrok.com/docs/api#api-credentials-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public CredentialsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new CredentialsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -294,11 +302,11 @@ public class Credentials {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class CredentialsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private CredentialsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -308,7 +316,7 @@ public class Credentials {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public CredentialsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -319,7 +327,7 @@ public class Credentials {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CredentialsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -330,7 +338,7 @@ public class Credentials {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public CredentialsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -341,7 +349,7 @@ public class Credentials {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CredentialsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -382,24 +390,26 @@ public class Credentials {
     /**
      * List all tunnel authtoken credentials on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-credentials-list">https://ngrok.com/docs/api#api-credentials-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public CredentialsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new CredentialsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class CredentialsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<java.util.List<String>> acl = Optional.empty();
 
-        private CredentialsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -412,7 +422,7 @@ public class Credentials {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public CredentialsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -424,7 +434,7 @@ public class Credentials {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CredentialsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -436,7 +446,7 @@ public class Credentials {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public CredentialsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -448,7 +458,7 @@ public class Credentials {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CredentialsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -469,7 +479,7 @@ public class Credentials {
          * @param acl the value of the acl parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CredentialsUpdateCallBuilder acl(final java.util.List<String> acl) {
+        public UpdateCallBuilder acl(final java.util.List<String> acl) {
             this.acl = Optional.ofNullable(acl);
             return this;
         }
@@ -490,7 +500,7 @@ public class Credentials {
          * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CredentialsUpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
+        public UpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
             this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
@@ -532,13 +542,15 @@ public class Credentials {
     /**
      * Update attributes of an tunnel authtoken credential by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-credentials-update">https://ngrok.com/docs/api#api-credentials-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public CredentialsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new CredentialsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

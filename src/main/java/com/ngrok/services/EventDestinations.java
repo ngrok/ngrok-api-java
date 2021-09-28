@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EventDestinations}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-event-destinations">https://ngrok.com/docs/api#api-event-destinations</a>.
  */
 public class EventDestinations {
     private final NgrokApiClient apiClient;
@@ -29,13 +31,13 @@ public class EventDestinations {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class EventDestinationsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String metadata = "";
         private String description = "";
         private String format = "";
         private EventTarget target = null;
 
-        private EventDestinationsCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -46,7 +48,7 @@ public class EventDestinations {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -58,7 +60,7 @@ public class EventDestinations {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -69,7 +71,7 @@ public class EventDestinations {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -80,7 +82,7 @@ public class EventDestinations {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -92,7 +94,7 @@ public class EventDestinations {
          * @param format the value of the format parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder format(final String format) {
+        public CreateCallBuilder format(final String format) {
             this.format = Objects.requireNonNull(format, "format is required");
             return this;
         }
@@ -104,7 +106,7 @@ public class EventDestinations {
          * @param format the value of the format parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder format(final Optional<String> format) {
+        public CreateCallBuilder format(final Optional<String> format) {
             this.format = Objects.requireNonNull(format, "format is required").orElse("");
             return this;
         }
@@ -118,7 +120,7 @@ public class EventDestinations {
          * @param target the value of the target parameter as a {@link EventTarget}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder target(final EventTarget target) {
+        public CreateCallBuilder target(final EventTarget target) {
             this.target = Objects.requireNonNull(target, "target is required");
             return this;
         }
@@ -132,7 +134,7 @@ public class EventDestinations {
          * @param target the value of the target parameter as an {@link Optional} of {@link EventTarget}
          * @return the call builder instance
          */
-        public EventDestinationsCreateCallBuilder target(final Optional<EventTarget> target) {
+        public CreateCallBuilder target(final Optional<EventTarget> target) {
             this.target = Objects.requireNonNull(target, "target is required").orElse(null);
             return this;
         }
@@ -177,21 +179,23 @@ public class EventDestinations {
      * associated with an Event Stream, and that Event Stream is associated with an
      * Endpoint Config.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-destinations-create">https://ngrok.com/docs/api#api-event-destinations-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public EventDestinationsCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new EventDestinationsCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EventDestinationsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EventDestinationsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -231,13 +235,15 @@ public class EventDestinations {
      * Event Stream, this will throw an error until that Event Stream has removed that
      * reference.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-destinations-delete">https://ngrok.com/docs/api#api-event-destinations-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EventDestinationsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EventDestinationsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -245,10 +251,10 @@ public class EventDestinations {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EventDestinationsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EventDestinationsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -287,13 +293,15 @@ public class EventDestinations {
     /**
      * Get detailed information about an Event Destination by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-destinations-get">https://ngrok.com/docs/api#api-event-destinations-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EventDestinationsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EventDestinationsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -301,11 +309,11 @@ public class EventDestinations {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class EventDestinationsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private EventDestinationsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -315,7 +323,7 @@ public class EventDestinations {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -326,7 +334,7 @@ public class EventDestinations {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -337,7 +345,7 @@ public class EventDestinations {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -348,7 +356,7 @@ public class EventDestinations {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -389,25 +397,27 @@ public class EventDestinations {
     /**
      * List all Event Destinations on this account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-destinations-list">https://ngrok.com/docs/api#api-event-destinations-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public EventDestinationsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new EventDestinationsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class EventDestinationsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
         private Optional<String> format = Optional.empty();
         private Optional<EventTarget> target = Optional.empty();
 
-        private EventDestinationsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -420,7 +430,7 @@ public class EventDestinations {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -432,7 +442,7 @@ public class EventDestinations {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -443,7 +453,7 @@ public class EventDestinations {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -454,7 +464,7 @@ public class EventDestinations {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -466,7 +476,7 @@ public class EventDestinations {
          * @param format the value of the format parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder format(final String format) {
+        public UpdateCallBuilder format(final String format) {
             this.format = Optional.ofNullable(format);
             return this;
         }
@@ -478,7 +488,7 @@ public class EventDestinations {
          * @param format the value of the format parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder format(final Optional<String> format) {
+        public UpdateCallBuilder format(final Optional<String> format) {
             this.format = Objects.requireNonNull(format, "format is required");
             return this;
         }
@@ -492,7 +502,7 @@ public class EventDestinations {
          * @param target the value of the target parameter as a {@link EventTarget}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder target(final EventTarget target) {
+        public UpdateCallBuilder target(final EventTarget target) {
             this.target = Optional.ofNullable(target);
             return this;
         }
@@ -506,7 +516,7 @@ public class EventDestinations {
          * @param target the value of the target parameter as an {@link Optional} of {@link EventTarget}
          * @return the call builder instance
          */
-        public EventDestinationsUpdateCallBuilder target(final Optional<EventTarget> target) {
+        public UpdateCallBuilder target(final Optional<EventTarget> target) {
             this.target = Objects.requireNonNull(target, "target is required");
             return this;
         }
@@ -549,13 +559,15 @@ public class EventDestinations {
     /**
      * Update attributes of an Event Destination.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-destinations-update">https://ngrok.com/docs/api#api-event-destinations-update</a>.
+     *
      * @param id Unique identifier for this Event Destination.
      * @return a call builder for this API call
      */
-    public EventDestinationsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new EventDestinationsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

@@ -3,9 +3,8 @@ package com.ngrok.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.ApiKeyTestBase;
-import com.ngrok.DefaultNgrokApiClient;
 import com.ngrok.Ngrok;
-import com.ngrok.NgrokApiClient;
+import com.ngrok.TestBase;
 import com.ngrok.Version;
 import com.ngrok.definitions.ApiKey;
 import com.ngrok.definitions.ApiKeyList;
@@ -21,18 +20,21 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.containing;
+import static com.github.tomakehurst.wiremock.client.WireMock.delete;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.noContent;
+import static com.github.tomakehurst.wiremock.client.WireMock.ok;
+import static com.github.tomakehurst.wiremock.client.WireMock.patch;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiKeysTest extends ApiKeyTestBase {
-    private static final String FAKE_API_SECRET ="s3kr1t";
-
     private static final Map<String, Object> API_KEY_CREATE = API_KEY_JSON_FIELDS.entrySet().stream()
         .filter(entry -> entry.getKey().equals("description") || entry.getKey().equals("metadata"))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -69,11 +71,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
     final WireMockExtension wireMock = new WireMockExtension();
 
     private Ngrok ngrok() {
-        final NgrokApiClient apiClient = DefaultNgrokApiClient
-            .newBuilder(USE_LIVE_API ? System.getenv("NGROK_API_KEY") : FAKE_API_SECRET)
-            .baseUri(USE_LIVE_API ? NgrokApiClient.DEFAULT_BASE_URI : wireMock.getBaseUri())
-            .build();
-        return new Ngrok(apiClient);
+        return TestBase.ngrok(wireMock.getBaseUri());
     }
 
     @BeforeEach
@@ -139,7 +137,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
     }
 
     @Test
-    public void testApiKeys() throws ExecutionException, InterruptedException, TimeoutException {
+    public void testApiKeys() throws InterruptedException {
         final String id = testCreateApiKey();
         try {
             testGetApiKey(id);
@@ -155,37 +153,37 @@ public class ApiKeysTest extends ApiKeyTestBase {
         }
     }
 
-    private String testCreateApiKey() throws ExecutionException, InterruptedException, TimeoutException {
+    private String testCreateApiKey() throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
         final ApiKey apiKey = apiKeys.create()
             .description((String) API_KEY_CREATE.get("description"))
             .metadata((String) API_KEY_CREATE.get("metadata"))
-            .call().toCompletableFuture().get(5, TimeUnit.SECONDS);
-        assertApiKeyFields(USE_LIVE_API, apiKey);
+            .blockingCall();
+        assertApiKeyFields(apiKey);
         return apiKey.getId();
     }
 
-    private void testGetApiKey(final String id) throws ExecutionException, InterruptedException, TimeoutException {
+    private void testGetApiKey(final String id) throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
         final ApiKey apiKey = apiKeys.get(id)
-            .call().toCompletableFuture().get(5, TimeUnit.SECONDS);
-        assertApiKeyFieldsNoToken(USE_LIVE_API, apiKey);
+            .blockingCall();
+        assertApiKeyFieldsNoToken(apiKey);
     }
 
-    public void testListApiKeys(final String id) throws ExecutionException, InterruptedException, TimeoutException {
+    public void testListApiKeys(final String id) throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
         final Page<ApiKeyList> apiKeyListPage = apiKeys.list()
             .limit("10")
-            .call().toCompletableFuture().get(5, TimeUnit.SECONDS);
+            .blockingCall();
         if (USE_LIVE_API) {
             final ApiKey apiKey = apiKeyListPage.getPage().getKeys()
                 .stream()
                 .filter(key -> key.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("API key with ID " + id + " not found in list"));
-            assertApiKeyFieldsNoToken(true, apiKey);
+            assertApiKeyFieldsNoToken(apiKey);
         } else {
-            assertApiKeyFieldsNoToken(false, apiKeyListPage.getPage().getKeys().get(0));
+            assertApiKeyFieldsNoToken(apiKeyListPage.getPage().getKeys().get(0));
             assertThat(apiKeyListPage.getPage().getKeys().get(1).getId()).isEqualTo("asdadsda");
             assertThat(apiKeyListPage.getPage().getKeys().get(1).getToken()).contains("12345");
             assertThat(apiKeyListPage.getPage().getNextPageUri()).isEmpty();
@@ -193,16 +191,16 @@ public class ApiKeysTest extends ApiKeyTestBase {
         }
     }
 
-    private void testUpdateApiKey(final String id) throws ExecutionException, InterruptedException, TimeoutException {
+    private void testUpdateApiKey(final String id) throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
         final ApiKey apiKey = apiKeys.update(id)
             .description((String) API_KEY_UPDATE.get("description"))
-            .call().toCompletableFuture().get(5, TimeUnit.SECONDS);
-        assertApiKeyFields(USE_LIVE_API, apiKey, (String) API_KEY_UPDATE.get("description"), false);
+            .blockingCall();
+        assertApiKeyFields(apiKey, (String) API_KEY_UPDATE.get("description"), false);
     }
 
-    private void testDeleteApiKey(final String id) throws ExecutionException, InterruptedException, TimeoutException {
+    private void testDeleteApiKey(final String id) throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
-        apiKeys.delete(id).call().toCompletableFuture().get(5, TimeUnit.SECONDS);
+        apiKeys.delete(id).blockingCall();
     }
 }

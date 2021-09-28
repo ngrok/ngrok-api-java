@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,8 +14,10 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EndpointIpPolicy {
     @JsonProperty("enabled")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Boolean> enabled;
     @JsonProperty("ip_policies")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<Ref> ipPolicies;
 
     /**

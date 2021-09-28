@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,10 +14,13 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TunnelSessionList implements Pageable {
     @JsonProperty("tunnel_sessions")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<TunnelSession> tunnelSessions;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("next_page_uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<java.net.URI> nextPageUri;
 
     /**

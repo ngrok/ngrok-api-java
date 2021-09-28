@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointLoggingModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-logging-module">https://ngrok.com/docs/api#api-endpoint-logging-module</a>.
  */
 public class EndpointLoggingModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointLoggingModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointLoggingModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointLoggingMutate module = null;
 
-        private EndpointLoggingModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointLoggingModule {
          * @param module the value of the module parameter as a {@link EndpointLoggingMutate}
          * @return the call builder instance
          */
-        public EndpointLoggingModuleReplaceCallBuilder module(final EndpointLoggingMutate module) {
+        public ReplaceCallBuilder module(final EndpointLoggingMutate module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointLoggingModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointLoggingMutate}
          * @return the call builder instance
          */
-        public EndpointLoggingModuleReplaceCallBuilder module(final Optional<EndpointLoggingMutate> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointLoggingMutate> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointLoggingModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-logging-module-replace">https://ngrok.com/docs/api#api-endpoint-logging-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointLoggingModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointLoggingModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointLoggingModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointLoggingModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointLoggingModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointLoggingModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-logging-module-get">https://ngrok.com/docs/api#api-endpoint-logging-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointLoggingModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointLoggingModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointLoggingModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointLoggingModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointLoggingModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointLoggingModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-logging-module-delete">https://ngrok.com/docs/api#api-endpoint-logging-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointLoggingModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointLoggingModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

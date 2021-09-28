@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,20 +14,28 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IpRestriction {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("enforced")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final boolean enforced;
     @JsonProperty("type")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String type;
     @JsonProperty("ip_policies")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<Ref> ipPolicies;
 
     /**
@@ -48,7 +57,7 @@ public class IpRestriction {
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
-        @JsonProperty("enforced") final boolean enforced,
+        @JsonProperty("enforced") final Boolean enforced,
         @JsonProperty("type") final String type,
         @JsonProperty("ip_policies") final java.util.List<Ref> ipPolicies
     ) {

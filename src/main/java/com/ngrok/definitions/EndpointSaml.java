@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,34 +14,49 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EndpointSaml {
     @JsonProperty("enabled")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Boolean> enabled;
     @JsonProperty("options_passthrough")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final boolean optionsPassthrough;
     @JsonProperty("cookie_prefix")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String cookiePrefix;
     @JsonProperty("inactivity_timeout")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final long inactivityTimeout;
     @JsonProperty("maximum_duration")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.Duration maximumDuration;
     @JsonProperty("idp_metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String idpMetadata;
     @JsonProperty("force_authn")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final boolean forceAuthn;
     @JsonProperty("allow_idp_initiated")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Boolean> allowIdpInitiated;
     @JsonProperty("authorized_groups")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> authorizedGroups;
     @JsonProperty("entity_id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String entityId;
     @JsonProperty("assertion_consumer_service_url")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI assertionConsumerServiceUrl;
     @JsonProperty("single_logout_url")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI singleLogoutUrl;
     @JsonProperty("request_signing_certificate_pem")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String requestSigningCertificatePem;
     @JsonProperty("metadata_url")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI metadataUrl;
     @JsonProperty("nameid_format")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String nameidFormat;
 
     /**
@@ -65,12 +81,12 @@ public class EndpointSaml {
     @JsonCreator
     public EndpointSaml(
         @JsonProperty("enabled") final Optional<Boolean> enabled,
-        @JsonProperty("options_passthrough") final boolean optionsPassthrough,
+        @JsonProperty("options_passthrough") final Boolean optionsPassthrough,
         @JsonProperty("cookie_prefix") final String cookiePrefix,
-        @JsonProperty("inactivity_timeout") final long inactivityTimeout,
+        @JsonProperty("inactivity_timeout") final Long inactivityTimeout,
         @JsonProperty("maximum_duration") final java.time.Duration maximumDuration,
         @JsonProperty("idp_metadata") final String idpMetadata,
-        @JsonProperty("force_authn") final boolean forceAuthn,
+        @JsonProperty("force_authn") final Boolean forceAuthn,
         @JsonProperty("allow_idp_initiated") final Optional<Boolean> allowIdpInitiated,
         @JsonProperty("authorized_groups") final java.util.List<String> authorizedGroups,
         @JsonProperty("entity_id") final String entityId,

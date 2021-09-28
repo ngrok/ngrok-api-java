@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  * Reserved Addresses are TCP addresses that can be used to listen for traffic.
  *  TCP address hostnames and ports are assigned by ngrok, they cannot be
  *  chosen.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs">https://ngrok.com/docs/api#api-reserved-addrs</a>.
  */
 public class ReservedAddrs {
     private final NgrokApiClient apiClient;
@@ -31,13 +33,13 @@ public class ReservedAddrs {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class ReservedAddrsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
         private String region = "";
         private String endpointConfigurationId = "";
 
-        private ReservedAddrsCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -47,7 +49,7 @@ public class ReservedAddrs {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -58,7 +60,7 @@ public class ReservedAddrs {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -70,7 +72,7 @@ public class ReservedAddrs {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -82,7 +84,7 @@ public class ReservedAddrs {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -94,7 +96,7 @@ public class ReservedAddrs {
          * @param region the value of the region parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder region(final String region) {
+        public CreateCallBuilder region(final String region) {
             this.region = Objects.requireNonNull(region, "region is required");
             return this;
         }
@@ -106,7 +108,7 @@ public class ReservedAddrs {
          * @param region the value of the region parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder region(final Optional<String> region) {
+        public CreateCallBuilder region(final Optional<String> region) {
             this.region = Objects.requireNonNull(region, "region is required").orElse("");
             return this;
         }
@@ -118,7 +120,7 @@ public class ReservedAddrs {
          * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
+        public CreateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
             this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
             return this;
         }
@@ -130,7 +132,7 @@ public class ReservedAddrs {
          * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsCreateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
+        public CreateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
             this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required").orElse("");
             return this;
         }
@@ -173,21 +175,23 @@ public class ReservedAddrs {
     /**
      * Create a new reserved address.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-create">https://ngrok.com/docs/api#api-reserved-addrs-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public ReservedAddrsCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new ReservedAddrsCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class ReservedAddrsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private ReservedAddrsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -225,13 +229,15 @@ public class ReservedAddrs {
     /**
      * Delete a reserved address.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-delete">https://ngrok.com/docs/api#api-reserved-addrs-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedAddrsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new ReservedAddrsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -239,10 +245,10 @@ public class ReservedAddrs {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class ReservedAddrsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private ReservedAddrsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -281,13 +287,15 @@ public class ReservedAddrs {
     /**
      * Get the details of a reserved address.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-get">https://ngrok.com/docs/api#api-reserved-addrs-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedAddrsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new ReservedAddrsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -295,11 +303,11 @@ public class ReservedAddrs {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class ReservedAddrsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private ReservedAddrsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -309,7 +317,7 @@ public class ReservedAddrs {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -320,7 +328,7 @@ public class ReservedAddrs {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -331,7 +339,7 @@ public class ReservedAddrs {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -342,7 +350,7 @@ public class ReservedAddrs {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -383,24 +391,26 @@ public class ReservedAddrs {
     /**
      * List all reserved addresses on this account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-list">https://ngrok.com/docs/api#api-reserved-addrs-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public ReservedAddrsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new ReservedAddrsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class ReservedAddrsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<String> endpointConfigurationId = Optional.empty();
 
-        private ReservedAddrsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -412,7 +422,7 @@ public class ReservedAddrs {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -423,7 +433,7 @@ public class ReservedAddrs {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -435,7 +445,7 @@ public class ReservedAddrs {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -447,7 +457,7 @@ public class ReservedAddrs {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -459,7 +469,7 @@ public class ReservedAddrs {
          * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsUpdateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
+        public UpdateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
             this.endpointConfigurationId = Optional.ofNullable(endpointConfigurationId);
             return this;
         }
@@ -471,7 +481,7 @@ public class ReservedAddrs {
          * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedAddrsUpdateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
+        public UpdateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
             this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
             return this;
         }
@@ -513,13 +523,15 @@ public class ReservedAddrs {
     /**
      * Update the attributes of a reserved address.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-update">https://ngrok.com/docs/api#api-reserved-addrs-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public ReservedAddrsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new ReservedAddrsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }
@@ -527,10 +539,10 @@ public class ReservedAddrs {
     /**
      * A builder object encapsulating state for an unsent DeleteEndpointConfig API call.
      */
-    public class ReservedAddrsDeleteEndpointConfigCallBuilder {
+    public class DeleteEndpointConfigCallBuilder {
         private final String id;
 
-        private ReservedAddrsDeleteEndpointConfigCallBuilder(
+        private DeleteEndpointConfigCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -568,13 +580,15 @@ public class ReservedAddrs {
     /**
      * Detach the endpoint configuration attached to a reserved address.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config">https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedAddrsDeleteEndpointConfigCallBuilder deleteEndpointConfig(
+    public DeleteEndpointConfigCallBuilder deleteEndpointConfig(
         final String id
     ) {
-        return new ReservedAddrsDeleteEndpointConfigCallBuilder(
+        return new DeleteEndpointConfigCallBuilder(
             id
         );
     }

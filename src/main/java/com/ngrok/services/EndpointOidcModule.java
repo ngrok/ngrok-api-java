@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointOidcModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-oidc-module">https://ngrok.com/docs/api#api-endpoint-oidc-module</a>.
  */
 public class EndpointOidcModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointOidcModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointOidcModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointOidc module = null;
 
-        private EndpointOidcModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointOidcModule {
          * @param module the value of the module parameter as a {@link EndpointOidc}
          * @return the call builder instance
          */
-        public EndpointOidcModuleReplaceCallBuilder module(final EndpointOidc module) {
+        public ReplaceCallBuilder module(final EndpointOidc module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointOidcModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointOidc}
          * @return the call builder instance
          */
-        public EndpointOidcModuleReplaceCallBuilder module(final Optional<EndpointOidc> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointOidc> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointOidcModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-oidc-module-replace">https://ngrok.com/docs/api#api-endpoint-oidc-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointOidcModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointOidcModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointOidcModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointOidcModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointOidcModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointOidcModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-oidc-module-get">https://ngrok.com/docs/api#api-endpoint-oidc-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointOidcModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointOidcModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointOidcModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointOidcModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointOidcModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointOidcModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-oidc-module-delete">https://ngrok.com/docs/api#api-endpoint-oidc-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointOidcModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointOidcModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

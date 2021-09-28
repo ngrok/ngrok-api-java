@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,24 +14,34 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TunnelSession {
     @JsonProperty("agent_version")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String agentVersion;
     @JsonProperty("credential")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Ref credential;
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("ip")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String ip;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("os")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String os;
     @JsonProperty("region")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String region;
     @JsonProperty("started_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime startedAt;
     @JsonProperty("transport")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String transport;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
 
     /**

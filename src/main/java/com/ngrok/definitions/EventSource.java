@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,8 +14,10 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventSource {
     @JsonProperty("type")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String type;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
 
     /**

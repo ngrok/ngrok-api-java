@@ -17,6 +17,8 @@ import java.util.stream.Stream;
  *  action. They can be attached to endpoints via the Endpoint Configuration IP
  *  Policy module. They can also be used with IP Restrictions to control source
  *  IP ranges that can start tunnel sessions and connect to the API and dashboard.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-ip-policies">https://ngrok.com/docs/api#api-ip-policies</a>.
  */
 public class IpPolicies {
     private final NgrokApiClient apiClient;
@@ -33,12 +35,12 @@ public class IpPolicies {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class IpPoliciesCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
         private final String action;
 
-        private IpPoliciesCreateCallBuilder(
+        private CreateCallBuilder(
             final String action
         ) {
             this.action = Objects.requireNonNull(action, "action is required");
@@ -51,7 +53,7 @@ public class IpPolicies {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -63,7 +65,7 @@ public class IpPolicies {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -75,7 +77,7 @@ public class IpPolicies {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -87,7 +89,7 @@ public class IpPolicies {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -130,13 +132,15 @@ public class IpPolicies {
      * Create a new IP policy. It will not apply to any traffic until you associate to
      * a traffic source via an endpoint configuration or IP restriction.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-create">https://ngrok.com/docs/api#api-ip-policies-create</a>.
+     *
      * @param action the IP policy action. Supported values are <code>allow</code> or <code>deny</code>
      * @return a call builder for this API call
      */
-    public IpPoliciesCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String action
     ) {
-        return new IpPoliciesCreateCallBuilder(
+        return new CreateCallBuilder(
             action
         );
     }
@@ -144,10 +148,10 @@ public class IpPolicies {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class IpPoliciesDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private IpPoliciesDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -187,13 +191,15 @@ public class IpPolicies {
      * purposes of traffic restriction it will be treated as if the IP policy remains
      * but has zero rules.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-delete">https://ngrok.com/docs/api#api-ip-policies-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public IpPoliciesDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new IpPoliciesDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -201,10 +207,10 @@ public class IpPolicies {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class IpPoliciesGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private IpPoliciesGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -243,13 +249,15 @@ public class IpPolicies {
     /**
      * Get detailed information about an IP policy by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-get">https://ngrok.com/docs/api#api-ip-policies-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public IpPoliciesGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new IpPoliciesGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -257,11 +265,11 @@ public class IpPolicies {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class IpPoliciesListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private IpPoliciesListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -271,7 +279,7 @@ public class IpPolicies {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -282,7 +290,7 @@ public class IpPolicies {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -293,7 +301,7 @@ public class IpPolicies {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -304,7 +312,7 @@ public class IpPolicies {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -345,23 +353,25 @@ public class IpPolicies {
     /**
      * List all IP policies on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-list">https://ngrok.com/docs/api#api-ip-policies-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public IpPoliciesListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new IpPoliciesListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class IpPoliciesUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
 
-        private IpPoliciesUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -374,7 +384,7 @@ public class IpPolicies {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -386,7 +396,7 @@ public class IpPolicies {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -398,7 +408,7 @@ public class IpPolicies {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -410,7 +420,7 @@ public class IpPolicies {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpPoliciesUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -451,13 +461,15 @@ public class IpPolicies {
     /**
      * Update attributes of an IP policy by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-update">https://ngrok.com/docs/api#api-ip-policies-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public IpPoliciesUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new IpPoliciesUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

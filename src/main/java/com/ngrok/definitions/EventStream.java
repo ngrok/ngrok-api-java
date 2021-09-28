@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,22 +14,31 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventStream {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("fields")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> fields;
     @JsonProperty("event_type")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String eventType;
     @JsonProperty("destination_ids")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> destinationIds;
     @JsonProperty("sampling_rate")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final double samplingRate;
 
     /**
@@ -54,7 +64,7 @@ public class EventStream {
         @JsonProperty("fields") final java.util.List<String> fields,
         @JsonProperty("event_type") final String eventType,
         @JsonProperty("destination_ids") final java.util.List<String> destinationIds,
-        @JsonProperty("sampling_rate") final double samplingRate
+        @JsonProperty("sampling_rate") final Double samplingRate
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");

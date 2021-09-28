@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 /**
  * SSH Credentials are SSH public keys that can be used to start SSH tunnels
  *  via the ngrok SSH tunnel gateway.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials">https://ngrok.com/docs/api#api-ssh-credentials</a>.
  */
 public class SshCredentials {
     private final NgrokApiClient apiClient;
@@ -30,13 +32,13 @@ public class SshCredentials {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class SshCredentialsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private java.util.List<String> acl = null;
+        private java.util.List<String> acl = java.util.Collections.emptyList();
         private final String publicKey;
 
-        private SshCredentialsCreateCallBuilder(
+        private CreateCallBuilder(
             final String publicKey
         ) {
             this.publicKey = Objects.requireNonNull(publicKey, "publicKey is required");
@@ -49,7 +51,7 @@ public class SshCredentials {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -61,7 +63,7 @@ public class SshCredentials {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -73,7 +75,7 @@ public class SshCredentials {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -85,7 +87,7 @@ public class SshCredentials {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -106,7 +108,7 @@ public class SshCredentials {
          * @param acl the value of the acl parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public SshCredentialsCreateCallBuilder acl(final java.util.List<String> acl) {
+        public CreateCallBuilder acl(final java.util.List<String> acl) {
             this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
@@ -127,8 +129,8 @@ public class SshCredentials {
          * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public SshCredentialsCreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
-            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(null);
+        public CreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
+            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -171,13 +173,15 @@ public class SshCredentials {
      * Create a new ssh_credential from an uploaded public SSH key. This ssh credential
      * can be used to start new tunnels via ngrok's SSH gateway.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials-create">https://ngrok.com/docs/api#api-ssh-credentials-create</a>.
+     *
      * @param publicKey the PEM-encoded public key of the SSH keypair that will be used to authenticate
      * @return a call builder for this API call
      */
-    public SshCredentialsCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String publicKey
     ) {
-        return new SshCredentialsCreateCallBuilder(
+        return new CreateCallBuilder(
             publicKey
         );
     }
@@ -185,10 +189,10 @@ public class SshCredentials {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class SshCredentialsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private SshCredentialsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -226,13 +230,15 @@ public class SshCredentials {
     /**
      * Delete an ssh_credential by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials-delete">https://ngrok.com/docs/api#api-ssh-credentials-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public SshCredentialsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new SshCredentialsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -240,10 +246,10 @@ public class SshCredentials {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class SshCredentialsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private SshCredentialsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -282,13 +288,15 @@ public class SshCredentials {
     /**
      * Get detailed information about an ssh_credential
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials-get">https://ngrok.com/docs/api#api-ssh-credentials-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public SshCredentialsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new SshCredentialsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -296,11 +304,11 @@ public class SshCredentials {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class SshCredentialsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private SshCredentialsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -310,7 +318,7 @@ public class SshCredentials {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -321,7 +329,7 @@ public class SshCredentials {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -332,7 +340,7 @@ public class SshCredentials {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -343,7 +351,7 @@ public class SshCredentials {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -384,24 +392,26 @@ public class SshCredentials {
     /**
      * List all ssh credentials on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials-list">https://ngrok.com/docs/api#api-ssh-credentials-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public SshCredentialsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new SshCredentialsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class SshCredentialsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<java.util.List<String>> acl = Optional.empty();
 
-        private SshCredentialsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -414,7 +424,7 @@ public class SshCredentials {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -426,7 +436,7 @@ public class SshCredentials {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -438,7 +448,7 @@ public class SshCredentials {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -450,7 +460,7 @@ public class SshCredentials {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshCredentialsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -471,7 +481,7 @@ public class SshCredentials {
          * @param acl the value of the acl parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public SshCredentialsUpdateCallBuilder acl(final java.util.List<String> acl) {
+        public UpdateCallBuilder acl(final java.util.List<String> acl) {
             this.acl = Optional.ofNullable(acl);
             return this;
         }
@@ -492,7 +502,7 @@ public class SshCredentials {
          * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public SshCredentialsUpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
+        public UpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
             this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
@@ -534,13 +544,15 @@ public class SshCredentials {
     /**
      * Update attributes of an ssh_credential by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials-update">https://ngrok.com/docs/api#api-ssh-credentials-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public SshCredentialsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new SshCredentialsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

@@ -18,6 +18,8 @@ import java.util.stream.Stream;
  *  restrictions can be used to enforce the source IPs that can make API
  *  requests, log in to the dashboard, start ngrok agents, and connect to your
  *  public-facing endpoints.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions">https://ngrok.com/docs/api#api-ip-restrictions</a>.
  */
 public class IpRestrictions {
     private final NgrokApiClient apiClient;
@@ -34,14 +36,14 @@ public class IpRestrictions {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class IpRestrictionsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
         private boolean enforced = false;
         private final String type;
         private final java.util.List<String> ipPolicyIds;
 
-        private IpRestrictionsCreateCallBuilder(
+        private CreateCallBuilder(
             final String type,
             final java.util.List<String> ipPolicyIds
         ) {
@@ -55,7 +57,7 @@ public class IpRestrictions {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -66,7 +68,7 @@ public class IpRestrictions {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -78,7 +80,7 @@ public class IpRestrictions {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -90,7 +92,7 @@ public class IpRestrictions {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -102,7 +104,7 @@ public class IpRestrictions {
          * @param enforced the value of the enforced parameter as a {@link boolean}
          * @return the call builder instance
          */
-        public IpRestrictionsCreateCallBuilder enforced(final boolean enforced) {
+        public CreateCallBuilder enforced(final boolean enforced) {
             this.enforced = Objects.requireNonNull(enforced, "enforced is required");
             return this;
         }
@@ -114,7 +116,7 @@ public class IpRestrictions {
          * @param enforced the value of the enforced parameter as an {@link Optional} of {@link boolean}
          * @return the call builder instance
          */
-        public IpRestrictionsCreateCallBuilder enforced(final Optional<Boolean> enforced) {
+        public CreateCallBuilder enforced(final Optional<Boolean> enforced) {
             this.enforced = Objects.requireNonNull(enforced, "enforced is required").orElse(false);
             return this;
         }
@@ -158,15 +160,17 @@ public class IpRestrictions {
     /**
      * Create a new IP restriction
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-create">https://ngrok.com/docs/api#api-ip-restrictions-create</a>.
+     *
      * @param type the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: <code>dashboard</code>, <code>api</code>, <code>agent</code>, and <code>endpoints</code>
      * @param ipPolicyIds the set of IP policy identifiers that are used to enforce the restriction
      * @return a call builder for this API call
      */
-    public IpRestrictionsCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String type,
         final java.util.List<String> ipPolicyIds
     ) {
-        return new IpRestrictionsCreateCallBuilder(
+        return new CreateCallBuilder(
             type,
             ipPolicyIds
         );
@@ -175,10 +179,10 @@ public class IpRestrictions {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class IpRestrictionsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private IpRestrictionsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -216,13 +220,15 @@ public class IpRestrictions {
     /**
      * Delete an IP restriction
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-delete">https://ngrok.com/docs/api#api-ip-restrictions-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public IpRestrictionsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new IpRestrictionsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -230,10 +236,10 @@ public class IpRestrictions {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class IpRestrictionsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private IpRestrictionsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -272,13 +278,15 @@ public class IpRestrictions {
     /**
      * Get detailed information about an IP restriction
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-get">https://ngrok.com/docs/api#api-ip-restrictions-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public IpRestrictionsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new IpRestrictionsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -286,11 +294,11 @@ public class IpRestrictions {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class IpRestrictionsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private IpRestrictionsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -300,7 +308,7 @@ public class IpRestrictions {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -311,7 +319,7 @@ public class IpRestrictions {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -322,7 +330,7 @@ public class IpRestrictions {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -333,7 +341,7 @@ public class IpRestrictions {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -374,25 +382,27 @@ public class IpRestrictions {
     /**
      * List all IP restrictions on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-list">https://ngrok.com/docs/api#api-ip-restrictions-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public IpRestrictionsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new IpRestrictionsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class IpRestrictionsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<Boolean> enforced = Optional.empty();
-        private java.util.List<String> ipPolicyIds = null;
+        private java.util.List<String> ipPolicyIds = java.util.Collections.emptyList();
 
-        private IpRestrictionsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -404,7 +414,7 @@ public class IpRestrictions {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -415,7 +425,7 @@ public class IpRestrictions {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -427,7 +437,7 @@ public class IpRestrictions {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -439,7 +449,7 @@ public class IpRestrictions {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -451,7 +461,7 @@ public class IpRestrictions {
          * @param enforced the value of the enforced parameter as a {@link boolean}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder enforced(final boolean enforced) {
+        public UpdateCallBuilder enforced(final boolean enforced) {
             this.enforced = Optional.ofNullable(enforced);
             return this;
         }
@@ -463,7 +473,7 @@ public class IpRestrictions {
          * @param enforced the value of the enforced parameter as an {@link Optional} of {@link boolean}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder enforced(final Optional<Boolean> enforced) {
+        public UpdateCallBuilder enforced(final Optional<Boolean> enforced) {
             this.enforced = Objects.requireNonNull(enforced, "enforced is required");
             return this;
         }
@@ -474,7 +484,7 @@ public class IpRestrictions {
          * @param ipPolicyIds the value of the ip_policy_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder ipPolicyIds(final java.util.List<String> ipPolicyIds) {
+        public UpdateCallBuilder ipPolicyIds(final java.util.List<String> ipPolicyIds) {
             this.ipPolicyIds = Objects.requireNonNull(ipPolicyIds, "ipPolicyIds is required");
             return this;
         }
@@ -485,8 +495,8 @@ public class IpRestrictions {
          * @param ipPolicyIds the value of the ip_policy_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public IpRestrictionsUpdateCallBuilder ipPolicyIds(final Optional<java.util.List<String>> ipPolicyIds) {
-            this.ipPolicyIds = Objects.requireNonNull(ipPolicyIds, "ipPolicyIds is required").orElse(null);
+        public UpdateCallBuilder ipPolicyIds(final Optional<java.util.List<String>> ipPolicyIds) {
+            this.ipPolicyIds = Objects.requireNonNull(ipPolicyIds, "ipPolicyIds is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -528,13 +538,15 @@ public class IpRestrictions {
     /**
      * Update attributes of an IP restriction by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-update">https://ngrok.com/docs/api#api-ip-restrictions-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public IpRestrictionsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new IpRestrictionsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

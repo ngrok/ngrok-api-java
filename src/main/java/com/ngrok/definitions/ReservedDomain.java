@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,30 +14,43 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReservedDomain {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("domain")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String domain;
     @JsonProperty("region")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String region;
     @JsonProperty("cname_target")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> cnameTarget;
     @JsonProperty("http_endpoint_configuration")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Ref> httpEndpointConfiguration;
     @JsonProperty("https_endpoint_configuration")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Ref> httpsEndpointConfiguration;
     @JsonProperty("certificate")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Ref> certificate;
     @JsonProperty("certificate_management_policy")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<ReservedDomainCertPolicy> certificateManagementPolicy;
     @JsonProperty("certificate_management_status")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<ReservedDomainCertStatus> certificateManagementStatus;
 
     /**

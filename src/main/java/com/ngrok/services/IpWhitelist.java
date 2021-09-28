@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 /**
  * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
  *  with an <code>endpoints</code> type instead.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist">https://ngrok.com/docs/api#api-ip-whitelist</a>.
  */
 public class IpWhitelist {
     private final NgrokApiClient apiClient;
@@ -30,12 +32,12 @@ public class IpWhitelist {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class IpWhitelistCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
         private String ipNet = "";
 
-        private IpWhitelistCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -46,7 +48,7 @@ public class IpWhitelist {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -58,7 +60,7 @@ public class IpWhitelist {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -70,7 +72,7 @@ public class IpWhitelist {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -82,7 +84,7 @@ public class IpWhitelist {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -95,7 +97,7 @@ public class IpWhitelist {
          * @param ipNet the value of the ip_net parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistCreateCallBuilder ipNet(final String ipNet) {
+        public CreateCallBuilder ipNet(final String ipNet) {
             this.ipNet = Objects.requireNonNull(ipNet, "ipNet is required");
             return this;
         }
@@ -108,7 +110,7 @@ public class IpWhitelist {
          * @param ipNet the value of the ip_net parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistCreateCallBuilder ipNet(final Optional<String> ipNet) {
+        public CreateCallBuilder ipNet(final Optional<String> ipNet) {
             this.ipNet = Objects.requireNonNull(ipNet, "ipNet is required").orElse("");
             return this;
         }
@@ -151,21 +153,23 @@ public class IpWhitelist {
      * Create a new IP whitelist entry that will restrict traffic to all tunnel
      * endpoints on the account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-create">https://ngrok.com/docs/api#api-ip-whitelist-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public IpWhitelistCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new IpWhitelistCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class IpWhitelistDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private IpWhitelistDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -203,13 +207,15 @@ public class IpWhitelist {
     /**
      * Delete an IP whitelist entry.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-delete">https://ngrok.com/docs/api#api-ip-whitelist-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public IpWhitelistDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new IpWhitelistDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -217,10 +223,10 @@ public class IpWhitelist {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class IpWhitelistGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private IpWhitelistGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -259,13 +265,15 @@ public class IpWhitelist {
     /**
      * Get detailed information about an IP whitelist entry by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-get">https://ngrok.com/docs/api#api-ip-whitelist-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public IpWhitelistGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new IpWhitelistGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -273,11 +281,11 @@ public class IpWhitelist {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class IpWhitelistListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private IpWhitelistListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -287,7 +295,7 @@ public class IpWhitelist {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -298,7 +306,7 @@ public class IpWhitelist {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -309,7 +317,7 @@ public class IpWhitelist {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -320,7 +328,7 @@ public class IpWhitelist {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -361,23 +369,25 @@ public class IpWhitelist {
     /**
      * List all IP whitelist entries on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-list">https://ngrok.com/docs/api#api-ip-whitelist-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public IpWhitelistListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new IpWhitelistListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class IpWhitelistUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
 
-        private IpWhitelistUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -390,7 +400,7 @@ public class IpWhitelist {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -402,7 +412,7 @@ public class IpWhitelist {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -414,7 +424,7 @@ public class IpWhitelist {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -426,7 +436,7 @@ public class IpWhitelist {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public IpWhitelistUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -467,13 +477,15 @@ public class IpWhitelist {
     /**
      * Update attributes of an IP whitelist entry by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-update">https://ngrok.com/docs/api#api-ip-whitelist-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public IpWhitelistUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new IpWhitelistUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EventSources}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-event-sources">https://ngrok.com/docs/api#api-event-sources</a>.
  */
 public class EventSources {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EventSources {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class EventSourcesCreateCallBuilder {
+    public class CreateCallBuilder {
         private final String subscriptionId;
         private String type = "";
 
-        private EventSourcesCreateCallBuilder(
+        private CreateCallBuilder(
             final String subscriptionId
         ) {
             this.subscriptionId = Objects.requireNonNull(subscriptionId, "subscriptionId is required");
@@ -45,7 +47,7 @@ public class EventSources {
          * @param type the value of the type parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSourcesCreateCallBuilder type(final String type) {
+        public CreateCallBuilder type(final String type) {
             this.type = Objects.requireNonNull(type, "type is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EventSources {
          * @param type the value of the type parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSourcesCreateCallBuilder type(final Optional<String> type) {
+        public CreateCallBuilder type(final Optional<String> type) {
             this.type = Objects.requireNonNull(type, "type is required").orElse("");
             return this;
         }
@@ -96,13 +98,15 @@ public class EventSources {
     /**
      * Add an additional type for which this event subscription will trigger
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-sources-create">https://ngrok.com/docs/api#api-event-sources-create</a>.
+     *
      * @param subscriptionId The unique identifier for the Event Subscription that this Event Source is attached to.
      * @return a call builder for this API call
      */
-    public EventSourcesCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String subscriptionId
     ) {
-        return new EventSourcesCreateCallBuilder(
+        return new CreateCallBuilder(
             subscriptionId
         );
     }
@@ -110,11 +114,11 @@ public class EventSources {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EventSourcesDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String subscriptionId;
         private final String type;
 
-        private EventSourcesDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String subscriptionId,
             final String type
         ) {
@@ -154,15 +158,17 @@ public class EventSources {
     /**
      * Remove a type for which this event subscription will trigger
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-sources-delete">https://ngrok.com/docs/api#api-event-sources-delete</a>.
+     *
      * @param subscriptionId The unique identifier for the Event Subscription that this Event Source is attached to.
      * @param type Type of event for which an event subscription will trigger
      * @return a call builder for this API call
      */
-    public EventSourcesDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String subscriptionId,
         final String type
     ) {
-        return new EventSourcesDeleteCallBuilder(
+        return new DeleteCallBuilder(
             subscriptionId,
             type
         );
@@ -171,11 +177,11 @@ public class EventSources {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EventSourcesGetCallBuilder {
+    public class GetCallBuilder {
         private final String subscriptionId;
         private final String type;
 
-        private EventSourcesGetCallBuilder(
+        private GetCallBuilder(
             final String subscriptionId,
             final String type
         ) {
@@ -216,15 +222,17 @@ public class EventSources {
     /**
      * Get the details for a given type that triggers for the given event subscription
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-sources-get">https://ngrok.com/docs/api#api-event-sources-get</a>.
+     *
      * @param subscriptionId The unique identifier for the Event Subscription that this Event Source is attached to.
      * @param type Type of event for which an event subscription will trigger
      * @return a call builder for this API call
      */
-    public EventSourcesGetCallBuilder get(
+    public GetCallBuilder get(
         final String subscriptionId,
         final String type
     ) {
-        return new EventSourcesGetCallBuilder(
+        return new GetCallBuilder(
             subscriptionId,
             type
         );
@@ -233,10 +241,10 @@ public class EventSources {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class EventSourcesListCallBuilder {
+    public class ListCallBuilder {
         private final String subscriptionId;
 
-        private EventSourcesListCallBuilder(
+        private ListCallBuilder(
             final String subscriptionId
         ) {
             this.subscriptionId = Objects.requireNonNull(subscriptionId, "subscriptionId is required");
@@ -275,13 +283,15 @@ public class EventSources {
     /**
      * List the types for which this event subscription will trigger
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-sources-list">https://ngrok.com/docs/api#api-event-sources-list</a>.
+     *
      * @param subscriptionId The unique identifier for the Event Subscription that this Event Source is attached to.
      * @return a call builder for this API call
      */
-    public EventSourcesListCallBuilder list(
+    public ListCallBuilder list(
         final String subscriptionId
     ) {
-        return new EventSourcesListCallBuilder(
+        return new ListCallBuilder(
             subscriptionId
         );
     }
@@ -289,11 +299,11 @@ public class EventSources {
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class EventSourcesUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String subscriptionId;
         private final String type;
 
-        private EventSourcesUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String subscriptionId,
             final String type
         ) {
@@ -334,15 +344,17 @@ public class EventSources {
     /**
      * Update the type for which this event subscription will trigger
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-sources-update">https://ngrok.com/docs/api#api-event-sources-update</a>.
+     *
      * @param subscriptionId The unique identifier for the Event Subscription that this Event Source is attached to.
      * @param type Type of event for which an event subscription will trigger
      * @return a call builder for this API call
      */
-    public EventSourcesUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String subscriptionId,
         final String type
     ) {
-        return new EventSourcesUpdateCallBuilder(
+        return new UpdateCallBuilder(
             subscriptionId,
             type
         );

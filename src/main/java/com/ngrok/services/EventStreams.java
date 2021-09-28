@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EventStreams}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-event-streams">https://ngrok.com/docs/api#api-event-streams</a>.
  */
 public class EventStreams {
     private final NgrokApiClient apiClient;
@@ -29,15 +31,15 @@ public class EventStreams {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class EventStreamsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String metadata = "";
         private String description = "";
-        private java.util.List<String> fields = null;
+        private java.util.List<String> fields = java.util.Collections.emptyList();
         private String eventType = "";
-        private java.util.List<String> destinationIds = null;
+        private java.util.List<String> destinationIds = java.util.Collections.emptyList();
         private double samplingRate = 0.0d;
 
-        private EventStreamsCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -48,7 +50,7 @@ public class EventStreams {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -60,7 +62,7 @@ public class EventStreams {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -71,7 +73,7 @@ public class EventStreams {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -82,7 +84,7 @@ public class EventStreams {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -93,7 +95,7 @@ public class EventStreams {
          * @param fields the value of the fields parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder fields(final java.util.List<String> fields) {
+        public CreateCallBuilder fields(final java.util.List<String> fields) {
             this.fields = Objects.requireNonNull(fields, "fields is required");
             return this;
         }
@@ -104,8 +106,8 @@ public class EventStreams {
          * @param fields the value of the fields parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder fields(final Optional<java.util.List<String>> fields) {
-            this.fields = Objects.requireNonNull(fields, "fields is required").orElse(null);
+        public CreateCallBuilder fields(final Optional<java.util.List<String>> fields) {
+            this.fields = Objects.requireNonNull(fields, "fields is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -116,7 +118,7 @@ public class EventStreams {
          * @param eventType the value of the event_type parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder eventType(final String eventType) {
+        public CreateCallBuilder eventType(final String eventType) {
             this.eventType = Objects.requireNonNull(eventType, "eventType is required");
             return this;
         }
@@ -128,7 +130,7 @@ public class EventStreams {
          * @param eventType the value of the event_type parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder eventType(final Optional<String> eventType) {
+        public CreateCallBuilder eventType(final Optional<String> eventType) {
             this.eventType = Objects.requireNonNull(eventType, "eventType is required").orElse("");
             return this;
         }
@@ -140,7 +142,7 @@ public class EventStreams {
          * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
+        public CreateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
             this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
             return this;
         }
@@ -152,8 +154,8 @@ public class EventStreams {
          * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(null);
+        public CreateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
+            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -164,7 +166,7 @@ public class EventStreams {
          * @param samplingRate the value of the sampling_rate parameter as a {@link double}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder samplingRate(final double samplingRate) {
+        public CreateCallBuilder samplingRate(final double samplingRate) {
             this.samplingRate = Objects.requireNonNull(samplingRate, "samplingRate is required");
             return this;
         }
@@ -176,7 +178,7 @@ public class EventStreams {
          * @param samplingRate the value of the sampling_rate parameter as an {@link Optional} of {@link double}
          * @return the call builder instance
          */
-        public EventStreamsCreateCallBuilder samplingRate(final Optional<Double> samplingRate) {
+        public CreateCallBuilder samplingRate(final Optional<Double> samplingRate) {
             this.samplingRate = Objects.requireNonNull(samplingRate, "samplingRate is required").orElse(0.0d);
             return this;
         }
@@ -222,21 +224,23 @@ public class EventStreams {
      * Create a new Event Stream. It will not apply to anything until you associate it
      * with one or more Endpoint Configs.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-streams-create">https://ngrok.com/docs/api#api-event-streams-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public EventStreamsCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new EventStreamsCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EventStreamsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EventStreamsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -274,13 +278,15 @@ public class EventStreams {
     /**
      * Delete an Event Stream. Associated Event Destinations will be preserved.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-streams-delete">https://ngrok.com/docs/api#api-event-streams-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EventStreamsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EventStreamsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -288,10 +294,10 @@ public class EventStreams {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EventStreamsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EventStreamsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -330,13 +336,15 @@ public class EventStreams {
     /**
      * Get detailed information about an Event Stream by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-streams-get">https://ngrok.com/docs/api#api-event-streams-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EventStreamsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EventStreamsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -344,11 +352,11 @@ public class EventStreams {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class EventStreamsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private EventStreamsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -358,7 +366,7 @@ public class EventStreams {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -369,7 +377,7 @@ public class EventStreams {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -380,7 +388,7 @@ public class EventStreams {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -391,7 +399,7 @@ public class EventStreams {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -432,18 +440,20 @@ public class EventStreams {
     /**
      * List all Event Streams available on this account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-streams-list">https://ngrok.com/docs/api#api-event-streams-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public EventStreamsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new EventStreamsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class EventStreamsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
@@ -451,7 +461,7 @@ public class EventStreams {
         private Optional<java.util.List<String>> destinationIds = Optional.empty();
         private Optional<Double> samplingRate = Optional.empty();
 
-        private EventStreamsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -464,7 +474,7 @@ public class EventStreams {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -476,7 +486,7 @@ public class EventStreams {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -487,7 +497,7 @@ public class EventStreams {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -498,7 +508,7 @@ public class EventStreams {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -509,7 +519,7 @@ public class EventStreams {
          * @param fields the value of the fields parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder fields(final java.util.List<String> fields) {
+        public UpdateCallBuilder fields(final java.util.List<String> fields) {
             this.fields = Optional.ofNullable(fields);
             return this;
         }
@@ -520,7 +530,7 @@ public class EventStreams {
          * @param fields the value of the fields parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder fields(final Optional<java.util.List<String>> fields) {
+        public UpdateCallBuilder fields(final Optional<java.util.List<String>> fields) {
             this.fields = Objects.requireNonNull(fields, "fields is required");
             return this;
         }
@@ -532,7 +542,7 @@ public class EventStreams {
          * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
+        public UpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
             this.destinationIds = Optional.ofNullable(destinationIds);
             return this;
         }
@@ -544,7 +554,7 @@ public class EventStreams {
          * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
+        public UpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
             this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
             return this;
         }
@@ -556,7 +566,7 @@ public class EventStreams {
          * @param samplingRate the value of the sampling_rate parameter as a {@link double}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder samplingRate(final double samplingRate) {
+        public UpdateCallBuilder samplingRate(final double samplingRate) {
             this.samplingRate = Optional.ofNullable(samplingRate);
             return this;
         }
@@ -568,7 +578,7 @@ public class EventStreams {
          * @param samplingRate the value of the sampling_rate parameter as an {@link Optional} of {@link double}
          * @return the call builder instance
          */
-        public EventStreamsUpdateCallBuilder samplingRate(final Optional<Double> samplingRate) {
+        public UpdateCallBuilder samplingRate(final Optional<Double> samplingRate) {
             this.samplingRate = Objects.requireNonNull(samplingRate, "samplingRate is required");
             return this;
         }
@@ -612,13 +622,15 @@ public class EventStreams {
     /**
      * Update attributes of an Event Stream by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-streams-update">https://ngrok.com/docs/api#api-event-streams-update</a>.
+     *
      * @param id Unique identifier for this Event Stream.
      * @return a call builder for this API call
      */
-    public EventStreamsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new EventStreamsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

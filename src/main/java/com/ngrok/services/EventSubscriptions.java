@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EventSubscriptions}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions">https://ngrok.com/docs/api#api-event-subscriptions</a>.
  */
 public class EventSubscriptions {
     private final NgrokApiClient apiClient;
@@ -29,13 +31,13 @@ public class EventSubscriptions {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class EventSubscriptionsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String metadata = "";
         private String description = "";
-        private java.util.List<EventSourceReplace> sources = null;
-        private java.util.List<String> destinationIds = null;
+        private java.util.List<EventSourceReplace> sources = java.util.Collections.emptyList();
+        private java.util.List<String> destinationIds = java.util.Collections.emptyList();
 
-        private EventSubscriptionsCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -46,7 +48,7 @@ public class EventSubscriptions {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -58,7 +60,7 @@ public class EventSubscriptions {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -70,7 +72,7 @@ public class EventSubscriptions {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -82,7 +84,7 @@ public class EventSubscriptions {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -93,7 +95,7 @@ public class EventSubscriptions {
          * @param sources the value of the sources parameter as a {@link java.util.List<EventSourceReplace>}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
+        public CreateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
             this.sources = Objects.requireNonNull(sources, "sources is required");
             return this;
         }
@@ -104,8 +106,8 @@ public class EventSubscriptions {
          * @param sources the value of the sources parameter as an {@link Optional} of {@link java.util.List<EventSourceReplace>}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required").orElse(null);
+        public CreateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
+            this.sources = Objects.requireNonNull(sources, "sources is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -116,7 +118,7 @@ public class EventSubscriptions {
          * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
+        public CreateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
             this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
             return this;
         }
@@ -128,8 +130,8 @@ public class EventSubscriptions {
          * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventSubscriptionsCreateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(null);
+        public CreateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
+            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -171,21 +173,23 @@ public class EventSubscriptions {
     /**
      * Create an Event Subscription.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-create">https://ngrok.com/docs/api#api-event-subscriptions-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public EventSubscriptionsCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new EventSubscriptionsCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EventSubscriptionsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EventSubscriptionsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -223,13 +227,15 @@ public class EventSubscriptions {
     /**
      * Delete an Event Subscription.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-delete">https://ngrok.com/docs/api#api-event-subscriptions-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EventSubscriptionsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EventSubscriptionsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -237,10 +243,10 @@ public class EventSubscriptions {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EventSubscriptionsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EventSubscriptionsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -279,13 +285,15 @@ public class EventSubscriptions {
     /**
      * Get an Event Subscription by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-get">https://ngrok.com/docs/api#api-event-subscriptions-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EventSubscriptionsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EventSubscriptionsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -293,11 +301,11 @@ public class EventSubscriptions {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class EventSubscriptionsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private EventSubscriptionsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -307,7 +315,7 @@ public class EventSubscriptions {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -318,7 +326,7 @@ public class EventSubscriptions {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -329,7 +337,7 @@ public class EventSubscriptions {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -340,7 +348,7 @@ public class EventSubscriptions {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -381,25 +389,27 @@ public class EventSubscriptions {
     /**
      * List this Account's Event Subscriptions.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-list">https://ngrok.com/docs/api#api-event-subscriptions-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public EventSubscriptionsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new EventSubscriptionsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class EventSubscriptionsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
         private Optional<java.util.List<EventSourceReplace>> sources = Optional.empty();
         private Optional<java.util.List<String>> destinationIds = Optional.empty();
 
-        private EventSubscriptionsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -412,7 +422,7 @@ public class EventSubscriptions {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -424,7 +434,7 @@ public class EventSubscriptions {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -436,7 +446,7 @@ public class EventSubscriptions {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -448,7 +458,7 @@ public class EventSubscriptions {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -459,7 +469,7 @@ public class EventSubscriptions {
          * @param sources the value of the sources parameter as a {@link java.util.List<EventSourceReplace>}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
+        public UpdateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
             this.sources = Optional.ofNullable(sources);
             return this;
         }
@@ -470,7 +480,7 @@ public class EventSubscriptions {
          * @param sources the value of the sources parameter as an {@link Optional} of {@link java.util.List<EventSourceReplace>}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
+        public UpdateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
             this.sources = Objects.requireNonNull(sources, "sources is required");
             return this;
         }
@@ -482,7 +492,7 @@ public class EventSubscriptions {
          * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
+        public UpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
             this.destinationIds = Optional.ofNullable(destinationIds);
             return this;
         }
@@ -494,7 +504,7 @@ public class EventSubscriptions {
          * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public EventSubscriptionsUpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
+        public UpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
             this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
             return this;
         }
@@ -537,13 +547,15 @@ public class EventSubscriptions {
     /**
      * Update an Event Subscription.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-update">https://ngrok.com/docs/api#api-event-subscriptions-update</a>.
+     *
      * @param id Unique identifier for this Event Subscription.
      * @return a call builder for this API call
      */
-    public EventSubscriptionsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new EventSubscriptionsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

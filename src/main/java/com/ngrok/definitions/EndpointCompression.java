@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -12,7 +13,65 @@ import java.util.Optional;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EndpointCompression {
+    /**
+     * Builder class for {@link EndpointCompression}.
+     */
+    public static class Builder {
+        private Optional<Boolean> enabled = Optional.empty();
+
+        private Builder(
+        ) {
+        }
+
+        /**
+         * <code>true</code> if the module will be applied to traffic, <code>false</code>
+         * to disable. default <code>true</code> if unspecified
+		 *
+		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+		 * @return this builder instance
+		 */
+        public Builder enabled(final boolean enabled) {
+            this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
+            return this;
+        }
+
+        /**
+         * <code>true</code> if the module will be applied to traffic, <code>false</code>
+         * to disable. default <code>true</code> if unspecified
+		 *
+		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+		 * @return this builder instance
+		 */
+        public Builder enabled(final Optional<Boolean> enabled) {
+            this.enabled = Objects.requireNonNull(enabled, "enabled is required");
+            return this;
+        }
+
+        /**
+         * Constructs the {@link EndpointCompression} instance.
+         *
+         * @return a new {@link EndpointCompression}
+         */
+        public EndpointCompression build() {
+            return new EndpointCompression(
+                this.enabled
+            );
+        }
+    }
+
+    /**
+     * Creates a new builder for the {@link EndpointCompression} type.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder newBuilder(
+    ) {
+        return new Builder (
+        );
+    }
+
     @JsonProperty("enabled")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Boolean> enabled;
 
     /**
@@ -21,7 +80,7 @@ public class EndpointCompression {
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
      */
     @JsonCreator
-    public EndpointCompression(
+    private EndpointCompression(
         @JsonProperty("enabled") final Optional<Boolean> enabled
     ) {
         this.enabled = enabled != null ? enabled : Optional.empty();

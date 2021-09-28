@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,26 +14,37 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CertificateAuthority {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("ca_pem")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String caPem;
     @JsonProperty("subject_common_name")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectCommonName;
     @JsonProperty("not_before")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime notBefore;
     @JsonProperty("not_after")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime notAfter;
     @JsonProperty("key_usages")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> keyUsages;
     @JsonProperty("extended_key_usages")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> extendedKeyUsages;
 
     /**

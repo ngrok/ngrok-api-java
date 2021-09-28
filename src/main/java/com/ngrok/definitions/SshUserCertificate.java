@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,32 +14,46 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SshUserCertificate {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("public_key")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String publicKey;
     @JsonProperty("key_type")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String keyType;
     @JsonProperty("ssh_certificate_authority_id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String sshCertificateAuthorityId;
     @JsonProperty("principals")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> principals;
     @JsonProperty("critical_options")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.Map<String, String> criticalOptions;
     @JsonProperty("extensions")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.Map<String, String> extensions;
     @JsonProperty("valid_after")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime validAfter;
     @JsonProperty("valid_until")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime validUntil;
     @JsonProperty("certificate")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String certificate;
 
     /**

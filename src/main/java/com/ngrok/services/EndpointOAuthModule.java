@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointOAuthModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-o-auth-module">https://ngrok.com/docs/api#api-endpoint-o-auth-module</a>.
  */
 public class EndpointOAuthModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointOAuthModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointOAuthModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointOAuth module = null;
 
-        private EndpointOAuthModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointOAuthModule {
          * @param module the value of the module parameter as a {@link EndpointOAuth}
          * @return the call builder instance
          */
-        public EndpointOAuthModuleReplaceCallBuilder module(final EndpointOAuth module) {
+        public ReplaceCallBuilder module(final EndpointOAuth module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointOAuthModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointOAuth}
          * @return the call builder instance
          */
-        public EndpointOAuthModuleReplaceCallBuilder module(final Optional<EndpointOAuth> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointOAuth> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointOAuthModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-o-auth-module-replace">https://ngrok.com/docs/api#api-endpoint-o-auth-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointOAuthModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointOAuthModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointOAuthModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointOAuthModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointOAuthModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointOAuthModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-o-auth-module-get">https://ngrok.com/docs/api#api-endpoint-o-auth-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointOAuthModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointOAuthModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointOAuthModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointOAuthModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointOAuthModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointOAuthModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-o-auth-module-delete">https://ngrok.com/docs/api#api-endpoint-o-auth-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointOAuthModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointOAuthModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

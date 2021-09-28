@@ -17,6 +17,8 @@ import java.util.stream.Stream;
  *  to verify that the TLS certificate presented by a client has been signed by
  *  this CA. Certificate Authorities  are used only for mTLS validation only and
  *  thus a private key is not included in the resource.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities">https://ngrok.com/docs/api#api-certificate-authorities</a>.
  */
 public class CertificateAuthorities {
     private final NgrokApiClient apiClient;
@@ -33,12 +35,12 @@ public class CertificateAuthorities {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class CertificateAuthoritiesCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
         private final String caPem;
 
-        private CertificateAuthoritiesCreateCallBuilder(
+        private CreateCallBuilder(
             final String caPem
         ) {
             this.caPem = Objects.requireNonNull(caPem, "caPem is required");
@@ -51,7 +53,7 @@ public class CertificateAuthorities {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -63,7 +65,7 @@ public class CertificateAuthorities {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -75,7 +77,7 @@ public class CertificateAuthorities {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -87,7 +89,7 @@ public class CertificateAuthorities {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -129,13 +131,15 @@ public class CertificateAuthorities {
     /**
      * Upload a new Certificate Authority
      *
+     * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities-create">https://ngrok.com/docs/api#api-certificate-authorities-create</a>.
+     *
      * @param caPem raw PEM of the Certificate Authority
      * @return a call builder for this API call
      */
-    public CertificateAuthoritiesCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String caPem
     ) {
-        return new CertificateAuthoritiesCreateCallBuilder(
+        return new CreateCallBuilder(
             caPem
         );
     }
@@ -143,10 +147,10 @@ public class CertificateAuthorities {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class CertificateAuthoritiesDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private CertificateAuthoritiesDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -184,13 +188,15 @@ public class CertificateAuthorities {
     /**
      * Delete a Certificate Authority
      *
+     * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities-delete">https://ngrok.com/docs/api#api-certificate-authorities-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public CertificateAuthoritiesDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new CertificateAuthoritiesDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -198,10 +204,10 @@ public class CertificateAuthorities {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class CertificateAuthoritiesGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private CertificateAuthoritiesGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -240,13 +246,15 @@ public class CertificateAuthorities {
     /**
      * Get detailed information about a certficate authority
      *
+     * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities-get">https://ngrok.com/docs/api#api-certificate-authorities-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public CertificateAuthoritiesGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new CertificateAuthoritiesGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -254,11 +262,11 @@ public class CertificateAuthorities {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class CertificateAuthoritiesListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private CertificateAuthoritiesListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -268,7 +276,7 @@ public class CertificateAuthorities {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -279,7 +287,7 @@ public class CertificateAuthorities {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -290,7 +298,7 @@ public class CertificateAuthorities {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -301,7 +309,7 @@ public class CertificateAuthorities {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -342,23 +350,25 @@ public class CertificateAuthorities {
     /**
      * List all Certificate Authority on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities-list">https://ngrok.com/docs/api#api-certificate-authorities-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public CertificateAuthoritiesListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new CertificateAuthoritiesListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class CertificateAuthoritiesUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
 
-        private CertificateAuthoritiesUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -371,7 +381,7 @@ public class CertificateAuthorities {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -383,7 +393,7 @@ public class CertificateAuthorities {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -395,7 +405,7 @@ public class CertificateAuthorities {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -407,7 +417,7 @@ public class CertificateAuthorities {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CertificateAuthoritiesUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -448,13 +458,15 @@ public class CertificateAuthorities {
     /**
      * Update attributes of a Certificate Authority by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities-update">https://ngrok.com/docs/api#api-certificate-authorities-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public CertificateAuthoritiesUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new CertificateAuthoritiesUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

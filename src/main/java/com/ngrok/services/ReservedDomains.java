@@ -16,6 +16,8 @@ import java.util.stream.Stream;
  *  can be used to listen for http, https or tls traffic. You may use a domain
  *  that you own by creating a CNAME record specified in the returned resource.
  *  This CNAME record points traffic for that domain to ngrok's edge servers.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-reserved-domains">https://ngrok.com/docs/api#api-reserved-domains</a>.
  */
 public class ReservedDomains {
     private final NgrokApiClient apiClient;
@@ -32,7 +34,7 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class ReservedDomainsCreateCallBuilder {
+    public class CreateCallBuilder {
         private final String name;
         private String region = "";
         private String description = "";
@@ -42,7 +44,7 @@ public class ReservedDomains {
         private Optional<String> certificateId = Optional.empty();
         private Optional<ReservedDomainCertPolicy> certificateManagementPolicy = Optional.empty();
 
-        private ReservedDomainsCreateCallBuilder(
+        private CreateCallBuilder(
             final String name
         ) {
             this.name = Objects.requireNonNull(name, "name is required");
@@ -55,7 +57,7 @@ public class ReservedDomains {
          * @param region the value of the region parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder region(final String region) {
+        public CreateCallBuilder region(final String region) {
             this.region = Objects.requireNonNull(region, "region is required");
             return this;
         }
@@ -67,7 +69,7 @@ public class ReservedDomains {
          * @param region the value of the region parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder region(final Optional<String> region) {
+        public CreateCallBuilder region(final Optional<String> region) {
             this.region = Objects.requireNonNull(region, "region is required").orElse("");
             return this;
         }
@@ -78,7 +80,7 @@ public class ReservedDomains {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -89,7 +91,7 @@ public class ReservedDomains {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -101,7 +103,7 @@ public class ReservedDomains {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -113,7 +115,7 @@ public class ReservedDomains {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -125,7 +127,7 @@ public class ReservedDomains {
          * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder httpEndpointConfigurationId(final String httpEndpointConfigurationId) {
+        public CreateCallBuilder httpEndpointConfigurationId(final String httpEndpointConfigurationId) {
             this.httpEndpointConfigurationId = Optional.ofNullable(httpEndpointConfigurationId);
             return this;
         }
@@ -137,7 +139,7 @@ public class ReservedDomains {
          * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder httpEndpointConfigurationId(final Optional<String> httpEndpointConfigurationId) {
+        public CreateCallBuilder httpEndpointConfigurationId(final Optional<String> httpEndpointConfigurationId) {
             this.httpEndpointConfigurationId = Objects.requireNonNull(httpEndpointConfigurationId, "httpEndpointConfigurationId is required");
             return this;
         }
@@ -149,7 +151,7 @@ public class ReservedDomains {
          * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder httpsEndpointConfigurationId(final String httpsEndpointConfigurationId) {
+        public CreateCallBuilder httpsEndpointConfigurationId(final String httpsEndpointConfigurationId) {
             this.httpsEndpointConfigurationId = Optional.ofNullable(httpsEndpointConfigurationId);
             return this;
         }
@@ -161,7 +163,7 @@ public class ReservedDomains {
          * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder httpsEndpointConfigurationId(final Optional<String> httpsEndpointConfigurationId) {
+        public CreateCallBuilder httpsEndpointConfigurationId(final Optional<String> httpsEndpointConfigurationId) {
             this.httpsEndpointConfigurationId = Objects.requireNonNull(httpsEndpointConfigurationId, "httpsEndpointConfigurationId is required");
             return this;
         }
@@ -174,7 +176,7 @@ public class ReservedDomains {
          * @param certificateId the value of the certificate_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder certificateId(final String certificateId) {
+        public CreateCallBuilder certificateId(final String certificateId) {
             this.certificateId = Optional.ofNullable(certificateId);
             return this;
         }
@@ -187,7 +189,7 @@ public class ReservedDomains {
          * @param certificateId the value of the certificate_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder certificateId(final Optional<String> certificateId) {
+        public CreateCallBuilder certificateId(final Optional<String> certificateId) {
             this.certificateId = Objects.requireNonNull(certificateId, "certificateId is required");
             return this;
         }
@@ -200,7 +202,7 @@ public class ReservedDomains {
          * @param certificateManagementPolicy the value of the certificate_management_policy parameter as a {@link ReservedDomainCertPolicy}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder certificateManagementPolicy(final ReservedDomainCertPolicy certificateManagementPolicy) {
+        public CreateCallBuilder certificateManagementPolicy(final ReservedDomainCertPolicy certificateManagementPolicy) {
             this.certificateManagementPolicy = Optional.ofNullable(certificateManagementPolicy);
             return this;
         }
@@ -213,7 +215,7 @@ public class ReservedDomains {
          * @param certificateManagementPolicy the value of the certificate_management_policy parameter as an {@link Optional} of {@link ReservedDomainCertPolicy}
          * @return the call builder instance
          */
-        public ReservedDomainsCreateCallBuilder certificateManagementPolicy(final Optional<ReservedDomainCertPolicy> certificateManagementPolicy) {
+        public CreateCallBuilder certificateManagementPolicy(final Optional<ReservedDomainCertPolicy> certificateManagementPolicy) {
             this.certificateManagementPolicy = Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required");
             return this;
         }
@@ -260,13 +262,15 @@ public class ReservedDomains {
     /**
      * Create a new reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-create">https://ngrok.com/docs/api#api-reserved-domains-create</a>.
+     *
      * @param name the domain name to reserve. It may be a full domain name like app.example.com. If the name does not contain a '.' it will reserve that subdomain on ngrok.io.
      * @return a call builder for this API call
      */
-    public ReservedDomainsCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String name
     ) {
-        return new ReservedDomainsCreateCallBuilder(
+        return new CreateCallBuilder(
             name
         );
     }
@@ -274,10 +278,10 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class ReservedDomainsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private ReservedDomainsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -315,13 +319,15 @@ public class ReservedDomains {
     /**
      * Delete a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete">https://ngrok.com/docs/api#api-reserved-domains-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedDomainsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new ReservedDomainsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -329,10 +335,10 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class ReservedDomainsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private ReservedDomainsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -371,13 +377,15 @@ public class ReservedDomains {
     /**
      * Get the details of a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-get">https://ngrok.com/docs/api#api-reserved-domains-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedDomainsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new ReservedDomainsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -385,11 +393,11 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class ReservedDomainsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private ReservedDomainsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -399,7 +407,7 @@ public class ReservedDomains {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -410,7 +418,7 @@ public class ReservedDomains {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -421,7 +429,7 @@ public class ReservedDomains {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -432,7 +440,7 @@ public class ReservedDomains {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -473,18 +481,20 @@ public class ReservedDomains {
     /**
      * List all reserved domains on this account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-list">https://ngrok.com/docs/api#api-reserved-domains-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public ReservedDomainsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new ReservedDomainsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class ReservedDomainsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
@@ -493,7 +503,7 @@ public class ReservedDomains {
         private Optional<String> certificateId = Optional.empty();
         private Optional<ReservedDomainCertPolicy> certificateManagementPolicy = Optional.empty();
 
-        private ReservedDomainsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -505,7 +515,7 @@ public class ReservedDomains {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -516,7 +526,7 @@ public class ReservedDomains {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -528,7 +538,7 @@ public class ReservedDomains {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -540,7 +550,7 @@ public class ReservedDomains {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -552,7 +562,7 @@ public class ReservedDomains {
          * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder httpEndpointConfigurationId(final String httpEndpointConfigurationId) {
+        public UpdateCallBuilder httpEndpointConfigurationId(final String httpEndpointConfigurationId) {
             this.httpEndpointConfigurationId = Optional.ofNullable(httpEndpointConfigurationId);
             return this;
         }
@@ -564,7 +574,7 @@ public class ReservedDomains {
          * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder httpEndpointConfigurationId(final Optional<String> httpEndpointConfigurationId) {
+        public UpdateCallBuilder httpEndpointConfigurationId(final Optional<String> httpEndpointConfigurationId) {
             this.httpEndpointConfigurationId = Objects.requireNonNull(httpEndpointConfigurationId, "httpEndpointConfigurationId is required");
             return this;
         }
@@ -576,7 +586,7 @@ public class ReservedDomains {
          * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder httpsEndpointConfigurationId(final String httpsEndpointConfigurationId) {
+        public UpdateCallBuilder httpsEndpointConfigurationId(final String httpsEndpointConfigurationId) {
             this.httpsEndpointConfigurationId = Optional.ofNullable(httpsEndpointConfigurationId);
             return this;
         }
@@ -588,7 +598,7 @@ public class ReservedDomains {
          * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder httpsEndpointConfigurationId(final Optional<String> httpsEndpointConfigurationId) {
+        public UpdateCallBuilder httpsEndpointConfigurationId(final Optional<String> httpsEndpointConfigurationId) {
             this.httpsEndpointConfigurationId = Objects.requireNonNull(httpsEndpointConfigurationId, "httpsEndpointConfigurationId is required");
             return this;
         }
@@ -601,7 +611,7 @@ public class ReservedDomains {
          * @param certificateId the value of the certificate_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder certificateId(final String certificateId) {
+        public UpdateCallBuilder certificateId(final String certificateId) {
             this.certificateId = Optional.ofNullable(certificateId);
             return this;
         }
@@ -614,7 +624,7 @@ public class ReservedDomains {
          * @param certificateId the value of the certificate_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder certificateId(final Optional<String> certificateId) {
+        public UpdateCallBuilder certificateId(final Optional<String> certificateId) {
             this.certificateId = Objects.requireNonNull(certificateId, "certificateId is required");
             return this;
         }
@@ -627,7 +637,7 @@ public class ReservedDomains {
          * @param certificateManagementPolicy the value of the certificate_management_policy parameter as a {@link ReservedDomainCertPolicy}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder certificateManagementPolicy(final ReservedDomainCertPolicy certificateManagementPolicy) {
+        public UpdateCallBuilder certificateManagementPolicy(final ReservedDomainCertPolicy certificateManagementPolicy) {
             this.certificateManagementPolicy = Optional.ofNullable(certificateManagementPolicy);
             return this;
         }
@@ -640,7 +650,7 @@ public class ReservedDomains {
          * @param certificateManagementPolicy the value of the certificate_management_policy parameter as an {@link Optional} of {@link ReservedDomainCertPolicy}
          * @return the call builder instance
          */
-        public ReservedDomainsUpdateCallBuilder certificateManagementPolicy(final Optional<ReservedDomainCertPolicy> certificateManagementPolicy) {
+        public UpdateCallBuilder certificateManagementPolicy(final Optional<ReservedDomainCertPolicy> certificateManagementPolicy) {
             this.certificateManagementPolicy = Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required");
             return this;
         }
@@ -685,13 +695,15 @@ public class ReservedDomains {
     /**
      * Update the attributes of a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-update">https://ngrok.com/docs/api#api-reserved-domains-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public ReservedDomainsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new ReservedDomainsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }
@@ -699,10 +711,10 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent DeleteCertificateManagementPolicy API call.
      */
-    public class ReservedDomainsDeleteCertificateManagementPolicyCallBuilder {
+    public class DeleteCertificateManagementPolicyCallBuilder {
         private final String id;
 
-        private ReservedDomainsDeleteCertificateManagementPolicyCallBuilder(
+        private DeleteCertificateManagementPolicyCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -740,13 +752,15 @@ public class ReservedDomains {
     /**
      * Detach the certificate management policy attached to a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete-certificate-management-policy">https://ngrok.com/docs/api#api-reserved-domains-delete-certificate-management-policy</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedDomainsDeleteCertificateManagementPolicyCallBuilder deleteCertificateManagementPolicy(
+    public DeleteCertificateManagementPolicyCallBuilder deleteCertificateManagementPolicy(
         final String id
     ) {
-        return new ReservedDomainsDeleteCertificateManagementPolicyCallBuilder(
+        return new DeleteCertificateManagementPolicyCallBuilder(
             id
         );
     }
@@ -754,10 +768,10 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent DeleteCertificate API call.
      */
-    public class ReservedDomainsDeleteCertificateCallBuilder {
+    public class DeleteCertificateCallBuilder {
         private final String id;
 
-        private ReservedDomainsDeleteCertificateCallBuilder(
+        private DeleteCertificateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -795,13 +809,15 @@ public class ReservedDomains {
     /**
      * Detach the certificate attached to a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete-certificate">https://ngrok.com/docs/api#api-reserved-domains-delete-certificate</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedDomainsDeleteCertificateCallBuilder deleteCertificate(
+    public DeleteCertificateCallBuilder deleteCertificate(
         final String id
     ) {
-        return new ReservedDomainsDeleteCertificateCallBuilder(
+        return new DeleteCertificateCallBuilder(
             id
         );
     }
@@ -809,10 +825,10 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent DeleteHttpEndpointConfig API call.
      */
-    public class ReservedDomainsDeleteHttpEndpointConfigCallBuilder {
+    public class DeleteHttpEndpointConfigCallBuilder {
         private final String id;
 
-        private ReservedDomainsDeleteHttpEndpointConfigCallBuilder(
+        private DeleteHttpEndpointConfigCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -850,13 +866,15 @@ public class ReservedDomains {
     /**
      * Detach the http endpoint configuration attached to a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete-http-endpoint-config">https://ngrok.com/docs/api#api-reserved-domains-delete-http-endpoint-config</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedDomainsDeleteHttpEndpointConfigCallBuilder deleteHttpEndpointConfig(
+    public DeleteHttpEndpointConfigCallBuilder deleteHttpEndpointConfig(
         final String id
     ) {
-        return new ReservedDomainsDeleteHttpEndpointConfigCallBuilder(
+        return new DeleteHttpEndpointConfigCallBuilder(
             id
         );
     }
@@ -864,10 +882,10 @@ public class ReservedDomains {
     /**
      * A builder object encapsulating state for an unsent DeleteHttpsEndpointConfig API call.
      */
-    public class ReservedDomainsDeleteHttpsEndpointConfigCallBuilder {
+    public class DeleteHttpsEndpointConfigCallBuilder {
         private final String id;
 
-        private ReservedDomainsDeleteHttpsEndpointConfigCallBuilder(
+        private DeleteHttpsEndpointConfigCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -905,13 +923,15 @@ public class ReservedDomains {
     /**
      * Detach the https endpoint configuration attached to a reserved domain.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete-https-endpoint-config">https://ngrok.com/docs/api#api-reserved-domains-delete-https-endpoint-config</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ReservedDomainsDeleteHttpsEndpointConfigCallBuilder deleteHttpsEndpointConfig(
+    public DeleteHttpsEndpointConfigCallBuilder deleteHttpsEndpointConfig(
         final String id
     ) {
-        return new ReservedDomainsDeleteHttpsEndpointConfigCallBuilder(
+        return new DeleteHttpsEndpointConfigCallBuilder(
             id
         );
     }

@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,18 +14,25 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AbuseReport {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("urls")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<java.net.URI> urls;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("status")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String status;
     @JsonProperty("hostnames")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<AbuseReportHostname> hostnames;
 
     /**

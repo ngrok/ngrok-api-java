@@ -45,6 +45,8 @@ public class Ngrok {
      * Abuse Reports allow you to submit take-down requests for URLs hosted by
      *  ngrok that violate ngrok's terms of service.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-abuse-reports">https://ngrok.com/docs/api#api-abuse-reports</a>.
+     *
      * @return a service client
      */
     public AbuseReports abuseReports() {
@@ -60,6 +62,8 @@ public class Ngrok {
      * on your
      *  ngrok.com dashboard.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-api-keys">https://ngrok.com/docs/api#api-api-keys</a>.
+     *
      * @return a service client
      */
     public ApiKeys apiKeys() {
@@ -72,6 +76,8 @@ public class Ngrok {
      *  to verify that the TLS certificate presented by a client has been signed by
      *  this CA. Certificate Authorities  are used only for mTLS validation only and
      *  thus a private key is not included in the resource.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-certificate-authorities">https://ngrok.com/docs/api#api-certificate-authorities</a>.
      *
      * @return a service client
      */
@@ -86,6 +92,8 @@ public class Ngrok {
      * <code>ngrok.yml</code>
      *  configuration file with the <code>authtoken</code> property.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-credentials">https://ngrok.com/docs/api#api-credentials</a>.
+     *
      * @return a service client
      */
     public Credentials credentials() {
@@ -97,6 +105,8 @@ public class Ngrok {
      *  traffic to a domain or address is handled. Endpoint configurations are only
      *  applied to Domains and TCP Addresses they have been attached to.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations">https://ngrok.com/docs/api#api-endpoint-configurations</a>.
+     *
      * @return a service client
      */
     public EndpointConfigurations endpointConfigurations() {
@@ -105,6 +115,8 @@ public class Ngrok {
     
     /**
      * Creates a service client for EventStreams.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-event-streams">https://ngrok.com/docs/api#api-event-streams</a>.
      *
      * @return a service client
      */
@@ -115,6 +127,8 @@ public class Ngrok {
     /**
      * Creates a service client for EventDestinations.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-destinations">https://ngrok.com/docs/api#api-event-destinations</a>.
+     *
      * @return a service client
      */
     public EventDestinations eventDestinations() {
@@ -124,6 +138,8 @@ public class Ngrok {
     /**
      * Creates a service client for EventSubscriptions.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions">https://ngrok.com/docs/api#api-event-subscriptions</a>.
+     *
      * @return a service client
      */
     public EventSubscriptions eventSubscriptions() {
@@ -132,6 +148,8 @@ public class Ngrok {
     
     /**
      * Creates a service client for EventSources.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-event-sources">https://ngrok.com/docs/api#api-event-sources</a>.
      *
      * @return a service client
      */
@@ -146,6 +164,8 @@ public class Ngrok {
      *  Policy module. They can also be used with IP Restrictions to control source
      *  IP ranges that can start tunnel sessions and connect to the API and dashboard.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policies">https://ngrok.com/docs/api#api-ip-policies</a>.
+     *
      * @return a service client
      */
     public IpPolicies ipPolicies() {
@@ -155,6 +175,8 @@ public class Ngrok {
     /**
      * IP Policy Rules are the IPv4 or IPv6 CIDRs entries that
      *  make up an IP Policy.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules">https://ngrok.com/docs/api#api-ip-policy-rules</a>.
      *
      * @return a service client
      */
@@ -170,6 +192,8 @@ public class Ngrok {
      *  requests, log in to the dashboard, start ngrok agents, and connect to your
      *  public-facing endpoints.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions">https://ngrok.com/docs/api#api-ip-restrictions</a>.
+     *
      * @return a service client
      */
     public IpRestrictions ipRestrictions() {
@@ -179,6 +203,8 @@ public class Ngrok {
     /**
      * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
      *  with an <code>endpoints</code> type instead.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist">https://ngrok.com/docs/api#api-ip-whitelist</a>.
      *
      * @return a service client
      */
@@ -190,6 +216,8 @@ public class Ngrok {
      * Reserved Addresses are TCP addresses that can be used to listen for traffic.
      *  TCP address hostnames and ports are assigned by ngrok, they cannot be
      *  chosen.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs">https://ngrok.com/docs/api#api-reserved-addrs</a>.
      *
      * @return a service client
      */
@@ -203,6 +231,8 @@ public class Ngrok {
      *  that you own by creating a CNAME record specified in the returned resource.
      *  This CNAME record points traffic for that domain to ngrok's edge servers.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains">https://ngrok.com/docs/api#api-reserved-domains</a>.
+     *
      * @return a service client
      */
     public ReservedDomains reservedDomains() {
@@ -213,6 +243,8 @@ public class Ngrok {
      * An SSH Certificate Authority is a pair of an SSH Certificate and its private
      *  key that can be used to sign other SSH host and user certificates.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-certificate-authorities">https://ngrok.com/docs/api#api-ssh-certificate-authorities</a>.
+     *
      * @return a service client
      */
     public SshCertificateAuthorities sshCertificateAuthorities() {
@@ -222,6 +254,8 @@ public class Ngrok {
     /**
      * SSH Credentials are SSH public keys that can be used to start SSH tunnels
      *  via the ngrok SSH tunnel gateway.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials">https://ngrok.com/docs/api#api-ssh-credentials</a>.
      *
      * @return a service client
      */
@@ -234,6 +268,8 @@ public class Ngrok {
      *  server to assert its authenticity to connecting SSH clients who trust the
      *  SSH Certificate Authority that was used to sign the certificate.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-host-certificates">https://ngrok.com/docs/api#api-ssh-host-certificates</a>.
+     *
      * @return a service client
      */
     public SshHostCertificates sshHostCertificates() {
@@ -244,6 +280,8 @@ public class Ngrok {
      * SSH User Certificates are presented by SSH clients when connecting to an SSH
      *  server to authenticate their connection. The SSH server must trust the SSH
      *  Certificate Authority used to sign the certificate.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates">https://ngrok.com/docs/api#api-ssh-user-certificates</a>.
      *
      * @return a service client
      */
@@ -258,6 +296,8 @@ public class Ngrok {
      *  provisioned by ngrok automatically for domains on which you have enabled
      *  automated certificate provisioning.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tls-certificates">https://ngrok.com/docs/api#api-tls-certificates</a>.
+     *
      * @return a service client
      */
     public TlsCertificates tlsCertificates() {
@@ -269,6 +309,8 @@ public class Ngrok {
      *  sessions that are running and connected to the ngrok service. Each tunnel
      *  session can include one or more Tunnels.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions">https://ngrok.com/docs/api#api-tunnel-sessions</a>.
+     *
      * @return a service client
      */
     public TunnelSessions tunnelSessions() {
@@ -278,6 +320,8 @@ public class Ngrok {
     /**
      * Tunnels provide endpoints to access services exposed by a running ngrok
      *  agent tunnel session or an SSH reverse tunnel session.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnels">https://ngrok.com/docs/api#api-tunnels</a>.
      *
      * @return a service client
      */
@@ -303,6 +347,8 @@ public class Ngrok {
         /**
          * Creates a service client for {@link EndpointLoggingModule}.
          *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-logging-module">https://ngrok.com/docs/api#api-endpoint-logging-module</a>
+         *
          * @return a service client
          */
         public EndpointLoggingModule logging() {
@@ -311,6 +357,8 @@ public class Ngrok {
         
         /**
          * Creates a service client for {@link EndpointCircuitBreakerModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-circuit-breaker-module">https://ngrok.com/docs/api#api-endpoint-circuit-breaker-module</a>
          *
          * @return a service client
          */
@@ -321,6 +369,8 @@ public class Ngrok {
         /**
          * Creates a service client for {@link EndpointCompressionModule}.
          *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-compression-module">https://ngrok.com/docs/api#api-endpoint-compression-module</a>
+         *
          * @return a service client
          */
         public EndpointCompressionModule compression() {
@@ -329,6 +379,8 @@ public class Ngrok {
         
         /**
          * Creates a service client for {@link EndpointTlsTerminationModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-tls-termination-module">https://ngrok.com/docs/api#api-endpoint-tls-termination-module</a>
          *
          * @return a service client
          */
@@ -339,6 +391,8 @@ public class Ngrok {
         /**
          * Creates a service client for {@link EndpointIpPolicyModule}.
          *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-ip-policy-module">https://ngrok.com/docs/api#api-endpoint-ip-policy-module</a>
+         *
          * @return a service client
          */
         public EndpointIpPolicyModule ipPolicy() {
@@ -347,6 +401,8 @@ public class Ngrok {
         
         /**
          * Creates a service client for {@link EndpointMutualTlsModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-mutual-tls-module">https://ngrok.com/docs/api#api-endpoint-mutual-tls-module</a>
          *
          * @return a service client
          */
@@ -357,6 +413,8 @@ public class Ngrok {
         /**
          * Creates a service client for {@link EndpointRequestHeadersModule}.
          *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-request-headers-module">https://ngrok.com/docs/api#api-endpoint-request-headers-module</a>
+         *
          * @return a service client
          */
         public EndpointRequestHeadersModule requestHeaders() {
@@ -365,6 +423,8 @@ public class Ngrok {
         
         /**
          * Creates a service client for {@link EndpointResponseHeadersModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-response-headers-module">https://ngrok.com/docs/api#api-endpoint-response-headers-module</a>
          *
          * @return a service client
          */
@@ -375,6 +435,8 @@ public class Ngrok {
         /**
          * Creates a service client for {@link EndpointOAuthModule}.
          *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-o-auth-module">https://ngrok.com/docs/api#api-endpoint-o-auth-module</a>
+         *
          * @return a service client
          */
         public EndpointOAuthModule oauth() {
@@ -383,6 +445,8 @@ public class Ngrok {
         
         /**
          * Creates a service client for {@link EndpointWebhookValidationModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-webhook-validation-module">https://ngrok.com/docs/api#api-endpoint-webhook-validation-module</a>
          *
          * @return a service client
          */
@@ -393,6 +457,8 @@ public class Ngrok {
         /**
          * Creates a service client for {@link EndpointSamlModule}.
          *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-saml-module">https://ngrok.com/docs/api#api-endpoint-saml-module</a>
+         *
          * @return a service client
          */
         public EndpointSamlModule saml() {
@@ -401,6 +467,8 @@ public class Ngrok {
         
         /**
          * Creates a service client for {@link EndpointOidcModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-endpoint-oidc-module">https://ngrok.com/docs/api#api-endpoint-oidc-module</a>
          *
          * @return a service client
          */

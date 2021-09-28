@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointSamlModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-saml-module">https://ngrok.com/docs/api#api-endpoint-saml-module</a>.
  */
 public class EndpointSamlModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointSamlModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointSamlModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointSamlMutate module = null;
 
-        private EndpointSamlModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointSamlModule {
          * @param module the value of the module parameter as a {@link EndpointSamlMutate}
          * @return the call builder instance
          */
-        public EndpointSamlModuleReplaceCallBuilder module(final EndpointSamlMutate module) {
+        public ReplaceCallBuilder module(final EndpointSamlMutate module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointSamlModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointSamlMutate}
          * @return the call builder instance
          */
-        public EndpointSamlModuleReplaceCallBuilder module(final Optional<EndpointSamlMutate> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointSamlMutate> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointSamlModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-saml-module-replace">https://ngrok.com/docs/api#api-endpoint-saml-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointSamlModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointSamlModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointSamlModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointSamlModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointSamlModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointSamlModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-saml-module-get">https://ngrok.com/docs/api#api-endpoint-saml-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointSamlModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointSamlModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointSamlModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointSamlModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointSamlModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointSamlModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-saml-module-delete">https://ngrok.com/docs/api#api-endpoint-saml-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointSamlModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointSamlModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

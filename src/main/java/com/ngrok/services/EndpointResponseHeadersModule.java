@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointResponseHeadersModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-response-headers-module">https://ngrok.com/docs/api#api-endpoint-response-headers-module</a>.
  */
 public class EndpointResponseHeadersModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointResponseHeadersModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointResponseHeadersModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointResponseHeaders module = null;
 
-        private EndpointResponseHeadersModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointResponseHeadersModule {
          * @param module the value of the module parameter as a {@link EndpointResponseHeaders}
          * @return the call builder instance
          */
-        public EndpointResponseHeadersModuleReplaceCallBuilder module(final EndpointResponseHeaders module) {
+        public ReplaceCallBuilder module(final EndpointResponseHeaders module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointResponseHeadersModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointResponseHeaders}
          * @return the call builder instance
          */
-        public EndpointResponseHeadersModuleReplaceCallBuilder module(final Optional<EndpointResponseHeaders> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointResponseHeaders> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointResponseHeadersModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-response-headers-module-replace">https://ngrok.com/docs/api#api-endpoint-response-headers-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointResponseHeadersModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointResponseHeadersModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointResponseHeadersModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointResponseHeadersModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointResponseHeadersModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointResponseHeadersModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-response-headers-module-get">https://ngrok.com/docs/api#api-endpoint-response-headers-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointResponseHeadersModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointResponseHeadersModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointResponseHeadersModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointResponseHeadersModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointResponseHeadersModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointResponseHeadersModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-response-headers-module-delete">https://ngrok.com/docs/api#api-endpoint-response-headers-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointResponseHeadersModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointResponseHeadersModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

@@ -29,8 +29,7 @@ public class ApiKeyTest extends ApiKeyTestBase {
             jsonStrForField(API_KEY_JSON_FIELDS, "uri"),
             jsonStrForField(API_KEY_JSON_FIELDS, "description"),
             jsonStrForField(API_KEY_JSON_FIELDS, "metadata"),
-            jsonStrForField(API_KEY_JSON_FIELDS, "created_at"),
-            "\"token\":null"
+            jsonStrForField(API_KEY_JSON_FIELDS, "created_at")
         );
     }
 
@@ -48,7 +47,7 @@ public class ApiKeyTest extends ApiKeyTestBase {
             "}";
 
         final ApiKey apiKey = MAPPER.readValue(jsonStr, ApiKey.class);
-        assertApiKeyFields(false, apiKey);
+        assertApiKeyFields(apiKey);
     }
 
     @Test

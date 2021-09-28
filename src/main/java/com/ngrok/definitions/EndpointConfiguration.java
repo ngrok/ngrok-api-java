@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,40 +14,58 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EndpointConfiguration {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("type")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String type;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("circuit_breaker")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointCircuitBreaker> circuitBreaker;
     @JsonProperty("compression")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointCompression> compression;
     @JsonProperty("request_headers")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointRequestHeaders> requestHeaders;
     @JsonProperty("response_headers")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointResponseHeaders> responseHeaders;
     @JsonProperty("ip_policy")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointIpPolicy> ipPolicy;
     @JsonProperty("mutual_tls")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointMutualTls> mutualTls;
     @JsonProperty("tls_termination")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointTlsTermination> tlsTermination;
     @JsonProperty("webhook_validation")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointWebhookValidation> webhookValidation;
     @JsonProperty("oauth")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointOAuth> oauth;
     @JsonProperty("logging")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointLogging> logging;
     @JsonProperty("saml")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointSaml> saml;
     @JsonProperty("oidc")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointOidc> oidc;
 
     /**

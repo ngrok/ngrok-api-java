@@ -17,6 +17,8 @@ import java.util.stream.Stream;
  *  until they are attached to a Domain. TLS Certificates may also be
  *  provisioned by ngrok automatically for domains on which you have enabled
  *  automated certificate provisioning.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-tls-certificates">https://ngrok.com/docs/api#api-tls-certificates</a>.
  */
 public class TlsCertificates {
     private final NgrokApiClient apiClient;
@@ -33,13 +35,13 @@ public class TlsCertificates {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class TlsCertificatesCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
         private final String certificatePem;
         private final String privateKeyPem;
 
-        private TlsCertificatesCreateCallBuilder(
+        private CreateCallBuilder(
             final String certificatePem,
             final String privateKeyPem
         ) {
@@ -53,7 +55,7 @@ public class TlsCertificates {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -64,7 +66,7 @@ public class TlsCertificates {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -76,7 +78,7 @@ public class TlsCertificates {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -88,7 +90,7 @@ public class TlsCertificates {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -131,15 +133,17 @@ public class TlsCertificates {
     /**
      * Upload a new TLS certificate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tls-certificates-create">https://ngrok.com/docs/api#api-tls-certificates-create</a>.
+     *
      * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="https://ngrok.com/docs/api#tls-certificates-pem">Certificate Bundles</a>.
      * @param privateKeyPem private key for the TLS certificate, PEM-encoded. See <a href="https://ngrok.com/docs/ngrok-link#tls-certificates-key">Private Keys</a>.
      * @return a call builder for this API call
      */
-    public TlsCertificatesCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String certificatePem,
         final String privateKeyPem
     ) {
-        return new TlsCertificatesCreateCallBuilder(
+        return new CreateCallBuilder(
             certificatePem,
             privateKeyPem
         );
@@ -148,10 +152,10 @@ public class TlsCertificates {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class TlsCertificatesDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private TlsCertificatesDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -189,13 +193,15 @@ public class TlsCertificates {
     /**
      * Delete a TLS certificate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tls-certificates-delete">https://ngrok.com/docs/api#api-tls-certificates-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public TlsCertificatesDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new TlsCertificatesDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -203,10 +209,10 @@ public class TlsCertificates {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class TlsCertificatesGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private TlsCertificatesGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -245,13 +251,15 @@ public class TlsCertificates {
     /**
      * Get detailed information about a TLS certificate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tls-certificates-get">https://ngrok.com/docs/api#api-tls-certificates-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public TlsCertificatesGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new TlsCertificatesGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -259,11 +267,11 @@ public class TlsCertificates {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class TlsCertificatesListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private TlsCertificatesListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -273,7 +281,7 @@ public class TlsCertificates {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -284,7 +292,7 @@ public class TlsCertificates {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -295,7 +303,7 @@ public class TlsCertificates {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -306,7 +314,7 @@ public class TlsCertificates {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -347,23 +355,25 @@ public class TlsCertificates {
     /**
      * List all TLS certificates on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tls-certificates-list">https://ngrok.com/docs/api#api-tls-certificates-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public TlsCertificatesListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new TlsCertificatesListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class TlsCertificatesUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
 
-        private TlsCertificatesUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -375,7 +385,7 @@ public class TlsCertificates {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -386,7 +396,7 @@ public class TlsCertificates {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -398,7 +408,7 @@ public class TlsCertificates {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -410,7 +420,7 @@ public class TlsCertificates {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TlsCertificatesUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -451,13 +461,15 @@ public class TlsCertificates {
     /**
      * Update attributes of a TLS Certificate by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tls-certificates-update">https://ngrok.com/docs/api#api-tls-certificates-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public TlsCertificatesUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new TlsCertificatesUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

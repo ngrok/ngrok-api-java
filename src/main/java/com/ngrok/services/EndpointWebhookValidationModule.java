@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointWebhookValidationModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-webhook-validation-module">https://ngrok.com/docs/api#api-endpoint-webhook-validation-module</a>.
  */
 public class EndpointWebhookValidationModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointWebhookValidationModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointWebhookValidationModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointWebhookValidation module = null;
 
-        private EndpointWebhookValidationModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointWebhookValidationModule {
          * @param module the value of the module parameter as a {@link EndpointWebhookValidation}
          * @return the call builder instance
          */
-        public EndpointWebhookValidationModuleReplaceCallBuilder module(final EndpointWebhookValidation module) {
+        public ReplaceCallBuilder module(final EndpointWebhookValidation module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointWebhookValidationModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointWebhookValidation}
          * @return the call builder instance
          */
-        public EndpointWebhookValidationModuleReplaceCallBuilder module(final Optional<EndpointWebhookValidation> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointWebhookValidation> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointWebhookValidationModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-webhook-validation-module-replace">https://ngrok.com/docs/api#api-endpoint-webhook-validation-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointWebhookValidationModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointWebhookValidationModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointWebhookValidationModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointWebhookValidationModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointWebhookValidationModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointWebhookValidationModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-webhook-validation-module-get">https://ngrok.com/docs/api#api-endpoint-webhook-validation-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointWebhookValidationModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointWebhookValidationModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointWebhookValidationModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointWebhookValidationModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointWebhookValidationModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointWebhookValidationModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-webhook-validation-module-delete">https://ngrok.com/docs/api#api-endpoint-webhook-validation-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointWebhookValidationModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointWebhookValidationModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

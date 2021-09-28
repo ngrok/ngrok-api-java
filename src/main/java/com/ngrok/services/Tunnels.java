@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 /**
  * Tunnels provide endpoints to access services exposed by a running ngrok
  *  agent tunnel session or an SSH reverse tunnel session.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-tunnels">https://ngrok.com/docs/api#api-tunnels</a>.
  */
 public class Tunnels {
     private final NgrokApiClient apiClient;
@@ -30,11 +32,11 @@ public class Tunnels {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class TunnelsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private TunnelsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -44,7 +46,7 @@ public class Tunnels {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public TunnelsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -55,7 +57,7 @@ public class Tunnels {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TunnelsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -66,7 +68,7 @@ public class Tunnels {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public TunnelsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -77,7 +79,7 @@ public class Tunnels {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TunnelsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -118,11 +120,13 @@ public class Tunnels {
     /**
      * List all online tunnels currently running on the account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnels-list">https://ngrok.com/docs/api#api-tunnels-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public TunnelsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new TunnelsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
 }

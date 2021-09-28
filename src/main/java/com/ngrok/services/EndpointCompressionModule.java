@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointCompressionModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-compression-module">https://ngrok.com/docs/api#api-endpoint-compression-module</a>.
  */
 public class EndpointCompressionModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointCompressionModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointCompressionModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointCompression module = null;
 
-        private EndpointCompressionModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointCompressionModule {
          * @param module the value of the module parameter as a {@link EndpointCompression}
          * @return the call builder instance
          */
-        public EndpointCompressionModuleReplaceCallBuilder module(final EndpointCompression module) {
+        public ReplaceCallBuilder module(final EndpointCompression module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointCompressionModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointCompression}
          * @return the call builder instance
          */
-        public EndpointCompressionModuleReplaceCallBuilder module(final Optional<EndpointCompression> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointCompression> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointCompressionModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-compression-module-replace">https://ngrok.com/docs/api#api-endpoint-compression-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointCompressionModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointCompressionModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointCompressionModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointCompressionModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointCompressionModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointCompressionModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-compression-module-get">https://ngrok.com/docs/api#api-endpoint-compression-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointCompressionModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointCompressionModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointCompressionModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointCompressionModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointCompressionModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointCompressionModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-compression-module-delete">https://ngrok.com/docs/api#api-endpoint-compression-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointCompressionModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointCompressionModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

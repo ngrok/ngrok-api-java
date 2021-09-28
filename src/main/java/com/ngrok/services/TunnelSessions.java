@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
  *  sessions that are running and connected to the ngrok service. Each tunnel
  *  session can include one or more Tunnels.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions">https://ngrok.com/docs/api#api-tunnel-sessions</a>.
  */
 public class TunnelSessions {
     private final NgrokApiClient apiClient;
@@ -31,11 +33,11 @@ public class TunnelSessions {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class TunnelSessionsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private TunnelSessionsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -45,7 +47,7 @@ public class TunnelSessions {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public TunnelSessionsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -56,7 +58,7 @@ public class TunnelSessions {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TunnelSessionsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -67,7 +69,7 @@ public class TunnelSessions {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public TunnelSessionsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -78,7 +80,7 @@ public class TunnelSessions {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public TunnelSessionsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -119,21 +121,23 @@ public class TunnelSessions {
     /**
      * List all online tunnel sessions running on this account.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions-list">https://ngrok.com/docs/api#api-tunnel-sessions-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public TunnelSessionsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new TunnelSessionsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class TunnelSessionsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private TunnelSessionsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -172,13 +176,15 @@ public class TunnelSessions {
     /**
      * Get the detailed status of a tunnel session by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions-get">https://ngrok.com/docs/api#api-tunnel-sessions-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public TunnelSessionsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new TunnelSessionsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -186,10 +192,10 @@ public class TunnelSessions {
     /**
      * A builder object encapsulating state for an unsent Restart API call.
      */
-    public class TunnelSessionsRestartCallBuilder {
+    public class RestartCallBuilder {
         private final String id;
 
-        private TunnelSessionsRestartCallBuilder(
+        private RestartCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -230,13 +236,15 @@ public class TunnelSessions {
      * not supported on Windows. When an agent restarts, it reconnects with a new
      * tunnel session ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions-restart">https://ngrok.com/docs/api#api-tunnel-sessions-restart</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public TunnelSessionsRestartCallBuilder restart(
+    public RestartCallBuilder restart(
         final String id
     ) {
-        return new TunnelSessionsRestartCallBuilder(
+        return new RestartCallBuilder(
             id
         );
     }
@@ -244,10 +252,10 @@ public class TunnelSessions {
     /**
      * A builder object encapsulating state for an unsent Stop API call.
      */
-    public class TunnelSessionsStopCallBuilder {
+    public class StopCallBuilder {
         private final String id;
 
-        private TunnelSessionsStopCallBuilder(
+        private StopCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -286,13 +294,15 @@ public class TunnelSessions {
      * Issues a command instructing the ngrok agent that started this tunnel session to
      * exit.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions-stop">https://ngrok.com/docs/api#api-tunnel-sessions-stop</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public TunnelSessionsStopCallBuilder stop(
+    public StopCallBuilder stop(
         final String id
     ) {
-        return new TunnelSessionsStopCallBuilder(
+        return new StopCallBuilder(
             id
         );
     }
@@ -300,10 +310,10 @@ public class TunnelSessions {
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class TunnelSessionsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
 
-        private TunnelSessionsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -352,13 +362,15 @@ public class TunnelSessions {
      * disabled update checks the agent is currently in process of updating the agent
      * has already successfully updated but has not yet been restarted
      *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions-update">https://ngrok.com/docs/api#api-tunnel-sessions-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public TunnelSessionsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new TunnelSessionsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

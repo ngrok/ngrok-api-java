@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 /**
  * Abuse Reports allow you to submit take-down requests for URLs hosted by
  *  ngrok that violate ngrok's terms of service.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-abuse-reports">https://ngrok.com/docs/api#api-abuse-reports</a>.
  */
 public class AbuseReports {
     private final NgrokApiClient apiClient;
@@ -30,11 +32,11 @@ public class AbuseReports {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class AbuseReportsCreateCallBuilder {
+    public class CreateCallBuilder {
         private final java.util.List<java.net.URI> urls;
         private String metadata = "";
 
-        private AbuseReportsCreateCallBuilder(
+        private CreateCallBuilder(
             final java.util.List<java.net.URI> urls
         ) {
             this.urls = Objects.requireNonNull(urls, "urls is required");
@@ -46,7 +48,7 @@ public class AbuseReports {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public AbuseReportsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -57,7 +59,7 @@ public class AbuseReports {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public AbuseReportsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -100,13 +102,15 @@ public class AbuseReports {
      * response team. This API is only available to authorized accounts. Contact
      * abuse@ngrok.com to request access
      *
+     * See also <a href="https://ngrok.com/docs/api#api-abuse-reports-create">https://ngrok.com/docs/api#api-abuse-reports-create</a>.
+     *
      * @param urls a list of URLs containing suspected abusive content
      * @return a call builder for this API call
      */
-    public AbuseReportsCreateCallBuilder create(
+    public CreateCallBuilder create(
         final java.util.List<java.net.URI> urls
     ) {
-        return new AbuseReportsCreateCallBuilder(
+        return new CreateCallBuilder(
             urls
         );
     }
@@ -114,10 +118,10 @@ public class AbuseReports {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class AbuseReportsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private AbuseReportsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -156,13 +160,15 @@ public class AbuseReports {
     /**
      * Get the detailed status of abuse report by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-abuse-reports-get">https://ngrok.com/docs/api#api-abuse-reports-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public AbuseReportsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new AbuseReportsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }

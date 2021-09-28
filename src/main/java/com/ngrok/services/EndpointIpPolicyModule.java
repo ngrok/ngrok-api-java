@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointIpPolicyModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-ip-policy-module">https://ngrok.com/docs/api#api-endpoint-ip-policy-module</a>.
  */
 public class EndpointIpPolicyModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointIpPolicyModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointIpPolicyModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointIpPolicyMutate module = null;
 
-        private EndpointIpPolicyModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointIpPolicyModule {
          * @param module the value of the module parameter as a {@link EndpointIpPolicyMutate}
          * @return the call builder instance
          */
-        public EndpointIpPolicyModuleReplaceCallBuilder module(final EndpointIpPolicyMutate module) {
+        public ReplaceCallBuilder module(final EndpointIpPolicyMutate module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointIpPolicyModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointIpPolicyMutate}
          * @return the call builder instance
          */
-        public EndpointIpPolicyModuleReplaceCallBuilder module(final Optional<EndpointIpPolicyMutate> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointIpPolicyMutate> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointIpPolicyModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-ip-policy-module-replace">https://ngrok.com/docs/api#api-endpoint-ip-policy-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointIpPolicyModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointIpPolicyModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointIpPolicyModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointIpPolicyModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointIpPolicyModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointIpPolicyModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-ip-policy-module-get">https://ngrok.com/docs/api#api-endpoint-ip-policy-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointIpPolicyModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointIpPolicyModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointIpPolicyModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointIpPolicyModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointIpPolicyModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointIpPolicyModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-ip-policy-module-delete">https://ngrok.com/docs/api#api-endpoint-ip-policy-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointIpPolicyModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointIpPolicyModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

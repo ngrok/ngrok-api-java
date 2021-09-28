@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  * Endpoint Configurations are a reusable group of modules that encapsulate how
  *  traffic to a domain or address is handled. Endpoint configurations are only
  *  applied to Domains and TCP Addresses they have been attached to.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations">https://ngrok.com/docs/api#api-endpoint-configurations</a>.
  */
 public class EndpointConfigurations {
     private final NgrokApiClient apiClient;
@@ -31,7 +33,7 @@ public class EndpointConfigurations {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class EndpointConfigurationsCreateCallBuilder {
+    public class CreateCallBuilder {
         private String type = "";
         private String description = "";
         private String metadata = "";
@@ -48,7 +50,7 @@ public class EndpointConfigurations {
         private Optional<EndpointSamlMutate> saml = Optional.empty();
         private Optional<EndpointOidc> oidc = Optional.empty();
 
-        private EndpointConfigurationsCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -59,7 +61,7 @@ public class EndpointConfigurations {
          * @param type the value of the type parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder type(final String type) {
+        public CreateCallBuilder type(final String type) {
             this.type = Objects.requireNonNull(type, "type is required");
             return this;
         }
@@ -71,7 +73,7 @@ public class EndpointConfigurations {
          * @param type the value of the type parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder type(final Optional<String> type) {
+        public CreateCallBuilder type(final Optional<String> type) {
             this.type = Objects.requireNonNull(type, "type is required").orElse("");
             return this;
         }
@@ -83,7 +85,7 @@ public class EndpointConfigurations {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -95,7 +97,7 @@ public class EndpointConfigurations {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -107,7 +109,7 @@ public class EndpointConfigurations {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -119,7 +121,7 @@ public class EndpointConfigurations {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -130,7 +132,7 @@ public class EndpointConfigurations {
          * @param circuitBreaker the value of the circuit_breaker parameter as a {@link EndpointCircuitBreaker}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder circuitBreaker(final EndpointCircuitBreaker circuitBreaker) {
+        public CreateCallBuilder circuitBreaker(final EndpointCircuitBreaker circuitBreaker) {
             this.circuitBreaker = Optional.ofNullable(circuitBreaker);
             return this;
         }
@@ -141,7 +143,7 @@ public class EndpointConfigurations {
          * @param circuitBreaker the value of the circuit_breaker parameter as an {@link Optional} of {@link EndpointCircuitBreaker}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder circuitBreaker(final Optional<EndpointCircuitBreaker> circuitBreaker) {
+        public CreateCallBuilder circuitBreaker(final Optional<EndpointCircuitBreaker> circuitBreaker) {
             this.circuitBreaker = Objects.requireNonNull(circuitBreaker, "circuitBreaker is required");
             return this;
         }
@@ -152,7 +154,7 @@ public class EndpointConfigurations {
          * @param compression the value of the compression parameter as a {@link EndpointCompression}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder compression(final EndpointCompression compression) {
+        public CreateCallBuilder compression(final EndpointCompression compression) {
             this.compression = Optional.ofNullable(compression);
             return this;
         }
@@ -163,7 +165,7 @@ public class EndpointConfigurations {
          * @param compression the value of the compression parameter as an {@link Optional} of {@link EndpointCompression}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder compression(final Optional<EndpointCompression> compression) {
+        public CreateCallBuilder compression(final Optional<EndpointCompression> compression) {
             this.compression = Objects.requireNonNull(compression, "compression is required");
             return this;
         }
@@ -174,7 +176,7 @@ public class EndpointConfigurations {
          * @param requestHeaders the value of the request_headers parameter as a {@link EndpointRequestHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder requestHeaders(final EndpointRequestHeaders requestHeaders) {
+        public CreateCallBuilder requestHeaders(final EndpointRequestHeaders requestHeaders) {
             this.requestHeaders = Optional.ofNullable(requestHeaders);
             return this;
         }
@@ -185,7 +187,7 @@ public class EndpointConfigurations {
          * @param requestHeaders the value of the request_headers parameter as an {@link Optional} of {@link EndpointRequestHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder requestHeaders(final Optional<EndpointRequestHeaders> requestHeaders) {
+        public CreateCallBuilder requestHeaders(final Optional<EndpointRequestHeaders> requestHeaders) {
             this.requestHeaders = Objects.requireNonNull(requestHeaders, "requestHeaders is required");
             return this;
         }
@@ -196,7 +198,7 @@ public class EndpointConfigurations {
          * @param responseHeaders the value of the response_headers parameter as a {@link EndpointResponseHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder responseHeaders(final EndpointResponseHeaders responseHeaders) {
+        public CreateCallBuilder responseHeaders(final EndpointResponseHeaders responseHeaders) {
             this.responseHeaders = Optional.ofNullable(responseHeaders);
             return this;
         }
@@ -207,7 +209,7 @@ public class EndpointConfigurations {
          * @param responseHeaders the value of the response_headers parameter as an {@link Optional} of {@link EndpointResponseHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder responseHeaders(final Optional<EndpointResponseHeaders> responseHeaders) {
+        public CreateCallBuilder responseHeaders(final Optional<EndpointResponseHeaders> responseHeaders) {
             this.responseHeaders = Objects.requireNonNull(responseHeaders, "responseHeaders is required");
             return this;
         }
@@ -218,7 +220,7 @@ public class EndpointConfigurations {
          * @param ipPolicy the value of the ip_policy parameter as a {@link EndpointIpPolicyMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder ipPolicy(final EndpointIpPolicyMutate ipPolicy) {
+        public CreateCallBuilder ipPolicy(final EndpointIpPolicyMutate ipPolicy) {
             this.ipPolicy = Optional.ofNullable(ipPolicy);
             return this;
         }
@@ -229,7 +231,7 @@ public class EndpointConfigurations {
          * @param ipPolicy the value of the ip_policy parameter as an {@link Optional} of {@link EndpointIpPolicyMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder ipPolicy(final Optional<EndpointIpPolicyMutate> ipPolicy) {
+        public CreateCallBuilder ipPolicy(final Optional<EndpointIpPolicyMutate> ipPolicy) {
             this.ipPolicy = Objects.requireNonNull(ipPolicy, "ipPolicy is required");
             return this;
         }
@@ -240,7 +242,7 @@ public class EndpointConfigurations {
          * @param mutualTls the value of the mutual_tls parameter as a {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
+        public CreateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
             this.mutualTls = Optional.ofNullable(mutualTls);
             return this;
         }
@@ -251,7 +253,7 @@ public class EndpointConfigurations {
          * @param mutualTls the value of the mutual_tls parameter as an {@link Optional} of {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder mutualTls(final Optional<EndpointMutualTlsMutate> mutualTls) {
+        public CreateCallBuilder mutualTls(final Optional<EndpointMutualTlsMutate> mutualTls) {
             this.mutualTls = Objects.requireNonNull(mutualTls, "mutualTls is required");
             return this;
         }
@@ -262,7 +264,7 @@ public class EndpointConfigurations {
          * @param tlsTermination the value of the tls_termination parameter as a {@link EndpointTlsTermination}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder tlsTermination(final EndpointTlsTermination tlsTermination) {
+        public CreateCallBuilder tlsTermination(final EndpointTlsTermination tlsTermination) {
             this.tlsTermination = Optional.ofNullable(tlsTermination);
             return this;
         }
@@ -273,7 +275,7 @@ public class EndpointConfigurations {
          * @param tlsTermination the value of the tls_termination parameter as an {@link Optional} of {@link EndpointTlsTermination}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder tlsTermination(final Optional<EndpointTlsTermination> tlsTermination) {
+        public CreateCallBuilder tlsTermination(final Optional<EndpointTlsTermination> tlsTermination) {
             this.tlsTermination = Objects.requireNonNull(tlsTermination, "tlsTermination is required");
             return this;
         }
@@ -284,7 +286,7 @@ public class EndpointConfigurations {
          * @param webhookValidation the value of the webhook_validation parameter as a {@link EndpointWebhookValidation}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder webhookValidation(final EndpointWebhookValidation webhookValidation) {
+        public CreateCallBuilder webhookValidation(final EndpointWebhookValidation webhookValidation) {
             this.webhookValidation = Optional.ofNullable(webhookValidation);
             return this;
         }
@@ -295,7 +297,7 @@ public class EndpointConfigurations {
          * @param webhookValidation the value of the webhook_validation parameter as an {@link Optional} of {@link EndpointWebhookValidation}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder webhookValidation(final Optional<EndpointWebhookValidation> webhookValidation) {
+        public CreateCallBuilder webhookValidation(final Optional<EndpointWebhookValidation> webhookValidation) {
             this.webhookValidation = Objects.requireNonNull(webhookValidation, "webhookValidation is required");
             return this;
         }
@@ -306,7 +308,7 @@ public class EndpointConfigurations {
          * @param oauth the value of the oauth parameter as a {@link EndpointOAuth}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder oauth(final EndpointOAuth oauth) {
+        public CreateCallBuilder oauth(final EndpointOAuth oauth) {
             this.oauth = Optional.ofNullable(oauth);
             return this;
         }
@@ -317,7 +319,7 @@ public class EndpointConfigurations {
          * @param oauth the value of the oauth parameter as an {@link Optional} of {@link EndpointOAuth}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder oauth(final Optional<EndpointOAuth> oauth) {
+        public CreateCallBuilder oauth(final Optional<EndpointOAuth> oauth) {
             this.oauth = Objects.requireNonNull(oauth, "oauth is required");
             return this;
         }
@@ -328,7 +330,7 @@ public class EndpointConfigurations {
          * @param logging the value of the logging parameter as a {@link EndpointLoggingMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder logging(final EndpointLoggingMutate logging) {
+        public CreateCallBuilder logging(final EndpointLoggingMutate logging) {
             this.logging = Optional.ofNullable(logging);
             return this;
         }
@@ -339,7 +341,7 @@ public class EndpointConfigurations {
          * @param logging the value of the logging parameter as an {@link Optional} of {@link EndpointLoggingMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder logging(final Optional<EndpointLoggingMutate> logging) {
+        public CreateCallBuilder logging(final Optional<EndpointLoggingMutate> logging) {
             this.logging = Objects.requireNonNull(logging, "logging is required");
             return this;
         }
@@ -350,7 +352,7 @@ public class EndpointConfigurations {
          * @param saml the value of the saml parameter as a {@link EndpointSamlMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder saml(final EndpointSamlMutate saml) {
+        public CreateCallBuilder saml(final EndpointSamlMutate saml) {
             this.saml = Optional.ofNullable(saml);
             return this;
         }
@@ -361,7 +363,7 @@ public class EndpointConfigurations {
          * @param saml the value of the saml parameter as an {@link Optional} of {@link EndpointSamlMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder saml(final Optional<EndpointSamlMutate> saml) {
+        public CreateCallBuilder saml(final Optional<EndpointSamlMutate> saml) {
             this.saml = Objects.requireNonNull(saml, "saml is required");
             return this;
         }
@@ -372,7 +374,7 @@ public class EndpointConfigurations {
          * @param oidc the value of the oidc parameter as a {@link EndpointOidc}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder oidc(final EndpointOidc oidc) {
+        public CreateCallBuilder oidc(final EndpointOidc oidc) {
             this.oidc = Optional.ofNullable(oidc);
             return this;
         }
@@ -383,7 +385,7 @@ public class EndpointConfigurations {
          * @param oidc the value of the oidc parameter as an {@link Optional} of {@link EndpointOidc}
          * @return the call builder instance
          */
-        public EndpointConfigurationsCreateCallBuilder oidc(final Optional<EndpointOidc> oidc) {
+        public CreateCallBuilder oidc(final Optional<EndpointOidc> oidc) {
             this.oidc = Objects.requireNonNull(oidc, "oidc is required");
             return this;
         }
@@ -437,21 +439,23 @@ public class EndpointConfigurations {
     /**
      * Create a new endpoint configuration
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations-create">https://ngrok.com/docs/api#api-endpoint-configurations-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public EndpointConfigurationsCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new EndpointConfigurationsCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointConfigurationsDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointConfigurationsDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -490,13 +494,15 @@ public class EndpointConfigurations {
      * Delete an endpoint configuration. This operation will fail if the endpoint
      * configuration is still referenced by any reserved domain or reserved address.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations-delete">https://ngrok.com/docs/api#api-endpoint-configurations-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointConfigurationsDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointConfigurationsDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -504,10 +510,10 @@ public class EndpointConfigurations {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointConfigurationsGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointConfigurationsGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -546,13 +552,15 @@ public class EndpointConfigurations {
     /**
      * Returns detailed information about an endpoint configuration
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations-get">https://ngrok.com/docs/api#api-endpoint-configurations-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointConfigurationsGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointConfigurationsGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -560,11 +568,11 @@ public class EndpointConfigurations {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class EndpointConfigurationsListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private EndpointConfigurationsListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -574,7 +582,7 @@ public class EndpointConfigurations {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -585,7 +593,7 @@ public class EndpointConfigurations {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -596,7 +604,7 @@ public class EndpointConfigurations {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -607,7 +615,7 @@ public class EndpointConfigurations {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -648,18 +656,20 @@ public class EndpointConfigurations {
     /**
      * Returns a list of all endpoint configurations on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations-list">https://ngrok.com/docs/api#api-endpoint-configurations-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public EndpointConfigurationsListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new EndpointConfigurationsListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class EndpointConfigurationsUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
@@ -676,7 +686,7 @@ public class EndpointConfigurations {
         private Optional<EndpointSamlMutate> saml = Optional.empty();
         private Optional<EndpointOidc> oidc = Optional.empty();
 
-        private EndpointConfigurationsUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -689,7 +699,7 @@ public class EndpointConfigurations {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -701,7 +711,7 @@ public class EndpointConfigurations {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -713,7 +723,7 @@ public class EndpointConfigurations {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -725,7 +735,7 @@ public class EndpointConfigurations {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -736,7 +746,7 @@ public class EndpointConfigurations {
          * @param circuitBreaker the value of the circuit_breaker parameter as a {@link EndpointCircuitBreaker}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder circuitBreaker(final EndpointCircuitBreaker circuitBreaker) {
+        public UpdateCallBuilder circuitBreaker(final EndpointCircuitBreaker circuitBreaker) {
             this.circuitBreaker = Optional.ofNullable(circuitBreaker);
             return this;
         }
@@ -747,7 +757,7 @@ public class EndpointConfigurations {
          * @param circuitBreaker the value of the circuit_breaker parameter as an {@link Optional} of {@link EndpointCircuitBreaker}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder circuitBreaker(final Optional<EndpointCircuitBreaker> circuitBreaker) {
+        public UpdateCallBuilder circuitBreaker(final Optional<EndpointCircuitBreaker> circuitBreaker) {
             this.circuitBreaker = Objects.requireNonNull(circuitBreaker, "circuitBreaker is required");
             return this;
         }
@@ -758,7 +768,7 @@ public class EndpointConfigurations {
          * @param compression the value of the compression parameter as a {@link EndpointCompression}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder compression(final EndpointCompression compression) {
+        public UpdateCallBuilder compression(final EndpointCompression compression) {
             this.compression = Optional.ofNullable(compression);
             return this;
         }
@@ -769,7 +779,7 @@ public class EndpointConfigurations {
          * @param compression the value of the compression parameter as an {@link Optional} of {@link EndpointCompression}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder compression(final Optional<EndpointCompression> compression) {
+        public UpdateCallBuilder compression(final Optional<EndpointCompression> compression) {
             this.compression = Objects.requireNonNull(compression, "compression is required");
             return this;
         }
@@ -780,7 +790,7 @@ public class EndpointConfigurations {
          * @param requestHeaders the value of the request_headers parameter as a {@link EndpointRequestHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder requestHeaders(final EndpointRequestHeaders requestHeaders) {
+        public UpdateCallBuilder requestHeaders(final EndpointRequestHeaders requestHeaders) {
             this.requestHeaders = Optional.ofNullable(requestHeaders);
             return this;
         }
@@ -791,7 +801,7 @@ public class EndpointConfigurations {
          * @param requestHeaders the value of the request_headers parameter as an {@link Optional} of {@link EndpointRequestHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder requestHeaders(final Optional<EndpointRequestHeaders> requestHeaders) {
+        public UpdateCallBuilder requestHeaders(final Optional<EndpointRequestHeaders> requestHeaders) {
             this.requestHeaders = Objects.requireNonNull(requestHeaders, "requestHeaders is required");
             return this;
         }
@@ -802,7 +812,7 @@ public class EndpointConfigurations {
          * @param responseHeaders the value of the response_headers parameter as a {@link EndpointResponseHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder responseHeaders(final EndpointResponseHeaders responseHeaders) {
+        public UpdateCallBuilder responseHeaders(final EndpointResponseHeaders responseHeaders) {
             this.responseHeaders = Optional.ofNullable(responseHeaders);
             return this;
         }
@@ -813,7 +823,7 @@ public class EndpointConfigurations {
          * @param responseHeaders the value of the response_headers parameter as an {@link Optional} of {@link EndpointResponseHeaders}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder responseHeaders(final Optional<EndpointResponseHeaders> responseHeaders) {
+        public UpdateCallBuilder responseHeaders(final Optional<EndpointResponseHeaders> responseHeaders) {
             this.responseHeaders = Objects.requireNonNull(responseHeaders, "responseHeaders is required");
             return this;
         }
@@ -824,7 +834,7 @@ public class EndpointConfigurations {
          * @param ipPolicy the value of the ip_policy parameter as a {@link EndpointIpPolicyMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder ipPolicy(final EndpointIpPolicyMutate ipPolicy) {
+        public UpdateCallBuilder ipPolicy(final EndpointIpPolicyMutate ipPolicy) {
             this.ipPolicy = Optional.ofNullable(ipPolicy);
             return this;
         }
@@ -835,7 +845,7 @@ public class EndpointConfigurations {
          * @param ipPolicy the value of the ip_policy parameter as an {@link Optional} of {@link EndpointIpPolicyMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder ipPolicy(final Optional<EndpointIpPolicyMutate> ipPolicy) {
+        public UpdateCallBuilder ipPolicy(final Optional<EndpointIpPolicyMutate> ipPolicy) {
             this.ipPolicy = Objects.requireNonNull(ipPolicy, "ipPolicy is required");
             return this;
         }
@@ -846,7 +856,7 @@ public class EndpointConfigurations {
          * @param mutualTls the value of the mutual_tls parameter as a {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
+        public UpdateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
             this.mutualTls = Optional.ofNullable(mutualTls);
             return this;
         }
@@ -857,7 +867,7 @@ public class EndpointConfigurations {
          * @param mutualTls the value of the mutual_tls parameter as an {@link Optional} of {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder mutualTls(final Optional<EndpointMutualTlsMutate> mutualTls) {
+        public UpdateCallBuilder mutualTls(final Optional<EndpointMutualTlsMutate> mutualTls) {
             this.mutualTls = Objects.requireNonNull(mutualTls, "mutualTls is required");
             return this;
         }
@@ -868,7 +878,7 @@ public class EndpointConfigurations {
          * @param tlsTermination the value of the tls_termination parameter as a {@link EndpointTlsTermination}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder tlsTermination(final EndpointTlsTermination tlsTermination) {
+        public UpdateCallBuilder tlsTermination(final EndpointTlsTermination tlsTermination) {
             this.tlsTermination = Optional.ofNullable(tlsTermination);
             return this;
         }
@@ -879,7 +889,7 @@ public class EndpointConfigurations {
          * @param tlsTermination the value of the tls_termination parameter as an {@link Optional} of {@link EndpointTlsTermination}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder tlsTermination(final Optional<EndpointTlsTermination> tlsTermination) {
+        public UpdateCallBuilder tlsTermination(final Optional<EndpointTlsTermination> tlsTermination) {
             this.tlsTermination = Objects.requireNonNull(tlsTermination, "tlsTermination is required");
             return this;
         }
@@ -890,7 +900,7 @@ public class EndpointConfigurations {
          * @param webhookValidation the value of the webhook_validation parameter as a {@link EndpointWebhookValidation}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder webhookValidation(final EndpointWebhookValidation webhookValidation) {
+        public UpdateCallBuilder webhookValidation(final EndpointWebhookValidation webhookValidation) {
             this.webhookValidation = Optional.ofNullable(webhookValidation);
             return this;
         }
@@ -901,7 +911,7 @@ public class EndpointConfigurations {
          * @param webhookValidation the value of the webhook_validation parameter as an {@link Optional} of {@link EndpointWebhookValidation}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder webhookValidation(final Optional<EndpointWebhookValidation> webhookValidation) {
+        public UpdateCallBuilder webhookValidation(final Optional<EndpointWebhookValidation> webhookValidation) {
             this.webhookValidation = Objects.requireNonNull(webhookValidation, "webhookValidation is required");
             return this;
         }
@@ -912,7 +922,7 @@ public class EndpointConfigurations {
          * @param oauth the value of the oauth parameter as a {@link EndpointOAuth}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder oauth(final EndpointOAuth oauth) {
+        public UpdateCallBuilder oauth(final EndpointOAuth oauth) {
             this.oauth = Optional.ofNullable(oauth);
             return this;
         }
@@ -923,7 +933,7 @@ public class EndpointConfigurations {
          * @param oauth the value of the oauth parameter as an {@link Optional} of {@link EndpointOAuth}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder oauth(final Optional<EndpointOAuth> oauth) {
+        public UpdateCallBuilder oauth(final Optional<EndpointOAuth> oauth) {
             this.oauth = Objects.requireNonNull(oauth, "oauth is required");
             return this;
         }
@@ -934,7 +944,7 @@ public class EndpointConfigurations {
          * @param logging the value of the logging parameter as a {@link EndpointLoggingMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder logging(final EndpointLoggingMutate logging) {
+        public UpdateCallBuilder logging(final EndpointLoggingMutate logging) {
             this.logging = Optional.ofNullable(logging);
             return this;
         }
@@ -945,7 +955,7 @@ public class EndpointConfigurations {
          * @param logging the value of the logging parameter as an {@link Optional} of {@link EndpointLoggingMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder logging(final Optional<EndpointLoggingMutate> logging) {
+        public UpdateCallBuilder logging(final Optional<EndpointLoggingMutate> logging) {
             this.logging = Objects.requireNonNull(logging, "logging is required");
             return this;
         }
@@ -956,7 +966,7 @@ public class EndpointConfigurations {
          * @param saml the value of the saml parameter as a {@link EndpointSamlMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder saml(final EndpointSamlMutate saml) {
+        public UpdateCallBuilder saml(final EndpointSamlMutate saml) {
             this.saml = Optional.ofNullable(saml);
             return this;
         }
@@ -967,7 +977,7 @@ public class EndpointConfigurations {
          * @param saml the value of the saml parameter as an {@link Optional} of {@link EndpointSamlMutate}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder saml(final Optional<EndpointSamlMutate> saml) {
+        public UpdateCallBuilder saml(final Optional<EndpointSamlMutate> saml) {
             this.saml = Objects.requireNonNull(saml, "saml is required");
             return this;
         }
@@ -978,7 +988,7 @@ public class EndpointConfigurations {
          * @param oidc the value of the oidc parameter as a {@link EndpointOidc}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder oidc(final EndpointOidc oidc) {
+        public UpdateCallBuilder oidc(final EndpointOidc oidc) {
             this.oidc = Optional.ofNullable(oidc);
             return this;
         }
@@ -989,7 +999,7 @@ public class EndpointConfigurations {
          * @param oidc the value of the oidc parameter as an {@link Optional} of {@link EndpointOidc}
          * @return the call builder instance
          */
-        public EndpointConfigurationsUpdateCallBuilder oidc(final Optional<EndpointOidc> oidc) {
+        public UpdateCallBuilder oidc(final Optional<EndpointOidc> oidc) {
             this.oidc = Objects.requireNonNull(oidc, "oidc is required");
             return this;
         }
@@ -1045,13 +1055,15 @@ public class EndpointConfigurations {
      * will completely replace the existing value. There is no way to delete an
      * existing module via this API, instead use the delete module API.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations-update">https://ngrok.com/docs/api#api-endpoint-configurations-update</a>.
+     *
      * @param id unique identifier of this endpoint configuration
      * @return a call builder for this API call
      */
-    public EndpointConfigurationsUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new EndpointConfigurationsUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 /**
  * An API client for {@link EndpointMutualTlsModule}.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-endpoint-mutual-tls-module">https://ngrok.com/docs/api#api-endpoint-mutual-tls-module</a>.
  */
 public class EndpointMutualTlsModule {
     private final NgrokApiClient apiClient;
@@ -29,11 +31,11 @@ public class EndpointMutualTlsModule {
     /**
      * A builder object encapsulating state for an unsent Replace API call.
      */
-    public class EndpointMutualTlsModuleReplaceCallBuilder {
+    public class ReplaceCallBuilder {
         private final String id;
         private EndpointMutualTlsMutate module = null;
 
-        private EndpointMutualTlsModuleReplaceCallBuilder(
+        private ReplaceCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -45,7 +47,7 @@ public class EndpointMutualTlsModule {
          * @param module the value of the module parameter as a {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public EndpointMutualTlsModuleReplaceCallBuilder module(final EndpointMutualTlsMutate module) {
+        public ReplaceCallBuilder module(final EndpointMutualTlsMutate module) {
             this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
@@ -56,7 +58,7 @@ public class EndpointMutualTlsModule {
          * @param module the value of the module parameter as an {@link Optional} of {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public EndpointMutualTlsModuleReplaceCallBuilder module(final Optional<EndpointMutualTlsMutate> module) {
+        public ReplaceCallBuilder module(final Optional<EndpointMutualTlsMutate> module) {
             this.module = Objects.requireNonNull(module, "module is required").orElse(null);
             return this;
         }
@@ -96,13 +98,15 @@ public class EndpointMutualTlsModule {
     /**
      * Creates a call builder for the Replace API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-mutual-tls-module-replace">https://ngrok.com/docs/api#api-endpoint-mutual-tls-module-replace</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public EndpointMutualTlsModuleReplaceCallBuilder replace(
+    public ReplaceCallBuilder replace(
         final String id
     ) {
-        return new EndpointMutualTlsModuleReplaceCallBuilder(
+        return new ReplaceCallBuilder(
             id
         );
     }
@@ -110,10 +114,10 @@ public class EndpointMutualTlsModule {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class EndpointMutualTlsModuleGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private EndpointMutualTlsModuleGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -152,13 +156,15 @@ public class EndpointMutualTlsModule {
     /**
      * Creates a call builder for the Get API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-mutual-tls-module-get">https://ngrok.com/docs/api#api-endpoint-mutual-tls-module-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointMutualTlsModuleGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new EndpointMutualTlsModuleGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -166,10 +172,10 @@ public class EndpointMutualTlsModule {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class EndpointMutualTlsModuleDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private EndpointMutualTlsModuleDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -207,13 +213,15 @@ public class EndpointMutualTlsModule {
     /**
      * Creates a call builder for the Delete API operation.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoint-mutual-tls-module-delete">https://ngrok.com/docs/api#api-endpoint-mutual-tls-module-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public EndpointMutualTlsModuleDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new EndpointMutualTlsModuleDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }

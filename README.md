@@ -6,7 +6,7 @@ make it easier to consume in Java.
 ## Usage
 
 This library is published on [Maven
-Central](https://search.maven.org/artifact/com.ngrok/ngrok-api-client).
+Central](https://search.maven.org/artifact/com.ngrok/ngrok-api-client-java).
 
 In your Maven `pom.xml` file, add:
 
@@ -14,8 +14,8 @@ In your Maven `pom.xml` file, add:
 <dependencies>
   <dependency>
     <groupId>com.ngrok</groupId>
-    <artifactId>ngrok-api-client</artifactId>
-    <version>${ngrok-api-client.version}</version>
+    <artifactId>ngrok-api-client-java</artifactId>
+    <version>${ngrok-api-client-java.version}</version>
   </dependency>
 </dependencies>
 ```

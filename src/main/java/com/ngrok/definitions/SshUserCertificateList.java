@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,10 +14,13 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SshUserCertificateList implements Pageable {
     @JsonProperty("ssh_user_certificates")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<SshUserCertificate> sshUserCertificates;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("next_page_uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<java.net.URI> nextPageUri;
 
     /**

@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,46 +14,67 @@ import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TlsCertificate {
     @JsonProperty("id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
     @JsonProperty("created_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
     @JsonProperty("metadata")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
     @JsonProperty("certificate_pem")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String certificatePem;
     @JsonProperty("subject_common_name")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectCommonName;
     @JsonProperty("subject_alternative_names")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final TlsCertificateSaNs subjectAlternativeNames;
     @JsonProperty("issued_at")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<java.time.OffsetDateTime> issuedAt;
     @JsonProperty("not_before")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime notBefore;
     @JsonProperty("not_after")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime notAfter;
     @JsonProperty("key_usages")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> keyUsages;
     @JsonProperty("extended_key_usages")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<String> extendedKeyUsages;
     @JsonProperty("private_key_type")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String privateKeyType;
     @JsonProperty("issuer_common_name")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String issuerCommonName;
     @JsonProperty("serial_number")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String serialNumber;
     @JsonProperty("subject_organization")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectOrganization;
     @JsonProperty("subject_organizational_unit")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectOrganizationalUnit;
     @JsonProperty("subject_locality")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectLocality;
     @JsonProperty("subject_province")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectProvince;
     @JsonProperty("subject_country")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String subjectCountry;
 
     /**

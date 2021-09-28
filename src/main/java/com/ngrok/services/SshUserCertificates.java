@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  * SSH User Certificates are presented by SSH clients when connecting to an SSH
  *  server to authenticate their connection. The SSH server must trust the SSH
  *  Certificate Authority used to sign the certificate.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates">https://ngrok.com/docs/api#api-ssh-user-certificates</a>.
  */
 public class SshUserCertificates {
     private final NgrokApiClient apiClient;
@@ -31,18 +33,18 @@ public class SshUserCertificates {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class SshUserCertificatesCreateCallBuilder {
+    public class CreateCallBuilder {
         private final String sshCertificateAuthorityId;
         private final String publicKey;
-        private java.util.List<String> principals = null;
-        private java.util.Map<String, String> criticalOptions = null;
-        private java.util.Map<String, String> extensions = null;
+        private java.util.List<String> principals = java.util.Collections.emptyList();
+        private java.util.Map<String, String> criticalOptions = java.util.Collections.emptyMap();
+        private java.util.Map<String, String> extensions = java.util.Collections.emptyMap();
         private java.time.OffsetDateTime validAfter = null;
         private java.time.OffsetDateTime validUntil = null;
         private String description = "";
         private String metadata = "";
 
-        private SshUserCertificatesCreateCallBuilder(
+        private CreateCallBuilder(
             final String sshCertificateAuthorityId,
             final String publicKey
         ) {
@@ -59,7 +61,7 @@ public class SshUserCertificates {
          * @param principals the value of the principals parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder principals(final java.util.List<String> principals) {
+        public CreateCallBuilder principals(final java.util.List<String> principals) {
             this.principals = Objects.requireNonNull(principals, "principals is required");
             return this;
         }
@@ -73,8 +75,8 @@ public class SshUserCertificates {
          * @param principals the value of the principals parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder principals(final Optional<java.util.List<String>> principals) {
-            this.principals = Objects.requireNonNull(principals, "principals is required").orElse(null);
+        public CreateCallBuilder principals(final Optional<java.util.List<String>> principals) {
+            this.principals = Objects.requireNonNull(principals, "principals is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -88,7 +90,7 @@ public class SshUserCertificates {
          * @param criticalOptions the value of the critical_options parameter as a {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder criticalOptions(final java.util.Map<String, String> criticalOptions) {
+        public CreateCallBuilder criticalOptions(final java.util.Map<String, String> criticalOptions) {
             this.criticalOptions = Objects.requireNonNull(criticalOptions, "criticalOptions is required");
             return this;
         }
@@ -103,8 +105,8 @@ public class SshUserCertificates {
          * @param criticalOptions the value of the critical_options parameter as an {@link Optional} of {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder criticalOptions(final Optional<java.util.Map<String, String>> criticalOptions) {
-            this.criticalOptions = Objects.requireNonNull(criticalOptions, "criticalOptions is required").orElse(null);
+        public CreateCallBuilder criticalOptions(final Optional<java.util.Map<String, String>> criticalOptions) {
+            this.criticalOptions = Objects.requireNonNull(criticalOptions, "criticalOptions is required").orElse(java.util.Collections.emptyMap());
             return this;
         }
         
@@ -122,7 +124,7 @@ public class SshUserCertificates {
          * @param extensions the value of the extensions parameter as a {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder extensions(final java.util.Map<String, String> extensions) {
+        public CreateCallBuilder extensions(final java.util.Map<String, String> extensions) {
             this.extensions = Objects.requireNonNull(extensions, "extensions is required");
             return this;
         }
@@ -141,8 +143,8 @@ public class SshUserCertificates {
          * @param extensions the value of the extensions parameter as an {@link Optional} of {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder extensions(final Optional<java.util.Map<String, String>> extensions) {
-            this.extensions = Objects.requireNonNull(extensions, "extensions is required").orElse(null);
+        public CreateCallBuilder extensions(final Optional<java.util.Map<String, String>> extensions) {
+            this.extensions = Objects.requireNonNull(extensions, "extensions is required").orElse(java.util.Collections.emptyMap());
             return this;
         }
         
@@ -153,7 +155,7 @@ public class SshUserCertificates {
          * @param validAfter the value of the valid_after parameter as a {@link java.time.OffsetDateTime}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder validAfter(final java.time.OffsetDateTime validAfter) {
+        public CreateCallBuilder validAfter(final java.time.OffsetDateTime validAfter) {
             this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
             return this;
         }
@@ -165,7 +167,7 @@ public class SshUserCertificates {
          * @param validAfter the value of the valid_after parameter as an {@link Optional} of {@link java.time.OffsetDateTime}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder validAfter(final Optional<java.time.OffsetDateTime> validAfter) {
+        public CreateCallBuilder validAfter(final Optional<java.time.OffsetDateTime> validAfter) {
             this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required").orElse(null);
             return this;
         }
@@ -178,7 +180,7 @@ public class SshUserCertificates {
          * @param validUntil the value of the valid_until parameter as a {@link java.time.OffsetDateTime}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder validUntil(final java.time.OffsetDateTime validUntil) {
+        public CreateCallBuilder validUntil(final java.time.OffsetDateTime validUntil) {
             this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
             return this;
         }
@@ -191,7 +193,7 @@ public class SshUserCertificates {
          * @param validUntil the value of the valid_until parameter as an {@link Optional} of {@link java.time.OffsetDateTime}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder validUntil(final Optional<java.time.OffsetDateTime> validUntil) {
+        public CreateCallBuilder validUntil(final Optional<java.time.OffsetDateTime> validUntil) {
             this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required").orElse(null);
             return this;
         }
@@ -203,7 +205,7 @@ public class SshUserCertificates {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -215,7 +217,7 @@ public class SshUserCertificates {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -227,7 +229,7 @@ public class SshUserCertificates {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -239,7 +241,7 @@ public class SshUserCertificates {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -287,15 +289,17 @@ public class SshUserCertificates {
     /**
      * Create a new SSH User Certificate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates-create">https://ngrok.com/docs/api#api-ssh-user-certificates-create</a>.
+     *
      * @param sshCertificateAuthorityId the ssh certificate authority that is used to sign this ssh user certificate
      * @param publicKey a public key in OpenSSH Authorized Keys format that this certificate signs
      * @return a call builder for this API call
      */
-    public SshUserCertificatesCreateCallBuilder create(
+    public CreateCallBuilder create(
         final String sshCertificateAuthorityId,
         final String publicKey
     ) {
-        return new SshUserCertificatesCreateCallBuilder(
+        return new CreateCallBuilder(
             sshCertificateAuthorityId,
             publicKey
         );
@@ -304,10 +308,10 @@ public class SshUserCertificates {
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class SshUserCertificatesDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private SshUserCertificatesDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -345,13 +349,15 @@ public class SshUserCertificates {
     /**
      * Delete an SSH User Certificate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates-delete">https://ngrok.com/docs/api#api-ssh-user-certificates-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public SshUserCertificatesDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new SshUserCertificatesDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -359,10 +365,10 @@ public class SshUserCertificates {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class SshUserCertificatesGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private SshUserCertificatesGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -401,13 +407,15 @@ public class SshUserCertificates {
     /**
      * Get detailed information about an SSH User Certficate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates-get">https://ngrok.com/docs/api#api-ssh-user-certificates-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public SshUserCertificatesGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new SshUserCertificatesGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -415,11 +423,11 @@ public class SshUserCertificates {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class SshUserCertificatesListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private SshUserCertificatesListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -429,7 +437,7 @@ public class SshUserCertificates {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -440,7 +448,7 @@ public class SshUserCertificates {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -451,7 +459,7 @@ public class SshUserCertificates {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -462,7 +470,7 @@ public class SshUserCertificates {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -503,23 +511,25 @@ public class SshUserCertificates {
     /**
      * List all SSH User Certificates issued on this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates-list">https://ngrok.com/docs/api#api-ssh-user-certificates-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public SshUserCertificatesListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new SshUserCertificatesListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class SshUserCertificatesUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
 
-        private SshUserCertificatesUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -532,7 +542,7 @@ public class SshUserCertificates {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -544,7 +554,7 @@ public class SshUserCertificates {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -556,7 +566,7 @@ public class SshUserCertificates {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -568,7 +578,7 @@ public class SshUserCertificates {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public SshUserCertificatesUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -609,13 +619,15 @@ public class SshUserCertificates {
     /**
      * Update an SSH User Certificate
      *
+     * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates-update">https://ngrok.com/docs/api#api-ssh-user-certificates-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public SshUserCertificatesUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new SshUserCertificatesUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }

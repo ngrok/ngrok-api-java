@@ -2,6 +2,7 @@ package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -12,7 +13,46 @@ import java.util.Optional;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AwsRole {
+    /**
+     * Builder class for {@link AwsRole}.
+     */
+    public static class Builder {
+        private final String roleArn;
+
+        private Builder(
+            final String roleArn
+        ) {
+            this.roleArn = Objects.requireNonNull(roleArn, "roleArn is required");
+        }
+
+        /**
+         * Constructs the {@link AwsRole} instance.
+         *
+         * @return a new {@link AwsRole}
+         */
+        public AwsRole build() {
+            return new AwsRole(
+                this.roleArn
+            );
+        }
+    }
+
+    /**
+     * Creates a new builder for the {@link AwsRole} type.
+     *
+     * @param roleArn An ARN that specifies the role that ngrok should use to deliver to the configured target.
+     * @return a new {@link Builder}
+     */
+    public static Builder newBuilder(
+        final String roleArn
+    ) {
+        return new Builder (
+            roleArn
+        );
+    }
+
     @JsonProperty("role_arn")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String roleArn;
 
     /**
@@ -21,7 +61,7 @@ public class AwsRole {
      * @param roleArn An ARN that specifies the role that ngrok should use to deliver to the configured target.
      */
     @JsonCreator
-    public AwsRole(
+    private AwsRole(
         @JsonProperty("role_arn") final String roleArn
     ) {
         this.roleArn = Objects.requireNonNull(roleArn, "roleArn is required");

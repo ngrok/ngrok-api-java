@@ -19,6 +19,8 @@ import java.util.stream.Stream;
  *  key from the <a href="https://dashboard.ngrok.com/api/keys">API Keys page</a>
  * on your
  *  ngrok.com dashboard.
+ *
+ * See also <a href="https://ngrok.com/docs/api#api-api-keys">https://ngrok.com/docs/api#api-api-keys</a>.
  */
 public class ApiKeys {
     private final NgrokApiClient apiClient;
@@ -35,11 +37,11 @@ public class ApiKeys {
     /**
      * A builder object encapsulating state for an unsent Create API call.
      */
-    public class ApiKeysCreateCallBuilder {
+    public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
 
-        private ApiKeysCreateCallBuilder(
+        private CreateCallBuilder(
         ) {
         }
         
@@ -50,7 +52,7 @@ public class ApiKeys {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public ApiKeysCreateCallBuilder description(final String description) {
+        public CreateCallBuilder description(final String description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -62,7 +64,7 @@ public class ApiKeys {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ApiKeysCreateCallBuilder description(final Optional<String> description) {
+        public CreateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required").orElse("");
             return this;
         }
@@ -73,7 +75,7 @@ public class ApiKeys {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public ApiKeysCreateCallBuilder metadata(final String metadata) {
+        public CreateCallBuilder metadata(final String metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -84,7 +86,7 @@ public class ApiKeys {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ApiKeysCreateCallBuilder metadata(final Optional<String> metadata) {
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
@@ -126,21 +128,23 @@ public class ApiKeys {
      * Create a new API key. The generated API key can be used to authenticate to the
      * ngrok API.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-api-keys-create">https://ngrok.com/docs/api#api-api-keys-create</a>.
+     *
      * @return a call builder for this API call
      */
-    public ApiKeysCreateCallBuilder create(
+    public CreateCallBuilder create(
     ) {
-        return new ApiKeysCreateCallBuilder(
+        return new CreateCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Delete API call.
      */
-    public class ApiKeysDeleteCallBuilder {
+    public class DeleteCallBuilder {
         private final String id;
 
-        private ApiKeysDeleteCallBuilder(
+        private DeleteCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -178,13 +182,15 @@ public class ApiKeys {
     /**
      * Delete an API key by ID
      *
+     * See also <a href="https://ngrok.com/docs/api#api-api-keys-delete">https://ngrok.com/docs/api#api-api-keys-delete</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ApiKeysDeleteCallBuilder delete(
+    public DeleteCallBuilder delete(
         final String id
     ) {
-        return new ApiKeysDeleteCallBuilder(
+        return new DeleteCallBuilder(
             id
         );
     }
@@ -192,10 +198,10 @@ public class ApiKeys {
     /**
      * A builder object encapsulating state for an unsent Get API call.
      */
-    public class ApiKeysGetCallBuilder {
+    public class GetCallBuilder {
         private final String id;
 
-        private ApiKeysGetCallBuilder(
+        private GetCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -234,13 +240,15 @@ public class ApiKeys {
     /**
      * Get the details of an API key by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-api-keys-get">https://ngrok.com/docs/api#api-api-keys-get</a>.
+     *
      * @param id a resource identifier
      * @return a call builder for this API call
      */
-    public ApiKeysGetCallBuilder get(
+    public GetCallBuilder get(
         final String id
     ) {
-        return new ApiKeysGetCallBuilder(
+        return new GetCallBuilder(
             id
         );
     }
@@ -248,11 +256,11 @@ public class ApiKeys {
     /**
      * A builder object encapsulating state for an unsent List API call.
      */
-    public class ApiKeysListCallBuilder {
+    public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
 
-        private ApiKeysListCallBuilder(
+        private ListCallBuilder(
         ) {
         }
         
@@ -262,7 +270,7 @@ public class ApiKeys {
          * @param beforeId the value of the before_id parameter as a {@link String}
          * @return the call builder instance
          */
-        public ApiKeysListCallBuilder beforeId(final String beforeId) {
+        public ListCallBuilder beforeId(final String beforeId) {
             this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
@@ -273,7 +281,7 @@ public class ApiKeys {
          * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ApiKeysListCallBuilder beforeId(final Optional<String> beforeId) {
+        public ListCallBuilder beforeId(final Optional<String> beforeId) {
             this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
             return this;
         }
@@ -284,7 +292,7 @@ public class ApiKeys {
          * @param limit the value of the limit parameter as a {@link String}
          * @return the call builder instance
          */
-        public ApiKeysListCallBuilder limit(final String limit) {
+        public ListCallBuilder limit(final String limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
@@ -295,7 +303,7 @@ public class ApiKeys {
          * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ApiKeysListCallBuilder limit(final Optional<String> limit) {
+        public ListCallBuilder limit(final Optional<String> limit) {
             this.limit = Objects.requireNonNull(limit, "limit is required");
             return this;
         }
@@ -336,23 +344,25 @@ public class ApiKeys {
     /**
      * List all API keys owned by this account
      *
+     * See also <a href="https://ngrok.com/docs/api#api-api-keys-list">https://ngrok.com/docs/api#api-api-keys-list</a>.
+     *
      * @return a call builder for this API call
      */
-    public ApiKeysListCallBuilder list(
+    public ListCallBuilder list(
     ) {
-        return new ApiKeysListCallBuilder(
+        return new ListCallBuilder(
         );
     }
     
     /**
      * A builder object encapsulating state for an unsent Update API call.
      */
-    public class ApiKeysUpdateCallBuilder {
+    public class UpdateCallBuilder {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
 
-        private ApiKeysUpdateCallBuilder(
+        private UpdateCallBuilder(
             final String id
         ) {
             this.id = Objects.requireNonNull(id, "id is required");
@@ -365,7 +375,7 @@ public class ApiKeys {
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
          */
-        public ApiKeysUpdateCallBuilder description(final String description) {
+        public UpdateCallBuilder description(final String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
@@ -377,7 +387,7 @@ public class ApiKeys {
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ApiKeysUpdateCallBuilder description(final Optional<String> description) {
+        public UpdateCallBuilder description(final Optional<String> description) {
             this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
@@ -388,7 +398,7 @@ public class ApiKeys {
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public ApiKeysUpdateCallBuilder metadata(final String metadata) {
+        public UpdateCallBuilder metadata(final String metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }
@@ -399,7 +409,7 @@ public class ApiKeys {
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public ApiKeysUpdateCallBuilder metadata(final Optional<String> metadata) {
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
@@ -440,13 +450,15 @@ public class ApiKeys {
     /**
      * Update attributes of an API key by ID.
      *
+     * See also <a href="https://ngrok.com/docs/api#api-api-keys-update">https://ngrok.com/docs/api#api-api-keys-update</a>.
+     *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
-    public ApiKeysUpdateCallBuilder update(
+    public UpdateCallBuilder update(
         final String id
     ) {
-        return new ApiKeysUpdateCallBuilder(
+        return new UpdateCallBuilder(
             id
         );
     }
