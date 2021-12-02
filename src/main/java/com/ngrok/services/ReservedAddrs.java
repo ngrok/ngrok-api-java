@@ -37,7 +37,7 @@ public class ReservedAddrs {
         private String description = "";
         private String metadata = "";
         private String region = "";
-        private String endpointConfigurationId = "";
+        private Optional<String> endpointConfigurationId = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -121,7 +121,7 @@ public class ReservedAddrs {
          * @return the call builder instance
          */
         public CreateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
-            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
+            this.endpointConfigurationId = Optional.ofNullable(endpointConfigurationId);
             return this;
         }
 
@@ -133,7 +133,7 @@ public class ReservedAddrs {
          * @return the call builder instance
          */
         public CreateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
-            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required").orElse("");
+            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
             return this;
         }
         
@@ -151,7 +151,7 @@ public class ReservedAddrs {
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
                     new AbstractMap.SimpleEntry<>("region", Optional.of(this.region)),
-                    new AbstractMap.SimpleEntry<>("endpoint_configuration_id", Optional.of(this.endpointConfigurationId))
+                    new AbstractMap.SimpleEntry<>("endpoint_configuration_id", this.endpointConfigurationId.map(Function.identity()))
                 ),
                 Optional.of(ReservedAddr.class)
             );

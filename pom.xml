@@ -4,7 +4,7 @@
 
   <groupId>com.ngrok</groupId>
   <artifactId>ngrok-api-java</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.2.1-SNAPSHOT</version>
 
   <name>ngrok Java API client</name>
   <description>ngrok API client for Java applications</description>
@@ -243,6 +243,8 @@
             <useReleaseProfile>false</useReleaseProfile>
             <releaseProfiles>release</releaseProfiles>
             <tagNameFormat>@{project.version}</tagNameFormat>
+            <localCheckout>true</localCheckout>
+            <pushChanges>false</pushChanges>
             <goals>deploy</goals>
           </configuration>
         </plugin>

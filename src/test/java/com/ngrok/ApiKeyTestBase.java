@@ -13,31 +13,33 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class ApiKeyTestBase extends TestBase {
-    public static final Map<String, Object> API_KEY_JSON_FIELDS = Stream.of(
-        entry("id", "abcdef123456"),
-        entry("uri", URI.create("https://api.ngrok.com/api_keys/abcdef123456")),
-        entry("description", "this is a great API key"),
-        entry("metadata", "this API key is quite meta"),
-        entry("created_at", OffsetDateTime.parse("2021-06-08T21:09:00-07:00")),
-        entry("token", "qwertyuiop")
-    ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public static ApiKey API_KEY = new ApiKey(
+        "abcdef123456",
+        URI.create("https://api.ngrok.com/api_keys/abcdef123456"),
+        "this is a great API key",
+        "this API key is quite meta",
+        OffsetDateTime.parse("2021-06-08T21:09:00-07:00"),
+        Optional.of("qwertyuiop")
+    );
 
     public static ApiKey API_KEY_NO_TOKEN = new ApiKey(
-        (String) API_KEY_JSON_FIELDS.get("id"),
-        (URI) API_KEY_JSON_FIELDS.get("uri"),
-        (String) API_KEY_JSON_FIELDS.get("description"),
-        (String) API_KEY_JSON_FIELDS.get("metadata"),
-        (OffsetDateTime) API_KEY_JSON_FIELDS.get("created_at"),
+        API_KEY.getId(),
+        API_KEY.getUri(),
+        API_KEY.getDescription(),
+        API_KEY.getMetadata(),
+        API_KEY.getCreatedAt(),
         Optional.empty()
     );
-    public static ApiKey API_KEY = new ApiKey(
-        (String) API_KEY_JSON_FIELDS.get("id"),
-        (URI) API_KEY_JSON_FIELDS.get("uri"),
-        (String) API_KEY_JSON_FIELDS.get("description"),
-        (String) API_KEY_JSON_FIELDS.get("metadata"),
-        (OffsetDateTime) API_KEY_JSON_FIELDS.get("created_at"),
-        Optional.of((String) API_KEY_JSON_FIELDS.get("token"))
-    );
+
+    public static final Map<String, Object> API_KEY_JSON_FIELDS = Stream.of(
+        entry("id", API_KEY.getId()),
+        entry("uri", API_KEY.getUri()),
+        entry("description", API_KEY.getDescription()),
+        entry("metadata", API_KEY.getMetadata()),
+        entry("created_at", API_KEY.getCreatedAt()),
+        entry("token", API_KEY.getToken().orElseThrow(() -> new AssertionError("Bad data in API_KEY")))
+    ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
 
     public static void assertApiKeyFields(final ApiKey apiKey, final String expectedDescription, boolean shouldHaveToken) {
         assertThat(apiKey).isNotNull();
@@ -47,20 +49,20 @@ public abstract class ApiKeyTestBase extends TestBase {
             assertThat(apiKey.getUri().getHost()).isEqualTo(NgrokApiClient.DEFAULT_BASE_URI.getHost());
             assertThat(apiKey.getCreatedAt()).isAfter(OffsetDateTime.now().minus(Duration.ofMinutes(20)));
         } else {
-            assertThat(apiKey.getId()).isEqualTo(API_KEY_JSON_FIELDS.get("id"));
-            assertThat(apiKey.getUri()).isEqualTo(API_KEY_JSON_FIELDS.get("uri"));
-            assertThat(apiKey.getCreatedAt()).isEqualTo(API_KEY_JSON_FIELDS.get("created_at"));
+            assertThat(apiKey.getId()).isEqualTo(API_KEY.getId());
+            assertThat(apiKey.getUri()).isEqualTo(API_KEY.getUri());
+            assertThat(apiKey.getCreatedAt()).isEqualTo(API_KEY.getCreatedAt());
         }
 
         assertThat(apiKey.getDescription()).isEqualTo(expectedDescription);
-        assertThat(apiKey.getMetadata()).isEqualTo(API_KEY_JSON_FIELDS.get("metadata"));
+        assertThat(apiKey.getMetadata()).isEqualTo(API_KEY.getMetadata());
 
         if (shouldHaveToken) {
             if (USE_LIVE_API) {
                 assertThat(apiKey.getToken()).isNotEmpty();
                 assertThat(apiKey.getToken().get()).isNotBlank();
             } else {
-                assertThat(apiKey.getToken()).contains((String) API_KEY_JSON_FIELDS.get("token"));
+                assertThat(apiKey.getToken()).isEqualTo(API_KEY.getToken());
             }
         } else {
             assertThat(apiKey.getToken()).isEmpty();
@@ -68,10 +70,10 @@ public abstract class ApiKeyTestBase extends TestBase {
     }
 
     public static void assertApiKeyFields(final ApiKey apiKey) {
-        assertApiKeyFields(apiKey, (String) API_KEY_JSON_FIELDS.get("description"), true);
+        assertApiKeyFields(apiKey, API_KEY.getDescription(), true);
     }
 
     public static void assertApiKeyFieldsNoToken(final ApiKey apiKey) {
-        assertApiKeyFields( apiKey, (String) API_KEY_JSON_FIELDS.get("description"), false);
+        assertApiKeyFields( apiKey, API_KEY.getDescription(), false);
     }
 }

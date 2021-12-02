@@ -9,13 +9,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A class encapsulating the {@link IpWhitelistEntryList} resource.
+ * A class encapsulating the {@link AgentIngressList} resource.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class IpWhitelistEntryList implements Pageable {
-    @JsonProperty("whitelist")
+public class AgentIngressList implements Pageable {
+    @JsonProperty("ingresses")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.List<IpWhitelistEntry> whitelist;
+    private final java.util.List<AgentIngress> ingresses;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI uri;
@@ -24,34 +24,34 @@ public class IpWhitelistEntryList implements Pageable {
     private final Optional<java.net.URI> nextPageUri;
 
     /**
-     * Creates a new instance of {@link IpWhitelistEntryList}.
+     * Creates a new instance of {@link AgentIngressList}.
      *
-     * @param whitelist the list of all IP whitelist entries on this account
-     * @param uri URI of the IP whitelist API resource
+     * @param ingresses the list of Agent Ingresses owned by this account
+     * @param uri URI of the Agent Ingress list API resource
      * @param nextPageUri URI of the next page, or null if there is no next page
      */
     @JsonCreator
-    public IpWhitelistEntryList(
-        @JsonProperty("whitelist") final java.util.List<IpWhitelistEntry> whitelist,
+    public AgentIngressList(
+        @JsonProperty("ingresses") final java.util.List<AgentIngress> ingresses,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.whitelist = Objects.requireNonNull(whitelist, "whitelist is required");
+        this.ingresses = Objects.requireNonNull(ingresses, "ingresses is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
 
     /**
-     * the list of all IP whitelist entries on this account
+     * the list of Agent Ingresses owned by this account
      *
-     * @return the value of the property as a {@link java.util.List<IpWhitelistEntry>}
+     * @return the value of the property as a {@link java.util.List<AgentIngress>}
      */
-    public java.util.List<IpWhitelistEntry> getWhitelist() {
-        return this.whitelist;
+    public java.util.List<AgentIngress> getIngresses() {
+        return this.ingresses;
     }
 
     /**
-     * URI of the IP whitelist API resource
+     * URI of the Agent Ingress list API resource
      *
      * @return the value of the property as a {@link java.net.URI}
      */
@@ -77,9 +77,9 @@ public class IpWhitelistEntryList implements Pageable {
             return false;
         }
         
-        final IpWhitelistEntryList other = (IpWhitelistEntryList) o;
+        final AgentIngressList other = (AgentIngressList) o;
         return
-            this.whitelist.equals(other.whitelist)&&
+            this.ingresses.equals(other.ingresses)&&
             this.uri.equals(other.uri)&&
             this.nextPageUri.equals(other.nextPageUri);
         
@@ -88,7 +88,7 @@ public class IpWhitelistEntryList implements Pageable {
     @Override
     public int hashCode() {
         return Objects.hash(
-            this.whitelist,
+            this.ingresses,
             this.uri,
             this.nextPageUri
         );
@@ -96,8 +96,8 @@ public class IpWhitelistEntryList implements Pageable {
 
     @Override
     public String toString() {
-        return "IpWhitelistEntryList{" +
-            "whitelist='" + this.whitelist +
+        return "AgentIngressList{" +
+            "ingresses='" + this.ingresses +
             "', uri='" + this.uri +
             "', nextPageUri='" + this.nextPageUri.map(Object::toString).orElse("(null)") +
             "'}";

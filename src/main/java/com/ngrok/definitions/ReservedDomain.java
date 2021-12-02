@@ -52,6 +52,9 @@ public class ReservedDomain {
     @JsonProperty("certificate_management_status")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<ReservedDomainCertStatus> certificateManagementStatus;
+    @JsonProperty("acme_challenge_cname_target")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<String> acmeChallengeCnameTarget;
 
     /**
      * Creates a new instance of {@link ReservedDomain}.
@@ -69,6 +72,7 @@ public class ReservedDomain {
      * @param certificate object referencing the TLS certificate used for connections to this domain. This can be either a user-uploaded certificate, the most recently issued automatic one, or null otherwise.
      * @param certificateManagementPolicy configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled
      * @param certificateManagementStatus status of the automatic certificate management for this domain, or null if automatic management is disabled
+     * @param acmeChallengeCnameTarget DNS CNAME target for the host _acme-challenge.example.com, where example.com is your reserved domain name. This is required to issue certificates for wildcard, non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok subdomains.
      */
     @JsonCreator
     public ReservedDomain(
@@ -84,7 +88,8 @@ public class ReservedDomain {
         @JsonProperty("https_endpoint_configuration") final Optional<Ref> httpsEndpointConfiguration,
         @JsonProperty("certificate") final Optional<Ref> certificate,
         @JsonProperty("certificate_management_policy") final Optional<ReservedDomainCertPolicy> certificateManagementPolicy,
-        @JsonProperty("certificate_management_status") final Optional<ReservedDomainCertStatus> certificateManagementStatus
+        @JsonProperty("certificate_management_status") final Optional<ReservedDomainCertStatus> certificateManagementStatus,
+        @JsonProperty("acme_challenge_cname_target") final Optional<String> acmeChallengeCnameTarget
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
@@ -99,6 +104,7 @@ public class ReservedDomain {
         this.certificate = certificate != null ? certificate : Optional.empty();
         this.certificateManagementPolicy = certificateManagementPolicy != null ? certificateManagementPolicy : Optional.empty();
         this.certificateManagementStatus = certificateManagementStatus != null ? certificateManagementStatus : Optional.empty();
+        this.acmeChallengeCnameTarget = acmeChallengeCnameTarget != null ? acmeChallengeCnameTarget : Optional.empty();
     }
 
     /**
@@ -227,6 +233,18 @@ public class ReservedDomain {
         return this.certificateManagementStatus;
     }
 
+    /**
+     * DNS CNAME target for the host _acme-challenge.example.com, where example.com is
+     * your reserved domain name. This is required to issue certificates for wildcard,
+     * non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok
+     * subdomains.
+     *
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
+     */
+    public Optional<String> getAcmeChallengeCnameTarget() {
+        return this.acmeChallengeCnameTarget;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -250,7 +268,8 @@ public class ReservedDomain {
             this.httpsEndpointConfiguration.equals(other.httpsEndpointConfiguration)&&
             this.certificate.equals(other.certificate)&&
             this.certificateManagementPolicy.equals(other.certificateManagementPolicy)&&
-            this.certificateManagementStatus.equals(other.certificateManagementStatus);
+            this.certificateManagementStatus.equals(other.certificateManagementStatus)&&
+            this.acmeChallengeCnameTarget.equals(other.acmeChallengeCnameTarget);
         
     }
 
@@ -269,7 +288,8 @@ public class ReservedDomain {
             this.httpsEndpointConfiguration,
             this.certificate,
             this.certificateManagementPolicy,
-            this.certificateManagementStatus
+            this.certificateManagementStatus,
+            this.acmeChallengeCnameTarget
         );
     }
 
@@ -289,6 +309,7 @@ public class ReservedDomain {
             "', certificate='" + this.certificate.map(Object::toString).orElse("(null)") +
             "', certificateManagementPolicy='" + this.certificateManagementPolicy.map(Object::toString).orElse("(null)") +
             "', certificateManagementStatus='" + this.certificateManagementStatus.map(Object::toString).orElse("(null)") +
+            "', acmeChallengeCnameTarget='" + this.acmeChallengeCnameTarget.orElse("(null)") +
             "'}";
     }
 }

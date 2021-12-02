@@ -12,20 +12,19 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
- *  with an <code>endpoints</code> type instead.
+ * An API client for {@link AgentIngresses}.
  *
- * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist">https://ngrok.com/docs/api#api-ip-whitelist</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses">https://ngrok.com/docs/api#api-agent-ingresses</a>.
  */
-public class IpWhitelist {
+public class AgentIngresses {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for IpWhitelist.
+     * Creates a new sub-client for AgentIngresses.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public IpWhitelist(final NgrokApiClient apiClient) {
+    public AgentIngresses(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -35,15 +34,17 @@ public class IpWhitelist {
     public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private String ipNet = "";
+        private final String domain;
 
         private CreateCallBuilder(
+            final String domain
         ) {
+            this.domain = Objects.requireNonNull(domain, "domain is required");
         }
         
         /**
-         * human-readable description of the source IPs for this IP whitelist entry.
-         * optional, max 255 bytes.
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -54,8 +55,8 @@ public class IpWhitelist {
         }
 
         /**
-         * human-readable description of the source IPs for this IP whitelist entry.
-         * optional, max 255 bytes.
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -66,8 +67,8 @@ public class IpWhitelist {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP whitelist entry.
-         * optional, max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -78,8 +79,8 @@ public class IpWhitelist {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP whitelist entry.
-         * optional, max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -90,57 +91,31 @@ public class IpWhitelist {
         }
         
         /**
-         * an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
-         * 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
-         * tunnel endpoints
-         *
-         * @param ipNet the value of the ip_net parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder ipNet(final String ipNet) {
-            this.ipNet = Objects.requireNonNull(ipNet, "ipNet is required");
-            return this;
-        }
-
-        /**
-         * an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
-         * 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
-         * tunnel endpoints
-         *
-         * @param ipNet the value of the ip_net parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder ipNet(final Optional<String> ipNet) {
-            this.ipNet = Objects.requireNonNull(ipNet, "ipNet is required").orElse("");
-            return this;
-        }
-        
-        /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpWhitelistEntry}
+         * @return a {@link CompletionStage} of {@link AgentIngress}
          */
-        public CompletionStage<IpWhitelistEntry> call() {
+        public CompletionStage<AgentIngress> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/ip_whitelist",
+                "/agent_ingresses",
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("ip_net", Optional.of(this.ipNet))
+                    new AbstractMap.SimpleEntry<>("domain", Optional.of(this.domain))
                 ),
-                Optional.of(IpWhitelistEntry.class)
+                Optional.of(AgentIngress.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpWhitelistEntry}
+         * @return {@link AgentIngress}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpWhitelistEntry blockingCall() throws InterruptedException {
+        public AgentIngress blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -150,16 +125,19 @@ public class IpWhitelist {
     }
 
     /**
-     * Create a new IP whitelist entry that will restrict traffic to all tunnel
-     * endpoints on the account.
+     * Create a new Agent Ingress. The ngrok agent can be configured to connect to
+     * ngrok via the new set of addresses on the returned Agent Ingress.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-create">https://ngrok.com/docs/api#api-ip-whitelist-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-create">https://ngrok.com/docs/api#api-agent-ingresses-create</a>.
      *
+     * @param domain the domain that you own to be used as the base domain name to generate regional agent ingress domains.
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
+        final String domain
     ) {
         return new CreateCallBuilder(
+            domain
         );
     }
     
@@ -183,7 +161,7 @@ public class IpWhitelist {
         public CompletionStage<Void> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.DELETE,
-                "/ip_whitelist/" + this.id,
+                "/agent_ingresses/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
                 Optional.empty()
@@ -205,9 +183,9 @@ public class IpWhitelist {
     }
 
     /**
-     * Delete an IP whitelist entry.
+     * Delete an Agent Ingress by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-delete">https://ngrok.com/docs/api#api-ip-whitelist-delete</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-delete">https://ngrok.com/docs/api#api-agent-ingresses-delete</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -235,25 +213,25 @@ public class IpWhitelist {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpWhitelistEntry}
+         * @return a {@link CompletionStage} of {@link AgentIngress}
          */
-        public CompletionStage<IpWhitelistEntry> call() {
+        public CompletionStage<AgentIngress> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_whitelist/" + this.id,
+                "/agent_ingresses/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(IpWhitelistEntry.class)
+                Optional.of(AgentIngress.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpWhitelistEntry}
+         * @return {@link AgentIngress}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpWhitelistEntry blockingCall() throws InterruptedException {
+        public AgentIngress blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -263,9 +241,9 @@ public class IpWhitelist {
     }
 
     /**
-     * Get detailed information about an IP whitelist entry by ID.
+     * Get the details of an Agent Ingress by ID.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-get">https://ngrok.com/docs/api#api-ip-whitelist-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-get">https://ngrok.com/docs/api#api-agent-ingresses-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -336,28 +314,28 @@ public class IpWhitelist {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link IpWhitelistEntryList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link AgentIngressList}
          */
-        public CompletionStage<Page<IpWhitelistEntryList>> call() {
+        public CompletionStage<Page<AgentIngressList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_whitelist",
+                "/agent_ingresses",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(IpWhitelistEntryList.class)
+                Optional.of(AgentIngressList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link IpWhitelistEntryList}
+         * @return a {@link Page} of {@link AgentIngressList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<IpWhitelistEntryList> blockingCall() throws InterruptedException {
+        public Page<AgentIngressList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -367,9 +345,9 @@ public class IpWhitelist {
     }
 
     /**
-     * List all IP whitelist entries on this account
+     * List all Agent Ingresses owned by this account
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-list">https://ngrok.com/docs/api#api-ip-whitelist-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-list">https://ngrok.com/docs/api#api-agent-ingresses-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -394,8 +372,8 @@ public class IpWhitelist {
         }
         
         /**
-         * human-readable description of the source IPs for this IP whitelist entry.
-         * optional, max 255 bytes.
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -406,8 +384,8 @@ public class IpWhitelist {
         }
 
         /**
-         * human-readable description of the source IPs for this IP whitelist entry.
-         * optional, max 255 bytes.
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -418,8 +396,8 @@ public class IpWhitelist {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP whitelist entry.
-         * optional, max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -430,8 +408,8 @@ public class IpWhitelist {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP whitelist entry.
-         * optional, max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -444,28 +422,28 @@ public class IpWhitelist {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpWhitelistEntry}
+         * @return a {@link CompletionStage} of {@link AgentIngress}
          */
-        public CompletionStage<IpWhitelistEntry> call() {
+        public CompletionStage<AgentIngress> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/ip_whitelist/" + this.id,
+                "/agent_ingresses/" + this.id,
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
                 ),
-                Optional.of(IpWhitelistEntry.class)
+                Optional.of(AgentIngress.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpWhitelistEntry}
+         * @return {@link AgentIngress}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpWhitelistEntry blockingCall() throws InterruptedException {
+        public AgentIngress blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -475,9 +453,9 @@ public class IpWhitelist {
     }
 
     /**
-     * Update attributes of an IP whitelist entry by ID
+     * Update attributes of an Agent Ingress by ID.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist-update">https://ngrok.com/docs/api#api-ip-whitelist-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-update">https://ngrok.com/docs/api#api-agent-ingresses-update</a>.
      *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
