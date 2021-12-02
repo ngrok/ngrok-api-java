@@ -54,6 +54,17 @@ public class Ngrok {
     }
     
     /**
+     * Creates a service client for AgentIngresses.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses">https://ngrok.com/docs/api#api-agent-ingresses</a>.
+     *
+     * @return a service client
+     */
+    public AgentIngresses agentIngresses() {
+        return new AgentIngresses(this.apiClient);
+    }
+    
+    /**
      * API Keys are used to authenticate to the <a
      * href="https://ngrok.com/docs/api#authentication">ngrok
      *  API</a>. You may use the API itself
@@ -198,18 +209,6 @@ public class Ngrok {
      */
     public IpRestrictions ipRestrictions() {
         return new IpRestrictions(this.apiClient);
-    }
-    
-    /**
-     * The IP Whitelist is deprecated and will be removed. Use an IP Restriction
-     *  with an <code>endpoints</code> type instead.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-whitelist">https://ngrok.com/docs/api#api-ip-whitelist</a>.
-     *
-     * @return a service client
-     */
-    public IpWhitelist ipWhitelist() {
-        return new IpWhitelist(this.apiClient);
     }
     
     /**

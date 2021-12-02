@@ -12,21 +12,19 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * Reserved Addresses are TCP addresses that can be used to listen for traffic.
- *  TCP address hostnames and ports are assigned by ngrok, they cannot be
- *  chosen.
+ * An API client for {@link AgentIngresses}.
  *
- * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs">https://ngrok.com/docs/api#api-reserved-addrs</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses">https://ngrok.com/docs/api#api-agent-ingresses</a>.
  */
-public class ReservedAddrs {
+public class AgentIngresses {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for ReservedAddrs.
+     * Creates a new sub-client for AgentIngresses.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public ReservedAddrs(final NgrokApiClient apiClient) {
+    public AgentIngresses(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -36,15 +34,17 @@ public class ReservedAddrs {
     public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private String region = "";
-        private Optional<String> endpointConfigurationId = Optional.empty();
+        private final String domain;
 
         private CreateCallBuilder(
+            final String domain
         ) {
+            this.domain = Objects.requireNonNull(domain, "domain is required");
         }
         
         /**
-         * human-readable description of what this reserved address will be used for
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -55,7 +55,8 @@ public class ReservedAddrs {
         }
 
         /**
-         * human-readable description of what this reserved address will be used for
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -66,8 +67,8 @@ public class ReservedAddrs {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this reserved address. Optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -78,8 +79,8 @@ public class ReservedAddrs {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this reserved address. Optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -90,80 +91,31 @@ public class ReservedAddrs {
         }
         
         /**
-         * reserve the address in this geographic ngrok datacenter. Optional, default is
-         * us. (au, eu, ap, us, jp, in, sa)
-         *
-         * @param region the value of the region parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder region(final String region) {
-            this.region = Objects.requireNonNull(region, "region is required");
-            return this;
-        }
-
-        /**
-         * reserve the address in this geographic ngrok datacenter. Optional, default is
-         * us. (au, eu, ap, us, jp, in, sa)
-         *
-         * @param region the value of the region parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder region(final Optional<String> region) {
-            this.region = Objects.requireNonNull(region, "region is required").orElse("");
-            return this;
-        }
-        
-        /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
-            this.endpointConfigurationId = Optional.ofNullable(endpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
-            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link ReservedAddr}
+         * @return a {@link CompletionStage} of {@link AgentIngress}
          */
-        public CompletionStage<ReservedAddr> call() {
+        public CompletionStage<AgentIngress> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/reserved_addrs",
+                "/agent_ingresses",
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("region", Optional.of(this.region)),
-                    new AbstractMap.SimpleEntry<>("endpoint_configuration_id", this.endpointConfigurationId.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("domain", Optional.of(this.domain))
                 ),
-                Optional.of(ReservedAddr.class)
+                Optional.of(AgentIngress.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link ReservedAddr}
+         * @return {@link AgentIngress}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public ReservedAddr blockingCall() throws InterruptedException {
+        public AgentIngress blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -173,15 +125,19 @@ public class ReservedAddrs {
     }
 
     /**
-     * Create a new reserved address.
+     * Create a new Agent Ingress. The ngrok agent can be configured to connect to
+     * ngrok via the new set of addresses on the returned Agent Ingress.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-create">https://ngrok.com/docs/api#api-reserved-addrs-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-create">https://ngrok.com/docs/api#api-agent-ingresses-create</a>.
      *
+     * @param domain the domain that you own to be used as the base domain name to generate regional agent ingress domains.
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
+        final String domain
     ) {
         return new CreateCallBuilder(
+            domain
         );
     }
     
@@ -205,7 +161,7 @@ public class ReservedAddrs {
         public CompletionStage<Void> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.DELETE,
-                "/reserved_addrs/" + this.id,
+                "/agent_ingresses/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
                 Optional.empty()
@@ -227,9 +183,9 @@ public class ReservedAddrs {
     }
 
     /**
-     * Delete a reserved address.
+     * Delete an Agent Ingress by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-delete">https://ngrok.com/docs/api#api-reserved-addrs-delete</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-delete">https://ngrok.com/docs/api#api-agent-ingresses-delete</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -257,25 +213,25 @@ public class ReservedAddrs {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link ReservedAddr}
+         * @return a {@link CompletionStage} of {@link AgentIngress}
          */
-        public CompletionStage<ReservedAddr> call() {
+        public CompletionStage<AgentIngress> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/reserved_addrs/" + this.id,
+                "/agent_ingresses/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(ReservedAddr.class)
+                Optional.of(AgentIngress.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link ReservedAddr}
+         * @return {@link AgentIngress}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public ReservedAddr blockingCall() throws InterruptedException {
+        public AgentIngress blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -285,9 +241,9 @@ public class ReservedAddrs {
     }
 
     /**
-     * Get the details of a reserved address.
+     * Get the details of an Agent Ingress by ID.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-get">https://ngrok.com/docs/api#api-reserved-addrs-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-get">https://ngrok.com/docs/api#api-agent-ingresses-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -358,28 +314,28 @@ public class ReservedAddrs {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link ReservedAddrList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link AgentIngressList}
          */
-        public CompletionStage<Page<ReservedAddrList>> call() {
+        public CompletionStage<Page<AgentIngressList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/reserved_addrs",
+                "/agent_ingresses",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(ReservedAddrList.class)
+                Optional.of(AgentIngressList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link ReservedAddrList}
+         * @return a {@link Page} of {@link AgentIngressList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<ReservedAddrList> blockingCall() throws InterruptedException {
+        public Page<AgentIngressList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -389,9 +345,9 @@ public class ReservedAddrs {
     }
 
     /**
-     * List all reserved addresses on this account.
+     * List all Agent Ingresses owned by this account
      *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-list">https://ngrok.com/docs/api#api-reserved-addrs-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-list">https://ngrok.com/docs/api#api-agent-ingresses-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -408,7 +364,6 @@ public class ReservedAddrs {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<String> endpointConfigurationId = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -417,7 +372,8 @@ public class ReservedAddrs {
         }
         
         /**
-         * human-readable description of what this reserved address will be used for
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -428,7 +384,8 @@ public class ReservedAddrs {
         }
 
         /**
-         * human-readable description of what this reserved address will be used for
+         * human-readable description of the use of this Agent Ingress. optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -439,8 +396,8 @@ public class ReservedAddrs {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this reserved address. Optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -451,8 +408,8 @@ public class ReservedAddrs {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this reserved address. Optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+         * max 4096 bytes
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -463,55 +420,30 @@ public class ReservedAddrs {
         }
         
         /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
-            this.endpointConfigurationId = Optional.ofNullable(endpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
-            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link ReservedAddr}
+         * @return a {@link CompletionStage} of {@link AgentIngress}
          */
-        public CompletionStage<ReservedAddr> call() {
+        public CompletionStage<AgentIngress> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/reserved_addrs/" + this.id,
+                "/agent_ingresses/" + this.id,
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("endpoint_configuration_id", this.endpointConfigurationId.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
                 ),
-                Optional.of(ReservedAddr.class)
+                Optional.of(AgentIngress.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link ReservedAddr}
+         * @return {@link AgentIngress}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public ReservedAddr blockingCall() throws InterruptedException {
+        public AgentIngress blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -521,9 +453,9 @@ public class ReservedAddrs {
     }
 
     /**
-     * Update the attributes of a reserved address.
+     * Update attributes of an Agent Ingress by ID.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-update">https://ngrok.com/docs/api#api-reserved-addrs-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-agent-ingresses-update">https://ngrok.com/docs/api#api-agent-ingresses-update</a>.
      *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
@@ -532,63 +464,6 @@ public class ReservedAddrs {
         final String id
     ) {
         return new UpdateCallBuilder(
-            id
-        );
-    }
-    
-    /**
-     * A builder object encapsulating state for an unsent DeleteEndpointConfig API call.
-     */
-    public class DeleteEndpointConfigCallBuilder {
-        private final String id;
-
-        private DeleteEndpointConfigCallBuilder(
-            final String id
-        ) {
-            this.id = Objects.requireNonNull(id, "id is required");
-        }
-        
-        /**
-         * Initiates the API call asynchronously.
-         *
-         * @return a {@link CompletionStage} of {@link Void}
-         */
-        public CompletionStage<Void> call() {
-            return apiClient.sendRequest(
-                NgrokApiClient.HttpMethod.DELETE,
-                "/reserved_addrs/" + this.id + "/endpoint_configuration",
-                Stream.empty(),
-                Stream.empty(),
-                Optional.empty()
-            );
-        }
-
-        /**
-         * Initiates the API call and blocks until it returns.
-         *
-         * @throws InterruptedException if the thread was interrupted during the call
-         */
-        public void blockingCall() throws InterruptedException {
-            try {
-                call().toCompletableFuture().get();
-            } catch (final ExecutionException e) {
-                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
-            }
-        }
-    }
-
-    /**
-     * Detach the endpoint configuration attached to a reserved address.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config">https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config</a>.
-     *
-     * @param id a resource identifier
-     * @return a call builder for this API call
-     */
-    public DeleteEndpointConfigCallBuilder deleteEndpointConfig(
-        final String id
-    ) {
-        return new DeleteEndpointConfigCallBuilder(
             id
         );
     }

@@ -23,25 +23,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.containing;
-import static com.github.tomakehurst.wiremock.client.WireMock.delete;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.noContent;
-import static com.github.tomakehurst.wiremock.client.WireMock.ok;
-import static com.github.tomakehurst.wiremock.client.WireMock.patch;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiKeysTest extends ApiKeyTestBase {
     private static final Map<String, Object> API_KEY_CREATE = API_KEY_JSON_FIELDS.entrySet().stream()
         .filter(entry -> entry.getKey().equals("description") || entry.getKey().equals("metadata"))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-    private static final Map<String, Object> API_KEY_UPDATE = Stream.of(
-        new AbstractMap.SimpleEntry<>("description", "this is an UPDATED description")
-    ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     private static final ApiKey OTHER_API_KEY = new ApiKey(
         "asdadsda",
@@ -59,13 +47,17 @@ public class ApiKeysTest extends ApiKeyTestBase {
     );
 
     private static final ApiKey UPDATED_API_KEY = new ApiKey(
-        (String) API_KEY_JSON_FIELDS.get("id"),
-        (URI) API_KEY_JSON_FIELDS.get("uri"),
-        (String) API_KEY_UPDATE.get("description"),
-        (String) API_KEY_JSON_FIELDS.get("metadata"),
-        (OffsetDateTime) API_KEY_JSON_FIELDS.get("created_at"),
+        API_KEY.getId(),
+        API_KEY.getUri(),
+        "this is an UPDATED description",
+        API_KEY.getMetadata(),
+        API_KEY.getCreatedAt(),
         Optional.empty()
     );
+
+    private static final Map<String, Object> API_KEY_UPDATE = Stream.of(
+        new AbstractMap.SimpleEntry<>("description", UPDATED_API_KEY.getDescription())
+    ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     @RegisterExtension
     final WireMockExtension wireMock = new WireMockExtension();
@@ -88,14 +80,14 @@ public class ApiKeysTest extends ApiKeyTestBase {
                 .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
-                .withRequestBody(equalTo(MAPPER.writeValueAsString(API_KEY_CREATE)))
+                .withRequestBody(equalToJson(MAPPER.writeValueAsString(API_KEY_CREATE)))
                 .willReturn(ok(MAPPER.writeValueAsString(API_KEY))
                     .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), "application/json")
                 )
         );
 
         wireMock.stubFor(
-            get(urlPathEqualTo("/api_keys/" + API_KEY_JSON_FIELDS.get("id")))
+            get(urlPathEqualTo("/api_keys/" + API_KEY.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
                 .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
@@ -116,19 +108,19 @@ public class ApiKeysTest extends ApiKeyTestBase {
         );
 
         wireMock.stubFor(
-            patch(urlPathEqualTo("/api_keys/" + API_KEY_JSON_FIELDS.get("id")))
+            patch(urlPathEqualTo("/api_keys/" + API_KEY.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
                 .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
-                .withRequestBody(equalTo(MAPPER.writeValueAsString(API_KEY_UPDATE)))
+                .withRequestBody(equalToJson(MAPPER.writeValueAsString(API_KEY_UPDATE)))
                 .willReturn(ok(MAPPER.writeValueAsString(UPDATED_API_KEY))
                     .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), "application/json")
                 )
         );
 
         wireMock.stubFor(
-            delete(urlPathEqualTo("/api_keys/" + API_KEY_JSON_FIELDS.get("id")))
+            delete(urlPathEqualTo("/api_keys/" + API_KEY.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
                 .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
@@ -196,7 +188,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
         final ApiKey apiKey = apiKeys.update(id)
             .description((String) API_KEY_UPDATE.get("description"))
             .blockingCall();
-        assertApiKeyFields(apiKey, (String) API_KEY_UPDATE.get("description"), false);
+        assertApiKeyFields(apiKey, UPDATED_API_KEY.getDescription(), false);
     }
 
     private void testDeleteApiKey(final String id) throws InterruptedException {

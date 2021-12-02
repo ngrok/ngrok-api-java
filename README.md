@@ -6,7 +6,7 @@ make it easier to consume in Java.
 ## Usage
 
 This library is published on [Maven
-Central](https://search.maven.org/artifact/com.ngrok/ngrok-api-client-java).
+Central](https://search.maven.org/artifact/com.ngrok/ngrok-api-java).
 
 In your Maven `pom.xml` file, add:
 
@@ -14,8 +14,8 @@ In your Maven `pom.xml` file, add:
 <dependencies>
   <dependency>
     <groupId>com.ngrok</groupId>
-    <artifactId>ngrok-api-client-java</artifactId>
-    <version>${ngrok-api-client-java.version}</version>
+    <artifactId>ngrok-api-java</artifactId>
+    <version>${ngrok-api-java.version}</version>
   </dependency>
 </dependencies>
 ```
@@ -25,18 +25,18 @@ See the above URL for the latest version of the API client.
 ## Documentation
 
 All objects, methods and properties are documented with Javadoc for
-integration with an IDE like IntelliJ IDEA or Eclipse.
+integration with an IDE like IntelliJ IDEA or Eclipse.  You can also
+[view the documentation online](https://java-api.docs.ngrok.com/).
 
 Beyond that, this readme is the best source of documentation for the
-library.  There is no API reference documentation published on the web
-at this time.
+library.
 
 ### Versioning
 
 This class library is published to Maven Central using semantic
-versioning. Breaking changes to the API will only be release with a bump
-of the major version number.  Each released commit is tagged in this
-repository.
+versioning. Breaking changes to the API will only be released with a
+bump of the major version number.  Each released commit is tagged in
+this repository.
 
 No compatibility promises are made for versions < 1.0.0.
 
@@ -54,7 +54,6 @@ key explicitly.
 import com.ngrok.*;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Example {
@@ -83,7 +82,6 @@ public class Example {
 import com.ngrok.*;
 import com.ngrok.definitions.*;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -140,12 +138,12 @@ public class Example {
         final var ngrokWithCustomApiClient = new Ngrok(customApiClient);
 
         // Clients for all api resources (like ip policies) are acccessible via methods on the root client
-        final var policy = ngrok.ipPolicies()
+        final var policy = defaultNgrok.ipPolicies()
             .get(policyId)
             .call().toCompletableFuture().join();
 
         // Some api resources are 'namespaced' through another method
-        final var circuitBreaker = ngrok.pointcfgModule()
+        final var circuitBreaker = defaultNgrok.pointcfgModule()
             .circuitBreaker()
             .get(endpointConfigId).call()
             .toCompletableFuture().join();
@@ -165,7 +163,6 @@ will be returned inside the `CompletionStage`.
 import com.ngrok.*;
 import com.ngrok.definitions.*;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
