@@ -28,9 +28,6 @@ public class IpPolicy {
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
-    @JsonProperty("action")
-    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String action;
 
     /**
      * Creates a new instance of {@link IpPolicy}.
@@ -40,7 +37,6 @@ public class IpPolicy {
      * @param createdAt timestamp when the IP policy was created, RFC 3339 format
      * @param description human-readable description of the source IPs of this IP policy. optional, max 255 bytes.
      * @param metadata arbitrary user-defined machine-readable data of this IP policy. optional, max 4096 bytes.
-     * @param action the IP policy action. Supported values are <code>allow</code> or <code>deny</code>
      */
     @JsonCreator
     public IpPolicy(
@@ -48,15 +44,13 @@ public class IpPolicy {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
-        @JsonProperty("action") final String action
+        @JsonProperty("metadata") final String metadata
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-        this.action = Objects.requireNonNull(action, "action is required");
     }
 
     /**
@@ -106,16 +100,6 @@ public class IpPolicy {
         return this.metadata;
     }
 
-    /**
-     * the IP policy action. Supported values are <code>allow</code> or
-     * <code>deny</code>
-     *
-     * @return the value of the property as a {@link String}
-     */
-    public String getAction() {
-        return this.action;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -131,8 +115,7 @@ public class IpPolicy {
             this.uri.equals(other.uri)&&
             this.createdAt.equals(other.createdAt)&&
             this.description.equals(other.description)&&
-            this.metadata.equals(other.metadata)&&
-            this.action.equals(other.action);
+            this.metadata.equals(other.metadata);
         
     }
 
@@ -143,8 +126,7 @@ public class IpPolicy {
             this.uri,
             this.createdAt,
             this.description,
-            this.metadata,
-            this.action
+            this.metadata
         );
     }
 
@@ -156,7 +138,6 @@ public class IpPolicy {
             "', createdAt='" + this.createdAt +
             "', description='" + this.description +
             "', metadata='" + this.metadata +
-            "', action='" + this.action +
             "'}";
     }
 }

@@ -12,20 +12,19 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * IP Policy Rules are the IPv4 or IPv6 CIDRs entries that
- *  make up an IP Policy.
+ * An API client for {@link EdgesTcp}.
  *
- * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules">https://ngrok.com/docs/api#api-ip-policy-rules</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-edges-tcp">https://ngrok.com/docs/api#api-edges-tcp</a>.
  */
-public class IpPolicyRules {
+public class EdgesTcp {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for IpPolicyRules.
+     * Creates a new sub-client for EdgesTcp.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public IpPolicyRules(final NgrokApiClient apiClient) {
+    public EdgesTcp(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -35,20 +34,16 @@ public class IpPolicyRules {
     public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private final String cidr;
-        private final String ipPolicyId;
-        private Optional<String> action = Optional.empty();
+        private Optional<java.util.List<String>> hostports = Optional.empty();
+        private Optional<EndpointBackendMutate> backend = Optional.empty();
+        private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
 
         private CreateCallBuilder(
-            final String cidr,
-            final String ipPolicyId
         ) {
-            this.cidr = Objects.requireNonNull(cidr, "cidr is required");
-            this.ipPolicyId = Objects.requireNonNull(ipPolicyId, "ipPolicyId is required");
         }
         
         /**
-         * human-readable description of the source IPs of this IP rule. optional, max 255
+         * human-readable description of what this edge will be used for; optional, max 255
          * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
@@ -60,7 +55,7 @@ public class IpPolicyRules {
         }
 
         /**
-         * human-readable description of the source IPs of this IP rule. optional, max 255
+         * human-readable description of what this edge will be used for; optional, max 255
          * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
@@ -72,8 +67,8 @@ public class IpPolicyRules {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP policy rule. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -84,8 +79,8 @@ public class IpPolicyRules {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP policy rule. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -96,57 +91,99 @@ public class IpPolicyRules {
         }
         
         /**
-         * the action to apply to the policy rule, either <code>allow</code> or
-         * <code>deny</code>
+         * hostports served by this edge
          *
-         * @param action the value of the action parameter as a {@link String}
+         * @param hostports the value of the hostports parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder action(final String action) {
-            this.action = Optional.ofNullable(action);
+        public CreateCallBuilder hostports(final java.util.List<String> hostports) {
+            this.hostports = Optional.ofNullable(hostports);
             return this;
         }
 
         /**
-         * the action to apply to the policy rule, either <code>allow</code> or
-         * <code>deny</code>
+         * hostports served by this edge
          *
-         * @param action the value of the action parameter as an {@link Optional} of {@link String}
+         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder action(final Optional<String> action) {
-            this.action = Objects.requireNonNull(action, "action is required");
+        public CreateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            return this;
+        }
+        
+        /**
+         * edge modules
+         *
+         * @param backend the value of the backend parameter as a {@link EndpointBackendMutate}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder backend(final EndpointBackendMutate backend) {
+            this.backend = Optional.ofNullable(backend);
+            return this;
+        }
+
+        /**
+         * edge modules
+         *
+         * @param backend the value of the backend parameter as an {@link Optional} of {@link EndpointBackendMutate}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder backend(final Optional<EndpointBackendMutate> backend) {
+            this.backend = Objects.requireNonNull(backend, "backend is required");
+            return this;
+        }
+        
+        /**
+         * Sets the <code>ip_restriction</code> parameter.
+         *
+         * @param ipRestriction the value of the ip_restriction parameter as a {@link EndpointIpPolicyMutate}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder ipRestriction(final EndpointIpPolicyMutate ipRestriction) {
+            this.ipRestriction = Optional.ofNullable(ipRestriction);
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>ip_restriction</code> parameter.
+         *
+         * @param ipRestriction the value of the ip_restriction parameter as an {@link Optional} of {@link EndpointIpPolicyMutate}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder ipRestriction(final Optional<EndpointIpPolicyMutate> ipRestriction) {
+            this.ipRestriction = Objects.requireNonNull(ipRestriction, "ipRestriction is required");
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpPolicyRule}
+         * @return a {@link CompletionStage} of {@link TcpEdge}
          */
-        public CompletionStage<IpPolicyRule> call() {
+        public CompletionStage<TcpEdge> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/ip_policy_rules",
+                "/edges/tcp",
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("cidr", Optional.of(this.cidr)),
-                    new AbstractMap.SimpleEntry<>("ip_policy_id", Optional.of(this.ipPolicyId)),
-                    new AbstractMap.SimpleEntry<>("action", this.action.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("hostports", this.hostports.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity()))
                 ),
-                Optional.of(IpPolicyRule.class)
+                Optional.of(TcpEdge.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpPolicyRule}
+         * @return {@link TcpEdge}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpPolicyRule blockingCall() throws InterruptedException {
+        public TcpEdge blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -156,78 +193,15 @@ public class IpPolicyRules {
     }
 
     /**
-     * Create a new IP policy rule attached to an IP Policy.
+     * Create a TCP Edge
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules-create">https://ngrok.com/docs/api#api-ip-policy-rules-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-tcp-create">https://ngrok.com/docs/api#api-edges-tcp-create</a>.
      *
-     * @param cidr an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
-     * @param ipPolicyId ID of the IP policy this IP policy rule will be attached to
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
-        final String cidr,
-        final String ipPolicyId
     ) {
         return new CreateCallBuilder(
-            cidr,
-            ipPolicyId
-        );
-    }
-    
-    /**
-     * A builder object encapsulating state for an unsent Delete API call.
-     */
-    public class DeleteCallBuilder {
-        private final String id;
-
-        private DeleteCallBuilder(
-            final String id
-        ) {
-            this.id = Objects.requireNonNull(id, "id is required");
-        }
-        
-        /**
-         * Initiates the API call asynchronously.
-         *
-         * @return a {@link CompletionStage} of {@link Void}
-         */
-        public CompletionStage<Void> call() {
-            return apiClient.sendRequest(
-                NgrokApiClient.HttpMethod.DELETE,
-                "/ip_policy_rules/" + this.id,
-                Stream.empty(),
-                Stream.empty(),
-                Optional.empty()
-            );
-        }
-
-        /**
-         * Initiates the API call and blocks until it returns.
-         *
-         * @throws InterruptedException if the thread was interrupted during the call
-         */
-        public void blockingCall() throws InterruptedException {
-            try {
-                call().toCompletableFuture().get();
-            } catch (final ExecutionException e) {
-                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
-            }
-        }
-    }
-
-    /**
-     * Delete an IP policy rule.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules-delete">https://ngrok.com/docs/api#api-ip-policy-rules-delete</a>.
-     *
-     * @param id a resource identifier
-     * @return a call builder for this API call
-     */
-    public DeleteCallBuilder delete(
-        final String id
-    ) {
-        return new DeleteCallBuilder(
-            id
         );
     }
     
@@ -246,25 +220,25 @@ public class IpPolicyRules {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpPolicyRule}
+         * @return a {@link CompletionStage} of {@link TcpEdge}
          */
-        public CompletionStage<IpPolicyRule> call() {
+        public CompletionStage<TcpEdge> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_policy_rules/" + this.id,
+                "/edges/tcp/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(IpPolicyRule.class)
+                Optional.of(TcpEdge.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpPolicyRule}
+         * @return {@link TcpEdge}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpPolicyRule blockingCall() throws InterruptedException {
+        public TcpEdge blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -274,9 +248,9 @@ public class IpPolicyRules {
     }
 
     /**
-     * Get detailed information about an IP policy rule by ID.
+     * Get a TCP Edge by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules-get">https://ngrok.com/docs/api#api-ip-policy-rules-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-tcp-get">https://ngrok.com/docs/api#api-edges-tcp-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -347,28 +321,28 @@ public class IpPolicyRules {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link IpPolicyRuleList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link TcpEdgeList}
          */
-        public CompletionStage<Page<IpPolicyRuleList>> call() {
+        public CompletionStage<Page<TcpEdgeList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_policy_rules",
+                "/edges/tcp",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(IpPolicyRuleList.class)
+                Optional.of(TcpEdgeList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link IpPolicyRuleList}
+         * @return a {@link Page} of {@link TcpEdgeList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<IpPolicyRuleList> blockingCall() throws InterruptedException {
+        public Page<TcpEdgeList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -378,9 +352,9 @@ public class IpPolicyRules {
     }
 
     /**
-     * List all IP policy rules on this account
+     * Returns a list of all TCP Edges on this account
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules-list">https://ngrok.com/docs/api#api-ip-policy-rules-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-tcp-list">https://ngrok.com/docs/api#api-edges-tcp-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -397,7 +371,9 @@ public class IpPolicyRules {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<String> cidr = Optional.empty();
+        private Optional<java.util.List<String>> hostports = Optional.empty();
+        private Optional<EndpointBackendMutate> backend = Optional.empty();
+        private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -406,7 +382,7 @@ public class IpPolicyRules {
         }
         
         /**
-         * human-readable description of the source IPs of this IP rule. optional, max 255
+         * human-readable description of what this edge will be used for; optional, max 255
          * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
@@ -418,7 +394,7 @@ public class IpPolicyRules {
         }
 
         /**
-         * human-readable description of the source IPs of this IP rule. optional, max 255
+         * human-readable description of what this edge will be used for; optional, max 255
          * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
@@ -430,8 +406,8 @@ public class IpPolicyRules {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP policy rule. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -442,8 +418,8 @@ public class IpPolicyRules {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP policy rule. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -454,53 +430,99 @@ public class IpPolicyRules {
         }
         
         /**
-         * an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
+         * hostports served by this edge
          *
-         * @param cidr the value of the cidr parameter as a {@link String}
+         * @param hostports the value of the hostports parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder cidr(final String cidr) {
-            this.cidr = Optional.ofNullable(cidr);
+        public UpdateCallBuilder hostports(final java.util.List<String> hostports) {
+            this.hostports = Optional.ofNullable(hostports);
             return this;
         }
 
         /**
-         * an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
+         * hostports served by this edge
          *
-         * @param cidr the value of the cidr parameter as an {@link Optional} of {@link String}
+         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder cidr(final Optional<String> cidr) {
-            this.cidr = Objects.requireNonNull(cidr, "cidr is required");
+        public UpdateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            return this;
+        }
+        
+        /**
+         * edge modules
+         *
+         * @param backend the value of the backend parameter as a {@link EndpointBackendMutate}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder backend(final EndpointBackendMutate backend) {
+            this.backend = Optional.ofNullable(backend);
+            return this;
+        }
+
+        /**
+         * edge modules
+         *
+         * @param backend the value of the backend parameter as an {@link Optional} of {@link EndpointBackendMutate}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder backend(final Optional<EndpointBackendMutate> backend) {
+            this.backend = Objects.requireNonNull(backend, "backend is required");
+            return this;
+        }
+        
+        /**
+         * Sets the <code>ip_restriction</code> parameter.
+         *
+         * @param ipRestriction the value of the ip_restriction parameter as a {@link EndpointIpPolicyMutate}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder ipRestriction(final EndpointIpPolicyMutate ipRestriction) {
+            this.ipRestriction = Optional.ofNullable(ipRestriction);
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>ip_restriction</code> parameter.
+         *
+         * @param ipRestriction the value of the ip_restriction parameter as an {@link Optional} of {@link EndpointIpPolicyMutate}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder ipRestriction(final Optional<EndpointIpPolicyMutate> ipRestriction) {
+            this.ipRestriction = Objects.requireNonNull(ipRestriction, "ipRestriction is required");
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpPolicyRule}
+         * @return a {@link CompletionStage} of {@link TcpEdge}
          */
-        public CompletionStage<IpPolicyRule> call() {
+        public CompletionStage<TcpEdge> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/ip_policy_rules/" + this.id,
+                "/edges/tcp/" + this.id,
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("cidr", this.cidr.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("hostports", this.hostports.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity()))
                 ),
-                Optional.of(IpPolicyRule.class)
+                Optional.of(TcpEdge.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpPolicyRule}
+         * @return {@link TcpEdge}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpPolicyRule blockingCall() throws InterruptedException {
+        public TcpEdge blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -510,17 +532,77 @@ public class IpPolicyRules {
     }
 
     /**
-     * Update attributes of an IP policy rule by ID
+     * Updates a TCP Edge by ID. If a module is not specified in the update, it will
+     * not be modified. However, each module configuration that is specified will
+     * completely replace the existing value. There is no way to delete an existing
+     * module via this API, instead use the delete module API.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policy-rules-update">https://ngrok.com/docs/api#api-ip-policy-rules-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-tcp-update">https://ngrok.com/docs/api#api-edges-tcp-update</a>.
      *
-     * @param id the value of the <code>id</code> parameter as a {@link String}
+     * @param id unique identifier of this edge
      * @return a call builder for this API call
      */
     public UpdateCallBuilder update(
         final String id
     ) {
         return new UpdateCallBuilder(
+            id
+        );
+    }
+    
+    /**
+     * A builder object encapsulating state for an unsent Delete API call.
+     */
+    public class DeleteCallBuilder {
+        private final String id;
+
+        private DeleteCallBuilder(
+            final String id
+        ) {
+            this.id = Objects.requireNonNull(id, "id is required");
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of {@link Void}
+         */
+        public CompletionStage<Void> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.DELETE,
+                "/edges/tcp/" + this.id,
+                Stream.empty(),
+                Stream.empty(),
+                Optional.empty()
+            );
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public void blockingCall() throws InterruptedException {
+            try {
+                call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Delete a TCP Edge by ID
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-edges-tcp-delete">https://ngrok.com/docs/api#api-edges-tcp-delete</a>.
+     *
+     * @param id a resource identifier
+     * @return a call builder for this API call
+     */
+    public DeleteCallBuilder delete(
+        final String id
+    ) {
+        return new DeleteCallBuilder(
             id
         );
     }

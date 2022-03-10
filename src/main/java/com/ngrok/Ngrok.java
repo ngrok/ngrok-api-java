@@ -112,27 +112,16 @@ public class Ngrok {
     }
     
     /**
-     * Endpoint Configurations are a reusable group of modules that encapsulate how
-     *  traffic to a domain or address is handled. Endpoint configurations are only
-     *  applied to Domains and TCP Addresses they have been attached to.
+     * Endpoints provides an API for querying the endpoint objects
+     *  which define what tunnel or edge is used to serve a hostport.
+     *  Only active endpoints associated with a tunnel or backend are returned.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-endpoint-configurations">https://ngrok.com/docs/api#api-endpoint-configurations</a>.
-     *
-     * @return a service client
-     */
-    public EndpointConfigurations endpointConfigurations() {
-        return new EndpointConfigurations(this.apiClient);
-    }
-    
-    /**
-     * Creates a service client for EventStreams.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-event-streams">https://ngrok.com/docs/api#api-event-streams</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-endpoints">https://ngrok.com/docs/api#api-endpoints</a>.
      *
      * @return a service client
      */
-    public EventStreams eventStreams() {
-        return new EventStreams(this.apiClient);
+    public Endpoints endpoints() {
+        return new Endpoints(this.apiClient);
     }
     
     /**
@@ -197,7 +186,7 @@ public class Ngrok {
     
     /**
      * An IP restriction is a restriction placed on the CIDRs that are allowed to
-     *  initate traffic to a specific aspect of your ngrok account. An IP
+     *  initiate traffic to a specific aspect of your ngrok account. An IP
      *  restriction has a type which defines the ingress it applies to. IP
      *  restrictions can be used to enforce the source IPs that can make API
      *  requests, log in to the dashboard, start ngrok agents, and connect to your
@@ -329,150 +318,354 @@ public class Ngrok {
     }
     
     /**
-     * Creates a namespace object for PointcfgModule.
+     * Creates a namespace object for Backends.
      *
      * @return a namespace object
      */
-    public PointcfgModuleNamespace pointcfgModule() {
-        return new PointcfgModuleNamespace();
+    public BackendsNamespace backends() {
+        return new BackendsNamespace();
     }
     
     /**
-     * A namespace object for PointcfgModule.
+     * Creates a namespace object for Edges.
+     *
+     * @return a namespace object
      */
-    public class PointcfgModuleNamespace {
-        private PointcfgModuleNamespace() {}
+    public EdgesNamespace edges() {
+        return new EdgesNamespace();
+    }
+    
+    /**
+     * Creates a namespace object for EdgeModules.
+     *
+     * @return a namespace object
+     */
+    public EdgeModulesNamespace edgeModules() {
+        return new EdgeModulesNamespace();
+    }
+    
+    /**
+     * A namespace object for Backends.
+     */
+    public class BackendsNamespace {
+        private BackendsNamespace() {}
         
         /**
-         * Creates a service client for {@link EndpointLoggingModule}.
+         * A Failover backend defines failover behavior within a list of referenced
+         *  backends. Traffic is sent to the first backend in the list. If that backend
+         *  is offline or no connection can be established, ngrok attempts to connect to
+         *  the next backend in the list until one is successful.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-logging-module">https://ngrok.com/docs/api#api-endpoint-logging-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-failover-backends">https://ngrok.com/docs/api#api-failover-backends</a>
          *
          * @return a service client
          */
-        public EndpointLoggingModule logging() {
-            return new EndpointLoggingModule(Ngrok.this.apiClient);
+        public FailoverBackends failover() {
+            return new FailoverBackends(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointCircuitBreakerModule}.
+         * Creates a service client for {@link HttpResponseBackends}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-circuit-breaker-module">https://ngrok.com/docs/api#api-endpoint-circuit-breaker-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-http-response-backends">https://ngrok.com/docs/api#api-http-response-backends</a>
          *
          * @return a service client
          */
-        public EndpointCircuitBreakerModule circuitBreaker() {
-            return new EndpointCircuitBreakerModule(Ngrok.this.apiClient);
+        public HttpResponseBackends httpResponse() {
+            return new HttpResponseBackends(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointCompressionModule}.
+         * A Tunnel Group Backend balances traffic among all online tunnels that match
+         *  a label selector.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-compression-module">https://ngrok.com/docs/api#api-endpoint-compression-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends">https://ngrok.com/docs/api#api-tunnel-group-backends</a>
          *
          * @return a service client
          */
-        public EndpointCompressionModule compression() {
-            return new EndpointCompressionModule(Ngrok.this.apiClient);
+        public TunnelGroupBackends tunnelGroup() {
+            return new TunnelGroupBackends(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointTlsTerminationModule}.
+         * A Weighted Backend balances traffic among the referenced backends. Traffic
+         *  is assigned proportionally to each based on its weight. The percentage of
+         *  traffic is calculated by dividing a backend's weight by the sum of all
+         *  weights.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-tls-termination-module">https://ngrok.com/docs/api#api-endpoint-tls-termination-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-weighted-backends">https://ngrok.com/docs/api#api-weighted-backends</a>
          *
          * @return a service client
          */
-        public EndpointTlsTerminationModule tlsTermination() {
-            return new EndpointTlsTerminationModule(Ngrok.this.apiClient);
+        public WeightedBackends weighted() {
+            return new WeightedBackends(Ngrok.this.apiClient);
+        }
+        
+    }
+    /**
+     * A namespace object for Edges.
+     */
+    public class EdgesNamespace {
+        private EdgesNamespace() {}
+        
+        /**
+         * Creates a service client for {@link EdgesHttpsRoutes}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edges-https-routes">https://ngrok.com/docs/api#api-edges-https-routes</a>
+         *
+         * @return a service client
+         */
+        public EdgesHttpsRoutes httpsRoutes() {
+            return new EdgesHttpsRoutes(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointIpPolicyModule}.
+         * Creates a service client for {@link EdgesHttps}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-ip-policy-module">https://ngrok.com/docs/api#api-endpoint-ip-policy-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edges-https">https://ngrok.com/docs/api#api-edges-https</a>
          *
          * @return a service client
          */
-        public EndpointIpPolicyModule ipPolicy() {
-            return new EndpointIpPolicyModule(Ngrok.this.apiClient);
+        public EdgesHttps https() {
+            return new EdgesHttps(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointMutualTlsModule}.
+         * Creates a service client for {@link EdgesTcp}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-mutual-tls-module">https://ngrok.com/docs/api#api-endpoint-mutual-tls-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edges-tcp">https://ngrok.com/docs/api#api-edges-tcp</a>
          *
          * @return a service client
          */
-        public EndpointMutualTlsModule mutualTls() {
-            return new EndpointMutualTlsModule(Ngrok.this.apiClient);
+        public EdgesTcp tcp() {
+            return new EdgesTcp(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointRequestHeadersModule}.
+         * Creates a service client for {@link EdgesTls}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-request-headers-module">https://ngrok.com/docs/api#api-endpoint-request-headers-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edges-tls">https://ngrok.com/docs/api#api-edges-tls</a>
          *
          * @return a service client
          */
-        public EndpointRequestHeadersModule requestHeaders() {
-            return new EndpointRequestHeadersModule(Ngrok.this.apiClient);
+        public EdgesTls tls() {
+            return new EdgesTls(Ngrok.this.apiClient);
+        }
+        
+    }
+    /**
+     * A namespace object for EdgeModules.
+     */
+    public class EdgeModulesNamespace {
+        private EdgeModulesNamespace() {}
+        
+        /**
+         * Creates a service client for {@link HttpsEdgeMutualTlsModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-https-edge-mutual-tls-module">https://ngrok.com/docs/api#api-https-edge-mutual-tls-module</a>
+         *
+         * @return a service client
+         */
+        public HttpsEdgeMutualTlsModule httpsEdgeMutualTls() {
+            return new HttpsEdgeMutualTlsModule(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointResponseHeadersModule}.
+         * Creates a service client for {@link HttpsEdgeTlsTerminationModule}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-response-headers-module">https://ngrok.com/docs/api#api-endpoint-response-headers-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-https-edge-tls-termination-module">https://ngrok.com/docs/api#api-https-edge-tls-termination-module</a>
          *
          * @return a service client
          */
-        public EndpointResponseHeadersModule responseHeaders() {
-            return new EndpointResponseHeadersModule(Ngrok.this.apiClient);
+        public HttpsEdgeTlsTerminationModule httpsEdgeTlsTermination() {
+            return new HttpsEdgeTlsTerminationModule(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointOAuthModule}.
+         * Creates a service client for {@link EdgeRouteBackendModule}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-o-auth-module">https://ngrok.com/docs/api#api-endpoint-o-auth-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-backend-module">https://ngrok.com/docs/api#api-edge-route-backend-module</a>
          *
          * @return a service client
          */
-        public EndpointOAuthModule oauth() {
-            return new EndpointOAuthModule(Ngrok.this.apiClient);
+        public EdgeRouteBackendModule httpsEdgeRouteBackend() {
+            return new EdgeRouteBackendModule(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointWebhookValidationModule}.
+         * Creates a service client for {@link EdgeRouteIpRestrictionModule}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-webhook-validation-module">https://ngrok.com/docs/api#api-endpoint-webhook-validation-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-ip-restriction-module">https://ngrok.com/docs/api#api-edge-route-ip-restriction-module</a>
          *
          * @return a service client
          */
-        public EndpointWebhookValidationModule webhookValidation() {
-            return new EndpointWebhookValidationModule(Ngrok.this.apiClient);
+        public EdgeRouteIpRestrictionModule httpsEdgeRouteIpRestriction() {
+            return new EdgeRouteIpRestrictionModule(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointSamlModule}.
+         * Creates a service client for {@link EdgeRouteRequestHeadersModule}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-saml-module">https://ngrok.com/docs/api#api-endpoint-saml-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-request-headers-module">https://ngrok.com/docs/api#api-edge-route-request-headers-module</a>
          *
          * @return a service client
          */
-        public EndpointSamlModule saml() {
-            return new EndpointSamlModule(Ngrok.this.apiClient);
+        public EdgeRouteRequestHeadersModule httpsEdgeRouteRequestHeaders() {
+            return new EdgeRouteRequestHeadersModule(Ngrok.this.apiClient);
         }
         
         /**
-         * Creates a service client for {@link EndpointOidcModule}.
+         * Creates a service client for {@link EdgeRouteResponseHeadersModule}.
          *
-         * See also <a href="https://ngrok.com/docs/api#api-endpoint-oidc-module">https://ngrok.com/docs/api#api-endpoint-oidc-module</a>
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-response-headers-module">https://ngrok.com/docs/api#api-edge-route-response-headers-module</a>
          *
          * @return a service client
          */
-        public EndpointOidcModule oidc() {
-            return new EndpointOidcModule(Ngrok.this.apiClient);
+        public EdgeRouteResponseHeadersModule httpsEdgeRouteResponseHeaders() {
+            return new EdgeRouteResponseHeadersModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteCompressionModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-compression-module">https://ngrok.com/docs/api#api-edge-route-compression-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteCompressionModule httpsEdgeRouteCompression() {
+            return new EdgeRouteCompressionModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteCircuitBreakerModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-circuit-breaker-module">https://ngrok.com/docs/api#api-edge-route-circuit-breaker-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteCircuitBreakerModule httpsEdgeRouteCircuitBreaker() {
+            return new EdgeRouteCircuitBreakerModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteWebhookVerificationModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-webhook-verification-module">https://ngrok.com/docs/api#api-edge-route-webhook-verification-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteWebhookVerificationModule httpsEdgeRouteWebhookVerification() {
+            return new EdgeRouteWebhookVerificationModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteOAuthModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-o-auth-module">https://ngrok.com/docs/api#api-edge-route-o-auth-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteOAuthModule httpsEdgeRouteOauth() {
+            return new EdgeRouteOAuthModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteSamlModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-saml-module">https://ngrok.com/docs/api#api-edge-route-saml-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteSamlModule httpsEdgeRouteSaml() {
+            return new EdgeRouteSamlModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteOidcModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-oidc-module">https://ngrok.com/docs/api#api-edge-route-oidc-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteOidcModule httpsEdgeRouteOidc() {
+            return new EdgeRouteOidcModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteWebsocketTcpConverterModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-websocket-tcp-converter-module">https://ngrok.com/docs/api#api-edge-route-websocket-tcp-converter-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteWebsocketTcpConverterModule httpsEdgeRouteWebsocketTcpConverter() {
+            return new EdgeRouteWebsocketTcpConverterModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TcpEdgeBackendModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tcp-edge-backend-module">https://ngrok.com/docs/api#api-tcp-edge-backend-module</a>
+         *
+         * @return a service client
+         */
+        public TcpEdgeBackendModule tcpEdgeBackend() {
+            return new TcpEdgeBackendModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TcpEdgeIpRestrictionModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tcp-edge-ip-restriction-module">https://ngrok.com/docs/api#api-tcp-edge-ip-restriction-module</a>
+         *
+         * @return a service client
+         */
+        public TcpEdgeIpRestrictionModule tcpEdgeIpRestriction() {
+            return new TcpEdgeIpRestrictionModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TlsEdgeBackendModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tls-edge-backend-module">https://ngrok.com/docs/api#api-tls-edge-backend-module</a>
+         *
+         * @return a service client
+         */
+        public TlsEdgeBackendModule tlsEdgeBackend() {
+            return new TlsEdgeBackendModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TlsEdgeIpRestrictionModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tls-edge-ip-restriction-module">https://ngrok.com/docs/api#api-tls-edge-ip-restriction-module</a>
+         *
+         * @return a service client
+         */
+        public TlsEdgeIpRestrictionModule tlsEdgeIpRestriction() {
+            return new TlsEdgeIpRestrictionModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TlsEdgeMutualTlsModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tls-edge-mutual-tls-module">https://ngrok.com/docs/api#api-tls-edge-mutual-tls-module</a>
+         *
+         * @return a service client
+         */
+        public TlsEdgeMutualTlsModule tlsEdgeMutualTls() {
+            return new TlsEdgeMutualTlsModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TlsEdgeTlsTerminationModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tls-edge-tls-termination-module">https://ngrok.com/docs/api#api-tls-edge-tls-termination-module</a>
+         *
+         * @return a service client
+         */
+        public TlsEdgeTlsTerminationModule tlsEdgeTlsTermination() {
+            return new TlsEdgeTlsTerminationModule(Ngrok.this.apiClient);
         }
         
     }

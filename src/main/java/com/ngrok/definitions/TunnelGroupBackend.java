@@ -9,16 +9,16 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A class encapsulating the {@link ReservedAddr} resource.
+ * A class encapsulating the {@link TunnelGroupBackend} resource.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReservedAddr {
+public class TunnelGroupBackend {
     @JsonProperty("id")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String id;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.net.URI uri;
+    private final String uri;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
@@ -28,45 +28,45 @@ public class ReservedAddr {
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String metadata;
-    @JsonProperty("addr")
+    @JsonProperty("labels")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String addr;
-    @JsonProperty("region")
+    private final java.util.Map<String, String> labels;
+    @JsonProperty("tunnels")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String region;
+    private final java.util.List<Ref> tunnels;
 
     /**
-     * Creates a new instance of {@link ReservedAddr}.
+     * Creates a new instance of {@link TunnelGroupBackend}.
      *
-     * @param id unique reserved address resource identifier
-     * @param uri URI of the reserved address API resource
-     * @param createdAt timestamp when the reserved address was created, RFC 3339 format
-     * @param description human-readable description of what this reserved address will be used for
-     * @param metadata arbitrary user-defined machine-readable data of this reserved address. Optional, max 4096 bytes.
-     * @param addr hostname:port of the reserved address that was assigned at creation time
-     * @param region reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa)
+     * @param id unique identifier for this TunnelGroup backend
+     * @param uri URI of the TunnelGroupBackend API resource
+     * @param createdAt timestamp when the backend was created, RFC 3339 format
+     * @param description human-readable description of this backend. Optional
+     * @param metadata arbitrary user-defined machine-readable data of this backend. Optional
+     * @param labels labels to watch for tunnels on, e.g. app->foo, dc->bar
+     * @param tunnels tunnels matching this backend
      */
     @JsonCreator
-    public ReservedAddr(
+    public TunnelGroupBackend(
         @JsonProperty("id") final String id,
-        @JsonProperty("uri") final java.net.URI uri,
+        @JsonProperty("uri") final String uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
-        @JsonProperty("addr") final String addr,
-        @JsonProperty("region") final String region
+        @JsonProperty("labels") final java.util.Map<String, String> labels,
+        @JsonProperty("tunnels") final java.util.List<Ref> tunnels
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-        this.addr = Objects.requireNonNull(addr, "addr is required");
-        this.region = Objects.requireNonNull(region, "region is required");
+        this.labels = Objects.requireNonNull(labels, "labels is required");
+        this.tunnels = Objects.requireNonNull(tunnels, "tunnels is required");
     }
 
     /**
-     * unique reserved address resource identifier
+     * unique identifier for this TunnelGroup backend
      *
      * @return the value of the property as a {@link String}
      */
@@ -75,16 +75,16 @@ public class ReservedAddr {
     }
 
     /**
-     * URI of the reserved address API resource
+     * URI of the TunnelGroupBackend API resource
      *
-     * @return the value of the property as a {@link java.net.URI}
+     * @return the value of the property as a {@link String}
      */
-    public java.net.URI getUri() {
+    public String getUri() {
         return this.uri;
     }
 
     /**
-     * timestamp when the reserved address was created, RFC 3339 format
+     * timestamp when the backend was created, RFC 3339 format
      *
      * @return the value of the property as a {@link java.time.OffsetDateTime}
      */
@@ -93,7 +93,7 @@ public class ReservedAddr {
     }
 
     /**
-     * human-readable description of what this reserved address will be used for
+     * human-readable description of this backend. Optional
      *
      * @return the value of the property as a {@link String}
      */
@@ -102,8 +102,7 @@ public class ReservedAddr {
     }
 
     /**
-     * arbitrary user-defined machine-readable data of this reserved address. Optional,
-     * max 4096 bytes.
+     * arbitrary user-defined machine-readable data of this backend. Optional
      *
      * @return the value of the property as a {@link String}
      */
@@ -112,22 +111,21 @@ public class ReservedAddr {
     }
 
     /**
-     * hostname:port of the reserved address that was assigned at creation time
+     * labels to watch for tunnels on, e.g. app->foo, dc->bar
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.util.Map<String, String>}
      */
-    public String getAddr() {
-        return this.addr;
+    public java.util.Map<String, String> getLabels() {
+        return this.labels;
     }
 
     /**
-     * reserve the address in this geographic ngrok datacenter. Optional, default is
-     * us. (au, eu, ap, us, jp, in, sa)
+     * tunnels matching this backend
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.util.List<Ref>}
      */
-    public String getRegion() {
-        return this.region;
+    public java.util.List<Ref> getTunnels() {
+        return this.tunnels;
     }
 
     @Override
@@ -139,15 +137,15 @@ public class ReservedAddr {
             return false;
         }
         
-        final ReservedAddr other = (ReservedAddr) o;
+        final TunnelGroupBackend other = (TunnelGroupBackend) o;
         return
             this.id.equals(other.id)&&
             this.uri.equals(other.uri)&&
             this.createdAt.equals(other.createdAt)&&
             this.description.equals(other.description)&&
             this.metadata.equals(other.metadata)&&
-            this.addr.equals(other.addr)&&
-            this.region.equals(other.region);
+            this.labels.equals(other.labels)&&
+            this.tunnels.equals(other.tunnels);
         
     }
 
@@ -159,21 +157,21 @@ public class ReservedAddr {
             this.createdAt,
             this.description,
             this.metadata,
-            this.addr,
-            this.region
+            this.labels,
+            this.tunnels
         );
     }
 
     @Override
     public String toString() {
-        return "ReservedAddr{" +
+        return "TunnelGroupBackend{" +
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
             "', description='" + this.description +
             "', metadata='" + this.metadata +
-            "', addr='" + this.addr +
-            "', region='" + this.region +
+            "', labels='" + this.labels +
+            "', tunnels='" + this.tunnels +
             "'}";
     }
 }

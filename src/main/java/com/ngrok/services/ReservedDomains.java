@@ -39,8 +39,6 @@ public class ReservedDomains {
         private String region = "";
         private String description = "";
         private String metadata = "";
-        private Optional<String> httpEndpointConfigurationId = Optional.empty();
-        private Optional<String> httpsEndpointConfigurationId = Optional.empty();
         private Optional<String> certificateId = Optional.empty();
         private Optional<ReservedDomainCertPolicy> certificateManagementPolicy = Optional.empty();
 
@@ -121,54 +119,6 @@ public class ReservedDomains {
         }
         
         /**
-         * ID of an endpoint configuration of type http that will be used to handle inbound
-         * http traffic to this domain
-         *
-         * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder httpEndpointConfigurationId(final String httpEndpointConfigurationId) {
-            this.httpEndpointConfigurationId = Optional.ofNullable(httpEndpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type http that will be used to handle inbound
-         * http traffic to this domain
-         *
-         * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder httpEndpointConfigurationId(final Optional<String> httpEndpointConfigurationId) {
-            this.httpEndpointConfigurationId = Objects.requireNonNull(httpEndpointConfigurationId, "httpEndpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
-         * ID of an endpoint configuration of type https that will be used to handle
-         * inbound https traffic to this domain
-         *
-         * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder httpsEndpointConfigurationId(final String httpsEndpointConfigurationId) {
-            this.httpsEndpointConfigurationId = Optional.ofNullable(httpsEndpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type https that will be used to handle
-         * inbound https traffic to this domain
-         *
-         * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder httpsEndpointConfigurationId(final Optional<String> httpsEndpointConfigurationId) {
-            this.httpsEndpointConfigurationId = Objects.requireNonNull(httpsEndpointConfigurationId, "httpsEndpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
          * ID of a user-uploaded TLS certificate to use for connections to targeting this
          * domain. Optional, mutually exclusive with
          * <code>certificate_management_policy</code>.
@@ -235,8 +185,6 @@ public class ReservedDomains {
                     new AbstractMap.SimpleEntry<>("region", Optional.of(this.region)),
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("http_endpoint_configuration_id", this.httpEndpointConfigurationId.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("https_endpoint_configuration_id", this.httpsEndpointConfigurationId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("certificate_id", this.certificateId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("certificate_management_policy", this.certificateManagementPolicy.map(Function.identity()))
                 ),
@@ -498,8 +446,6 @@ public class ReservedDomains {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<String> httpEndpointConfigurationId = Optional.empty();
-        private Optional<String> httpsEndpointConfigurationId = Optional.empty();
         private Optional<String> certificateId = Optional.empty();
         private Optional<ReservedDomainCertPolicy> certificateManagementPolicy = Optional.empty();
 
@@ -552,54 +498,6 @@ public class ReservedDomains {
          */
         public UpdateCallBuilder metadata(final Optional<String> metadata) {
             this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-            return this;
-        }
-        
-        /**
-         * ID of an endpoint configuration of type http that will be used to handle inbound
-         * http traffic to this domain
-         *
-         * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder httpEndpointConfigurationId(final String httpEndpointConfigurationId) {
-            this.httpEndpointConfigurationId = Optional.ofNullable(httpEndpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type http that will be used to handle inbound
-         * http traffic to this domain
-         *
-         * @param httpEndpointConfigurationId the value of the http_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder httpEndpointConfigurationId(final Optional<String> httpEndpointConfigurationId) {
-            this.httpEndpointConfigurationId = Objects.requireNonNull(httpEndpointConfigurationId, "httpEndpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
-         * ID of an endpoint configuration of type https that will be used to handle
-         * inbound https traffic to this domain
-         *
-         * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder httpsEndpointConfigurationId(final String httpsEndpointConfigurationId) {
-            this.httpsEndpointConfigurationId = Optional.ofNullable(httpsEndpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type https that will be used to handle
-         * inbound https traffic to this domain
-         *
-         * @param httpsEndpointConfigurationId the value of the https_endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder httpsEndpointConfigurationId(final Optional<String> httpsEndpointConfigurationId) {
-            this.httpsEndpointConfigurationId = Objects.requireNonNull(httpsEndpointConfigurationId, "httpsEndpointConfigurationId is required");
             return this;
         }
         
@@ -668,8 +566,6 @@ public class ReservedDomains {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("http_endpoint_configuration_id", this.httpEndpointConfigurationId.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("https_endpoint_configuration_id", this.httpsEndpointConfigurationId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("certificate_id", this.certificateId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("certificate_management_policy", this.certificateManagementPolicy.map(Function.identity()))
                 ),
@@ -818,120 +714,6 @@ public class ReservedDomains {
         final String id
     ) {
         return new DeleteCertificateCallBuilder(
-            id
-        );
-    }
-    
-    /**
-     * A builder object encapsulating state for an unsent DeleteHttpEndpointConfig API call.
-     */
-    public class DeleteHttpEndpointConfigCallBuilder {
-        private final String id;
-
-        private DeleteHttpEndpointConfigCallBuilder(
-            final String id
-        ) {
-            this.id = Objects.requireNonNull(id, "id is required");
-        }
-        
-        /**
-         * Initiates the API call asynchronously.
-         *
-         * @return a {@link CompletionStage} of {@link Void}
-         */
-        public CompletionStage<Void> call() {
-            return apiClient.sendRequest(
-                NgrokApiClient.HttpMethod.DELETE,
-                "/reserved_domains/" + this.id + "/http_endpoint_configuration",
-                Stream.empty(),
-                Stream.empty(),
-                Optional.empty()
-            );
-        }
-
-        /**
-         * Initiates the API call and blocks until it returns.
-         *
-         * @throws InterruptedException if the thread was interrupted during the call
-         */
-        public void blockingCall() throws InterruptedException {
-            try {
-                call().toCompletableFuture().get();
-            } catch (final ExecutionException e) {
-                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
-            }
-        }
-    }
-
-    /**
-     * Detach the http endpoint configuration attached to a reserved domain.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete-http-endpoint-config">https://ngrok.com/docs/api#api-reserved-domains-delete-http-endpoint-config</a>.
-     *
-     * @param id a resource identifier
-     * @return a call builder for this API call
-     */
-    public DeleteHttpEndpointConfigCallBuilder deleteHttpEndpointConfig(
-        final String id
-    ) {
-        return new DeleteHttpEndpointConfigCallBuilder(
-            id
-        );
-    }
-    
-    /**
-     * A builder object encapsulating state for an unsent DeleteHttpsEndpointConfig API call.
-     */
-    public class DeleteHttpsEndpointConfigCallBuilder {
-        private final String id;
-
-        private DeleteHttpsEndpointConfigCallBuilder(
-            final String id
-        ) {
-            this.id = Objects.requireNonNull(id, "id is required");
-        }
-        
-        /**
-         * Initiates the API call asynchronously.
-         *
-         * @return a {@link CompletionStage} of {@link Void}
-         */
-        public CompletionStage<Void> call() {
-            return apiClient.sendRequest(
-                NgrokApiClient.HttpMethod.DELETE,
-                "/reserved_domains/" + this.id + "/https_endpoint_configuration",
-                Stream.empty(),
-                Stream.empty(),
-                Optional.empty()
-            );
-        }
-
-        /**
-         * Initiates the API call and blocks until it returns.
-         *
-         * @throws InterruptedException if the thread was interrupted during the call
-         */
-        public void blockingCall() throws InterruptedException {
-            try {
-                call().toCompletableFuture().get();
-            } catch (final ExecutionException e) {
-                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
-            }
-        }
-    }
-
-    /**
-     * Detach the https endpoint configuration attached to a reserved domain.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-delete-https-endpoint-config">https://ngrok.com/docs/api#api-reserved-domains-delete-https-endpoint-config</a>.
-     *
-     * @param id a resource identifier
-     * @return a call builder for this API call
-     */
-    public DeleteHttpsEndpointConfigCallBuilder deleteHttpsEndpointConfig(
-        final String id
-    ) {
-        return new DeleteHttpsEndpointConfigCallBuilder(
             id
         );
     }

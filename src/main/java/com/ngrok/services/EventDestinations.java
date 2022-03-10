@@ -232,8 +232,7 @@ public class EventDestinations {
 
     /**
      * Delete an Event Destination. If the Event Destination is still referenced by an
-     * Event Stream, this will throw an error until that Event Stream has removed that
-     * reference.
+     * Event Subscription.
      *
      * See also <a href="https://ngrok.com/docs/api#api-event-destinations-delete">https://ngrok.com/docs/api#api-event-destinations-delete</a>.
      *

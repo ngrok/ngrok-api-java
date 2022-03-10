@@ -12,19 +12,20 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * An API client for {@link EventSubscriptions}.
+ * A Tunnel Group Backend balances traffic among all online tunnels that match
+ *  a label selector.
  *
- * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions">https://ngrok.com/docs/api#api-event-subscriptions</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends">https://ngrok.com/docs/api#api-tunnel-group-backends</a>.
  */
-public class EventSubscriptions {
+public class TunnelGroupBackends {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for EventSubscriptions.
+     * Creates a new sub-client for TunnelGroupBackends.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public EventSubscriptions(final NgrokApiClient apiClient) {
+    public TunnelGroupBackends(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -32,42 +33,16 @@ public class EventSubscriptions {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String metadata = "";
         private String description = "";
-        private java.util.List<EventSourceReplace> sources = java.util.Collections.emptyList();
-        private java.util.List<String> destinationIds = java.util.Collections.emptyList();
+        private String metadata = "";
+        private java.util.Map<String, String> labels = java.util.Collections.emptyMap();
 
         private CreateCallBuilder(
         ) {
         }
         
         /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-            return this;
-        }
-
-        /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
-            return this;
-        }
-        
-        /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -78,8 +53,7 @@ public class EventSubscriptions {
         }
 
         /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -90,78 +64,75 @@ public class EventSubscriptions {
         }
         
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as a {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public CreateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required");
+        public CreateCallBuilder metadata(final String metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
 
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as an {@link Optional} of {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CreateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required").orElse(java.util.Collections.emptyList());
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
         
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * labels to watch for tunnels on, e.g. app->foo, dc->bar
          *
-         * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
+         * @param labels the value of the labels parameter as a {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
+        public CreateCallBuilder labels(final java.util.Map<String, String> labels) {
+            this.labels = Objects.requireNonNull(labels, "labels is required");
             return this;
         }
 
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * labels to watch for tunnels on, e.g. app->foo, dc->bar
          *
-         * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param labels the value of the labels parameter as an {@link Optional} of {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(java.util.Collections.emptyList());
+        public CreateCallBuilder labels(final Optional<java.util.Map<String, String>> labels) {
+            this.labels = Objects.requireNonNull(labels, "labels is required").orElse(java.util.Collections.emptyMap());
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link EventSubscription}
+         * @return a {@link CompletionStage} of {@link TunnelGroupBackend}
          */
-        public CompletionStage<EventSubscription> call() {
+        public CompletionStage<TunnelGroupBackend> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/event_subscriptions",
+                "/backends/tunnel_group",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("sources", Optional.of(this.sources)),
-                    new AbstractMap.SimpleEntry<>("destination_ids", Optional.of(this.destinationIds))
+                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
+                    new AbstractMap.SimpleEntry<>("labels", Optional.of(this.labels))
                 ),
-                Optional.of(EventSubscription.class)
+                Optional.of(TunnelGroupBackend.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link EventSubscription}
+         * @return {@link TunnelGroupBackend}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public EventSubscription blockingCall() throws InterruptedException {
+        public TunnelGroupBackend blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -171,9 +142,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * Create an Event Subscription.
+     * Create a new TunnelGroup backend
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-create">https://ngrok.com/docs/api#api-event-subscriptions-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends-create">https://ngrok.com/docs/api#api-tunnel-group-backends-create</a>.
      *
      * @return a call builder for this API call
      */
@@ -203,7 +174,7 @@ public class EventSubscriptions {
         public CompletionStage<Void> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.DELETE,
-                "/event_subscriptions/" + this.id,
+                "/backends/tunnel_group/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
                 Optional.empty()
@@ -225,9 +196,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * Delete an Event Subscription.
+     * Delete a TunnelGroup backend by ID. TODO what if used?
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-delete">https://ngrok.com/docs/api#api-event-subscriptions-delete</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends-delete">https://ngrok.com/docs/api#api-tunnel-group-backends-delete</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -255,25 +226,25 @@ public class EventSubscriptions {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link EventSubscription}
+         * @return a {@link CompletionStage} of {@link TunnelGroupBackend}
          */
-        public CompletionStage<EventSubscription> call() {
+        public CompletionStage<TunnelGroupBackend> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/event_subscriptions/" + this.id,
+                "/backends/tunnel_group/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(EventSubscription.class)
+                Optional.of(TunnelGroupBackend.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link EventSubscription}
+         * @return {@link TunnelGroupBackend}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public EventSubscription blockingCall() throws InterruptedException {
+        public TunnelGroupBackend blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -283,9 +254,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * Get an Event Subscription by ID.
+     * Get detailed information about a TunnelGroup backend by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-get">https://ngrok.com/docs/api#api-event-subscriptions-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends-get">https://ngrok.com/docs/api#api-tunnel-group-backends-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -356,28 +327,28 @@ public class EventSubscriptions {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link EventSubscriptionList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link TunnelGroupBackendList}
          */
-        public CompletionStage<Page<EventSubscriptionList>> call() {
+        public CompletionStage<Page<TunnelGroupBackendList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/event_subscriptions",
+                "/backends/tunnel_group",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(EventSubscriptionList.class)
+                Optional.of(TunnelGroupBackendList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link EventSubscriptionList}
+         * @return a {@link Page} of {@link TunnelGroupBackendList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<EventSubscriptionList> blockingCall() throws InterruptedException {
+        public Page<TunnelGroupBackendList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -387,9 +358,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * List this Account's Event Subscriptions.
+     * List all TunnelGroup backends on this account
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-list">https://ngrok.com/docs/api#api-event-subscriptions-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends-list">https://ngrok.com/docs/api#api-tunnel-group-backends-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -404,10 +375,9 @@ public class EventSubscriptions {
      */
     public class UpdateCallBuilder {
         private final String id;
-        private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
-        private Optional<java.util.List<EventSourceReplace>> sources = Optional.empty();
-        private Optional<java.util.List<String>> destinationIds = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private java.util.Map<String, String> labels = java.util.Collections.emptyMap();
 
         private UpdateCallBuilder(
             final String id
@@ -416,32 +386,7 @@ public class EventSubscriptions {
         }
         
         /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
-            return this;
-        }
-
-        /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-            return this;
-        }
-        
-        /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -452,8 +397,7 @@ public class EventSubscriptions {
         }
 
         /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -464,78 +408,75 @@ public class EventSubscriptions {
         }
         
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as a {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public UpdateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
-            this.sources = Optional.ofNullable(sources);
+        public UpdateCallBuilder metadata(final String metadata) {
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as an {@link Optional} of {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public UpdateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required");
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * labels to watch for tunnels on, e.g. app->foo, dc->bar
          *
-         * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
+         * @param labels the value of the labels parameter as a {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
-            this.destinationIds = Optional.ofNullable(destinationIds);
+        public UpdateCallBuilder labels(final java.util.Map<String, String> labels) {
+            this.labels = Objects.requireNonNull(labels, "labels is required");
             return this;
         }
 
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * labels to watch for tunnels on, e.g. app->foo, dc->bar
          *
-         * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param labels the value of the labels parameter as an {@link Optional} of {@link java.util.Map<String, String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
+        public UpdateCallBuilder labels(final Optional<java.util.Map<String, String>> labels) {
+            this.labels = Objects.requireNonNull(labels, "labels is required").orElse(java.util.Collections.emptyMap());
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link EventSubscription}
+         * @return a {@link CompletionStage} of {@link TunnelGroupBackend}
          */
-        public CompletionStage<EventSubscription> call() {
+        public CompletionStage<TunnelGroupBackend> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/event_subscriptions/" + this.id,
+                "/backends/tunnel_group/" + this.id,
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("sources", this.sources.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("destination_ids", this.destinationIds.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("labels", Optional.of(this.labels))
                 ),
-                Optional.of(EventSubscription.class)
+                Optional.of(TunnelGroupBackend.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link EventSubscription}
+         * @return {@link TunnelGroupBackend}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public EventSubscription blockingCall() throws InterruptedException {
+        public TunnelGroupBackend blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -545,11 +486,11 @@ public class EventSubscriptions {
     }
 
     /**
-     * Update an Event Subscription.
+     * Update TunnelGroup backend by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-update">https://ngrok.com/docs/api#api-event-subscriptions-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-group-backends-update">https://ngrok.com/docs/api#api-tunnel-group-backends-update</a>.
      *
-     * @param id Unique identifier for this Event Subscription.
+     * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
     public UpdateCallBuilder update(

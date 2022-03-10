@@ -38,12 +38,9 @@ public class IpPolicies {
     public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private final String action;
 
         private CreateCallBuilder(
-            final String action
         ) {
-            this.action = Objects.requireNonNull(action, "action is required");
         }
         
         /**
@@ -106,8 +103,7 @@ public class IpPolicies {
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("action", Optional.of(this.action))
+                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata))
                 ),
                 Optional.of(IpPolicy.class)
             );
@@ -134,14 +130,11 @@ public class IpPolicies {
      *
      * See also <a href="https://ngrok.com/docs/api#api-ip-policies-create">https://ngrok.com/docs/api#api-ip-policies-create</a>.
      *
-     * @param action the IP policy action. Supported values are <code>allow</code> or <code>deny</code>
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
-        final String action
     ) {
         return new CreateCallBuilder(
-            action
         );
     }
     

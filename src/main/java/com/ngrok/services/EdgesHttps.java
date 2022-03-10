@@ -12,24 +12,19 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * An IP restriction is a restriction placed on the CIDRs that are allowed to
- *  initiate traffic to a specific aspect of your ngrok account. An IP
- *  restriction has a type which defines the ingress it applies to. IP
- *  restrictions can be used to enforce the source IPs that can make API
- *  requests, log in to the dashboard, start ngrok agents, and connect to your
- *  public-facing endpoints.
+ * An API client for {@link EdgesHttps}.
  *
- * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions">https://ngrok.com/docs/api#api-ip-restrictions</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-edges-https">https://ngrok.com/docs/api#api-edges-https</a>.
  */
-public class IpRestrictions {
+public class EdgesHttps {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for IpRestrictions.
+     * Creates a new sub-client for EdgesHttps.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public IpRestrictions(final NgrokApiClient apiClient) {
+    public EdgesHttps(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -39,20 +34,17 @@ public class IpRestrictions {
     public class CreateCallBuilder {
         private String description = "";
         private String metadata = "";
-        private boolean enforced = false;
-        private final String type;
-        private final java.util.List<String> ipPolicyIds;
+        private Optional<java.util.List<String>> hostports = Optional.empty();
+        private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
+        private Optional<EndpointTlsTerminationAtEdge> tlsTermination = Optional.empty();
 
         private CreateCallBuilder(
-            final String type,
-            final java.util.List<String> ipPolicyIds
         ) {
-            this.type = Objects.requireNonNull(type, "type is required");
-            this.ipPolicyIds = Objects.requireNonNull(ipPolicyIds, "ipPolicyIds is required");
         }
         
         /**
-         * human-readable description of this IP restriction. optional, max 255 bytes.
+         * human-readable description of what this edge will be used for; optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -63,7 +55,8 @@ public class IpRestrictions {
         }
 
         /**
-         * human-readable description of this IP restriction. optional, max 255 bytes.
+         * human-readable description of what this edge will be used for; optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -74,8 +67,8 @@ public class IpRestrictions {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP restriction. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge; optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -86,8 +79,8 @@ public class IpRestrictions {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP restriction. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge; optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -98,57 +91,99 @@ public class IpRestrictions {
         }
         
         /**
-         * true if the IP restriction will be enforced. if false, only warnings will be
-         * issued
+         * hostports served by this edge
          *
-         * @param enforced the value of the enforced parameter as a {@link boolean}
+         * @param hostports the value of the hostports parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder enforced(final boolean enforced) {
-            this.enforced = Objects.requireNonNull(enforced, "enforced is required");
+        public CreateCallBuilder hostports(final java.util.List<String> hostports) {
+            this.hostports = Optional.ofNullable(hostports);
             return this;
         }
 
         /**
-         * true if the IP restriction will be enforced. if false, only warnings will be
-         * issued
+         * hostports served by this edge
          *
-         * @param enforced the value of the enforced parameter as an {@link Optional} of {@link boolean}
+         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder enforced(final Optional<Boolean> enforced) {
-            this.enforced = Objects.requireNonNull(enforced, "enforced is required").orElse(false);
+        public CreateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            return this;
+        }
+        
+        /**
+         * edge modules
+         *
+         * @param mutualTls the value of the mutual_tls parameter as a {@link EndpointMutualTlsMutate}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
+            this.mutualTls = Optional.ofNullable(mutualTls);
+            return this;
+        }
+
+        /**
+         * edge modules
+         *
+         * @param mutualTls the value of the mutual_tls parameter as an {@link Optional} of {@link EndpointMutualTlsMutate}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder mutualTls(final Optional<EndpointMutualTlsMutate> mutualTls) {
+            this.mutualTls = Objects.requireNonNull(mutualTls, "mutualTls is required");
+            return this;
+        }
+        
+        /**
+         * Sets the <code>tls_termination</code> parameter.
+         *
+         * @param tlsTermination the value of the tls_termination parameter as a {@link EndpointTlsTerminationAtEdge}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder tlsTermination(final EndpointTlsTerminationAtEdge tlsTermination) {
+            this.tlsTermination = Optional.ofNullable(tlsTermination);
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>tls_termination</code> parameter.
+         *
+         * @param tlsTermination the value of the tls_termination parameter as an {@link Optional} of {@link EndpointTlsTerminationAtEdge}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder tlsTermination(final Optional<EndpointTlsTerminationAtEdge> tlsTermination) {
+            this.tlsTermination = Objects.requireNonNull(tlsTermination, "tlsTermination is required");
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpRestriction}
+         * @return a {@link CompletionStage} of {@link HttpsEdge}
          */
-        public CompletionStage<IpRestriction> call() {
+        public CompletionStage<HttpsEdge> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/ip_restrictions",
+                "/edges/https",
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("enforced", Optional.of(this.enforced)),
-                    new AbstractMap.SimpleEntry<>("type", Optional.of(this.type)),
-                    new AbstractMap.SimpleEntry<>("ip_policy_ids", Optional.of(this.ipPolicyIds))
+                    new AbstractMap.SimpleEntry<>("hostports", this.hostports.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("mutual_tls", this.mutualTls.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("tls_termination", this.tlsTermination.map(Function.identity()))
                 ),
-                Optional.of(IpRestriction.class)
+                Optional.of(HttpsEdge.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpRestriction}
+         * @return {@link HttpsEdge}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpRestriction blockingCall() throws InterruptedException {
+        public HttpsEdge blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -158,78 +193,15 @@ public class IpRestrictions {
     }
 
     /**
-     * Create a new IP restriction
+     * Create an HTTPS Edge
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-create">https://ngrok.com/docs/api#api-ip-restrictions-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-https-create">https://ngrok.com/docs/api#api-edges-https-create</a>.
      *
-     * @param type the type of IP restriction. this defines what traffic will be restricted with the attached policies. four values are currently supported: <code>dashboard</code>, <code>api</code>, <code>agent</code>, and <code>endpoints</code>
-     * @param ipPolicyIds the set of IP policy identifiers that are used to enforce the restriction
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
-        final String type,
-        final java.util.List<String> ipPolicyIds
     ) {
         return new CreateCallBuilder(
-            type,
-            ipPolicyIds
-        );
-    }
-    
-    /**
-     * A builder object encapsulating state for an unsent Delete API call.
-     */
-    public class DeleteCallBuilder {
-        private final String id;
-
-        private DeleteCallBuilder(
-            final String id
-        ) {
-            this.id = Objects.requireNonNull(id, "id is required");
-        }
-        
-        /**
-         * Initiates the API call asynchronously.
-         *
-         * @return a {@link CompletionStage} of {@link Void}
-         */
-        public CompletionStage<Void> call() {
-            return apiClient.sendRequest(
-                NgrokApiClient.HttpMethod.DELETE,
-                "/ip_restrictions/" + this.id,
-                Stream.empty(),
-                Stream.empty(),
-                Optional.empty()
-            );
-        }
-
-        /**
-         * Initiates the API call and blocks until it returns.
-         *
-         * @throws InterruptedException if the thread was interrupted during the call
-         */
-        public void blockingCall() throws InterruptedException {
-            try {
-                call().toCompletableFuture().get();
-            } catch (final ExecutionException e) {
-                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
-            }
-        }
-    }
-
-    /**
-     * Delete an IP restriction
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-delete">https://ngrok.com/docs/api#api-ip-restrictions-delete</a>.
-     *
-     * @param id a resource identifier
-     * @return a call builder for this API call
-     */
-    public DeleteCallBuilder delete(
-        final String id
-    ) {
-        return new DeleteCallBuilder(
-            id
         );
     }
     
@@ -248,25 +220,25 @@ public class IpRestrictions {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpRestriction}
+         * @return a {@link CompletionStage} of {@link HttpsEdge}
          */
-        public CompletionStage<IpRestriction> call() {
+        public CompletionStage<HttpsEdge> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_restrictions/" + this.id,
+                "/edges/https/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(IpRestriction.class)
+                Optional.of(HttpsEdge.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpRestriction}
+         * @return {@link HttpsEdge}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpRestriction blockingCall() throws InterruptedException {
+        public HttpsEdge blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -276,9 +248,9 @@ public class IpRestrictions {
     }
 
     /**
-     * Get detailed information about an IP restriction
+     * Get an HTTPS Edge by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-get">https://ngrok.com/docs/api#api-ip-restrictions-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-https-get">https://ngrok.com/docs/api#api-edges-https-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -349,28 +321,28 @@ public class IpRestrictions {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link IpRestrictionList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link HttpsEdgeList}
          */
-        public CompletionStage<Page<IpRestrictionList>> call() {
+        public CompletionStage<Page<HttpsEdgeList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_restrictions",
+                "/edges/https",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(IpRestrictionList.class)
+                Optional.of(HttpsEdgeList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link IpRestrictionList}
+         * @return a {@link Page} of {@link HttpsEdgeList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<IpRestrictionList> blockingCall() throws InterruptedException {
+        public Page<HttpsEdgeList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -380,9 +352,9 @@ public class IpRestrictions {
     }
 
     /**
-     * List all IP restrictions on this account
+     * Returns a list of all HTTPS Edges on this account
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-list">https://ngrok.com/docs/api#api-ip-restrictions-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-https-list">https://ngrok.com/docs/api#api-edges-https-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -399,8 +371,9 @@ public class IpRestrictions {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<Boolean> enforced = Optional.empty();
-        private java.util.List<String> ipPolicyIds = java.util.Collections.emptyList();
+        private Optional<java.util.List<String>> hostports = Optional.empty();
+        private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
+        private Optional<EndpointTlsTerminationAtEdge> tlsTermination = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -409,7 +382,8 @@ public class IpRestrictions {
         }
         
         /**
-         * human-readable description of this IP restriction. optional, max 255 bytes.
+         * human-readable description of what this edge will be used for; optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -420,7 +394,8 @@ public class IpRestrictions {
         }
 
         /**
-         * human-readable description of this IP restriction. optional, max 255 bytes.
+         * human-readable description of what this edge will be used for; optional, max 255
+         * bytes.
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -431,8 +406,8 @@ public class IpRestrictions {
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP restriction. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge; optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
@@ -443,8 +418,8 @@ public class IpRestrictions {
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP restriction. optional,
-         * max 4096 bytes.
+         * arbitrary user-defined machine-readable data of this edge; optional, max 4096
+         * bytes.
          *
          * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -455,78 +430,99 @@ public class IpRestrictions {
         }
         
         /**
-         * true if the IP restriction will be enforced. if false, only warnings will be
-         * issued
+         * hostports served by this edge
          *
-         * @param enforced the value of the enforced parameter as a {@link boolean}
+         * @param hostports the value of the hostports parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder enforced(final boolean enforced) {
-            this.enforced = Optional.ofNullable(enforced);
+        public UpdateCallBuilder hostports(final java.util.List<String> hostports) {
+            this.hostports = Optional.ofNullable(hostports);
             return this;
         }
 
         /**
-         * true if the IP restriction will be enforced. if false, only warnings will be
-         * issued
+         * hostports served by this edge
          *
-         * @param enforced the value of the enforced parameter as an {@link Optional} of {@link boolean}
+         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder enforced(final Optional<Boolean> enforced) {
-            this.enforced = Objects.requireNonNull(enforced, "enforced is required");
+        public UpdateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
             return this;
         }
         
         /**
-         * the set of IP policy identifiers that are used to enforce the restriction
+         * edge modules
          *
-         * @param ipPolicyIds the value of the ip_policy_ids parameter as a {@link java.util.List<String>}
+         * @param mutualTls the value of the mutual_tls parameter as a {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public UpdateCallBuilder ipPolicyIds(final java.util.List<String> ipPolicyIds) {
-            this.ipPolicyIds = Objects.requireNonNull(ipPolicyIds, "ipPolicyIds is required");
+        public UpdateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
+            this.mutualTls = Optional.ofNullable(mutualTls);
             return this;
         }
 
         /**
-         * the set of IP policy identifiers that are used to enforce the restriction
+         * edge modules
          *
-         * @param ipPolicyIds the value of the ip_policy_ids parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param mutualTls the value of the mutual_tls parameter as an {@link Optional} of {@link EndpointMutualTlsMutate}
          * @return the call builder instance
          */
-        public UpdateCallBuilder ipPolicyIds(final Optional<java.util.List<String>> ipPolicyIds) {
-            this.ipPolicyIds = Objects.requireNonNull(ipPolicyIds, "ipPolicyIds is required").orElse(java.util.Collections.emptyList());
+        public UpdateCallBuilder mutualTls(final Optional<EndpointMutualTlsMutate> mutualTls) {
+            this.mutualTls = Objects.requireNonNull(mutualTls, "mutualTls is required");
+            return this;
+        }
+        
+        /**
+         * Sets the <code>tls_termination</code> parameter.
+         *
+         * @param tlsTermination the value of the tls_termination parameter as a {@link EndpointTlsTerminationAtEdge}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder tlsTermination(final EndpointTlsTerminationAtEdge tlsTermination) {
+            this.tlsTermination = Optional.ofNullable(tlsTermination);
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>tls_termination</code> parameter.
+         *
+         * @param tlsTermination the value of the tls_termination parameter as an {@link Optional} of {@link EndpointTlsTerminationAtEdge}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder tlsTermination(final Optional<EndpointTlsTerminationAtEdge> tlsTermination) {
+            this.tlsTermination = Objects.requireNonNull(tlsTermination, "tlsTermination is required");
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpRestriction}
+         * @return a {@link CompletionStage} of {@link HttpsEdge}
          */
-        public CompletionStage<IpRestriction> call() {
+        public CompletionStage<HttpsEdge> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/ip_restrictions/" + this.id,
+                "/edges/https/" + this.id,
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("enforced", this.enforced.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("ip_policy_ids", Optional.of(this.ipPolicyIds))
+                    new AbstractMap.SimpleEntry<>("hostports", this.hostports.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("mutual_tls", this.mutualTls.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("tls_termination", this.tlsTermination.map(Function.identity()))
                 ),
-                Optional.of(IpRestriction.class)
+                Optional.of(HttpsEdge.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpRestriction}
+         * @return {@link HttpsEdge}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpRestriction blockingCall() throws InterruptedException {
+        public HttpsEdge blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -536,17 +532,77 @@ public class IpRestrictions {
     }
 
     /**
-     * Update attributes of an IP restriction by ID
+     * Updates an HTTPS Edge by ID. If a module is not specified in the update, it will
+     * not be modified. However, each module configuration that is specified will
+     * completely replace the existing value. There is no way to delete an existing
+     * module via this API, instead use the delete module API.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-restrictions-update">https://ngrok.com/docs/api#api-ip-restrictions-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-edges-https-update">https://ngrok.com/docs/api#api-edges-https-update</a>.
      *
-     * @param id the value of the <code>id</code> parameter as a {@link String}
+     * @param id unique identifier of this edge
      * @return a call builder for this API call
      */
     public UpdateCallBuilder update(
         final String id
     ) {
         return new UpdateCallBuilder(
+            id
+        );
+    }
+    
+    /**
+     * A builder object encapsulating state for an unsent Delete API call.
+     */
+    public class DeleteCallBuilder {
+        private final String id;
+
+        private DeleteCallBuilder(
+            final String id
+        ) {
+            this.id = Objects.requireNonNull(id, "id is required");
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of {@link Void}
+         */
+        public CompletionStage<Void> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.DELETE,
+                "/edges/https/" + this.id,
+                Stream.empty(),
+                Stream.empty(),
+                Optional.empty()
+            );
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public void blockingCall() throws InterruptedException {
+            try {
+                call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Delete an HTTPS Edge by ID
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-edges-https-delete">https://ngrok.com/docs/api#api-edges-https-delete</a>.
+     *
+     * @param id a resource identifier
+     * @return a call builder for this API call
+     */
+    public DeleteCallBuilder delete(
+        final String id
+    ) {
+        return new DeleteCallBuilder(
             id
         );
     }

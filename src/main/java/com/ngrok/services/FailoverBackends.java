@@ -12,19 +12,22 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * An API client for {@link EventSubscriptions}.
+ * A Failover backend defines failover behavior within a list of referenced
+ *  backends. Traffic is sent to the first backend in the list. If that backend
+ *  is offline or no connection can be established, ngrok attempts to connect to
+ *  the next backend in the list until one is successful.
  *
- * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions">https://ngrok.com/docs/api#api-event-subscriptions</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-failover-backends">https://ngrok.com/docs/api#api-failover-backends</a>.
  */
-public class EventSubscriptions {
+public class FailoverBackends {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for EventSubscriptions.
+     * Creates a new sub-client for FailoverBackends.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public EventSubscriptions(final NgrokApiClient apiClient) {
+    public FailoverBackends(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -32,42 +35,16 @@ public class EventSubscriptions {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String metadata = "";
         private String description = "";
-        private java.util.List<EventSourceReplace> sources = java.util.Collections.emptyList();
-        private java.util.List<String> destinationIds = java.util.Collections.emptyList();
+        private String metadata = "";
+        private java.util.List<String> backends = java.util.Collections.emptyList();
 
         private CreateCallBuilder(
         ) {
         }
         
         /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-            return this;
-        }
-
-        /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
-            return this;
-        }
-        
-        /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -78,8 +55,7 @@ public class EventSubscriptions {
         }
 
         /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -90,78 +66,75 @@ public class EventSubscriptions {
         }
         
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as a {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public CreateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required");
+        public CreateCallBuilder metadata(final String metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
 
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as an {@link Optional} of {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CreateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required").orElse(java.util.Collections.emptyList());
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
             return this;
         }
         
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * the ids of the child backends in order
          *
-         * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
+         * @param backends the value of the backends parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
+        public CreateCallBuilder backends(final java.util.List<String> backends) {
+            this.backends = Objects.requireNonNull(backends, "backends is required");
             return this;
         }
 
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * the ids of the child backends in order
          *
-         * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public CreateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(java.util.Collections.emptyList());
+        public CreateCallBuilder backends(final Optional<java.util.List<String>> backends) {
+            this.backends = Objects.requireNonNull(backends, "backends is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link EventSubscription}
+         * @return a {@link CompletionStage} of {@link FailoverBackend}
          */
-        public CompletionStage<EventSubscription> call() {
+        public CompletionStage<FailoverBackend> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/event_subscriptions",
+                "/backends/failover",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("sources", Optional.of(this.sources)),
-                    new AbstractMap.SimpleEntry<>("destination_ids", Optional.of(this.destinationIds))
+                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
+                    new AbstractMap.SimpleEntry<>("backends", Optional.of(this.backends))
                 ),
-                Optional.of(EventSubscription.class)
+                Optional.of(FailoverBackend.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link EventSubscription}
+         * @return {@link FailoverBackend}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public EventSubscription blockingCall() throws InterruptedException {
+        public FailoverBackend blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -171,9 +144,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * Create an Event Subscription.
+     * Create a new Failover backend
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-create">https://ngrok.com/docs/api#api-event-subscriptions-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-failover-backends-create">https://ngrok.com/docs/api#api-failover-backends-create</a>.
      *
      * @return a call builder for this API call
      */
@@ -203,7 +176,7 @@ public class EventSubscriptions {
         public CompletionStage<Void> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.DELETE,
-                "/event_subscriptions/" + this.id,
+                "/backends/failover/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
                 Optional.empty()
@@ -225,9 +198,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * Delete an Event Subscription.
+     * Delete a Failover backend by ID. TODO what if used?
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-delete">https://ngrok.com/docs/api#api-event-subscriptions-delete</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-failover-backends-delete">https://ngrok.com/docs/api#api-failover-backends-delete</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -255,25 +228,25 @@ public class EventSubscriptions {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link EventSubscription}
+         * @return a {@link CompletionStage} of {@link FailoverBackend}
          */
-        public CompletionStage<EventSubscription> call() {
+        public CompletionStage<FailoverBackend> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/event_subscriptions/" + this.id,
+                "/backends/failover/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(EventSubscription.class)
+                Optional.of(FailoverBackend.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link EventSubscription}
+         * @return {@link FailoverBackend}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public EventSubscription blockingCall() throws InterruptedException {
+        public FailoverBackend blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -283,9 +256,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * Get an Event Subscription by ID.
+     * Get detailed information about a Failover backend by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-get">https://ngrok.com/docs/api#api-event-subscriptions-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-failover-backends-get">https://ngrok.com/docs/api#api-failover-backends-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -356,28 +329,28 @@ public class EventSubscriptions {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link EventSubscriptionList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link FailoverBackendList}
          */
-        public CompletionStage<Page<EventSubscriptionList>> call() {
+        public CompletionStage<Page<FailoverBackendList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/event_subscriptions",
+                "/backends/failover",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(EventSubscriptionList.class)
+                Optional.of(FailoverBackendList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link EventSubscriptionList}
+         * @return a {@link Page} of {@link FailoverBackendList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<EventSubscriptionList> blockingCall() throws InterruptedException {
+        public Page<FailoverBackendList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -387,9 +360,9 @@ public class EventSubscriptions {
     }
 
     /**
-     * List this Account's Event Subscriptions.
+     * List all Failover backends on this account
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-list">https://ngrok.com/docs/api#api-event-subscriptions-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-failover-backends-list">https://ngrok.com/docs/api#api-failover-backends-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -404,10 +377,9 @@ public class EventSubscriptions {
      */
     public class UpdateCallBuilder {
         private final String id;
-        private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
-        private Optional<java.util.List<EventSourceReplace>> sources = Optional.empty();
-        private Optional<java.util.List<String>> destinationIds = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private java.util.List<String> backends = java.util.Collections.emptyList();
 
         private UpdateCallBuilder(
             final String id
@@ -416,32 +388,7 @@ public class EventSubscriptions {
         }
         
         /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
-            return this;
-        }
-
-        /**
-         * Arbitrary customer supplied information intended to be machine readable.
-         * Optional, max 4096 chars.
-         *
-         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-            return this;
-        }
-        
-        /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as a {@link String}
          * @return the call builder instance
@@ -452,8 +399,7 @@ public class EventSubscriptions {
         }
 
         /**
-         * Arbitrary customer supplied information intended to be human readable. Optional,
-         * max 255 chars.
+         * human-readable description of this backend. Optional
          *
          * @param description the value of the description parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
@@ -464,78 +410,75 @@ public class EventSubscriptions {
         }
         
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as a {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as a {@link String}
          * @return the call builder instance
          */
-        public UpdateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
-            this.sources = Optional.ofNullable(sources);
+        public UpdateCallBuilder metadata(final String metadata) {
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
         /**
-         * Sources containing the types for which this event subscription will trigger
+         * arbitrary user-defined machine-readable data of this backend. Optional
          *
-         * @param sources the value of the sources parameter as an {@link Optional} of {@link java.util.List<EventSourceReplace>}
+         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public UpdateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required");
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * the ids of the child backends in order
          *
-         * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
+         * @param backends the value of the backends parameter as a {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
-            this.destinationIds = Optional.ofNullable(destinationIds);
+        public UpdateCallBuilder backends(final java.util.List<String> backends) {
+            this.backends = Objects.requireNonNull(backends, "backends is required");
             return this;
         }
 
         /**
-         * A list of Event Destination IDs which should be used for this Event
-         * Subscription.
+         * the ids of the child backends in order
          *
-         * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
          */
-        public UpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
+        public UpdateCallBuilder backends(final Optional<java.util.List<String>> backends) {
+            this.backends = Objects.requireNonNull(backends, "backends is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link EventSubscription}
+         * @return a {@link CompletionStage} of {@link FailoverBackend}
          */
-        public CompletionStage<EventSubscription> call() {
+        public CompletionStage<FailoverBackend> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/event_subscriptions/" + this.id,
+                "/backends/failover/" + this.id,
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("sources", this.sources.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("destination_ids", this.destinationIds.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("backends", Optional.of(this.backends))
                 ),
-                Optional.of(EventSubscription.class)
+                Optional.of(FailoverBackend.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link EventSubscription}
+         * @return {@link FailoverBackend}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public EventSubscription blockingCall() throws InterruptedException {
+        public FailoverBackend blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -545,11 +488,11 @@ public class EventSubscriptions {
     }
 
     /**
-     * Update an Event Subscription.
+     * Update Failover backend by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-event-subscriptions-update">https://ngrok.com/docs/api#api-event-subscriptions-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-failover-backends-update">https://ngrok.com/docs/api#api-failover-backends-update</a>.
      *
-     * @param id Unique identifier for this Event Subscription.
+     * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call
      */
     public UpdateCallBuilder update(
