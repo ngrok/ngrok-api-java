@@ -37,12 +37,6 @@ public class ReservedDomain {
     @JsonProperty("cname_target")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> cnameTarget;
-    @JsonProperty("http_endpoint_configuration")
-    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<Ref> httpEndpointConfiguration;
-    @JsonProperty("https_endpoint_configuration")
-    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<Ref> httpsEndpointConfiguration;
     @JsonProperty("certificate")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Ref> certificate;
@@ -67,8 +61,6 @@ public class ReservedDomain {
      * @param domain hostname of the reserved domain
      * @param region reserve the domain in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa)
      * @param cnameTarget DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of *.ngrok.io
-     * @param httpEndpointConfiguration object referencing the endpoint configuration applied to http traffic on this domain
-     * @param httpsEndpointConfiguration object referencing the endpoint configuration applied to https traffic on this domain
      * @param certificate object referencing the TLS certificate used for connections to this domain. This can be either a user-uploaded certificate, the most recently issued automatic one, or null otherwise.
      * @param certificateManagementPolicy configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled
      * @param certificateManagementStatus status of the automatic certificate management for this domain, or null if automatic management is disabled
@@ -84,8 +76,6 @@ public class ReservedDomain {
         @JsonProperty("domain") final String domain,
         @JsonProperty("region") final String region,
         @JsonProperty("cname_target") final Optional<String> cnameTarget,
-        @JsonProperty("http_endpoint_configuration") final Optional<Ref> httpEndpointConfiguration,
-        @JsonProperty("https_endpoint_configuration") final Optional<Ref> httpsEndpointConfiguration,
         @JsonProperty("certificate") final Optional<Ref> certificate,
         @JsonProperty("certificate_management_policy") final Optional<ReservedDomainCertPolicy> certificateManagementPolicy,
         @JsonProperty("certificate_management_status") final Optional<ReservedDomainCertStatus> certificateManagementStatus,
@@ -99,8 +89,6 @@ public class ReservedDomain {
         this.domain = Objects.requireNonNull(domain, "domain is required");
         this.region = Objects.requireNonNull(region, "region is required");
         this.cnameTarget = cnameTarget != null ? cnameTarget : Optional.empty();
-        this.httpEndpointConfiguration = httpEndpointConfiguration != null ? httpEndpointConfiguration : Optional.empty();
-        this.httpsEndpointConfiguration = httpsEndpointConfiguration != null ? httpsEndpointConfiguration : Optional.empty();
         this.certificate = certificate != null ? certificate : Optional.empty();
         this.certificateManagementPolicy = certificateManagementPolicy != null ? certificateManagementPolicy : Optional.empty();
         this.certificateManagementStatus = certificateManagementStatus != null ? certificateManagementStatus : Optional.empty();
@@ -183,26 +171,6 @@ public class ReservedDomain {
     }
 
     /**
-     * object referencing the endpoint configuration applied to http traffic on this
-     * domain
-     *
-     * @return the value of the property as a {@link Ref} wrapped in an {@link Optional}
-     */
-    public Optional<Ref> getHttpEndpointConfiguration() {
-        return this.httpEndpointConfiguration;
-    }
-
-    /**
-     * object referencing the endpoint configuration applied to https traffic on this
-     * domain
-     *
-     * @return the value of the property as a {@link Ref} wrapped in an {@link Optional}
-     */
-    public Optional<Ref> getHttpsEndpointConfiguration() {
-        return this.httpsEndpointConfiguration;
-    }
-
-    /**
      * object referencing the TLS certificate used for connections to this domain. This
      * can be either a user-uploaded certificate, the most recently issued automatic
      * one, or null otherwise.
@@ -264,8 +232,6 @@ public class ReservedDomain {
             this.domain.equals(other.domain)&&
             this.region.equals(other.region)&&
             this.cnameTarget.equals(other.cnameTarget)&&
-            this.httpEndpointConfiguration.equals(other.httpEndpointConfiguration)&&
-            this.httpsEndpointConfiguration.equals(other.httpsEndpointConfiguration)&&
             this.certificate.equals(other.certificate)&&
             this.certificateManagementPolicy.equals(other.certificateManagementPolicy)&&
             this.certificateManagementStatus.equals(other.certificateManagementStatus)&&
@@ -284,8 +250,6 @@ public class ReservedDomain {
             this.domain,
             this.region,
             this.cnameTarget,
-            this.httpEndpointConfiguration,
-            this.httpsEndpointConfiguration,
             this.certificate,
             this.certificateManagementPolicy,
             this.certificateManagementStatus,
@@ -304,8 +268,6 @@ public class ReservedDomain {
             "', domain='" + this.domain +
             "', region='" + this.region +
             "', cnameTarget='" + this.cnameTarget.orElse("(null)") +
-            "', httpEndpointConfiguration='" + this.httpEndpointConfiguration.map(Object::toString).orElse("(null)") +
-            "', httpsEndpointConfiguration='" + this.httpsEndpointConfiguration.map(Object::toString).orElse("(null)") +
             "', certificate='" + this.certificate.map(Object::toString).orElse("(null)") +
             "', certificateManagementPolicy='" + this.certificateManagementPolicy.map(Object::toString).orElse("(null)") +
             "', certificateManagementStatus='" + this.certificateManagementStatus.map(Object::toString).orElse("(null)") +

@@ -129,4 +129,62 @@ public class Tunnels {
         return new ListCallBuilder(
         );
     }
+    
+    /**
+     * A builder object encapsulating state for an unsent Get API call.
+     */
+    public class GetCallBuilder {
+        private final String id;
+
+        private GetCallBuilder(
+            final String id
+        ) {
+            this.id = Objects.requireNonNull(id, "id is required");
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of {@link Tunnel}
+         */
+        public CompletionStage<Tunnel> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.GET,
+                "/tunnels/" + this.id,
+                Stream.empty(),
+                Stream.empty(),
+                Optional.of(Tunnel.class)
+            );
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @return {@link Tunnel}
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public Tunnel blockingCall() throws InterruptedException {
+            try {
+                return call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Get the status of a tunnel by ID
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnels-get">https://ngrok.com/docs/api#api-tunnels-get</a>.
+     *
+     * @param id a resource identifier
+     * @return a call builder for this API call
+     */
+    public GetCallBuilder get(
+        final String id
+    ) {
+        return new GetCallBuilder(
+            id
+        );
+    }
 }

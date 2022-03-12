@@ -34,9 +34,6 @@ public class ReservedAddr {
     @JsonProperty("region")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String region;
-    @JsonProperty("endpoint_configuration")
-    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<Ref> endpointConfiguration;
 
     /**
      * Creates a new instance of {@link ReservedAddr}.
@@ -48,7 +45,6 @@ public class ReservedAddr {
      * @param metadata arbitrary user-defined machine-readable data of this reserved address. Optional, max 4096 bytes.
      * @param addr hostname:port of the reserved address that was assigned at creation time
      * @param region reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa)
-     * @param endpointConfiguration object reference to the endpoint configuration that will be applied to traffic to this address
      */
     @JsonCreator
     public ReservedAddr(
@@ -58,8 +54,7 @@ public class ReservedAddr {
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
         @JsonProperty("addr") final String addr,
-        @JsonProperty("region") final String region,
-        @JsonProperty("endpoint_configuration") final Optional<Ref> endpointConfiguration
+        @JsonProperty("region") final String region
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
@@ -68,7 +63,6 @@ public class ReservedAddr {
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.addr = Objects.requireNonNull(addr, "addr is required");
         this.region = Objects.requireNonNull(region, "region is required");
-        this.endpointConfiguration = endpointConfiguration != null ? endpointConfiguration : Optional.empty();
     }
 
     /**
@@ -136,16 +130,6 @@ public class ReservedAddr {
         return this.region;
     }
 
-    /**
-     * object reference to the endpoint configuration that will be applied to traffic
-     * to this address
-     *
-     * @return the value of the property as a {@link Ref} wrapped in an {@link Optional}
-     */
-    public Optional<Ref> getEndpointConfiguration() {
-        return this.endpointConfiguration;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -163,8 +147,7 @@ public class ReservedAddr {
             this.description.equals(other.description)&&
             this.metadata.equals(other.metadata)&&
             this.addr.equals(other.addr)&&
-            this.region.equals(other.region)&&
-            this.endpointConfiguration.equals(other.endpointConfiguration);
+            this.region.equals(other.region);
         
     }
 
@@ -177,8 +160,7 @@ public class ReservedAddr {
             this.description,
             this.metadata,
             this.addr,
-            this.region,
-            this.endpointConfiguration
+            this.region
         );
     }
 
@@ -192,7 +174,6 @@ public class ReservedAddr {
             "', metadata='" + this.metadata +
             "', addr='" + this.addr +
             "', region='" + this.region +
-            "', endpointConfiguration='" + this.endpointConfiguration.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

@@ -54,7 +54,7 @@ public class EndpointWebhookValidation {
          * endpoint. Value must be one of the supported providers: <code>SLACK</code>,
          * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
          * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
-         * <code>SENDGRID</code>, <code>XERO</code>.
+         * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
 		 *
 		 * @param provider the value of the <code>provider</code> parameter as a {@link String}
 		 * @return this builder instance
@@ -69,7 +69,7 @@ public class EndpointWebhookValidation {
          * endpoint. Value must be one of the supported providers: <code>SLACK</code>,
          * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
          * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
-         * <code>SENDGRID</code>, <code>XERO</code>.
+         * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
 		 *
 		 * @param provider the value of the <code>provider</code> parameter as a {@link String}, wrapped in an {@link Optional}
 		 * @return this builder instance
@@ -142,7 +142,7 @@ public class EndpointWebhookValidation {
      * Creates a new instance of {@link EndpointWebhookValidation}.
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
-     * @param provider a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: <code>SLACK</code>, <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>, <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>, <code>SENDGRID</code>, <code>XERO</code>.
+     * @param provider a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: <code>SLACK</code>, <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>, <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>, <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
      * @param secret a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret
      */
     @JsonCreator
@@ -171,7 +171,7 @@ public class EndpointWebhookValidation {
      * endpoint. Value must be one of the supported providers: <code>SLACK</code>,
      * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
      * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
-     * <code>SENDGRID</code>, <code>XERO</code>.
+     * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
      *
      * @return the value of the property as a {@link String}
      */

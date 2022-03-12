@@ -112,8 +112,8 @@ public class EventSubscriptions {
         }
         
         /**
-         * A list of Event Destination IDs which should be used for this Event Stream.
-         * Event Streams are required to have at least one Event Destination.
+         * A list of Event Destination IDs which should be used for this Event
+         * Subscription.
          *
          * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
@@ -124,8 +124,8 @@ public class EventSubscriptions {
         }
 
         /**
-         * A list of Event Destination IDs which should be used for this Event Stream.
-         * Event Streams are required to have at least one Event Destination.
+         * A list of Event Destination IDs which should be used for this Event
+         * Subscription.
          *
          * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance
@@ -486,8 +486,8 @@ public class EventSubscriptions {
         }
         
         /**
-         * A list of Event Destination IDs which should be used for this Event Stream.
-         * Event Streams are required to have at least one Event Destination.
+         * A list of Event Destination IDs which should be used for this Event
+         * Subscription.
          *
          * @param destinationIds the value of the destination_ids parameter as a {@link java.util.List<String>}
          * @return the call builder instance
@@ -498,8 +498,8 @@ public class EventSubscriptions {
         }
 
         /**
-         * A list of Event Destination IDs which should be used for this Event Stream.
-         * Event Streams are required to have at least one Event Destination.
+         * A list of Event Destination IDs which should be used for this Event
+         * Subscription.
          *
          * @param destinationIds the value of the destination_ids parameter as an {@link Optional} of {@link java.util.List<String>}
          * @return the call builder instance

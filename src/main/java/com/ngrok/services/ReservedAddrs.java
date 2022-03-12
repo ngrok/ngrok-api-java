@@ -37,7 +37,6 @@ public class ReservedAddrs {
         private String description = "";
         private String metadata = "";
         private String region = "";
-        private Optional<String> endpointConfigurationId = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -114,30 +113,6 @@ public class ReservedAddrs {
         }
         
         /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
-            this.endpointConfigurationId = Optional.ofNullable(endpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
-            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link ReservedAddr}
@@ -150,8 +125,7 @@ public class ReservedAddrs {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("region", Optional.of(this.region)),
-                    new AbstractMap.SimpleEntry<>("endpoint_configuration_id", this.endpointConfigurationId.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("region", Optional.of(this.region))
                 ),
                 Optional.of(ReservedAddr.class)
             );
@@ -408,7 +382,6 @@ public class ReservedAddrs {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<String> endpointConfigurationId = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -463,30 +436,6 @@ public class ReservedAddrs {
         }
         
         /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder endpointConfigurationId(final String endpointConfigurationId) {
-            this.endpointConfigurationId = Optional.ofNullable(endpointConfigurationId);
-            return this;
-        }
-
-        /**
-         * ID of an endpoint configuration of type tcp that will be used to handle inbound
-         * traffic to this address
-         *
-         * @param endpointConfigurationId the value of the endpoint_configuration_id parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public UpdateCallBuilder endpointConfigurationId(final Optional<String> endpointConfigurationId) {
-            this.endpointConfigurationId = Objects.requireNonNull(endpointConfigurationId, "endpointConfigurationId is required");
-            return this;
-        }
-        
-        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link ReservedAddr}
@@ -498,8 +447,7 @@ public class ReservedAddrs {
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("endpoint_configuration_id", this.endpointConfigurationId.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
                 ),
                 Optional.of(ReservedAddr.class)
             );
@@ -532,63 +480,6 @@ public class ReservedAddrs {
         final String id
     ) {
         return new UpdateCallBuilder(
-            id
-        );
-    }
-    
-    /**
-     * A builder object encapsulating state for an unsent DeleteEndpointConfig API call.
-     */
-    public class DeleteEndpointConfigCallBuilder {
-        private final String id;
-
-        private DeleteEndpointConfigCallBuilder(
-            final String id
-        ) {
-            this.id = Objects.requireNonNull(id, "id is required");
-        }
-        
-        /**
-         * Initiates the API call asynchronously.
-         *
-         * @return a {@link CompletionStage} of {@link Void}
-         */
-        public CompletionStage<Void> call() {
-            return apiClient.sendRequest(
-                NgrokApiClient.HttpMethod.DELETE,
-                "/reserved_addrs/" + this.id + "/endpoint_configuration",
-                Stream.empty(),
-                Stream.empty(),
-                Optional.empty()
-            );
-        }
-
-        /**
-         * Initiates the API call and blocks until it returns.
-         *
-         * @throws InterruptedException if the thread was interrupted during the call
-         */
-        public void blockingCall() throws InterruptedException {
-            try {
-                call().toCompletableFuture().get();
-            } catch (final ExecutionException e) {
-                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
-            }
-        }
-    }
-
-    /**
-     * Detach the endpoint configuration attached to a reserved address.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config">https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config</a>.
-     *
-     * @param id a resource identifier
-     * @return a call builder for this API call
-     */
-    public DeleteEndpointConfigCallBuilder deleteEndpointConfig(
-        final String id
-    ) {
-        return new DeleteEndpointConfigCallBuilder(
             id
         );
     }

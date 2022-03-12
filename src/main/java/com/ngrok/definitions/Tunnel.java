@@ -34,17 +34,33 @@ public class Tunnel {
     @JsonProperty("tunnel_session")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Ref tunnelSession;
+    @JsonProperty("endpoint")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<Ref> endpoint;
+    @JsonProperty("labels")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final java.util.Map<String, String> labels;
+    @JsonProperty("backends")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<java.util.List<Ref>> backends;
+    @JsonProperty("forwards_to")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final String forwardsTo;
 
     /**
      * Creates a new instance of {@link Tunnel}.
      *
      * @param id unique tunnel resource identifier
-     * @param publicUrl URL of the tunnel's public endpoint
+     * @param publicUrl URL of the ephemeral tunnel's public endpoint
      * @param startedAt timestamp when the tunnel was initiated in RFC 3339 format
      * @param metadata user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel <a href="https://ngrok.com/docs#tunnel-definitions-metadata">metadata configuration option</a> In API version 0, this value was instead pulled from the top-level <a href="https://ngrok.com/docs#config_metadata">metadata configuration option</a>.
-     * @param proto tunnel protocol. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code>
+     * @param proto tunnel protocol for ephemeral tunnels. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code>
      * @param region identifier of tune region where the tunnel is running
      * @param tunnelSession reference object pointing to the tunnel session on which this tunnel was started
+     * @param endpoint the ephemeral endpoint this tunnel is associated with, if this is an agent-initiated tunnel
+     * @param labels the labels the tunnel group backends will match against, if this is a backend tunnel
+     * @param backends tunnel group backends served by this backend tunnel
+     * @param forwardsTo upstream address the ngrok agent forwards traffic over this tunnel to. this may be expressed as a URL or a network address.
      */
     @JsonCreator
     public Tunnel(
@@ -54,7 +70,11 @@ public class Tunnel {
         @JsonProperty("metadata") final String metadata,
         @JsonProperty("proto") final String proto,
         @JsonProperty("region") final String region,
-        @JsonProperty("tunnel_session") final Ref tunnelSession
+        @JsonProperty("tunnel_session") final Ref tunnelSession,
+        @JsonProperty("endpoint") final Optional<Ref> endpoint,
+        @JsonProperty("labels") final java.util.Map<String, String> labels,
+        @JsonProperty("backends") final Optional<java.util.List<Ref>> backends,
+        @JsonProperty("forwards_to") final String forwardsTo
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.publicUrl = Objects.requireNonNull(publicUrl, "publicUrl is required");
@@ -63,6 +83,10 @@ public class Tunnel {
         this.proto = Objects.requireNonNull(proto, "proto is required");
         this.region = Objects.requireNonNull(region, "region is required");
         this.tunnelSession = Objects.requireNonNull(tunnelSession, "tunnelSession is required");
+        this.endpoint = endpoint != null ? endpoint : Optional.empty();
+        this.labels = Objects.requireNonNull(labels, "labels is required");
+        this.backends = backends != null ? backends : Optional.empty();
+        this.forwardsTo = Objects.requireNonNull(forwardsTo, "forwardsTo is required");
     }
 
     /**
@@ -75,7 +99,7 @@ public class Tunnel {
     }
 
     /**
-     * URL of the tunnel's public endpoint
+     * URL of the ephemeral tunnel's public endpoint
      *
      * @return the value of the property as a {@link java.net.URI}
      */
@@ -106,8 +130,8 @@ public class Tunnel {
     }
 
     /**
-     * tunnel protocol. one of <code>http</code>, <code>https</code>, <code>tcp</code>
-     * or <code>tls</code>
+     * tunnel protocol for ephemeral tunnels. one of <code>http</code>,
+     * <code>https</code>, <code>tcp</code> or <code>tls</code>
      *
      * @return the value of the property as a {@link String}
      */
@@ -133,6 +157,45 @@ public class Tunnel {
         return this.tunnelSession;
     }
 
+    /**
+     * the ephemeral endpoint this tunnel is associated with, if this is an
+     * agent-initiated tunnel
+     *
+     * @return the value of the property as a {@link Ref} wrapped in an {@link Optional}
+     */
+    public Optional<Ref> getEndpoint() {
+        return this.endpoint;
+    }
+
+    /**
+     * the labels the tunnel group backends will match against, if this is a backend
+     * tunnel
+     *
+     * @return the value of the property as a {@link java.util.Map<String, String>}
+     */
+    public java.util.Map<String, String> getLabels() {
+        return this.labels;
+    }
+
+    /**
+     * tunnel group backends served by this backend tunnel
+     *
+     * @return the value of the property as a {@link java.util.List<Ref>} wrapped in an {@link Optional}
+     */
+    public Optional<java.util.List<Ref>> getBackends() {
+        return this.backends;
+    }
+
+    /**
+     * upstream address the ngrok agent forwards traffic over this tunnel to. this may
+     * be expressed as a URL or a network address.
+     *
+     * @return the value of the property as a {@link String}
+     */
+    public String getForwardsTo() {
+        return this.forwardsTo;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -150,7 +213,11 @@ public class Tunnel {
             this.metadata.equals(other.metadata)&&
             this.proto.equals(other.proto)&&
             this.region.equals(other.region)&&
-            this.tunnelSession.equals(other.tunnelSession);
+            this.tunnelSession.equals(other.tunnelSession)&&
+            this.endpoint.equals(other.endpoint)&&
+            this.labels.equals(other.labels)&&
+            this.backends.equals(other.backends)&&
+            this.forwardsTo.equals(other.forwardsTo);
         
     }
 
@@ -163,7 +230,11 @@ public class Tunnel {
             this.metadata,
             this.proto,
             this.region,
-            this.tunnelSession
+            this.tunnelSession,
+            this.endpoint,
+            this.labels,
+            this.backends,
+            this.forwardsTo
         );
     }
 
@@ -177,6 +248,10 @@ public class Tunnel {
             "', proto='" + this.proto +
             "', region='" + this.region +
             "', tunnelSession='" + this.tunnelSession +
+            "', endpoint='" + this.endpoint.map(Object::toString).orElse("(null)") +
+            "', labels='" + this.labels +
+            "', backends='" + this.backends.map(Object::toString).orElse("(null)") +
+            "', forwardsTo='" + this.forwardsTo +
             "'}";
     }
 }

@@ -37,6 +37,7 @@ public class IpPolicyRules {
         private String metadata = "";
         private final String cidr;
         private final String ipPolicyId;
+        private Optional<String> action = Optional.empty();
 
         private CreateCallBuilder(
             final String cidr,
@@ -95,6 +96,30 @@ public class IpPolicyRules {
         }
         
         /**
+         * the action to apply to the policy rule, either <code>allow</code> or
+         * <code>deny</code>
+         *
+         * @param action the value of the action parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder action(final String action) {
+            this.action = Optional.ofNullable(action);
+            return this;
+        }
+
+        /**
+         * the action to apply to the policy rule, either <code>allow</code> or
+         * <code>deny</code>
+         *
+         * @param action the value of the action parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder action(final Optional<String> action) {
+            this.action = Objects.requireNonNull(action, "action is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link IpPolicyRule}
@@ -108,7 +133,8 @@ public class IpPolicyRules {
                     new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
                     new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
                     new AbstractMap.SimpleEntry<>("cidr", Optional.of(this.cidr)),
-                    new AbstractMap.SimpleEntry<>("ip_policy_id", Optional.of(this.ipPolicyId))
+                    new AbstractMap.SimpleEntry<>("ip_policy_id", Optional.of(this.ipPolicyId)),
+                    new AbstractMap.SimpleEntry<>("action", this.action.map(Function.identity()))
                 ),
                 Optional.of(IpPolicyRule.class)
             );

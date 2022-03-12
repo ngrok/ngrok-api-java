@@ -34,6 +34,9 @@ public class IpPolicyRule {
     @JsonProperty("ip_policy")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Ref ipPolicy;
+    @JsonProperty("action")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final String action;
 
     /**
      * Creates a new instance of {@link IpPolicyRule}.
@@ -45,6 +48,7 @@ public class IpPolicyRule {
      * @param metadata arbitrary user-defined machine-readable data of this IP policy rule. optional, max 4096 bytes.
      * @param cidr an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
      * @param ipPolicy object describing the IP policy this IP Policy Rule belongs to
+     * @param action the action to apply to the policy rule, either <code>allow</code> or <code>deny</code>
      */
     @JsonCreator
     public IpPolicyRule(
@@ -54,7 +58,8 @@ public class IpPolicyRule {
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
         @JsonProperty("cidr") final String cidr,
-        @JsonProperty("ip_policy") final Ref ipPolicy
+        @JsonProperty("ip_policy") final Ref ipPolicy,
+        @JsonProperty("action") final String action
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
@@ -63,6 +68,7 @@ public class IpPolicyRule {
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.cidr = Objects.requireNonNull(cidr, "cidr is required");
         this.ipPolicy = Objects.requireNonNull(ipPolicy, "ipPolicy is required");
+        this.action = Objects.requireNonNull(action, "action is required");
     }
 
     /**
@@ -130,6 +136,16 @@ public class IpPolicyRule {
         return this.ipPolicy;
     }
 
+    /**
+     * the action to apply to the policy rule, either <code>allow</code> or
+     * <code>deny</code>
+     *
+     * @return the value of the property as a {@link String}
+     */
+    public String getAction() {
+        return this.action;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -147,7 +163,8 @@ public class IpPolicyRule {
             this.description.equals(other.description)&&
             this.metadata.equals(other.metadata)&&
             this.cidr.equals(other.cidr)&&
-            this.ipPolicy.equals(other.ipPolicy);
+            this.ipPolicy.equals(other.ipPolicy)&&
+            this.action.equals(other.action);
         
     }
 
@@ -160,7 +177,8 @@ public class IpPolicyRule {
             this.description,
             this.metadata,
             this.cidr,
-            this.ipPolicy
+            this.ipPolicy,
+            this.action
         );
     }
 
@@ -174,6 +192,7 @@ public class IpPolicyRule {
             "', metadata='" + this.metadata +
             "', cidr='" + this.cidr +
             "', ipPolicy='" + this.ipPolicy +
+            "', action='" + this.action +
             "'}";
     }
 }
