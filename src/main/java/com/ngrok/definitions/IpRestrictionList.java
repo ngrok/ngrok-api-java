@@ -27,7 +27,7 @@ public class IpRestrictionList implements Pageable {
      * Creates a new instance of {@link IpRestrictionList}.
      *
      * @param ipRestrictions the list of all IP restrictions on this account
-     * @param uri URI of the IP resrtrictions list API resource
+     * @param uri URI of the IP restrictions list API resource
      * @param nextPageUri URI of the next page, or null if there is no next page
      */
     @JsonCreator
@@ -51,7 +51,7 @@ public class IpRestrictionList implements Pageable {
     }
 
     /**
-     * URI of the IP resrtrictions list API resource
+     * URI of the IP restrictions list API resource
      *
      * @return the value of the property as a {@link java.net.URI}
      */

@@ -54,7 +54,7 @@ public class SshUserCertificates {
         
         /**
          * the list of principals included in the ssh user certificate. This is the list of
-         * usernames that the certificate holder may sign in as on a machine authorizinig
+         * usernames that the certificate holder may sign in as on a machine authorizing
          * the signing certificate authority. Dangerously, if no principals are specified,
          * this certificate may be used to log in as any user.
          *
@@ -68,7 +68,7 @@ public class SshUserCertificates {
 
         /**
          * the list of principals included in the ssh user certificate. This is the list of
-         * usernames that the certificate holder may sign in as on a machine authorizinig
+         * usernames that the certificate holder may sign in as on a machine authorizing
          * the signing certificate authority. Dangerously, if no principals are specified,
          * this certificate may be used to log in as any user.
          *

@@ -88,7 +88,7 @@ public class WeightedBackends {
         }
         
         /**
-         * the ids of the child backends to their weights (0-10000)
+         * the ids of the child backends to their weights [0-10000]
          *
          * @param backends the value of the backends parameter as a {@link java.util.Map<String, Long>}
          * @return the call builder instance
@@ -99,7 +99,7 @@ public class WeightedBackends {
         }
 
         /**
-         * the ids of the child backends to their weights (0-10000)
+         * the ids of the child backends to their weights [0-10000]
          *
          * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.Map<String, Long>}
          * @return the call builder instance
@@ -198,7 +198,7 @@ public class WeightedBackends {
     }
 
     /**
-     * Delete a Weighted backend by ID. TODO what if used?
+     * Delete a Weighted backend by ID.
      *
      * See also <a href="https://ngrok.com/docs/api#api-weighted-backends-delete">https://ngrok.com/docs/api#api-weighted-backends-delete</a>.
      *
@@ -432,7 +432,7 @@ public class WeightedBackends {
         }
         
         /**
-         * the ids of the child backends to their weights (0-10000)
+         * the ids of the child backends to their weights [0-10000]
          *
          * @param backends the value of the backends parameter as a {@link java.util.Map<String, Long>}
          * @return the call builder instance
@@ -443,7 +443,7 @@ public class WeightedBackends {
         }
 
         /**
-         * the ids of the child backends to their weights (0-10000)
+         * the ids of the child backends to their weights [0-10000]
          *
          * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.Map<String, Long>}
          * @return the call builder instance
