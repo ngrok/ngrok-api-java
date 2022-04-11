@@ -1,3 +1,10 @@
+# Unstable
+
+This library is currently unstable. We know of rough edges
+and are working to bring it to parity with our other API client
+libraries. Please feel free to try it out and let us know if you find
+it useful!
+
 # ngrok API client library for Java
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to
@@ -25,7 +32,7 @@ See the above URL for the latest version of the API client.
 ## Documentation
 
 All objects, methods and properties are documented with Javadoc for
-integration with an IDE like IntelliJ IDEA or Eclipse.  You can also
+integration with an IDE like IntelliJ IDEA or Eclipse. You can also
 [view the documentation online](https://java-api.docs.ngrok.com/).
 
 Beyond that, this readme is the best source of documentation for the
@@ -35,17 +42,17 @@ library.
 
 This class library is published to Maven Central using semantic
 versioning. Breaking changes to the API will only be released with a
-bump of the major version number.  Each released commit is tagged in
+bump of the major version number. Each released commit is tagged in
 this repository.
 
 No compatibility promises are made for versions < 1.0.0.
 
 ### Quickstart
 
-First, use the ngrok dashboard to generate an API key.  Store that in a
-safe place.  Inject it into your application using the environment
-variable `NGROK_API_KEY`.  The `Ngrok.createDefault()` method will pull
-from that environment variable.  If you prefer, you can also pass the API
+First, use the ngrok dashboard to generate an API key. Store that in a
+safe place. Inject it into your application using the environment
+variable `NGROK_API_KEY`. The `Ngrok.createDefault()` method will pull
+from that environment variable. If you prefer, you can also pass the API
 key explicitly.
 
 #### Create an IP Policy that allows traffic from some subnets
@@ -114,7 +121,7 @@ resource client classes in your application code.
 
 You can also customize low-level behavior by instantiating the
 `DefaultNgrokApiClient` yourself, and then using it to construct the
-`Ngrok` instance.  If you'd like to use a different HTTP library
+`Ngrok` instance. If you'd like to use a different HTTP library
 entirely, you can even implement the `NgrokApiClient` interface
 yourself.
 
@@ -155,7 +162,7 @@ public class Example {
 
 All list responses from the ngrok API are paged. All list response
 objects implement the `Pageable` interface, and are wrapped in a `Page`
-class, which has a `next()` method.  Calling `next()` will asyncronously
+class, which has a `next()` method. Calling `next()` will asyncronously
 request the next page. If no next page is available, an empty `Optional`
 will be returned inside the `CompletionStage`.
 
@@ -188,7 +195,7 @@ public class Example {
 ### Error Handling
 
 All errors returned by the ngrok API are serialized as structured
-payloads for easy error handling.  If a structured error is returned by
+payloads for easy error handling. If a structured error is returned by
 the ngrok API, this library will return a failed `CompletionStage`
 containing a `NgrokApiError`.
 
@@ -246,5 +253,5 @@ of ngrok domain objects.
 ### Sync / Async Interfaces
 
 The `call()` method on each API client operation is asynchronous and
-returns a `CompletionStage`.  If you require a synchronous call, you can
+returns a `CompletionStage`. If you require a synchronous call, you can
 use `blockingCall()` instead.

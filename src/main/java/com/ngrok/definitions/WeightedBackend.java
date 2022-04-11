@@ -40,7 +40,7 @@ public class WeightedBackend {
      * @param createdAt timestamp when the backend was created, RFC 3339 format
      * @param description human-readable description of this backend. Optional
      * @param metadata arbitrary user-defined machine-readable data of this backend. Optional
-     * @param backends the ids of the child backends to their weights (0-10000)
+     * @param backends the ids of the child backends to their weights [0-10000]
      */
     @JsonCreator
     public WeightedBackend(
@@ -105,7 +105,7 @@ public class WeightedBackend {
     }
 
     /**
-     * the ids of the child backends to their weights (0-10000)
+     * the ids of the child backends to their weights [0-10000]
      *
      * @return the value of the property as a {@link java.util.Map<String, Long>}
      */

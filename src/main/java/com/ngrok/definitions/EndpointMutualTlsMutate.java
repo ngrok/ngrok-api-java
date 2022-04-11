@@ -50,7 +50,7 @@ public class EndpointMutualTlsMutate {
 
         /**
          * list of certificate authorities that will be used to validate the TLS client
-         * certificate presnted by the initiatiator of the TLS connection
+         * certificate presented by the initiator of the TLS connection
 		 *
 		 * @param certificateAuthorityIds the value of the <code>certificate_authority_ids</code> parameter as a {@link java.util.List<String>}
 		 * @return this builder instance
@@ -62,7 +62,7 @@ public class EndpointMutualTlsMutate {
 
         /**
          * list of certificate authorities that will be used to validate the TLS client
-         * certificate presnted by the initiatiator of the TLS connection
+         * certificate presented by the initiator of the TLS connection
 		 *
 		 * @param certificateAuthorityIds the value of the <code>certificate_authority_ids</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
 		 * @return this builder instance
@@ -107,7 +107,7 @@ public class EndpointMutualTlsMutate {
      * Creates a new instance of {@link EndpointMutualTlsMutate}.
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
-     * @param certificateAuthorityIds list of certificate authorities that will be used to validate the TLS client certificate presnted by the initiatiator of the TLS connection
+     * @param certificateAuthorityIds list of certificate authorities that will be used to validate the TLS client certificate presented by the initiator of the TLS connection
      */
     @JsonCreator
     private EndpointMutualTlsMutate(
@@ -130,7 +130,7 @@ public class EndpointMutualTlsMutate {
 
     /**
      * list of certificate authorities that will be used to validate the TLS client
-     * certificate presnted by the initiatiator of the TLS connection
+     * certificate presented by the initiator of the TLS connection
      *
      * @return the value of the property as a {@link java.util.List<String>}
      */
