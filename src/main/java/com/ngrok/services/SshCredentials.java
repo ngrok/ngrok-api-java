@@ -33,8 +33,8 @@ public class SshCredentials {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private java.util.List<String> acl = java.util.Collections.emptyList();
         private final String publicKey;
 
@@ -52,7 +52,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -64,7 +64,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -76,7 +76,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -88,7 +88,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -102,10 +102,10 @@ public class SshCredentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as a {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder acl(final java.util.List<String> acl) {
@@ -123,10 +123,10 @@ public class SshCredentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
@@ -145,9 +145,9 @@ public class SshCredentials {
                 "/ssh_credentials",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl)),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl).filter(acl -> !acl.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("public_key", Optional.of(this.publicKey))
                 ),
                 Optional.of(SshCredential.class)
@@ -171,7 +171,7 @@ public class SshCredentials {
 
     /**
      * Create a new ssh_credential from an uploaded public SSH key. This ssh credential
-     * can be used to start new tunnels via ngrok's SSH gateway.
+     * can be used to start new tunnels via ngrok&#39;s SSH gateway.
      *
      * See also <a href="https://ngrok.com/docs/api#api-ssh-credentials-create">https://ngrok.com/docs/api#api-ssh-credentials-create</a>.
      *
@@ -319,7 +319,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -341,7 +341,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -409,7 +409,7 @@ public class SshCredentials {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<java.util.List<String>> acl = Optional.empty();
+        private java.util.List<String> acl = java.util.Collections.emptyList();
 
         private UpdateCallBuilder(
             final String id
@@ -425,7 +425,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -449,7 +449,7 @@ public class SshCredentials {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -475,14 +475,14 @@ public class SshCredentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as a {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder acl(final java.util.List<String> acl) {
-            this.acl = Optional.ofNullable(acl);
+            this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
 
@@ -496,14 +496,14 @@ public class SshCredentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
-            this.acl = Objects.requireNonNull(acl, "acl is required");
+            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -520,7 +520,7 @@ public class SshCredentials {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("acl", this.acl.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl).filter(acl -> !acl.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(SshCredential.class)
             );

@@ -36,7 +36,7 @@ public class EventSubscriptionList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.eventSubscriptions = Objects.requireNonNull(eventSubscriptions, "eventSubscriptions is required");
+        this.eventSubscriptions = eventSubscriptions != null ? eventSubscriptions : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class EventSubscriptionList implements Pageable {
     /**
      * The list of all Event Subscriptions on this account.
      *
-     * @return the value of the property as a {@link java.util.List<EventSubscription>}
+     * @return the value of the property as a {@link java.util.List} of {@link EventSubscription}
      */
     public java.util.List<EventSubscription> getEventSubscriptions() {
         return this.eventSubscriptions;

@@ -25,7 +25,7 @@ public class EndpointSamlMutate {
         private Optional<String> idpMetadata = Optional.empty();
         private Optional<Boolean> forceAuthn = Optional.empty();
         private Optional<Boolean> allowIdpInitiated = Optional.empty();
-        private Optional<java.util.List<String>> authorizedGroups = Optional.empty();
+        private java.util.List<String> authorizedGroups = java.util.Collections.emptyList();
         private Optional<String> nameidFormat = Optional.empty();
 
         private Builder(
@@ -35,10 +35,10 @@ public class EndpointSamlMutate {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder enabled(final boolean enabled) {
             this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
             return this;
@@ -47,10 +47,10 @@ public class EndpointSamlMutate {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder enabled(final Optional<Boolean> enabled) {
             this.enabled = Objects.requireNonNull(enabled, "enabled is required");
             return this;
@@ -59,10 +59,10 @@ public class EndpointSamlMutate {
         /**
          * Do not enforce authentication on HTTP OPTIONS requests. necessary if you are
          * supporting CORS.
-		 *
-		 * @param optionsPassthrough the value of the <code>options_passthrough</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param optionsPassthrough the value of the <code>options_passthrough</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder optionsPassthrough(final boolean optionsPassthrough) {
             this.optionsPassthrough = Optional.of(Objects.requireNonNull(optionsPassthrough, "optionsPassthrough is required"));
             return this;
@@ -71,10 +71,10 @@ public class EndpointSamlMutate {
         /**
          * Do not enforce authentication on HTTP OPTIONS requests. necessary if you are
          * supporting CORS.
-		 *
-		 * @param optionsPassthrough the value of the <code>options_passthrough</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param optionsPassthrough the value of the <code>options_passthrough</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder optionsPassthrough(final Optional<Boolean> optionsPassthrough) {
             this.optionsPassthrough = Objects.requireNonNull(optionsPassthrough, "optionsPassthrough is required");
             return this;
@@ -82,11 +82,11 @@ public class EndpointSamlMutate {
 
         /**
          * the prefix of the session cookie that ngrok sets on the http client to cache
-         * authentication. default is 'ngrok.'
-		 *
-		 * @param cookiePrefix the value of the <code>cookie_prefix</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         * authentication. default is &#39;ngrok.&#39;
+         *
+         * @param cookiePrefix the value of the <code>cookie_prefix</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder cookiePrefix(final String cookiePrefix) {
             this.cookiePrefix = Optional.of(Objects.requireNonNull(cookiePrefix, "cookiePrefix is required"));
             return this;
@@ -94,11 +94,11 @@ public class EndpointSamlMutate {
 
         /**
          * the prefix of the session cookie that ngrok sets on the http client to cache
-         * authentication. default is 'ngrok.'
-		 *
-		 * @param cookiePrefix the value of the <code>cookie_prefix</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         * authentication. default is &#39;ngrok.&#39;
+         *
+         * @param cookiePrefix the value of the <code>cookie_prefix</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder cookiePrefix(final Optional<String> cookiePrefix) {
             this.cookiePrefix = Objects.requireNonNull(cookiePrefix, "cookiePrefix is required");
             return this;
@@ -108,10 +108,10 @@ public class EndpointSamlMutate {
          * Integer number of seconds of inactivity after which if the user has not accessed
          * the endpoint, their session will time out and they will be forced to
          * reauthenticate.
-		 *
-		 * @param inactivityTimeout the value of the <code>inactivity_timeout</code> parameter as a {@link long}
-		 * @return this builder instance
-		 */
+         *
+         * @param inactivityTimeout the value of the <code>inactivity_timeout</code> parameter as a {@link long}
+         * @return this builder instance
+         */
         public Builder inactivityTimeout(final long inactivityTimeout) {
             this.inactivityTimeout = Optional.of(Objects.requireNonNull(inactivityTimeout, "inactivityTimeout is required"));
             return this;
@@ -121,10 +121,10 @@ public class EndpointSamlMutate {
          * Integer number of seconds of inactivity after which if the user has not accessed
          * the endpoint, their session will time out and they will be forced to
          * reauthenticate.
-		 *
-		 * @param inactivityTimeout the value of the <code>inactivity_timeout</code> parameter as a {@link long}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param inactivityTimeout the value of the <code>inactivity_timeout</code> parameter as a {@link long}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder inactivityTimeout(final Optional<Long> inactivityTimeout) {
             this.inactivityTimeout = Objects.requireNonNull(inactivityTimeout, "inactivityTimeout is required");
             return this;
@@ -133,10 +133,10 @@ public class EndpointSamlMutate {
         /**
          * Integer number of seconds of the maximum duration of an authenticated session.
          * After this period is exceeded, a user must reauthenticate.
-		 *
-		 * @param maximumDuration the value of the <code>maximum_duration</code> parameter as a {@link java.time.Duration}
-		 * @return this builder instance
-		 */
+         *
+         * @param maximumDuration the value of the <code>maximum_duration</code> parameter as a {@link java.time.Duration}
+         * @return this builder instance
+         */
         public Builder maximumDuration(final java.time.Duration maximumDuration) {
             this.maximumDuration = Optional.of(Objects.requireNonNull(maximumDuration, "maximumDuration is required"));
             return this;
@@ -145,10 +145,10 @@ public class EndpointSamlMutate {
         /**
          * Integer number of seconds of the maximum duration of an authenticated session.
          * After this period is exceeded, a user must reauthenticate.
-		 *
-		 * @param maximumDuration the value of the <code>maximum_duration</code> parameter as a {@link java.time.Duration}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param maximumDuration the value of the <code>maximum_duration</code> parameter as a {@link java.time.Duration}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder maximumDuration(final Optional<java.time.Duration> maximumDuration) {
             this.maximumDuration = Objects.requireNonNull(maximumDuration, "maximumDuration is required");
             return this;
@@ -157,10 +157,10 @@ public class EndpointSamlMutate {
         /**
          * The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file
          * to download or as a URL.
-		 *
-		 * @param idpMetadata the value of the <code>idp_metadata</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param idpMetadata the value of the <code>idp_metadata</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder idpMetadata(final String idpMetadata) {
             this.idpMetadata = Optional.of(Objects.requireNonNull(idpMetadata, "idpMetadata is required"));
             return this;
@@ -169,10 +169,10 @@ public class EndpointSamlMutate {
         /**
          * The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file
          * to download or as a URL.
-		 *
-		 * @param idpMetadata the value of the <code>idp_metadata</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param idpMetadata the value of the <code>idp_metadata</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder idpMetadata(final Optional<String> idpMetadata) {
             this.idpMetadata = Objects.requireNonNull(idpMetadata, "idpMetadata is required");
             return this;
@@ -182,10 +182,10 @@ public class EndpointSamlMutate {
          * If true, indicates that whenever we redirect a user to the IdP for
          * authentication that the IdP must prompt the user for authentication credentials
          * even if the user already has a valid session with the IdP.
-		 *
-		 * @param forceAuthn the value of the <code>force_authn</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param forceAuthn the value of the <code>force_authn</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder forceAuthn(final boolean forceAuthn) {
             this.forceAuthn = Optional.of(Objects.requireNonNull(forceAuthn, "forceAuthn is required"));
             return this;
@@ -195,10 +195,10 @@ public class EndpointSamlMutate {
          * If true, indicates that whenever we redirect a user to the IdP for
          * authentication that the IdP must prompt the user for authentication credentials
          * even if the user already has a valid session with the IdP.
-		 *
-		 * @param forceAuthn the value of the <code>force_authn</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param forceAuthn the value of the <code>force_authn</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder forceAuthn(final Optional<Boolean> forceAuthn) {
             this.forceAuthn = Objects.requireNonNull(forceAuthn, "forceAuthn is required");
             return this;
@@ -209,10 +209,10 @@ public class EndpointSamlMutate {
          * visit the endpoint first and then be redirected). The IdP should set the
          * <code>RelayState</code> parameter to the target URL of the resource they want
          * the user to be redirected to after the SAML login assertion has been processed.
-		 *
-		 * @param allowIdpInitiated the value of the <code>allow_idp_initiated</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param allowIdpInitiated the value of the <code>allow_idp_initiated</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder allowIdpInitiated(final boolean allowIdpInitiated) {
             this.allowIdpInitiated = Optional.of(Objects.requireNonNull(allowIdpInitiated, "allowIdpInitiated is required"));
             return this;
@@ -223,10 +223,10 @@ public class EndpointSamlMutate {
          * visit the endpoint first and then be redirected). The IdP should set the
          * <code>RelayState</code> parameter to the target URL of the resource they want
          * the user to be redirected to after the SAML login assertion has been processed.
-		 *
-		 * @param allowIdpInitiated the value of the <code>allow_idp_initiated</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param allowIdpInitiated the value of the <code>allow_idp_initiated</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder allowIdpInitiated(final Optional<Boolean> allowIdpInitiated) {
             this.allowIdpInitiated = Objects.requireNonNull(allowIdpInitiated, "allowIdpInitiated is required");
             return this;
@@ -235,24 +235,24 @@ public class EndpointSamlMutate {
         /**
          * If present, only users who are a member of one of the listed groups may access
          * the target endpoint.
-		 *
-		 * @param authorizedGroups the value of the <code>authorized_groups</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param authorizedGroups the value of the <code>authorized_groups</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder authorizedGroups(final java.util.List<String> authorizedGroups) {
-            this.authorizedGroups = Optional.of(Objects.requireNonNull(authorizedGroups, "authorizedGroups is required"));
+            this.authorizedGroups = Objects.requireNonNull(authorizedGroups, "authorizedGroups is required");
             return this;
         }
 
         /**
          * If present, only users who are a member of one of the listed groups may access
          * the target endpoint.
-		 *
-		 * @param authorizedGroups the value of the <code>authorized_groups</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param authorizedGroups the value of the <code>authorized_groups</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder authorizedGroups(final Optional<java.util.List<String>> authorizedGroups) {
-            this.authorizedGroups = Objects.requireNonNull(authorizedGroups, "authorizedGroups is required");
+            this.authorizedGroups = Objects.requireNonNull(authorizedGroups, "authorizedGroups is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
@@ -262,10 +262,10 @@ public class EndpointSamlMutate {
          * <code>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</code> will be used.
          * A subset of the allowed values enumerated by the SAML specification are
          * supported.
-		 *
-		 * @param nameidFormat the value of the <code>nameid_format</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param nameidFormat the value of the <code>nameid_format</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder nameidFormat(final String nameidFormat) {
             this.nameidFormat = Optional.of(Objects.requireNonNull(nameidFormat, "nameidFormat is required"));
             return this;
@@ -277,10 +277,10 @@ public class EndpointSamlMutate {
          * <code>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</code> will be used.
          * A subset of the allowed values enumerated by the SAML specification are
          * supported.
-		 *
-		 * @param nameidFormat the value of the <code>nameid_format</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param nameidFormat the value of the <code>nameid_format</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder nameidFormat(final Optional<String> nameidFormat) {
             this.nameidFormat = Objects.requireNonNull(nameidFormat, "nameidFormat is required");
             return this;
@@ -301,7 +301,7 @@ public class EndpointSamlMutate {
                 this.idpMetadata.orElse(""),
                 this.forceAuthn.orElse(false),
                 this.allowIdpInitiated,
-                this.authorizedGroups.orElse(java.util.Collections.emptyList()),
+                this.authorizedGroups,
                 this.nameidFormat.orElse("")
             );
         }
@@ -354,7 +354,7 @@ public class EndpointSamlMutate {
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
      * @param optionsPassthrough Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS.
-     * @param cookiePrefix the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok.'
+     * @param cookiePrefix the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is &#39;ngrok.&#39;
      * @param inactivityTimeout Integer number of seconds of inactivity after which if the user has not accessed the endpoint, their session will time out and they will be forced to reauthenticate.
      * @param maximumDuration Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate.
      * @param idpMetadata The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file to download or as a URL.
@@ -384,7 +384,7 @@ public class EndpointSamlMutate {
         this.idpMetadata = Objects.requireNonNull(idpMetadata, "idpMetadata is required");
         this.forceAuthn = Objects.requireNonNull(forceAuthn, "forceAuthn is required");
         this.allowIdpInitiated = allowIdpInitiated != null ? allowIdpInitiated : Optional.empty();
-        this.authorizedGroups = Objects.requireNonNull(authorizedGroups, "authorizedGroups is required");
+        this.authorizedGroups = authorizedGroups != null ? authorizedGroups : java.util.Collections.emptyList();
         this.nameidFormat = Objects.requireNonNull(nameidFormat, "nameidFormat is required");
     }
 
@@ -410,7 +410,7 @@ public class EndpointSamlMutate {
 
     /**
      * the prefix of the session cookie that ngrok sets on the http client to cache
-     * authentication. default is 'ngrok.'
+     * authentication. default is &#39;ngrok.&#39;
      *
      * @return the value of the property as a {@link String}
      */
@@ -476,7 +476,7 @@ public class EndpointSamlMutate {
      * If present, only users who are a member of one of the listed groups may access
      * the target endpoint.
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getAuthorizedGroups() {
         return this.authorizedGroups;

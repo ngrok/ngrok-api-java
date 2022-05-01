@@ -33,7 +33,7 @@ public class TlsEdgeIpRestrictionModule {
      */
     public class ReplaceCallBuilder {
         private final String id;
-        private EndpointIpPolicyMutate module = null;
+        private Optional<EndpointIpPolicyMutate> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String id
@@ -48,7 +48,7 @@ public class TlsEdgeIpRestrictionModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointIpPolicyMutate module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -59,7 +59,7 @@ public class TlsEdgeIpRestrictionModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointIpPolicyMutate> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -74,7 +74,7 @@ public class TlsEdgeIpRestrictionModule {
                 "/edges/tls/" + this.id + "/ip_restriction",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointIpPolicy.class)
             );

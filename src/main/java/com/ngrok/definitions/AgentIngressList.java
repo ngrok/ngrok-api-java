@@ -36,7 +36,7 @@ public class AgentIngressList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.ingresses = Objects.requireNonNull(ingresses, "ingresses is required");
+        this.ingresses = ingresses != null ? ingresses : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class AgentIngressList implements Pageable {
     /**
      * the list of Agent Ingresses owned by this account
      *
-     * @return the value of the property as a {@link java.util.List<AgentIngress>}
+     * @return the value of the property as a {@link java.util.List} of {@link AgentIngress}
      */
     public java.util.List<AgentIngress> getIngresses() {
         return this.ingresses;

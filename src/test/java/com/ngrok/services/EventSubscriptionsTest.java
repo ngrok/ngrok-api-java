@@ -86,7 +86,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         wireMock.stubFor(
             post(urlPathEqualTo("/event_destinations"))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
                 .withRequestBody(equalToJson(MAPPER.writeValueAsString(EVENT_DESTINATION_CREATE)))
@@ -98,7 +98,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         wireMock.stubFor(
             delete(urlPathEqualTo("/event_destinations/" + EVENT_DESTINATION.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(noContent())
         );
@@ -106,7 +106,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         wireMock.stubFor(
             post(urlPathEqualTo("/event_subscriptions"))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
                 .withRequestBody(equalToJson(MAPPER.writeValueAsString(EVENT_SUBSCRIPTION_CREATE)))
@@ -118,7 +118,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         wireMock.stubFor(
             get(urlPathEqualTo("/event_subscriptions/" + EVENT_SUBSCRIPTION.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(ok(MAPPER.writeValueAsString(EVENT_SUBSCRIPTION))
                     .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), "application/json")
@@ -129,7 +129,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
             get(urlPathEqualTo("/event_subscriptions"))
                 .withQueryParam("limit", equalTo("10"))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(ok(MAPPER.writeValueAsString(EVENT_SUBSCRIPTION_LIST))
                     .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), "application/json")
@@ -139,7 +139,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         wireMock.stubFor(
             patch(urlPathEqualTo("/event_subscriptions/" + EVENT_SUBSCRIPTION.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
                 .withRequestBody(equalToJson(MAPPER.writeValueAsString(EVENT_SUBSCRIPTION_UPDATE)))
@@ -151,7 +151,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         wireMock.stubFor(
             delete(urlPathEqualTo("/event_subscriptions/" + EVENT_SUBSCRIPTION.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(noContent())
         );

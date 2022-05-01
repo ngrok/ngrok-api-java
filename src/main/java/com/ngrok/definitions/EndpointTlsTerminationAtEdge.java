@@ -27,10 +27,10 @@ public class EndpointTlsTerminationAtEdge {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder enabled(final boolean enabled) {
             this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
             return this;
@@ -39,10 +39,10 @@ public class EndpointTlsTerminationAtEdge {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder enabled(final Optional<Boolean> enabled) {
             this.enabled = Objects.requireNonNull(enabled, "enabled is required");
             return this;
@@ -53,10 +53,10 @@ public class EndpointTlsTerminationAtEdge {
          * the TLS handshake. if unspecified, ngrok will choose an industry-safe default.
          * This value must be null if <code>terminate_at</code> is set to
          * <code>upstream</code>.
-		 *
-		 * @param minVersion the value of the <code>min_version</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param minVersion the value of the <code>min_version</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder minVersion(final String minVersion) {
             this.minVersion = Optional.of(Objects.requireNonNull(minVersion, "minVersion is required"));
             return this;
@@ -67,10 +67,10 @@ public class EndpointTlsTerminationAtEdge {
          * the TLS handshake. if unspecified, ngrok will choose an industry-safe default.
          * This value must be null if <code>terminate_at</code> is set to
          * <code>upstream</code>.
-		 *
-		 * @param minVersion the value of the <code>min_version</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param minVersion the value of the <code>min_version</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder minVersion(final Optional<String> minVersion) {
             this.minVersion = Objects.requireNonNull(minVersion, "minVersion is required");
             return this;

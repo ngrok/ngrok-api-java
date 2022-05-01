@@ -25,10 +25,10 @@ public class EventSourceReplace {
 
         /**
          * Type of event for which an event subscription will trigger
-		 *
-		 * @param type the value of the <code>type</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param type the value of the <code>type</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder type(final String type) {
             this.type = Optional.of(Objects.requireNonNull(type, "type is required"));
             return this;
@@ -36,10 +36,10 @@ public class EventSourceReplace {
 
         /**
          * Type of event for which an event subscription will trigger
-		 *
-		 * @param type the value of the <code>type</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param type the value of the <code>type</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder type(final Optional<String> type) {
             this.type = Objects.requireNonNull(type, "type is required");
             return this;

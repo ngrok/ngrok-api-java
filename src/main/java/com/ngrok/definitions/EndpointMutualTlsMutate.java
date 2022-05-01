@@ -18,7 +18,7 @@ public class EndpointMutualTlsMutate {
      */
     public static class Builder {
         private Optional<Boolean> enabled = Optional.empty();
-        private Optional<java.util.List<String>> certificateAuthorityIds = Optional.empty();
+        private java.util.List<String> certificateAuthorityIds = java.util.Collections.emptyList();
 
         private Builder(
         ) {
@@ -27,10 +27,10 @@ public class EndpointMutualTlsMutate {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder enabled(final boolean enabled) {
             this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
             return this;
@@ -39,10 +39,10 @@ public class EndpointMutualTlsMutate {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder enabled(final Optional<Boolean> enabled) {
             this.enabled = Objects.requireNonNull(enabled, "enabled is required");
             return this;
@@ -51,24 +51,24 @@ public class EndpointMutualTlsMutate {
         /**
          * list of certificate authorities that will be used to validate the TLS client
          * certificate presented by the initiator of the TLS connection
-		 *
-		 * @param certificateAuthorityIds the value of the <code>certificate_authority_ids</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param certificateAuthorityIds the value of the <code>certificate_authority_ids</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder certificateAuthorityIds(final java.util.List<String> certificateAuthorityIds) {
-            this.certificateAuthorityIds = Optional.of(Objects.requireNonNull(certificateAuthorityIds, "certificateAuthorityIds is required"));
+            this.certificateAuthorityIds = Objects.requireNonNull(certificateAuthorityIds, "certificateAuthorityIds is required");
             return this;
         }
 
         /**
          * list of certificate authorities that will be used to validate the TLS client
          * certificate presented by the initiator of the TLS connection
-		 *
-		 * @param certificateAuthorityIds the value of the <code>certificate_authority_ids</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param certificateAuthorityIds the value of the <code>certificate_authority_ids</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder certificateAuthorityIds(final Optional<java.util.List<String>> certificateAuthorityIds) {
-            this.certificateAuthorityIds = Objects.requireNonNull(certificateAuthorityIds, "certificateAuthorityIds is required");
+            this.certificateAuthorityIds = Objects.requireNonNull(certificateAuthorityIds, "certificateAuthorityIds is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
@@ -80,7 +80,7 @@ public class EndpointMutualTlsMutate {
         public EndpointMutualTlsMutate build() {
             return new EndpointMutualTlsMutate(
                 this.enabled,
-                this.certificateAuthorityIds.orElse(java.util.Collections.emptyList())
+                this.certificateAuthorityIds
             );
         }
     }
@@ -115,7 +115,7 @@ public class EndpointMutualTlsMutate {
         @JsonProperty("certificate_authority_ids") final java.util.List<String> certificateAuthorityIds
     ) {
         this.enabled = enabled != null ? enabled : Optional.empty();
-        this.certificateAuthorityIds = Objects.requireNonNull(certificateAuthorityIds, "certificateAuthorityIds is required");
+        this.certificateAuthorityIds = certificateAuthorityIds != null ? certificateAuthorityIds : java.util.Collections.emptyList();
     }
 
     /**
@@ -132,7 +132,7 @@ public class EndpointMutualTlsMutate {
      * list of certificate authorities that will be used to validate the TLS client
      * certificate presented by the initiator of the TLS connection
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getCertificateAuthorityIds() {
         return this.certificateAuthorityIds;

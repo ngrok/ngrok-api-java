@@ -133,7 +133,7 @@ public class TlsEdge {
     /**
      * hostports served by this edge
      *
-     * @return the value of the property as a {@link java.util.List<String>} wrapped in an {@link Optional}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
     public Optional<java.util.List<String>> getHostports() {
         return this.hostports;

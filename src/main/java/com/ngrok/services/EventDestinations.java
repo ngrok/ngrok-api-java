@@ -32,10 +32,10 @@ public class EventDestinations {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String metadata = "";
-        private String description = "";
-        private String format = "";
-        private EventTarget target = null;
+        private Optional<String> metadata = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> format = Optional.empty();
+        private Optional<EventTarget> target = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -49,7 +49,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -61,7 +61,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -72,7 +72,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -83,7 +83,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -95,7 +95,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder format(final String format) {
-            this.format = Objects.requireNonNull(format, "format is required");
+            this.format = Optional.of(Objects.requireNonNull(format, "format is required"));
             return this;
         }
 
@@ -107,7 +107,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder format(final Optional<String> format) {
-            this.format = Objects.requireNonNull(format, "format is required").orElse("");
+            this.format = Objects.requireNonNull(format, "format is required");
             return this;
         }
         
@@ -121,7 +121,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder target(final EventTarget target) {
-            this.target = Objects.requireNonNull(target, "target is required");
+            this.target = Optional.of(Objects.requireNonNull(target, "target is required"));
             return this;
         }
 
@@ -135,7 +135,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public CreateCallBuilder target(final Optional<EventTarget> target) {
-            this.target = Objects.requireNonNull(target, "target is required").orElse(null);
+            this.target = Objects.requireNonNull(target, "target is required");
             return this;
         }
         
@@ -150,10 +150,10 @@ public class EventDestinations {
                 "/event_destinations",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("format", Optional.of(this.format)),
-                    new AbstractMap.SimpleEntry<>("target", Optional.of(this.target))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("format", this.format.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("target", this.target.map(Function.identity()))
                 ),
                 Optional.of(EventDestination.class)
             );
@@ -323,7 +323,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -345,7 +345,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -430,7 +430,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -453,7 +453,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -476,7 +476,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public UpdateCallBuilder format(final String format) {
-            this.format = Optional.ofNullable(format);
+            this.format = Optional.of(Objects.requireNonNull(format, "format is required"));
             return this;
         }
 
@@ -502,7 +502,7 @@ public class EventDestinations {
          * @return the call builder instance
          */
         public UpdateCallBuilder target(final EventTarget target) {
-            this.target = Optional.ofNullable(target);
+            this.target = Optional.of(Objects.requireNonNull(target, "target is required"));
             return this;
         }
 

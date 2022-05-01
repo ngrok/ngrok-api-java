@@ -59,10 +59,10 @@ public class AbuseReport {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.urls = Objects.requireNonNull(urls, "urls is required");
+        this.urls = urls != null ? urls : java.util.Collections.emptyList();
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.status = Objects.requireNonNull(status, "status is required");
-        this.hostnames = Objects.requireNonNull(hostnames, "hostnames is required");
+        this.hostnames = hostnames != null ? hostnames : java.util.Collections.emptyList();
     }
 
     /**
@@ -95,7 +95,7 @@ public class AbuseReport {
     /**
      * a list of URLs containing suspected abusive content
      *
-     * @return the value of the property as a {@link java.util.List<java.net.URI>}
+     * @return the value of the property as a {@link java.util.List} of {@link java.net.URI}
      */
     public java.util.List<java.net.URI> getUrls() {
         return this.urls;
@@ -124,7 +124,7 @@ public class AbuseReport {
     /**
      * an array of hostname statuses related to the report
      *
-     * @return the value of the property as a {@link java.util.List<AbuseReportHostname>}
+     * @return the value of the property as a {@link java.util.List} of {@link AbuseReportHostname}
      */
     public java.util.List<AbuseReportHostname> getHostnames() {
         return this.hostnames;

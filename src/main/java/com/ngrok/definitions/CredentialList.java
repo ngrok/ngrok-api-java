@@ -36,7 +36,7 @@ public class CredentialList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.credentials = Objects.requireNonNull(credentials, "credentials is required");
+        this.credentials = credentials != null ? credentials : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class CredentialList implements Pageable {
     /**
      * the list of all tunnel credentials on this account
      *
-     * @return the value of the property as a {@link java.util.List<Credential>}
+     * @return the value of the property as a {@link java.util.List} of {@link Credential}
      */
     public java.util.List<Credential> getCredentials() {
         return this.credentials;

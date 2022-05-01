@@ -36,7 +36,7 @@ public class HttpsEdgeList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.httpsEdges = Objects.requireNonNull(httpsEdges, "httpsEdges is required");
+        this.httpsEdges = httpsEdges != null ? httpsEdges : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class HttpsEdgeList implements Pageable {
     /**
      * the list of all HTTPS Edges on this account
      *
-     * @return the value of the property as a {@link java.util.List<HttpsEdge>}
+     * @return the value of the property as a {@link java.util.List} of {@link HttpsEdge}
      */
     public java.util.List<HttpsEdge> getHttpsEdges() {
         return this.httpsEdges;

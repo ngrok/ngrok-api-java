@@ -61,8 +61,8 @@ public class EventSubscription {
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.description = Objects.requireNonNull(description, "description is required");
-        this.sources = Objects.requireNonNull(sources, "sources is required");
-        this.destinations = Objects.requireNonNull(destinations, "destinations is required");
+        this.sources = sources != null ? sources : java.util.Collections.emptyList();
+        this.destinations = destinations != null ? destinations : java.util.Collections.emptyList();
     }
 
     /**
@@ -115,7 +115,7 @@ public class EventSubscription {
     /**
      * Sources containing the types for which this event subscription will trigger
      *
-     * @return the value of the property as a {@link java.util.List<EventSource>}
+     * @return the value of the property as a {@link java.util.List} of {@link EventSource}
      */
     public java.util.List<EventSource> getSources() {
         return this.sources;
@@ -124,7 +124,7 @@ public class EventSubscription {
     /**
      * Destinations to which these events will be sent
      *
-     * @return the value of the property as a {@link java.util.List<Ref>}
+     * @return the value of the property as a {@link java.util.List} of {@link Ref}
      */
     public java.util.List<Ref> getDestinations() {
         return this.destinations;

@@ -33,7 +33,7 @@ public class TlsEdgeTlsTerminationModule {
      */
     public class ReplaceCallBuilder {
         private final String id;
-        private EndpointTlsTermination module = null;
+        private Optional<EndpointTlsTermination> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String id
@@ -48,7 +48,7 @@ public class TlsEdgeTlsTerminationModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointTlsTermination module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -59,7 +59,7 @@ public class TlsEdgeTlsTerminationModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointTlsTermination> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -74,7 +74,7 @@ public class TlsEdgeTlsTerminationModule {
                 "/edges/tls/" + this.id + "/tls_termination",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointTlsTermination.class)
             );

@@ -18,7 +18,7 @@ public class TunnelGroupBackend {
     private final String id;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String uri;
+    private final java.net.URI uri;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
@@ -43,13 +43,13 @@ public class TunnelGroupBackend {
      * @param createdAt timestamp when the backend was created, RFC 3339 format
      * @param description human-readable description of this backend. Optional
      * @param metadata arbitrary user-defined machine-readable data of this backend. Optional
-     * @param labels labels to watch for tunnels on, e.g. app->foo, dc->bar
+     * @param labels labels to watch for tunnels on, e.g. app-&gt;foo, dc-&gt;bar
      * @param tunnels tunnels matching this backend
      */
     @JsonCreator
     public TunnelGroupBackend(
         @JsonProperty("id") final String id,
-        @JsonProperty("uri") final String uri,
+        @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
@@ -61,8 +61,8 @@ public class TunnelGroupBackend {
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-        this.labels = Objects.requireNonNull(labels, "labels is required");
-        this.tunnels = Objects.requireNonNull(tunnels, "tunnels is required");
+        this.labels = labels != null ? labels : java.util.Collections.emptyMap();
+        this.tunnels = tunnels != null ? tunnels : java.util.Collections.emptyList();
     }
 
     /**
@@ -77,9 +77,9 @@ public class TunnelGroupBackend {
     /**
      * URI of the TunnelGroupBackend API resource
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.net.URI}
      */
-    public String getUri() {
+    public java.net.URI getUri() {
         return this.uri;
     }
 
@@ -111,9 +111,9 @@ public class TunnelGroupBackend {
     }
 
     /**
-     * labels to watch for tunnels on, e.g. app->foo, dc->bar
+     * labels to watch for tunnels on, e.g. app-&gt;foo, dc-&gt;bar
      *
-     * @return the value of the property as a {@link java.util.Map<String, String>}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
      */
     public java.util.Map<String, String> getLabels() {
         return this.labels;
@@ -122,7 +122,7 @@ public class TunnelGroupBackend {
     /**
      * tunnels matching this backend
      *
-     * @return the value of the property as a {@link java.util.List<Ref>}
+     * @return the value of the property as a {@link java.util.List} of {@link Ref}
      */
     public java.util.List<Ref> getTunnels() {
         return this.tunnels;

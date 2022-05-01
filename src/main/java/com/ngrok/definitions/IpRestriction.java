@@ -68,7 +68,7 @@ public class IpRestriction {
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.enforced = Objects.requireNonNull(enforced, "enforced is required");
         this.type = Objects.requireNonNull(type, "type is required");
-        this.ipPolicies = Objects.requireNonNull(ipPolicies, "ipPolicies is required");
+        this.ipPolicies = ipPolicies != null ? ipPolicies : java.util.Collections.emptyList();
     }
 
     /**
@@ -142,7 +142,7 @@ public class IpRestriction {
     /**
      * the set of IP policies that are used to enforce the restriction
      *
-     * @return the value of the property as a {@link java.util.List<Ref>}
+     * @return the value of the property as a {@link java.util.List} of {@link Ref}
      */
     public java.util.List<Ref> getIpPolicies() {
         return this.ipPolicies;

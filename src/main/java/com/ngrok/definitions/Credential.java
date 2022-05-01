@@ -43,8 +43,8 @@ public class Credential {
      * @param createdAt timestamp when the tunnel credential was created, RFC 3339 format
      * @param description human-readable description of who or what will use the credential to authenticate. Optional, max 255 bytes.
      * @param metadata arbitrary user-defined machine-readable data of this credential. Optional, max 4096 bytes.
-     * @param token the credential's authtoken that can be used to authenticate an ngrok agent. <strong>This value is only available one time, on the API response from credential creation, otherwise it is null.</strong>
-     * @param acl optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>'*'</code> is equivalent to no acl at all and will explicitly permit all actions.
+     * @param token the credential&#39;s authtoken that can be used to authenticate an ngrok agent. <strong>This value is only available one time, on the API response from credential creation, otherwise it is null.</strong>
+     * @param acl optional list of ACL rules. If unspecified, the credential will have no restrictions. The only allowed ACL rule at this time is the <code>bind</code> rule. The <code>bind</code> rule allows the caller to restrict what domains and addresses the token is allowed to bind. For example, to allow the token to open a tunnel on example.ngrok.io your ACL would include the rule <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to match multiple domains with a common suffix. For example, you may specify a rule of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>, <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly permit all actions.
      */
     @JsonCreator
     public Credential(
@@ -62,7 +62,7 @@ public class Credential {
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.token = token != null ? token : Optional.empty();
-        this.acl = Objects.requireNonNull(acl, "acl is required");
+        this.acl = acl != null ? acl : java.util.Collections.emptyList();
     }
 
     /**
@@ -113,7 +113,7 @@ public class Credential {
     }
 
     /**
-     * the credential's authtoken that can be used to authenticate an ngrok agent.
+     * the credential&#39;s authtoken that can be used to authenticate an ngrok agent.
      * <strong>This value is only available one time, on the API response from
      * credential creation, otherwise it is null.</strong>
      *
@@ -133,10 +133,10 @@ public class Credential {
      * match multiple domains with a common suffix. For example, you may specify a rule
      * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
      * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-     * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-     * actions.
+     * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+     * permit all actions.
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getAcl() {
         return this.acl;

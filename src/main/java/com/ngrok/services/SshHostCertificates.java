@@ -37,10 +37,10 @@ public class SshHostCertificates {
         private final String sshCertificateAuthorityId;
         private final String publicKey;
         private java.util.List<String> principals = java.util.Collections.emptyList();
-        private java.time.OffsetDateTime validAfter = null;
-        private java.time.OffsetDateTime validUntil = null;
-        private String description = "";
-        private String metadata = "";
+        private Optional<java.time.OffsetDateTime> validAfter = Optional.empty();
+        private Optional<java.time.OffsetDateTime> validUntil = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
 
         private CreateCallBuilder(
             final String sshCertificateAuthorityId,
@@ -56,7 +56,7 @@ public class SshHostCertificates {
          * certificate. Dangerously, if no principals are specified, this certificate is
          * considered valid for all hosts.
          *
-         * @param principals the value of the principals parameter as a {@link java.util.List<String>}
+         * @param principals the value of the principals parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder principals(final java.util.List<String> principals) {
@@ -70,7 +70,7 @@ public class SshHostCertificates {
          * certificate. Dangerously, if no principals are specified, this certificate is
          * considered valid for all hosts.
          *
-         * @param principals the value of the principals parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param principals the value of the principals parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder principals(final Optional<java.util.List<String>> principals) {
@@ -86,7 +86,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validAfter(final java.time.OffsetDateTime validAfter) {
-            this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
+            this.validAfter = Optional.of(Objects.requireNonNull(validAfter, "validAfter is required"));
             return this;
         }
 
@@ -98,7 +98,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validAfter(final Optional<java.time.OffsetDateTime> validAfter) {
-            this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required").orElse(null);
+            this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
             return this;
         }
         
@@ -111,7 +111,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validUntil(final java.time.OffsetDateTime validUntil) {
-            this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
+            this.validUntil = Optional.of(Objects.requireNonNull(validUntil, "validUntil is required"));
             return this;
         }
 
@@ -124,7 +124,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validUntil(final Optional<java.time.OffsetDateTime> validUntil) {
-            this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required").orElse(null);
+            this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
             return this;
         }
         
@@ -136,7 +136,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -148,7 +148,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -160,7 +160,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -172,7 +172,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -189,11 +189,11 @@ public class SshHostCertificates {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("ssh_certificate_authority_id", Optional.of(this.sshCertificateAuthorityId)),
                     new AbstractMap.SimpleEntry<>("public_key", Optional.of(this.publicKey)),
-                    new AbstractMap.SimpleEntry<>("principals", Optional.of(this.principals)),
-                    new AbstractMap.SimpleEntry<>("valid_after", Optional.of(this.validAfter)),
-                    new AbstractMap.SimpleEntry<>("valid_until", Optional.of(this.validUntil)),
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata))
+                    new AbstractMap.SimpleEntry<>("principals", Optional.of(this.principals).filter(principals -> !principals.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("valid_after", this.validAfter.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("valid_until", this.validUntil.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
                 ),
                 Optional.of(SshHostCertificate.class)
             );
@@ -366,7 +366,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -388,7 +388,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -471,7 +471,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -495,7 +495,7 @@ public class SshHostCertificates {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 

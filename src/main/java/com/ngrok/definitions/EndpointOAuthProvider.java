@@ -28,10 +28,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using github as the identity provider
-		 *
-		 * @param github the value of the <code>github</code> parameter as a {@link EndpointOAuthGitHub}
-		 * @return this builder instance
-		 */
+         *
+         * @param github the value of the <code>github</code> parameter as a {@link EndpointOAuthGitHub}
+         * @return this builder instance
+         */
         public Builder github(final EndpointOAuthGitHub github) {
             this.github = Optional.of(Objects.requireNonNull(github, "github is required"));
             return this;
@@ -39,10 +39,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using github as the identity provider
-		 *
-		 * @param github the value of the <code>github</code> parameter as a {@link EndpointOAuthGitHub}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param github the value of the <code>github</code> parameter as a {@link EndpointOAuthGitHub}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder github(final Optional<EndpointOAuthGitHub> github) {
             this.github = Objects.requireNonNull(github, "github is required");
             return this;
@@ -50,10 +50,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using facebook as the identity provider
-		 *
-		 * @param facebook the value of the <code>facebook</code> parameter as a {@link EndpointOAuthFacebook}
-		 * @return this builder instance
-		 */
+         *
+         * @param facebook the value of the <code>facebook</code> parameter as a {@link EndpointOAuthFacebook}
+         * @return this builder instance
+         */
         public Builder facebook(final EndpointOAuthFacebook facebook) {
             this.facebook = Optional.of(Objects.requireNonNull(facebook, "facebook is required"));
             return this;
@@ -61,10 +61,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using facebook as the identity provider
-		 *
-		 * @param facebook the value of the <code>facebook</code> parameter as a {@link EndpointOAuthFacebook}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param facebook the value of the <code>facebook</code> parameter as a {@link EndpointOAuthFacebook}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder facebook(final Optional<EndpointOAuthFacebook> facebook) {
             this.facebook = Objects.requireNonNull(facebook, "facebook is required");
             return this;
@@ -72,10 +72,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using microsoft as the identity provider
-		 *
-		 * @param microsoft the value of the <code>microsoft</code> parameter as a {@link EndpointOAuthMicrosoft}
-		 * @return this builder instance
-		 */
+         *
+         * @param microsoft the value of the <code>microsoft</code> parameter as a {@link EndpointOAuthMicrosoft}
+         * @return this builder instance
+         */
         public Builder microsoft(final EndpointOAuthMicrosoft microsoft) {
             this.microsoft = Optional.of(Objects.requireNonNull(microsoft, "microsoft is required"));
             return this;
@@ -83,10 +83,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using microsoft as the identity provider
-		 *
-		 * @param microsoft the value of the <code>microsoft</code> parameter as a {@link EndpointOAuthMicrosoft}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param microsoft the value of the <code>microsoft</code> parameter as a {@link EndpointOAuthMicrosoft}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder microsoft(final Optional<EndpointOAuthMicrosoft> microsoft) {
             this.microsoft = Objects.requireNonNull(microsoft, "microsoft is required");
             return this;
@@ -94,10 +94,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using google as the identity provider
-		 *
-		 * @param google the value of the <code>google</code> parameter as a {@link EndpointOAuthGoogle}
-		 * @return this builder instance
-		 */
+         *
+         * @param google the value of the <code>google</code> parameter as a {@link EndpointOAuthGoogle}
+         * @return this builder instance
+         */
         public Builder google(final EndpointOAuthGoogle google) {
             this.google = Optional.of(Objects.requireNonNull(google, "google is required"));
             return this;
@@ -105,10 +105,10 @@ public class EndpointOAuthProvider {
 
         /**
          * configuration for using google as the identity provider
-		 *
-		 * @param google the value of the <code>google</code> parameter as a {@link EndpointOAuthGoogle}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param google the value of the <code>google</code> parameter as a {@link EndpointOAuthGoogle}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder google(final Optional<EndpointOAuthGoogle> google) {
             this.google = Objects.requireNonNull(google, "google is required");
             return this;

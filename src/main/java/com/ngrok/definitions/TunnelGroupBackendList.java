@@ -36,7 +36,7 @@ public class TunnelGroupBackendList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.backends = Objects.requireNonNull(backends, "backends is required");
+        this.backends = backends != null ? backends : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class TunnelGroupBackendList implements Pageable {
     /**
      * the list of all TunnelGroup backends on this account
      *
-     * @return the value of the property as a {@link java.util.List<TunnelGroupBackend>}
+     * @return the value of the property as a {@link java.util.List} of {@link TunnelGroupBackend}
      */
     public java.util.List<TunnelGroupBackend> getBackends() {
         return this.backends;

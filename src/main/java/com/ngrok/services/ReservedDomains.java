@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * Reserved Domains are hostnames that you can listen for traffic on. Domains
  *  can be used to listen for http, https or tls traffic. You may use a domain
  *  that you own by creating a CNAME record specified in the returned resource.
- *  This CNAME record points traffic for that domain to ngrok's edge servers.
+ *  This CNAME record points traffic for that domain to ngrok&#39;s edge servers.
  *
  * See also <a href="https://ngrok.com/docs/api#api-reserved-domains">https://ngrok.com/docs/api#api-reserved-domains</a>.
  */
@@ -36,9 +36,9 @@ public class ReservedDomains {
      */
     public class CreateCallBuilder {
         private final String name;
-        private String region = "";
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> region = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private Optional<String> certificateId = Optional.empty();
         private Optional<ReservedDomainCertPolicy> certificateManagementPolicy = Optional.empty();
 
@@ -56,7 +56,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder region(final String region) {
-            this.region = Objects.requireNonNull(region, "region is required");
+            this.region = Optional.of(Objects.requireNonNull(region, "region is required"));
             return this;
         }
 
@@ -68,7 +68,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder region(final Optional<String> region) {
-            this.region = Objects.requireNonNull(region, "region is required").orElse("");
+            this.region = Objects.requireNonNull(region, "region is required");
             return this;
         }
         
@@ -79,7 +79,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -90,7 +90,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -102,7 +102,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -114,7 +114,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -127,7 +127,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder certificateId(final String certificateId) {
-            this.certificateId = Optional.ofNullable(certificateId);
+            this.certificateId = Optional.of(Objects.requireNonNull(certificateId, "certificateId is required"));
             return this;
         }
 
@@ -153,7 +153,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public CreateCallBuilder certificateManagementPolicy(final ReservedDomainCertPolicy certificateManagementPolicy) {
-            this.certificateManagementPolicy = Optional.ofNullable(certificateManagementPolicy);
+            this.certificateManagementPolicy = Optional.of(Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required"));
             return this;
         }
 
@@ -182,9 +182,9 @@ public class ReservedDomains {
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("name", Optional.of(this.name)),
-                    new AbstractMap.SimpleEntry<>("region", Optional.of(this.region)),
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
+                    new AbstractMap.SimpleEntry<>("region", this.region.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("certificate_id", this.certificateId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("certificate_management_policy", this.certificateManagementPolicy.map(Function.identity()))
                 ),
@@ -212,7 +212,7 @@ public class ReservedDomains {
      *
      * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-create">https://ngrok.com/docs/api#api-reserved-domains-create</a>.
      *
-     * @param name the domain name to reserve. It may be a full domain name like app.example.com. If the name does not contain a '.' it will reserve that subdomain on ngrok.io.
+     * @param name the domain name to reserve. It may be a full domain name like app.example.com. If the name does not contain a &#39;.&#39; it will reserve that subdomain on ngrok.io.
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
@@ -356,7 +356,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -378,7 +378,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -462,7 +462,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -485,7 +485,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -510,7 +510,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public UpdateCallBuilder certificateId(final String certificateId) {
-            this.certificateId = Optional.ofNullable(certificateId);
+            this.certificateId = Optional.of(Objects.requireNonNull(certificateId, "certificateId is required"));
             return this;
         }
 
@@ -536,7 +536,7 @@ public class ReservedDomains {
          * @return the call builder instance
          */
         public UpdateCallBuilder certificateManagementPolicy(final ReservedDomainCertPolicy certificateManagementPolicy) {
-            this.certificateManagementPolicy = Optional.ofNullable(certificateManagementPolicy);
+            this.certificateManagementPolicy = Optional.of(Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required"));
             return this;
         }
 

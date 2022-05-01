@@ -33,7 +33,7 @@ public class EventSources {
      */
     public class CreateCallBuilder {
         private final String subscriptionId;
-        private String type = "";
+        private Optional<String> type = Optional.empty();
 
         private CreateCallBuilder(
             final String subscriptionId
@@ -48,7 +48,7 @@ public class EventSources {
          * @return the call builder instance
          */
         public CreateCallBuilder type(final String type) {
-            this.type = Objects.requireNonNull(type, "type is required");
+            this.type = Optional.of(Objects.requireNonNull(type, "type is required"));
             return this;
         }
 
@@ -59,7 +59,7 @@ public class EventSources {
          * @return the call builder instance
          */
         public CreateCallBuilder type(final Optional<String> type) {
-            this.type = Objects.requireNonNull(type, "type is required").orElse("");
+            this.type = Objects.requireNonNull(type, "type is required");
             return this;
         }
         
@@ -74,7 +74,7 @@ public class EventSources {
                 "/event_subscriptions/" + this.subscriptionId + "/sources",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("type", Optional.of(this.type))
+                    new AbstractMap.SimpleEntry<>("type", this.type.map(Function.identity()))
                 ),
                 Optional.of(EventSource.class)
             );

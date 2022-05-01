@@ -33,8 +33,8 @@ public class TunnelGroupBackends {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private java.util.Map<String, String> labels = java.util.Collections.emptyMap();
 
         private CreateCallBuilder(
@@ -48,7 +48,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -59,7 +59,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -70,7 +70,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -81,14 +81,14 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
         /**
-         * labels to watch for tunnels on, e.g. app->foo, dc->bar
+         * labels to watch for tunnels on, e.g. app-&gt;foo, dc-&gt;bar
          *
-         * @param labels the value of the labels parameter as a {@link java.util.Map<String, String>}
+         * @param labels the value of the labels parameter as a {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder labels(final java.util.Map<String, String> labels) {
@@ -97,9 +97,9 @@ public class TunnelGroupBackends {
         }
 
         /**
-         * labels to watch for tunnels on, e.g. app->foo, dc->bar
+         * labels to watch for tunnels on, e.g. app-&gt;foo, dc-&gt;bar
          *
-         * @param labels the value of the labels parameter as an {@link Optional} of {@link java.util.Map<String, String>}
+         * @param labels the value of the labels parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder labels(final Optional<java.util.Map<String, String>> labels) {
@@ -118,9 +118,9 @@ public class TunnelGroupBackends {
                 "/backends/tunnel_group",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("labels", Optional.of(this.labels))
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("labels", Optional.of(this.labels).filter(labels -> !labels.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(TunnelGroupBackend.class)
             );
@@ -287,7 +287,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -309,7 +309,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -392,7 +392,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -414,7 +414,7 @@ public class TunnelGroupBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -430,9 +430,9 @@ public class TunnelGroupBackends {
         }
         
         /**
-         * labels to watch for tunnels on, e.g. app->foo, dc->bar
+         * labels to watch for tunnels on, e.g. app-&gt;foo, dc-&gt;bar
          *
-         * @param labels the value of the labels parameter as a {@link java.util.Map<String, String>}
+         * @param labels the value of the labels parameter as a {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder labels(final java.util.Map<String, String> labels) {
@@ -441,9 +441,9 @@ public class TunnelGroupBackends {
         }
 
         /**
-         * labels to watch for tunnels on, e.g. app->foo, dc->bar
+         * labels to watch for tunnels on, e.g. app-&gt;foo, dc-&gt;bar
          *
-         * @param labels the value of the labels parameter as an {@link Optional} of {@link java.util.Map<String, String>}
+         * @param labels the value of the labels parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder labels(final Optional<java.util.Map<String, String>> labels) {
@@ -464,7 +464,7 @@ public class TunnelGroupBackends {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("labels", Optional.of(this.labels))
+                    new AbstractMap.SimpleEntry<>("labels", Optional.of(this.labels).filter(labels -> !labels.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(TunnelGroupBackend.class)
             );

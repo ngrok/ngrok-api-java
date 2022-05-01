@@ -36,7 +36,7 @@ public class ApiKeyList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.keys = Objects.requireNonNull(keys, "keys is required");
+        this.keys = keys != null ? keys : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class ApiKeyList implements Pageable {
     /**
      * the list of API keys for this account
      *
-     * @return the value of the property as a {@link java.util.List<ApiKey>}
+     * @return the value of the property as a {@link java.util.List} of {@link ApiKey}
      */
     public java.util.List<ApiKey> getKeys() {
         return this.keys;

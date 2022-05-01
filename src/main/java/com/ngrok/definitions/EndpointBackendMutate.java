@@ -27,10 +27,10 @@ public class EndpointBackendMutate {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder enabled(final boolean enabled) {
             this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
             return this;
@@ -39,10 +39,10 @@ public class EndpointBackendMutate {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder enabled(final Optional<Boolean> enabled) {
             this.enabled = Objects.requireNonNull(enabled, "enabled is required");
             return this;
@@ -50,10 +50,10 @@ public class EndpointBackendMutate {
 
         /**
          * backend to be used to back this endpoint
-		 *
-		 * @param backendId the value of the <code>backend_id</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param backendId the value of the <code>backend_id</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder backendId(final String backendId) {
             this.backendId = Optional.of(Objects.requireNonNull(backendId, "backendId is required"));
             return this;
@@ -61,10 +61,10 @@ public class EndpointBackendMutate {
 
         /**
          * backend to be used to back this endpoint
-		 *
-		 * @param backendId the value of the <code>backend_id</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param backendId the value of the <code>backend_id</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder backendId(final Optional<String> backendId) {
             this.backendId = Objects.requireNonNull(backendId, "backendId is required");
             return this;

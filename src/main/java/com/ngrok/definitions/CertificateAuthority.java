@@ -85,8 +85,8 @@ public class CertificateAuthority {
         this.subjectCommonName = Objects.requireNonNull(subjectCommonName, "subjectCommonName is required");
         this.notBefore = Objects.requireNonNull(notBefore, "notBefore is required");
         this.notAfter = Objects.requireNonNull(notAfter, "notAfter is required");
-        this.keyUsages = Objects.requireNonNull(keyUsages, "keyUsages is required");
-        this.extendedKeyUsages = Objects.requireNonNull(extendedKeyUsages, "extendedKeyUsages is required");
+        this.keyUsages = keyUsages != null ? keyUsages : java.util.Collections.emptyList();
+        this.extendedKeyUsages = extendedKeyUsages != null ? extendedKeyUsages : java.util.Collections.emptyList();
     }
 
     /**
@@ -175,7 +175,7 @@ public class CertificateAuthority {
     /**
      * set of actions the private key of this Certificate Authority can be used for
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getKeyUsages() {
         return this.keyUsages;
@@ -185,7 +185,7 @@ public class CertificateAuthority {
      * extended set of actions the private key of this Certificate Authority can be
      * used for
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getExtendedKeyUsages() {
         return this.extendedKeyUsages;

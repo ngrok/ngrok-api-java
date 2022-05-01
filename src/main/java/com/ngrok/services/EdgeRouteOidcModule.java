@@ -34,7 +34,7 @@ public class EdgeRouteOidcModule {
     public class ReplaceCallBuilder {
         private final String edgeId;
         private final String id;
-        private EndpointOidc module = null;
+        private Optional<EndpointOidc> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String edgeId,
@@ -51,7 +51,7 @@ public class EdgeRouteOidcModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointOidc module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -62,7 +62,7 @@ public class EdgeRouteOidcModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointOidc> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -77,7 +77,7 @@ public class EdgeRouteOidcModule {
                 "/edges/https/" + this.edgeId + "/routes/" + this.id + "/oidc",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointOidc.class)
             );

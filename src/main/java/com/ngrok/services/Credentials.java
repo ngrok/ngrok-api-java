@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 /**
  * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
  *  agent to connect the ngrok service as your account. They are installed with
- *  the <code>ngrok authtoken</code> command or by specifying it in the
+ *  the <code>ngrok config add-authtoken</code> command or by specifying it in the
  * <code>ngrok.yml</code>
  *  configuration file with the <code>authtoken</code> property.
  *
@@ -36,8 +36,8 @@ public class Credentials {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private java.util.List<String> acl = java.util.Collections.emptyList();
 
         private CreateCallBuilder(
@@ -52,7 +52,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -64,7 +64,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -76,7 +76,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -88,7 +88,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -102,10 +102,10 @@ public class Credentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as a {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder acl(final java.util.List<String> acl) {
@@ -123,10 +123,10 @@ public class Credentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
@@ -145,9 +145,9 @@ public class Credentials {
                 "/credentials",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl))
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl).filter(acl -> !acl.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(Credential.class)
             );
@@ -317,7 +317,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -339,7 +339,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -407,7 +407,7 @@ public class Credentials {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<java.util.List<String>> acl = Optional.empty();
+        private java.util.List<String> acl = java.util.Collections.emptyList();
 
         private UpdateCallBuilder(
             final String id
@@ -423,7 +423,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -447,7 +447,7 @@ public class Credentials {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -473,14 +473,14 @@ public class Credentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as a {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder acl(final java.util.List<String> acl) {
-            this.acl = Optional.ofNullable(acl);
+            this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
 
@@ -494,14 +494,14 @@ public class Credentials {
          * match multiple domains with a common suffix. For example, you may specify a rule
          * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
          * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>'*'</code> is equivalent to no acl at all and will explicitly permit all
-         * actions.
+         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
+         * permit all actions.
          *
-         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
-            this.acl = Objects.requireNonNull(acl, "acl is required");
+            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -518,7 +518,7 @@ public class Credentials {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("acl", this.acl.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl).filter(acl -> !acl.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(Credential.class)
             );

@@ -33,18 +33,20 @@ public class IpPolicyRules {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private final String cidr;
         private final String ipPolicyId;
-        private Optional<String> action = Optional.empty();
+        private final String action;
 
         private CreateCallBuilder(
             final String cidr,
-            final String ipPolicyId
+            final String ipPolicyId,
+            final String action
         ) {
             this.cidr = Objects.requireNonNull(cidr, "cidr is required");
             this.ipPolicyId = Objects.requireNonNull(ipPolicyId, "ipPolicyId is required");
+            this.action = Objects.requireNonNull(action, "action is required");
         }
         
         /**
@@ -55,7 +57,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -67,7 +69,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -79,7 +81,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -91,31 +93,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
-            return this;
-        }
-        
-        /**
-         * the action to apply to the policy rule, either <code>allow</code> or
-         * <code>deny</code>
-         *
-         * @param action the value of the action parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder action(final String action) {
-            this.action = Optional.ofNullable(action);
-            return this;
-        }
-
-        /**
-         * the action to apply to the policy rule, either <code>allow</code> or
-         * <code>deny</code>
-         *
-         * @param action the value of the action parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder action(final Optional<String> action) {
-            this.action = Objects.requireNonNull(action, "action is required");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -130,11 +108,11 @@ public class IpPolicyRules {
                 "/ip_policy_rules",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("cidr", Optional.of(this.cidr)),
                     new AbstractMap.SimpleEntry<>("ip_policy_id", Optional.of(this.ipPolicyId)),
-                    new AbstractMap.SimpleEntry<>("action", this.action.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("action", Optional.of(this.action))
                 ),
                 Optional.of(IpPolicyRule.class)
             );
@@ -162,15 +140,18 @@ public class IpPolicyRules {
      *
      * @param cidr an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
      * @param ipPolicyId ID of the IP policy this IP policy rule will be attached to
+     * @param action the action to apply to the policy rule, either <code>allow</code> or <code>deny</code>
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
         final String cidr,
-        final String ipPolicyId
+        final String ipPolicyId,
+        final String action
     ) {
         return new CreateCallBuilder(
             cidr,
-            ipPolicyId
+            ipPolicyId,
+            action
         );
     }
     
@@ -307,7 +288,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -329,7 +310,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -413,7 +394,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -437,7 +418,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -460,7 +441,7 @@ public class IpPolicyRules {
          * @return the call builder instance
          */
         public UpdateCallBuilder cidr(final String cidr) {
-            this.cidr = Optional.ofNullable(cidr);
+            this.cidr = Optional.of(Objects.requireNonNull(cidr, "cidr is required"));
             return this;
         }
 

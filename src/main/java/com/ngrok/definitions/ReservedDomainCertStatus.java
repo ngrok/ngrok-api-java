@@ -24,7 +24,7 @@ public class ReservedDomainCertStatus {
      * Creates a new instance of {@link ReservedDomainCertStatus}.
      *
      * @param renewsAt timestamp when the next renewal will be requested, RFC 3339 format
-     * @param provisioningJob status of the certificate provisioning job, or null if the certificiate isn't being provisioned or renewed
+     * @param provisioningJob status of the certificate provisioning job, or null if the certificiate isn&#39;t being provisioned or renewed
      */
     @JsonCreator
     public ReservedDomainCertStatus(
@@ -45,8 +45,8 @@ public class ReservedDomainCertStatus {
     }
 
     /**
-     * status of the certificate provisioning job, or null if the certificiate isn't
-     * being provisioned or renewed
+     * status of the certificate provisioning job, or null if the certificiate
+     * isn&#39;t being provisioned or renewed
      *
      * @return the value of the property as a {@link ReservedDomainCertJob} wrapped in an {@link Optional}
      */

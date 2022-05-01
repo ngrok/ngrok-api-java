@@ -48,7 +48,7 @@ public class TunnelSessions {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -70,7 +70,7 @@ public class TunnelSessions {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -358,7 +358,7 @@ public class TunnelSessions {
      * breaking compatibility issues. If you wish to update to a new major version,
      * that must be done manually. Still, please be aware that updating your ngrok
      * agent could break your integration. This call will fail in any of the following
-     * circumstances: there is no update available the ngrok agent's configuration
+     * circumstances: there is no update available the ngrok agent&#39;s configuration
      * disabled update checks the agent is currently in process of updating the agent
      * has already successfully updated but has not yet been restarted
      *

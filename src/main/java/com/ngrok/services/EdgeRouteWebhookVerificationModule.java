@@ -34,7 +34,7 @@ public class EdgeRouteWebhookVerificationModule {
     public class ReplaceCallBuilder {
         private final String edgeId;
         private final String id;
-        private EndpointWebhookValidation module = null;
+        private Optional<EndpointWebhookValidation> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String edgeId,
@@ -51,7 +51,7 @@ public class EdgeRouteWebhookVerificationModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointWebhookValidation module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -62,7 +62,7 @@ public class EdgeRouteWebhookVerificationModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointWebhookValidation> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -77,7 +77,7 @@ public class EdgeRouteWebhookVerificationModule {
                 "/edges/https/" + this.edgeId + "/routes/" + this.id + "/webhook_verification",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointWebhookValidation.class)
             );

@@ -33,11 +33,11 @@ public class SshCertificateAuthorities {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
-        private String privateKeyType = "";
-        private String ellipticCurve = "";
-        private long keySize = 0L;
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private Optional<String> privateKeyType = Optional.empty();
+        private Optional<String> ellipticCurve = Optional.empty();
+        private Optional<Long> keySize = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -51,7 +51,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -63,7 +63,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -75,7 +75,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -87,7 +87,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -99,7 +99,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder privateKeyType(final String privateKeyType) {
-            this.privateKeyType = Objects.requireNonNull(privateKeyType, "privateKeyType is required");
+            this.privateKeyType = Optional.of(Objects.requireNonNull(privateKeyType, "privateKeyType is required"));
             return this;
         }
 
@@ -111,7 +111,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder privateKeyType(final Optional<String> privateKeyType) {
-            this.privateKeyType = Objects.requireNonNull(privateKeyType, "privateKeyType is required").orElse("");
+            this.privateKeyType = Objects.requireNonNull(privateKeyType, "privateKeyType is required");
             return this;
         }
         
@@ -122,7 +122,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder ellipticCurve(final String ellipticCurve) {
-            this.ellipticCurve = Objects.requireNonNull(ellipticCurve, "ellipticCurve is required");
+            this.ellipticCurve = Optional.of(Objects.requireNonNull(ellipticCurve, "ellipticCurve is required"));
             return this;
         }
 
@@ -133,7 +133,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder ellipticCurve(final Optional<String> ellipticCurve) {
-            this.ellipticCurve = Objects.requireNonNull(ellipticCurve, "ellipticCurve is required").orElse("");
+            this.ellipticCurve = Objects.requireNonNull(ellipticCurve, "ellipticCurve is required");
             return this;
         }
         
@@ -145,7 +145,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder keySize(final long keySize) {
-            this.keySize = Objects.requireNonNull(keySize, "keySize is required");
+            this.keySize = Optional.of(Objects.requireNonNull(keySize, "keySize is required"));
             return this;
         }
 
@@ -157,7 +157,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public CreateCallBuilder keySize(final Optional<Long> keySize) {
-            this.keySize = Objects.requireNonNull(keySize, "keySize is required").orElse(0L);
+            this.keySize = Objects.requireNonNull(keySize, "keySize is required");
             return this;
         }
         
@@ -172,11 +172,11 @@ public class SshCertificateAuthorities {
                 "/ssh_certificate_authorities",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("private_key_type", Optional.of(this.privateKeyType)),
-                    new AbstractMap.SimpleEntry<>("elliptic_curve", Optional.of(this.ellipticCurve)),
-                    new AbstractMap.SimpleEntry<>("key_size", Optional.of(this.keySize))
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("private_key_type", this.privateKeyType.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("elliptic_curve", this.ellipticCurve.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("key_size", this.keySize.map(Function.identity()))
                 ),
                 Optional.of(SshCertificateAuthority.class)
             );
@@ -343,7 +343,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -365,7 +365,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -448,7 +448,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -472,7 +472,7 @@ public class SshCertificateAuthorities {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 

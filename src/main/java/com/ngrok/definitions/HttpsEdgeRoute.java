@@ -21,7 +21,7 @@ public class HttpsEdgeRoute {
     private final String id;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String createdAt;
+    private final java.time.OffsetDateTime createdAt;
     @JsonProperty("match_type")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String matchType;
@@ -30,7 +30,7 @@ public class HttpsEdgeRoute {
     private final String match;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String uri;
+    private final java.net.URI uri;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String description;
@@ -77,8 +77,8 @@ public class HttpsEdgeRoute {
      * @param edgeId unique identifier of this edge
      * @param id unique identifier of this edge route
      * @param createdAt timestamp when the edge configuration was created, RFC 3339 format
-     * @param matchType Type of match to use for this route. Valid values are "exact_path" and "path_prefix".
-     * @param match Route selector: "/blog" or "example.com" or "example.com/blog"
+     * @param matchType Type of match to use for this route. Valid values are &#34;exact_path&#34; and &#34;path_prefix&#34;.
+     * @param match Route selector: &#34;/blog&#34; or &#34;example.com&#34; or &#34;example.com/blog&#34;
      * @param uri URI of the edge API resource
      * @param description human-readable description of what this edge will be used for; optional, max 255 bytes.
      * @param metadata arbitrary user-defined machine-readable data of this edge. Optional, max 4096 bytes.
@@ -98,10 +98,10 @@ public class HttpsEdgeRoute {
     public HttpsEdgeRoute(
         @JsonProperty("edge_id") final String edgeId,
         @JsonProperty("id") final String id,
-        @JsonProperty("created_at") final String createdAt,
+        @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("match_type") final String matchType,
         @JsonProperty("match") final String match,
-        @JsonProperty("uri") final String uri,
+        @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
         @JsonProperty("backend") final Optional<EndpointBackend> backend,
@@ -158,15 +158,15 @@ public class HttpsEdgeRoute {
     /**
      * timestamp when the edge configuration was created, RFC 3339 format
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.time.OffsetDateTime}
      */
-    public String getCreatedAt() {
+    public java.time.OffsetDateTime getCreatedAt() {
         return this.createdAt;
     }
 
     /**
-     * Type of match to use for this route. Valid values are "exact_path" and
-     * "path_prefix".
+     * Type of match to use for this route. Valid values are &#34;exact_path&#34; and
+     * &#34;path_prefix&#34;.
      *
      * @return the value of the property as a {@link String}
      */
@@ -175,7 +175,8 @@ public class HttpsEdgeRoute {
     }
 
     /**
-     * Route selector: "/blog" or "example.com" or "example.com/blog"
+     * Route selector: &#34;/blog&#34; or &#34;example.com&#34; or
+     * &#34;example.com/blog&#34;
      *
      * @return the value of the property as a {@link String}
      */
@@ -186,9 +187,9 @@ public class HttpsEdgeRoute {
     /**
      * URI of the edge API resource
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.net.URI}
      */
-    public String getUri() {
+    public java.net.URI getUri() {
         return this.uri;
     }
 

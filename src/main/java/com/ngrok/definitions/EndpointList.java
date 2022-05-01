@@ -36,7 +36,7 @@ public class EndpointList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.endpoints = Objects.requireNonNull(endpoints, "endpoints is required");
+        this.endpoints = endpoints != null ? endpoints : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class EndpointList implements Pageable {
     /**
      * the list of all active endpoints on this account
      *
-     * @return the value of the property as a {@link java.util.List<Endpoint>}
+     * @return the value of the property as a {@link java.util.List} of {@link Endpoint}
      */
     public java.util.List<Endpoint> getEndpoints() {
         return this.endpoints;

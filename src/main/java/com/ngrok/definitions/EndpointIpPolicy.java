@@ -24,7 +24,7 @@ public class EndpointIpPolicy {
      * Creates a new instance of {@link EndpointIpPolicy}.
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
-     * @param ipPolicies the value of the <code>ip_policies</code> parameter as a {@link java.util.List<Ref>}
+     * @param ipPolicies the value of the <code>ip_policies</code> parameter as a {@link java.util.List} of {@link Ref}
      */
     @JsonCreator
     public EndpointIpPolicy(
@@ -32,7 +32,7 @@ public class EndpointIpPolicy {
         @JsonProperty("ip_policies") final java.util.List<Ref> ipPolicies
     ) {
         this.enabled = enabled != null ? enabled : Optional.empty();
-        this.ipPolicies = Objects.requireNonNull(ipPolicies, "ipPolicies is required");
+        this.ipPolicies = ipPolicies != null ? ipPolicies : java.util.Collections.emptyList();
     }
 
     /**
@@ -48,7 +48,7 @@ public class EndpointIpPolicy {
     /**
      * Fetches the value of the <code>ipPolicies</code> property.
      *
-     * @return the value of the property as a {@link java.util.List<Ref>}
+     * @return the value of the property as a {@link java.util.List} of {@link Ref}
      */
     public java.util.List<Ref> getIpPolicies() {
         return this.ipPolicies;

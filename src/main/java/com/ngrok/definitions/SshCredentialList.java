@@ -36,7 +36,7 @@ public class SshCredentialList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.sshCredentials = Objects.requireNonNull(sshCredentials, "sshCredentials is required");
+        this.sshCredentials = sshCredentials != null ? sshCredentials : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class SshCredentialList implements Pageable {
     /**
      * the list of all ssh credentials on this account
      *
-     * @return the value of the property as a {@link java.util.List<SshCredential>}
+     * @return the value of the property as a {@link java.util.List} of {@link SshCredential}
      */
     public java.util.List<SshCredential> getSshCredentials() {
         return this.sshCredentials;

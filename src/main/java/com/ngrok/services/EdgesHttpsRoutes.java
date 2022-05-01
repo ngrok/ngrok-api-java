@@ -35,8 +35,8 @@ public class EdgesHttpsRoutes {
         private final String edgeId;
         private final String matchType;
         private final String match;
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private Optional<EndpointBackendMutate> backend = Optional.empty();
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
         private Optional<EndpointCircuitBreaker> circuitBreaker = Optional.empty();
@@ -67,7 +67,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -79,7 +79,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -91,7 +91,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -103,7 +103,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -114,7 +114,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder backend(final EndpointBackendMutate backend) {
-            this.backend = Optional.ofNullable(backend);
+            this.backend = Optional.of(Objects.requireNonNull(backend, "backend is required"));
             return this;
         }
 
@@ -136,7 +136,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder ipRestriction(final EndpointIpPolicyMutate ipRestriction) {
-            this.ipRestriction = Optional.ofNullable(ipRestriction);
+            this.ipRestriction = Optional.of(Objects.requireNonNull(ipRestriction, "ipRestriction is required"));
             return this;
         }
 
@@ -158,7 +158,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder circuitBreaker(final EndpointCircuitBreaker circuitBreaker) {
-            this.circuitBreaker = Optional.ofNullable(circuitBreaker);
+            this.circuitBreaker = Optional.of(Objects.requireNonNull(circuitBreaker, "circuitBreaker is required"));
             return this;
         }
 
@@ -180,7 +180,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder compression(final EndpointCompression compression) {
-            this.compression = Optional.ofNullable(compression);
+            this.compression = Optional.of(Objects.requireNonNull(compression, "compression is required"));
             return this;
         }
 
@@ -202,7 +202,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder requestHeaders(final EndpointRequestHeaders requestHeaders) {
-            this.requestHeaders = Optional.ofNullable(requestHeaders);
+            this.requestHeaders = Optional.of(Objects.requireNonNull(requestHeaders, "requestHeaders is required"));
             return this;
         }
 
@@ -224,7 +224,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder responseHeaders(final EndpointResponseHeaders responseHeaders) {
-            this.responseHeaders = Optional.ofNullable(responseHeaders);
+            this.responseHeaders = Optional.of(Objects.requireNonNull(responseHeaders, "responseHeaders is required"));
             return this;
         }
 
@@ -246,7 +246,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder webhookVerification(final EndpointWebhookValidation webhookVerification) {
-            this.webhookVerification = Optional.ofNullable(webhookVerification);
+            this.webhookVerification = Optional.of(Objects.requireNonNull(webhookVerification, "webhookVerification is required"));
             return this;
         }
 
@@ -268,7 +268,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder oauth(final EndpointOAuth oauth) {
-            this.oauth = Optional.ofNullable(oauth);
+            this.oauth = Optional.of(Objects.requireNonNull(oauth, "oauth is required"));
             return this;
         }
 
@@ -290,7 +290,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder saml(final EndpointSamlMutate saml) {
-            this.saml = Optional.ofNullable(saml);
+            this.saml = Optional.of(Objects.requireNonNull(saml, "saml is required"));
             return this;
         }
 
@@ -312,7 +312,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder oidc(final EndpointOidc oidc) {
-            this.oidc = Optional.ofNullable(oidc);
+            this.oidc = Optional.of(Objects.requireNonNull(oidc, "oidc is required"));
             return this;
         }
 
@@ -334,7 +334,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public CreateCallBuilder websocketTcpConverter(final EndpointWebsocketTcpConverter websocketTcpConverter) {
-            this.websocketTcpConverter = Optional.ofNullable(websocketTcpConverter);
+            this.websocketTcpConverter = Optional.of(Objects.requireNonNull(websocketTcpConverter, "websocketTcpConverter is required"));
             return this;
         }
 
@@ -362,8 +362,8 @@ public class EdgesHttpsRoutes {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("match_type", Optional.of(this.matchType)),
                     new AbstractMap.SimpleEntry<>("match", Optional.of(this.match)),
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("circuit_breaker", this.circuitBreaker.map(Function.identity())),
@@ -401,8 +401,8 @@ public class EdgesHttpsRoutes {
      * See also <a href="https://ngrok.com/docs/api#api-edges-https-routes-create">https://ngrok.com/docs/api#api-edges-https-routes-create</a>.
      *
      * @param edgeId unique identifier of this edge
-     * @param matchType Type of match to use for this route. Valid values are "exact_path" and "path_prefix".
-     * @param match Route selector: "/blog" or "example.com" or "example.com/blog"
+     * @param matchType Type of match to use for this route. Valid values are &#34;exact_path&#34; and &#34;path_prefix&#34;.
+     * @param match Route selector: &#34;/blog&#34; or &#34;example.com&#34; or &#34;example.com/blog&#34;
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
@@ -487,10 +487,10 @@ public class EdgesHttpsRoutes {
     public class UpdateCallBuilder {
         private final String edgeId;
         private final String id;
-        private String matchType = "";
-        private String match = "";
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> matchType = Optional.empty();
+        private Optional<String> match = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private Optional<EndpointBackendMutate> backend = Optional.empty();
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
         private Optional<EndpointCircuitBreaker> circuitBreaker = Optional.empty();
@@ -512,48 +512,50 @@ public class EdgesHttpsRoutes {
         }
         
         /**
-         * Type of match to use for this route. Valid values are "exact_path" and
-         * "path_prefix".
+         * Type of match to use for this route. Valid values are &#34;exact_path&#34; and
+         * &#34;path_prefix&#34;.
          *
          * @param matchType the value of the match_type parameter as a {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder matchType(final String matchType) {
-            this.matchType = Objects.requireNonNull(matchType, "matchType is required");
+            this.matchType = Optional.of(Objects.requireNonNull(matchType, "matchType is required"));
             return this;
         }
 
         /**
-         * Type of match to use for this route. Valid values are "exact_path" and
-         * "path_prefix".
+         * Type of match to use for this route. Valid values are &#34;exact_path&#34; and
+         * &#34;path_prefix&#34;.
          *
          * @param matchType the value of the match_type parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder matchType(final Optional<String> matchType) {
-            this.matchType = Objects.requireNonNull(matchType, "matchType is required").orElse("");
+            this.matchType = Objects.requireNonNull(matchType, "matchType is required");
             return this;
         }
         
         /**
-         * Route selector: "/blog" or "example.com" or "example.com/blog"
+         * Route selector: &#34;/blog&#34; or &#34;example.com&#34; or
+         * &#34;example.com/blog&#34;
          *
          * @param match the value of the match parameter as a {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder match(final String match) {
-            this.match = Objects.requireNonNull(match, "match is required");
+            this.match = Optional.of(Objects.requireNonNull(match, "match is required"));
             return this;
         }
 
         /**
-         * Route selector: "/blog" or "example.com" or "example.com/blog"
+         * Route selector: &#34;/blog&#34; or &#34;example.com&#34; or
+         * &#34;example.com/blog&#34;
          *
          * @param match the value of the match parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder match(final Optional<String> match) {
-            this.match = Objects.requireNonNull(match, "match is required").orElse("");
+            this.match = Objects.requireNonNull(match, "match is required");
             return this;
         }
         
@@ -565,7 +567,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -577,7 +579,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -589,7 +591,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -601,7 +603,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -612,7 +614,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder backend(final EndpointBackendMutate backend) {
-            this.backend = Optional.ofNullable(backend);
+            this.backend = Optional.of(Objects.requireNonNull(backend, "backend is required"));
             return this;
         }
 
@@ -634,7 +636,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder ipRestriction(final EndpointIpPolicyMutate ipRestriction) {
-            this.ipRestriction = Optional.ofNullable(ipRestriction);
+            this.ipRestriction = Optional.of(Objects.requireNonNull(ipRestriction, "ipRestriction is required"));
             return this;
         }
 
@@ -656,7 +658,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder circuitBreaker(final EndpointCircuitBreaker circuitBreaker) {
-            this.circuitBreaker = Optional.ofNullable(circuitBreaker);
+            this.circuitBreaker = Optional.of(Objects.requireNonNull(circuitBreaker, "circuitBreaker is required"));
             return this;
         }
 
@@ -678,7 +680,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder compression(final EndpointCompression compression) {
-            this.compression = Optional.ofNullable(compression);
+            this.compression = Optional.of(Objects.requireNonNull(compression, "compression is required"));
             return this;
         }
 
@@ -700,7 +702,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder requestHeaders(final EndpointRequestHeaders requestHeaders) {
-            this.requestHeaders = Optional.ofNullable(requestHeaders);
+            this.requestHeaders = Optional.of(Objects.requireNonNull(requestHeaders, "requestHeaders is required"));
             return this;
         }
 
@@ -722,7 +724,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder responseHeaders(final EndpointResponseHeaders responseHeaders) {
-            this.responseHeaders = Optional.ofNullable(responseHeaders);
+            this.responseHeaders = Optional.of(Objects.requireNonNull(responseHeaders, "responseHeaders is required"));
             return this;
         }
 
@@ -744,7 +746,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder webhookVerification(final EndpointWebhookValidation webhookVerification) {
-            this.webhookVerification = Optional.ofNullable(webhookVerification);
+            this.webhookVerification = Optional.of(Objects.requireNonNull(webhookVerification, "webhookVerification is required"));
             return this;
         }
 
@@ -766,7 +768,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder oauth(final EndpointOAuth oauth) {
-            this.oauth = Optional.ofNullable(oauth);
+            this.oauth = Optional.of(Objects.requireNonNull(oauth, "oauth is required"));
             return this;
         }
 
@@ -788,7 +790,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder saml(final EndpointSamlMutate saml) {
-            this.saml = Optional.ofNullable(saml);
+            this.saml = Optional.of(Objects.requireNonNull(saml, "saml is required"));
             return this;
         }
 
@@ -810,7 +812,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder oidc(final EndpointOidc oidc) {
-            this.oidc = Optional.ofNullable(oidc);
+            this.oidc = Optional.of(Objects.requireNonNull(oidc, "oidc is required"));
             return this;
         }
 
@@ -832,7 +834,7 @@ public class EdgesHttpsRoutes {
          * @return the call builder instance
          */
         public UpdateCallBuilder websocketTcpConverter(final EndpointWebsocketTcpConverter websocketTcpConverter) {
-            this.websocketTcpConverter = Optional.ofNullable(websocketTcpConverter);
+            this.websocketTcpConverter = Optional.of(Objects.requireNonNull(websocketTcpConverter, "websocketTcpConverter is required"));
             return this;
         }
 
@@ -858,10 +860,10 @@ public class EdgesHttpsRoutes {
                 "/edges/https/" + this.edgeId + "/routes/" + this.id,
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("match_type", Optional.of(this.matchType)),
-                    new AbstractMap.SimpleEntry<>("match", Optional.of(this.match)),
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
+                    new AbstractMap.SimpleEntry<>("match_type", this.matchType.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("match", this.match.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("circuit_breaker", this.circuitBreaker.map(Function.identity())),

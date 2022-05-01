@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 /**
  * A Weighted Backend balances traffic among the referenced backends. Traffic
  *  is assigned proportionally to each based on its weight. The percentage of
- *  traffic is calculated by dividing a backend's weight by the sum of all
+ *  traffic is calculated by dividing a backend&#39;s weight by the sum of all
  *  weights.
  *
  * See also <a href="https://ngrok.com/docs/api#api-weighted-backends">https://ngrok.com/docs/api#api-weighted-backends</a>.
@@ -35,8 +35,8 @@ public class WeightedBackends {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
         private java.util.Map<String, Long> backends = java.util.Collections.emptyMap();
 
         private CreateCallBuilder(
@@ -50,7 +50,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -61,7 +61,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -72,7 +72,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -83,14 +83,14 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
         /**
          * the ids of the child backends to their weights [0-10000]
          *
-         * @param backends the value of the backends parameter as a {@link java.util.Map<String, Long>}
+         * @param backends the value of the backends parameter as a {@link java.util.Map} of {@link String} to {@link Long}
          * @return the call builder instance
          */
         public CreateCallBuilder backends(final java.util.Map<String, Long> backends) {
@@ -101,7 +101,7 @@ public class WeightedBackends {
         /**
          * the ids of the child backends to their weights [0-10000]
          *
-         * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.Map<String, Long>}
+         * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link Long}
          * @return the call builder instance
          */
         public CreateCallBuilder backends(final Optional<java.util.Map<String, Long>> backends) {
@@ -120,9 +120,9 @@ public class WeightedBackends {
                 "/backends/weighted",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("backends", Optional.of(this.backends))
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("backends", Optional.of(this.backends).filter(backends -> !backends.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(WeightedBackend.class)
             );
@@ -289,7 +289,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -311,7 +311,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -394,7 +394,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -416,7 +416,7 @@ public class WeightedBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -434,7 +434,7 @@ public class WeightedBackends {
         /**
          * the ids of the child backends to their weights [0-10000]
          *
-         * @param backends the value of the backends parameter as a {@link java.util.Map<String, Long>}
+         * @param backends the value of the backends parameter as a {@link java.util.Map} of {@link String} to {@link Long}
          * @return the call builder instance
          */
         public UpdateCallBuilder backends(final java.util.Map<String, Long> backends) {
@@ -445,7 +445,7 @@ public class WeightedBackends {
         /**
          * the ids of the child backends to their weights [0-10000]
          *
-         * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.Map<String, Long>}
+         * @param backends the value of the backends parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link Long}
          * @return the call builder instance
          */
         public UpdateCallBuilder backends(final Optional<java.util.Map<String, Long>> backends) {
@@ -466,7 +466,7 @@ public class WeightedBackends {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("backends", Optional.of(this.backends))
+                    new AbstractMap.SimpleEntry<>("backends", Optional.of(this.backends).filter(backends -> !backends.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(WeightedBackend.class)
             );

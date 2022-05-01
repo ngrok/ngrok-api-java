@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 /**
  * Abuse Reports allow you to submit take-down requests for URLs hosted by
- *  ngrok that violate ngrok's terms of service.
+ *  ngrok that violate ngrok&#39;s terms of service.
  *
  * See also <a href="https://ngrok.com/docs/api#api-abuse-reports">https://ngrok.com/docs/api#api-abuse-reports</a>.
  */
@@ -33,8 +33,8 @@ public class AbuseReports {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private final java.util.List<java.net.URI> urls;
-        private String metadata = "";
+        private java.util.List<java.net.URI> urls = java.util.Collections.emptyList();
+        private Optional<String> metadata = Optional.empty();
 
         private CreateCallBuilder(
             final java.util.List<java.net.URI> urls
@@ -49,7 +49,7 @@ public class AbuseReports {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -60,7 +60,7 @@ public class AbuseReports {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -75,8 +75,8 @@ public class AbuseReports {
                 "/abuse_reports",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("urls", Optional.of(this.urls)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata))
+                    new AbstractMap.SimpleEntry<>("urls", Optional.of(this.urls).filter(urls -> !urls.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
                 ),
                 Optional.of(AbuseReport.class)
             );
