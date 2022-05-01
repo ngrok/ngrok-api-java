@@ -37,11 +37,11 @@ public class IpRestrictions {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
-        private boolean enforced = false;
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private Optional<Boolean> enforced = Optional.empty();
         private final String type;
-        private final java.util.List<String> ipPolicyIds;
+        private java.util.List<String> ipPolicyIds = java.util.Collections.emptyList();
 
         private CreateCallBuilder(
             final String type,
@@ -58,7 +58,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -69,7 +69,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -81,7 +81,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -93,7 +93,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -105,7 +105,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public CreateCallBuilder enforced(final boolean enforced) {
-            this.enforced = Objects.requireNonNull(enforced, "enforced is required");
+            this.enforced = Optional.of(Objects.requireNonNull(enforced, "enforced is required"));
             return this;
         }
 
@@ -117,7 +117,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public CreateCallBuilder enforced(final Optional<Boolean> enforced) {
-            this.enforced = Objects.requireNonNull(enforced, "enforced is required").orElse(false);
+            this.enforced = Objects.requireNonNull(enforced, "enforced is required");
             return this;
         }
         
@@ -132,11 +132,11 @@ public class IpRestrictions {
                 "/ip_restrictions",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("enforced", Optional.of(this.enforced)),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("enforced", this.enforced.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("type", Optional.of(this.type)),
-                    new AbstractMap.SimpleEntry<>("ip_policy_ids", Optional.of(this.ipPolicyIds))
+                    new AbstractMap.SimpleEntry<>("ip_policy_ids", Optional.of(this.ipPolicyIds).filter(ipPolicyIds -> !ipPolicyIds.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(IpRestriction.class)
             );
@@ -309,7 +309,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -331,7 +331,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -415,7 +415,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -438,7 +438,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -462,7 +462,7 @@ public class IpRestrictions {
          * @return the call builder instance
          */
         public UpdateCallBuilder enforced(final boolean enforced) {
-            this.enforced = Optional.ofNullable(enforced);
+            this.enforced = Optional.of(Objects.requireNonNull(enforced, "enforced is required"));
             return this;
         }
 
@@ -481,7 +481,7 @@ public class IpRestrictions {
         /**
          * the set of IP policy identifiers that are used to enforce the restriction
          *
-         * @param ipPolicyIds the value of the ip_policy_ids parameter as a {@link java.util.List<String>}
+         * @param ipPolicyIds the value of the ip_policy_ids parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder ipPolicyIds(final java.util.List<String> ipPolicyIds) {
@@ -492,7 +492,7 @@ public class IpRestrictions {
         /**
          * the set of IP policy identifiers that are used to enforce the restriction
          *
-         * @param ipPolicyIds the value of the ip_policy_ids parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param ipPolicyIds the value of the ip_policy_ids parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder ipPolicyIds(final Optional<java.util.List<String>> ipPolicyIds) {
@@ -514,7 +514,7 @@ public class IpRestrictions {
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("enforced", this.enforced.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("ip_policy_ids", Optional.of(this.ipPolicyIds))
+                    new AbstractMap.SimpleEntry<>("ip_policy_ids", Optional.of(this.ipPolicyIds).filter(ipPolicyIds -> !ipPolicyIds.isEmpty()).map(Function.identity()))
                 ),
                 Optional.of(IpRestriction.class)
             );

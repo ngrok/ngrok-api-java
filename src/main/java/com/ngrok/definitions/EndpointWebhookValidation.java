@@ -28,10 +28,10 @@ public class EndpointWebhookValidation {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder enabled(final boolean enabled) {
             this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
             return this;
@@ -40,10 +40,10 @@ public class EndpointWebhookValidation {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder enabled(final Optional<Boolean> enabled) {
             this.enabled = Objects.requireNonNull(enabled, "enabled is required");
             return this;
@@ -55,10 +55,10 @@ public class EndpointWebhookValidation {
          * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
          * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
          * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
-		 *
-		 * @param provider the value of the <code>provider</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param provider the value of the <code>provider</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder provider(final String provider) {
             this.provider = Optional.of(Objects.requireNonNull(provider, "provider is required"));
             return this;
@@ -70,10 +70,10 @@ public class EndpointWebhookValidation {
          * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
          * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
          * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
-		 *
-		 * @param provider the value of the <code>provider</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param provider the value of the <code>provider</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder provider(final Optional<String> provider) {
             this.provider = Objects.requireNonNull(provider, "provider is required");
             return this;
@@ -82,10 +82,10 @@ public class EndpointWebhookValidation {
         /**
          * a string secret used to validate requests from the given provider. All providers
          * except AWS SNS require a secret
-		 *
-		 * @param secret the value of the <code>secret</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param secret the value of the <code>secret</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder secret(final String secret) {
             this.secret = Optional.of(Objects.requireNonNull(secret, "secret is required"));
             return this;
@@ -94,10 +94,10 @@ public class EndpointWebhookValidation {
         /**
          * a string secret used to validate requests from the given provider. All providers
          * except AWS SNS require a secret
-		 *
-		 * @param secret the value of the <code>secret</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param secret the value of the <code>secret</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder secret(final Optional<String> secret) {
             this.secret = Objects.requireNonNull(secret, "secret is required");
             return this;

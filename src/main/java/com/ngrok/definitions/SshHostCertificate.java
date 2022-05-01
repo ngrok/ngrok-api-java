@@ -89,7 +89,7 @@ public class SshHostCertificate {
         this.publicKey = Objects.requireNonNull(publicKey, "publicKey is required");
         this.keyType = Objects.requireNonNull(keyType, "keyType is required");
         this.sshCertificateAuthorityId = Objects.requireNonNull(sshCertificateAuthorityId, "sshCertificateAuthorityId is required");
-        this.principals = Objects.requireNonNull(principals, "principals is required");
+        this.principals = principals != null ? principals : java.util.Collections.emptyList();
         this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
         this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
         this.certificate = Objects.requireNonNull(certificate, "certificate is required");
@@ -177,7 +177,7 @@ public class SshHostCertificate {
      * certificate. Dangerously, if no principals are specified, this certificate is
      * considered valid for all hosts.
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getPrincipals() {
         return this.principals;

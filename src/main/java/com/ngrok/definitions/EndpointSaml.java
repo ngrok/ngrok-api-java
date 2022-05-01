@@ -64,18 +64,18 @@ public class EndpointSaml {
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
      * @param optionsPassthrough Do not enforce authentication on HTTP OPTIONS requests. necessary if you are supporting CORS.
-     * @param cookiePrefix the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is 'ngrok.'
+     * @param cookiePrefix the prefix of the session cookie that ngrok sets on the http client to cache authentication. default is &#39;ngrok.&#39;
      * @param inactivityTimeout Integer number of seconds of inactivity after which if the user has not accessed the endpoint, their session will time out and they will be forced to reauthenticate.
      * @param maximumDuration Integer number of seconds of the maximum duration of an authenticated session. After this period is exceeded, a user must reauthenticate.
      * @param idpMetadata The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file to download or as a URL.
      * @param forceAuthn If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP.
      * @param allowIdpInitiated If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the <code>RelayState</code> parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed.
      * @param authorizedGroups If present, only users who are a member of one of the listed groups may access the target endpoint.
-     * @param entityId The SP Entity's unique ID. This always takes the form of a URL. In ngrok's implementation, this URL is the same as the metadata URL. This will need to be specified to the IdP as configuration.
-     * @param assertionConsumerServiceUrl The public URL of the SP's Assertion Consumer Service. This is where the IdP will redirect to during an authentication flow. This will need to be specified to the IdP as configuration.
-     * @param singleLogoutUrl The public URL of the SP's Single Logout Service. This is where the IdP will redirect to during a single logout flow. This will optionally need to be specified to the IdP as configuration.
-     * @param requestSigningCertificatePem PEM-encoded x.509 certificate of the key pair that is used to sign all SAML requests that the ngrok SP makes to the IdP. Many IdPs do not support request signing verification, but we highly recommend specifying this in the IdP's configuration if it is supported.
-     * @param metadataUrl A public URL where the SP's metadata is hosted. If an IdP supports dynamic configuration, this is the URL it can use to retrieve the SP metadata.
+     * @param entityId The SP Entity&#39;s unique ID. This always takes the form of a URL. In ngrok&#39;s implementation, this URL is the same as the metadata URL. This will need to be specified to the IdP as configuration.
+     * @param assertionConsumerServiceUrl The public URL of the SP&#39;s Assertion Consumer Service. This is where the IdP will redirect to during an authentication flow. This will need to be specified to the IdP as configuration.
+     * @param singleLogoutUrl The public URL of the SP&#39;s Single Logout Service. This is where the IdP will redirect to during a single logout flow. This will optionally need to be specified to the IdP as configuration.
+     * @param requestSigningCertificatePem PEM-encoded x.509 certificate of the key pair that is used to sign all SAML requests that the ngrok SP makes to the IdP. Many IdPs do not support request signing verification, but we highly recommend specifying this in the IdP&#39;s configuration if it is supported.
+     * @param metadataUrl A public URL where the SP&#39;s metadata is hosted. If an IdP supports dynamic configuration, this is the URL it can use to retrieve the SP metadata.
      * @param nameidFormat Defines the name identifier format the SP expects the IdP to use in its assertions to identify subjects. If unspecified, a default value of <code>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</code> will be used. A subset of the allowed values enumerated by the SAML specification are supported.
      */
     @JsonCreator
@@ -104,7 +104,7 @@ public class EndpointSaml {
         this.idpMetadata = Objects.requireNonNull(idpMetadata, "idpMetadata is required");
         this.forceAuthn = Objects.requireNonNull(forceAuthn, "forceAuthn is required");
         this.allowIdpInitiated = allowIdpInitiated != null ? allowIdpInitiated : Optional.empty();
-        this.authorizedGroups = Objects.requireNonNull(authorizedGroups, "authorizedGroups is required");
+        this.authorizedGroups = authorizedGroups != null ? authorizedGroups : java.util.Collections.emptyList();
         this.entityId = Objects.requireNonNull(entityId, "entityId is required");
         this.assertionConsumerServiceUrl = Objects.requireNonNull(assertionConsumerServiceUrl, "assertionConsumerServiceUrl is required");
         this.singleLogoutUrl = Objects.requireNonNull(singleLogoutUrl, "singleLogoutUrl is required");
@@ -135,7 +135,7 @@ public class EndpointSaml {
 
     /**
      * the prefix of the session cookie that ngrok sets on the http client to cache
-     * authentication. default is 'ngrok.'
+     * authentication. default is &#39;ngrok.&#39;
      *
      * @return the value of the property as a {@link String}
      */
@@ -201,16 +201,16 @@ public class EndpointSaml {
      * If present, only users who are a member of one of the listed groups may access
      * the target endpoint.
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getAuthorizedGroups() {
         return this.authorizedGroups;
     }
 
     /**
-     * The SP Entity's unique ID. This always takes the form of a URL. In ngrok's
-     * implementation, this URL is the same as the metadata URL. This will need to be
-     * specified to the IdP as configuration.
+     * The SP Entity&#39;s unique ID. This always takes the form of a URL. In
+     * ngrok&#39;s implementation, this URL is the same as the metadata URL. This will
+     * need to be specified to the IdP as configuration.
      *
      * @return the value of the property as a {@link String}
      */
@@ -219,7 +219,7 @@ public class EndpointSaml {
     }
 
     /**
-     * The public URL of the SP's Assertion Consumer Service. This is where the IdP
+     * The public URL of the SP&#39;s Assertion Consumer Service. This is where the IdP
      * will redirect to during an authentication flow. This will need to be specified
      * to the IdP as configuration.
      *
@@ -230,7 +230,7 @@ public class EndpointSaml {
     }
 
     /**
-     * The public URL of the SP's Single Logout Service. This is where the IdP will
+     * The public URL of the SP&#39;s Single Logout Service. This is where the IdP will
      * redirect to during a single logout flow. This will optionally need to be
      * specified to the IdP as configuration.
      *
@@ -243,7 +243,7 @@ public class EndpointSaml {
     /**
      * PEM-encoded x.509 certificate of the key pair that is used to sign all SAML
      * requests that the ngrok SP makes to the IdP. Many IdPs do not support request
-     * signing verification, but we highly recommend specifying this in the IdP's
+     * signing verification, but we highly recommend specifying this in the IdP&#39;s
      * configuration if it is supported.
      *
      * @return the value of the property as a {@link String}
@@ -253,7 +253,7 @@ public class EndpointSaml {
     }
 
     /**
-     * A public URL where the SP's metadata is hosted. If an IdP supports dynamic
+     * A public URL where the SP&#39;s metadata is hosted. If an IdP supports dynamic
      * configuration, this is the URL it can use to retrieve the SP metadata.
      *
      * @return the value of the property as a {@link java.net.URI}

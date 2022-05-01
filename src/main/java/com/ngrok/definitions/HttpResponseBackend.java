@@ -18,7 +18,7 @@ public class HttpResponseBackend {
     private final String id;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String uri;
+    private final java.net.URI uri;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
@@ -53,7 +53,7 @@ public class HttpResponseBackend {
     @JsonCreator
     public HttpResponseBackend(
         @JsonProperty("id") final String id,
-        @JsonProperty("uri") final String uri,
+        @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
@@ -67,7 +67,7 @@ public class HttpResponseBackend {
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.body = Objects.requireNonNull(body, "body is required");
-        this.headers = Objects.requireNonNull(headers, "headers is required");
+        this.headers = headers != null ? headers : java.util.Collections.emptyMap();
         this.statusCode = Objects.requireNonNull(statusCode, "statusCode is required");
     }
 
@@ -83,9 +83,9 @@ public class HttpResponseBackend {
     /**
      * URI of the HTTPResponseBackend API resource
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.net.URI}
      */
-    public String getUri() {
+    public java.net.URI getUri() {
         return this.uri;
     }
 
@@ -128,7 +128,7 @@ public class HttpResponseBackend {
     /**
      * headers to return
      *
-     * @return the value of the property as a {@link java.util.Map<String, String>}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
      */
     public java.util.Map<String, String> getHeaders() {
         return this.headers;

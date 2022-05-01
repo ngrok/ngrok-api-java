@@ -43,7 +43,7 @@ public class Ngrok {
     
     /**
      * Abuse Reports allow you to submit take-down requests for URLs hosted by
-     *  ngrok that violate ngrok's terms of service.
+     *  ngrok that violate ngrok&#39;s terms of service.
      *
      * See also <a href="https://ngrok.com/docs/api#api-abuse-reports">https://ngrok.com/docs/api#api-abuse-reports</a>.
      *
@@ -68,7 +68,8 @@ public class Ngrok {
      * API Keys are used to authenticate to the <a
      * href="https://ngrok.com/docs/api#authentication">ngrok
      *  API</a>. You may use the API itself
-     *  to provision and manage API Keys but you'll need to provision your first API
+     *  to provision and manage API Keys but you&#39;ll need to provision your first
+     * API
      *  key from the <a href="https://dashboard.ngrok.com/api/keys">API Keys page</a>
      * on your
      *  ngrok.com dashboard.
@@ -99,7 +100,7 @@ public class Ngrok {
     /**
      * Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
      *  agent to connect the ngrok service as your account. They are installed with
-     *  the <code>ngrok authtoken</code> command or by specifying it in the
+     *  the <code>ngrok config add-authtoken</code> command or by specifying it in the
      * <code>ngrok.yml</code>
      *  configuration file with the <code>authtoken</code> property.
      *
@@ -217,7 +218,7 @@ public class Ngrok {
      * Reserved Domains are hostnames that you can listen for traffic on. Domains
      *  can be used to listen for http, https or tls traffic. You may use a domain
      *  that you own by creating a CNAME record specified in the returned resource.
-     *  This CNAME record points traffic for that domain to ngrok's edge servers.
+     *  This CNAME record points traffic for that domain to ngrok&#39;s edge servers.
      *
      * See also <a href="https://ngrok.com/docs/api#api-reserved-domains">https://ngrok.com/docs/api#api-reserved-domains</a>.
      *
@@ -390,7 +391,7 @@ public class Ngrok {
         /**
          * A Weighted Backend balances traffic among the referenced backends. Traffic
          *  is assigned proportionally to each based on its weight. The percentage of
-         *  traffic is calculated by dividing a backend's weight by the sum of all
+         *  traffic is calculated by dividing a backend&#39;s weight by the sum of all
          *  weights.
          *
          * See also <a href="https://ngrok.com/docs/api#api-weighted-backends">https://ngrok.com/docs/api#api-weighted-backends</a>

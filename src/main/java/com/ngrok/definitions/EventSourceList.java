@@ -31,14 +31,14 @@ public class EventSourceList {
         @JsonProperty("sources") final java.util.List<EventSource> sources,
         @JsonProperty("uri") final java.net.URI uri
     ) {
-        this.sources = Objects.requireNonNull(sources, "sources is required");
+        this.sources = sources != null ? sources : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
     }
 
     /**
      * The list of all Event Sources for an Event Subscription
      *
-     * @return the value of the property as a {@link java.util.List<EventSource>}
+     * @return the value of the property as a {@link java.util.List} of {@link EventSource}
      */
     public java.util.List<EventSource> getSources() {
         return this.sources;

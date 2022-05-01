@@ -36,7 +36,7 @@ public class SshHostCertificateList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.sshHostCertificates = Objects.requireNonNull(sshHostCertificates, "sshHostCertificates is required");
+        this.sshHostCertificates = sshHostCertificates != null ? sshHostCertificates : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class SshHostCertificateList implements Pageable {
     /**
      * the list of all ssh host certificates on this account
      *
-     * @return the value of the property as a {@link java.util.List<SshHostCertificate>}
+     * @return the value of the property as a {@link java.util.List} of {@link SshHostCertificate}
      */
     public java.util.List<SshHostCertificate> getSshHostCertificates() {
         return this.sshHostCertificates;

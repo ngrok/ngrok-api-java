@@ -36,7 +36,7 @@ public class IpPolicyRuleList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.ipPolicyRules = Objects.requireNonNull(ipPolicyRules, "ipPolicyRules is required");
+        this.ipPolicyRules = ipPolicyRules != null ? ipPolicyRules : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class IpPolicyRuleList implements Pageable {
     /**
      * the list of all IP policy rules on this account
      *
-     * @return the value of the property as a {@link java.util.List<IpPolicyRule>}
+     * @return the value of the property as a {@link java.util.List} of {@link IpPolicyRule}
      */
     public java.util.List<IpPolicyRule> getIpPolicyRules() {
         return this.ipPolicyRules;

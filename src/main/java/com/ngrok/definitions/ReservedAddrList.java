@@ -36,7 +36,7 @@ public class ReservedAddrList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.reservedAddrs = Objects.requireNonNull(reservedAddrs, "reservedAddrs is required");
+        this.reservedAddrs = reservedAddrs != null ? reservedAddrs : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class ReservedAddrList implements Pageable {
     /**
      * the list of all reserved addresses on this account
      *
-     * @return the value of the property as a {@link java.util.List<ReservedAddr>}
+     * @return the value of the property as a {@link java.util.List} of {@link ReservedAddr}
      */
     public java.util.List<ReservedAddr> getReservedAddrs() {
         return this.reservedAddrs;

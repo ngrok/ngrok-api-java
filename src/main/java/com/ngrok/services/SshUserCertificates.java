@@ -39,10 +39,10 @@ public class SshUserCertificates {
         private java.util.List<String> principals = java.util.Collections.emptyList();
         private java.util.Map<String, String> criticalOptions = java.util.Collections.emptyMap();
         private java.util.Map<String, String> extensions = java.util.Collections.emptyMap();
-        private java.time.OffsetDateTime validAfter = null;
-        private java.time.OffsetDateTime validUntil = null;
-        private String description = "";
-        private String metadata = "";
+        private Optional<java.time.OffsetDateTime> validAfter = Optional.empty();
+        private Optional<java.time.OffsetDateTime> validUntil = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
 
         private CreateCallBuilder(
             final String sshCertificateAuthorityId,
@@ -58,7 +58,7 @@ public class SshUserCertificates {
          * the signing certificate authority. Dangerously, if no principals are specified,
          * this certificate may be used to log in as any user.
          *
-         * @param principals the value of the principals parameter as a {@link java.util.List<String>}
+         * @param principals the value of the principals parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder principals(final java.util.List<String> principals) {
@@ -72,7 +72,7 @@ public class SshUserCertificates {
          * the signing certificate authority. Dangerously, if no principals are specified,
          * this certificate may be used to log in as any user.
          *
-         * @param principals the value of the principals parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param principals the value of the principals parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder principals(final Optional<java.util.List<String>> principals) {
@@ -87,7 +87,7 @@ public class SshUserCertificates {
          * href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the
          * OpenSSH certificate protocol spec</a> for additional details.
          *
-         * @param criticalOptions the value of the critical_options parameter as a {@link java.util.Map<String, String>}
+         * @param criticalOptions the value of the critical_options parameter as a {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder criticalOptions(final java.util.Map<String, String> criticalOptions) {
@@ -102,7 +102,7 @@ public class SshUserCertificates {
          * href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the
          * OpenSSH certificate protocol spec</a> for additional details.
          *
-         * @param criticalOptions the value of the critical_options parameter as an {@link Optional} of {@link java.util.Map<String, String>}
+         * @param criticalOptions the value of the critical_options parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder criticalOptions(final Optional<java.util.Map<String, String>> criticalOptions) {
@@ -115,13 +115,13 @@ public class SshUserCertificates {
          * metadata that can be interpreted by the SSH server for any purpose. These can be
          * used to permit or deny the ability to open a terminal, do port forwarding, x11
          * forwarding, and more. If unspecified, the certificate will include limited
-         * permissions with the following extension map: <code>{"permit-pty": "",
-         * "permit-user-rc": ""}</code> OpenSSH understands a number of predefined
-         * extensions. See <a
+         * permissions with the following extension map: <code>{&#34;permit-pty&#34;:
+         * &#34;&#34;, &#34;permit-user-rc&#34;: &#34;&#34;}</code> OpenSSH understands a
+         * number of predefined extensions. See <a
          * href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the
          * OpenSSH certificate protocol spec</a> for additional details.
          *
-         * @param extensions the value of the extensions parameter as a {@link java.util.Map<String, String>}
+         * @param extensions the value of the extensions parameter as a {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder extensions(final java.util.Map<String, String> extensions) {
@@ -134,13 +134,13 @@ public class SshUserCertificates {
          * metadata that can be interpreted by the SSH server for any purpose. These can be
          * used to permit or deny the ability to open a terminal, do port forwarding, x11
          * forwarding, and more. If unspecified, the certificate will include limited
-         * permissions with the following extension map: <code>{"permit-pty": "",
-         * "permit-user-rc": ""}</code> OpenSSH understands a number of predefined
-         * extensions. See <a
+         * permissions with the following extension map: <code>{&#34;permit-pty&#34;:
+         * &#34;&#34;, &#34;permit-user-rc&#34;: &#34;&#34;}</code> OpenSSH understands a
+         * number of predefined extensions. See <a
          * href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the
          * OpenSSH certificate protocol spec</a> for additional details.
          *
-         * @param extensions the value of the extensions parameter as an {@link Optional} of {@link java.util.Map<String, String>}
+         * @param extensions the value of the extensions parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder extensions(final Optional<java.util.Map<String, String>> extensions) {
@@ -156,7 +156,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validAfter(final java.time.OffsetDateTime validAfter) {
-            this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
+            this.validAfter = Optional.of(Objects.requireNonNull(validAfter, "validAfter is required"));
             return this;
         }
 
@@ -168,7 +168,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validAfter(final Optional<java.time.OffsetDateTime> validAfter) {
-            this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required").orElse(null);
+            this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
             return this;
         }
         
@@ -181,7 +181,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validUntil(final java.time.OffsetDateTime validUntil) {
-            this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
+            this.validUntil = Optional.of(Objects.requireNonNull(validUntil, "validUntil is required"));
             return this;
         }
 
@@ -194,7 +194,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder validUntil(final Optional<java.time.OffsetDateTime> validUntil) {
-            this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required").orElse(null);
+            this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
             return this;
         }
         
@@ -206,7 +206,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -218,7 +218,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -230,7 +230,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -242,7 +242,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -259,13 +259,13 @@ public class SshUserCertificates {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("ssh_certificate_authority_id", Optional.of(this.sshCertificateAuthorityId)),
                     new AbstractMap.SimpleEntry<>("public_key", Optional.of(this.publicKey)),
-                    new AbstractMap.SimpleEntry<>("principals", Optional.of(this.principals)),
-                    new AbstractMap.SimpleEntry<>("critical_options", Optional.of(this.criticalOptions)),
-                    new AbstractMap.SimpleEntry<>("extensions", Optional.of(this.extensions)),
-                    new AbstractMap.SimpleEntry<>("valid_after", Optional.of(this.validAfter)),
-                    new AbstractMap.SimpleEntry<>("valid_until", Optional.of(this.validUntil)),
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata))
+                    new AbstractMap.SimpleEntry<>("principals", Optional.of(this.principals).filter(principals -> !principals.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("critical_options", Optional.of(this.criticalOptions).filter(criticalOptions -> !criticalOptions.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("extensions", Optional.of(this.extensions).filter(extensions -> !extensions.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("valid_after", this.validAfter.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("valid_until", this.validUntil.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
                 ),
                 Optional.of(SshUserCertificate.class)
             );
@@ -438,7 +438,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -460,7 +460,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -543,7 +543,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -567,7 +567,7 @@ public class SshUserCertificates {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 

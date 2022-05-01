@@ -13,6 +13,8 @@ import java.util.Optional;
 public abstract class TestBase {
     public static final String FAKE_API_SECRET ="s3kr1t";
 
+    public static final String USER_AGENT = "ngrok-api-java/" + Version.CLIENT_VERSION + "/" + System.getProperty("java.version");
+
     public static final boolean USE_LIVE_API = Optional.ofNullable(System.getenv("TEST_NO_MOCK"))
         .map(Boolean::valueOf)
         .orElse(false);

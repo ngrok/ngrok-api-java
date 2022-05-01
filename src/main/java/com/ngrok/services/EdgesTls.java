@@ -32,9 +32,9 @@ public class EdgesTls {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
-        private Optional<java.util.List<String>> hostports = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private java.util.List<String> hostports = java.util.Collections.emptyList();
         private Optional<EndpointBackendMutate> backend = Optional.empty();
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
         private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
@@ -52,7 +52,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -64,7 +64,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -76,7 +76,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -88,29 +88,29 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
         /**
          * hostports served by this edge
          *
-         * @param hostports the value of the hostports parameter as a {@link java.util.List<String>}
+         * @param hostports the value of the hostports parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder hostports(final java.util.List<String> hostports) {
-            this.hostports = Optional.ofNullable(hostports);
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
             return this;
         }
 
         /**
          * hostports served by this edge
          *
-         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
-            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -121,7 +121,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder backend(final EndpointBackendMutate backend) {
-            this.backend = Optional.ofNullable(backend);
+            this.backend = Optional.of(Objects.requireNonNull(backend, "backend is required"));
             return this;
         }
 
@@ -143,7 +143,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder ipRestriction(final EndpointIpPolicyMutate ipRestriction) {
-            this.ipRestriction = Optional.ofNullable(ipRestriction);
+            this.ipRestriction = Optional.of(Objects.requireNonNull(ipRestriction, "ipRestriction is required"));
             return this;
         }
 
@@ -165,7 +165,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
-            this.mutualTls = Optional.ofNullable(mutualTls);
+            this.mutualTls = Optional.of(Objects.requireNonNull(mutualTls, "mutualTls is required"));
             return this;
         }
 
@@ -187,7 +187,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public CreateCallBuilder tlsTermination(final EndpointTlsTermination tlsTermination) {
-            this.tlsTermination = Optional.ofNullable(tlsTermination);
+            this.tlsTermination = Optional.of(Objects.requireNonNull(tlsTermination, "tlsTermination is required"));
             return this;
         }
 
@@ -213,9 +213,9 @@ public class EdgesTls {
                 "/edges/tls",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("hostports", this.hostports.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("hostports", Optional.of(this.hostports).filter(hostports -> !hostports.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("mutual_tls", this.mutualTls.map(Function.identity())),
@@ -329,7 +329,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -351,7 +351,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -419,7 +419,7 @@ public class EdgesTls {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private Optional<java.util.List<String>> hostports = Optional.empty();
+        private java.util.List<String> hostports = java.util.Collections.emptyList();
         private Optional<EndpointBackendMutate> backend = Optional.empty();
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
         private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
@@ -439,7 +439,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -463,7 +463,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -482,22 +482,22 @@ public class EdgesTls {
         /**
          * hostports served by this edge
          *
-         * @param hostports the value of the hostports parameter as a {@link java.util.List<String>}
+         * @param hostports the value of the hostports parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder hostports(final java.util.List<String> hostports) {
-            this.hostports = Optional.ofNullable(hostports);
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
             return this;
         }
 
         /**
          * hostports served by this edge
          *
-         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List<String>}
+         * @param hostports the value of the hostports parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
-            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required").orElse(java.util.Collections.emptyList());
             return this;
         }
         
@@ -508,7 +508,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public UpdateCallBuilder backend(final EndpointBackendMutate backend) {
-            this.backend = Optional.ofNullable(backend);
+            this.backend = Optional.of(Objects.requireNonNull(backend, "backend is required"));
             return this;
         }
 
@@ -530,7 +530,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public UpdateCallBuilder ipRestriction(final EndpointIpPolicyMutate ipRestriction) {
-            this.ipRestriction = Optional.ofNullable(ipRestriction);
+            this.ipRestriction = Optional.of(Objects.requireNonNull(ipRestriction, "ipRestriction is required"));
             return this;
         }
 
@@ -552,7 +552,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public UpdateCallBuilder mutualTls(final EndpointMutualTlsMutate mutualTls) {
-            this.mutualTls = Optional.ofNullable(mutualTls);
+            this.mutualTls = Optional.of(Objects.requireNonNull(mutualTls, "mutualTls is required"));
             return this;
         }
 
@@ -574,7 +574,7 @@ public class EdgesTls {
          * @return the call builder instance
          */
         public UpdateCallBuilder tlsTermination(final EndpointTlsTermination tlsTermination) {
-            this.tlsTermination = Optional.ofNullable(tlsTermination);
+            this.tlsTermination = Optional.of(Objects.requireNonNull(tlsTermination, "tlsTermination is required"));
             return this;
         }
 
@@ -602,7 +602,7 @@ public class EdgesTls {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("hostports", this.hostports.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("hostports", Optional.of(this.hostports).filter(hostports -> !hostports.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("mutual_tls", this.mutualTls.map(Function.identity())),

@@ -27,10 +27,10 @@ public class EventTargetCloudwatchLogs {
         /**
          * Configuration for how to authenticate into your AWS account. Exactly one of
          * <code>role</code> or <code>creds</code> should be configured.
-		 *
-		 * @param auth the value of the <code>auth</code> parameter as a {@link AwsAuth}
-		 * @return this builder instance
-		 */
+         *
+         * @param auth the value of the <code>auth</code> parameter as a {@link AwsAuth}
+         * @return this builder instance
+         */
         public Builder auth(final AwsAuth auth) {
             this.auth = Optional.of(Objects.requireNonNull(auth, "auth is required"));
             return this;
@@ -39,10 +39,10 @@ public class EventTargetCloudwatchLogs {
         /**
          * Configuration for how to authenticate into your AWS account. Exactly one of
          * <code>role</code> or <code>creds</code> should be configured.
-		 *
-		 * @param auth the value of the <code>auth</code> parameter as a {@link AwsAuth}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param auth the value of the <code>auth</code> parameter as a {@link AwsAuth}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder auth(final Optional<AwsAuth> auth) {
             this.auth = Objects.requireNonNull(auth, "auth is required");
             return this;
@@ -51,10 +51,10 @@ public class EventTargetCloudwatchLogs {
         /**
          * An Amazon Resource Name specifying the CloudWatch Logs group to deposit events
          * into.
-		 *
-		 * @param logGroupArn the value of the <code>log_group_arn</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param logGroupArn the value of the <code>log_group_arn</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder logGroupArn(final String logGroupArn) {
             this.logGroupArn = Optional.of(Objects.requireNonNull(logGroupArn, "logGroupArn is required"));
             return this;
@@ -63,10 +63,10 @@ public class EventTargetCloudwatchLogs {
         /**
          * An Amazon Resource Name specifying the CloudWatch Logs group to deposit events
          * into.
-		 *
-		 * @param logGroupArn the value of the <code>log_group_arn</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param logGroupArn the value of the <code>log_group_arn</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder logGroupArn(final Optional<String> logGroupArn) {
             this.logGroupArn = Objects.requireNonNull(logGroupArn, "logGroupArn is required");
             return this;

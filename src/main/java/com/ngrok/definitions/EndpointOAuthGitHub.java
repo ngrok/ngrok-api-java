@@ -19,67 +19,67 @@ public class EndpointOAuthGitHub {
     public static class Builder {
         private Optional<String> clientId = Optional.empty();
         private Optional<String> clientSecret = Optional.empty();
-        private Optional<java.util.List<String>> scopes = Optional.empty();
-        private Optional<java.util.List<String>> emailAddresses = Optional.empty();
-        private Optional<java.util.List<String>> emailDomains = Optional.empty();
-        private Optional<java.util.List<String>> teams = Optional.empty();
-        private Optional<java.util.List<String>> organizations = Optional.empty();
+        private java.util.List<String> scopes = java.util.Collections.emptyList();
+        private java.util.List<String> emailAddresses = java.util.Collections.emptyList();
+        private java.util.List<String> emailDomains = java.util.Collections.emptyList();
+        private java.util.List<String> teams = java.util.Collections.emptyList();
+        private java.util.List<String> organizations = java.util.Collections.emptyList();
 
         private Builder(
         ) {
         }
 
         /**
-         * the OAuth app client ID. retrieve it from the identity provider's dashboard
+         * the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard
          * where you created your own OAuth app. optional. if unspecified, ngrok will use
          * its own managed oauth application which has additional restrictions. see the
          * OAuth module docs for more details. if present, client_secret must be present as
          * well.
-		 *
-		 * @param clientId the value of the <code>client_id</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param clientId the value of the <code>client_id</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder clientId(final String clientId) {
             this.clientId = Optional.of(Objects.requireNonNull(clientId, "clientId is required"));
             return this;
         }
 
         /**
-         * the OAuth app client ID. retrieve it from the identity provider's dashboard
+         * the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard
          * where you created your own OAuth app. optional. if unspecified, ngrok will use
          * its own managed oauth application which has additional restrictions. see the
          * OAuth module docs for more details. if present, client_secret must be present as
          * well.
-		 *
-		 * @param clientId the value of the <code>client_id</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param clientId the value of the <code>client_id</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder clientId(final Optional<String> clientId) {
             this.clientId = Objects.requireNonNull(clientId, "clientId is required");
             return this;
         }
 
         /**
-         * the OAuth app client secret. retrieve if from the identity provider's dashboard
-         * where you created your own OAuth app. optional, see all of the caveats in the
-         * docs for <code>client_id</code>.
-		 *
-		 * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         * the OAuth app client secret. retrieve if from the identity provider&#39;s
+         * dashboard where you created your own OAuth app. optional, see all of the caveats
+         * in the docs for <code>client_id</code>.
+         *
+         * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder clientSecret(final String clientSecret) {
             this.clientSecret = Optional.of(Objects.requireNonNull(clientSecret, "clientSecret is required"));
             return this;
         }
 
         /**
-         * the OAuth app client secret. retrieve if from the identity provider's dashboard
-         * where you created your own OAuth app. optional, see all of the caveats in the
-         * docs for <code>client_id</code>.
-		 *
-		 * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         * the OAuth app client secret. retrieve if from the identity provider&#39;s
+         * dashboard where you created your own OAuth app. optional, see all of the caveats
+         * in the docs for <code>client_id</code>.
+         *
+         * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder clientSecret(final Optional<String> clientSecret) {
             this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret is required");
             return this;
@@ -90,12 +90,12 @@ public class EndpointOAuthGitHub {
          * would like to ask for. these may not be set if you are using the ngrok-managed
          * oauth app (i.e. you must pass both <code>client_id</code> and
          * <code>client_secret</code> to set scopes)
-		 *
-		 * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder scopes(final java.util.List<String> scopes) {
-            this.scopes = Optional.of(Objects.requireNonNull(scopes, "scopes is required"));
+            this.scopes = Objects.requireNonNull(scopes, "scopes is required");
             return this;
         }
 
@@ -104,112 +104,114 @@ public class EndpointOAuthGitHub {
          * would like to ask for. these may not be set if you are using the ngrok-managed
          * oauth app (i.e. you must pass both <code>client_id</code> and
          * <code>client_secret</code> to set scopes)
-		 *
-		 * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder scopes(final Optional<java.util.List<String>> scopes) {
-            this.scopes = Objects.requireNonNull(scopes, "scopes is required");
+            this.scopes = Objects.requireNonNull(scopes, "scopes is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
         /**
          * a list of email addresses of users authenticated by identity provider who are
          * allowed access to the endpoint
-		 *
-		 * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder emailAddresses(final java.util.List<String> emailAddresses) {
-            this.emailAddresses = Optional.of(Objects.requireNonNull(emailAddresses, "emailAddresses is required"));
-            return this;
-        }
-
-        /**
-         * a list of email addresses of users authenticated by identity provider who are
-         * allowed access to the endpoint
-		 *
-		 * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
-        public Builder emailAddresses(final Optional<java.util.List<String>> emailAddresses) {
             this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required");
             return this;
         }
 
         /**
-         * a list of email domains of users authenticated by identity provider who are
+         * a list of email addresses of users authenticated by identity provider who are
          * allowed access to the endpoint
-		 *
-		 * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
-        public Builder emailDomains(final java.util.List<String> emailDomains) {
-            this.emailDomains = Optional.of(Objects.requireNonNull(emailDomains, "emailDomains is required"));
+         *
+         * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder emailAddresses(final Optional<java.util.List<String>> emailAddresses) {
+            this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
         /**
          * a list of email domains of users authenticated by identity provider who are
          * allowed access to the endpoint
-		 *
-		 * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
-        public Builder emailDomains(final Optional<java.util.List<String>> emailDomains) {
+         *
+         * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
+        public Builder emailDomains(final java.util.List<String> emailDomains) {
             this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required");
             return this;
         }
 
         /**
-         * a list of github teams identifiers. users will be allowed access to the endpoint
-         * if they are a member of any of these teams. identifiers should be in the 'slug'
-         * format qualified with the org name, e.g. <code>org-name/team-name</code>
-		 *
-		 * @param teams the value of the <code>teams</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
-        public Builder teams(final java.util.List<String> teams) {
-            this.teams = Optional.of(Objects.requireNonNull(teams, "teams is required"));
+         * a list of email domains of users authenticated by identity provider who are
+         * allowed access to the endpoint
+         *
+         * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder emailDomains(final Optional<java.util.List<String>> emailDomains) {
+            this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
         /**
          * a list of github teams identifiers. users will be allowed access to the endpoint
-         * if they are a member of any of these teams. identifiers should be in the 'slug'
-         * format qualified with the org name, e.g. <code>org-name/team-name</code>
-		 *
-		 * @param teams the value of the <code>teams</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
-        public Builder teams(final Optional<java.util.List<String>> teams) {
+         * if they are a member of any of these teams. identifiers should be in the
+         * &#39;slug&#39; format qualified with the org name, e.g.
+         * <code>org-name/team-name</code>
+         *
+         * @param teams the value of the <code>teams</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
+        public Builder teams(final java.util.List<String> teams) {
             this.teams = Objects.requireNonNull(teams, "teams is required");
             return this;
         }
 
         /**
-         * a list of github org identifiers. users who are members of any of the listed
-         * organizations will be allowed access. identifiers should be the organization's
-         * 'slug'
-		 *
-		 * @param organizations the value of the <code>organizations</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
-        public Builder organizations(final java.util.List<String> organizations) {
-            this.organizations = Optional.of(Objects.requireNonNull(organizations, "organizations is required"));
+         * a list of github teams identifiers. users will be allowed access to the endpoint
+         * if they are a member of any of these teams. identifiers should be in the
+         * &#39;slug&#39; format qualified with the org name, e.g.
+         * <code>org-name/team-name</code>
+         *
+         * @param teams the value of the <code>teams</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder teams(final Optional<java.util.List<String>> teams) {
+            this.teams = Objects.requireNonNull(teams, "teams is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
         /**
          * a list of github org identifiers. users who are members of any of the listed
-         * organizations will be allowed access. identifiers should be the organization's
-         * 'slug'
-		 *
-		 * @param organizations the value of the <code>organizations</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
-        public Builder organizations(final Optional<java.util.List<String>> organizations) {
+         * organizations will be allowed access. identifiers should be the
+         * organization&#39;s &#39;slug&#39;
+         *
+         * @param organizations the value of the <code>organizations</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
+        public Builder organizations(final java.util.List<String> organizations) {
             this.organizations = Objects.requireNonNull(organizations, "organizations is required");
+            return this;
+        }
+
+        /**
+         * a list of github org identifiers. users who are members of any of the listed
+         * organizations will be allowed access. identifiers should be the
+         * organization&#39;s &#39;slug&#39;
+         *
+         * @param organizations the value of the <code>organizations</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder organizations(final Optional<java.util.List<String>> organizations) {
+            this.organizations = Objects.requireNonNull(organizations, "organizations is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
@@ -222,11 +224,11 @@ public class EndpointOAuthGitHub {
             return new EndpointOAuthGitHub(
                 this.clientId,
                 this.clientSecret,
-                this.scopes.orElse(java.util.Collections.emptyList()),
-                this.emailAddresses.orElse(java.util.Collections.emptyList()),
-                this.emailDomains.orElse(java.util.Collections.emptyList()),
-                this.teams.orElse(java.util.Collections.emptyList()),
-                this.organizations.orElse(java.util.Collections.emptyList())
+                this.scopes,
+                this.emailAddresses,
+                this.emailDomains,
+                this.teams,
+                this.organizations
             );
         }
     }
@@ -267,13 +269,13 @@ public class EndpointOAuthGitHub {
     /**
      * Creates a new instance of {@link EndpointOAuthGitHub}.
      *
-     * @param clientId the OAuth app client ID. retrieve it from the identity provider's dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well.
-     * @param clientSecret the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>.
+     * @param clientId the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well.
+     * @param clientSecret the OAuth app client secret. retrieve if from the identity provider&#39;s dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>.
      * @param scopes a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both <code>client_id</code> and <code>client_secret</code> to set scopes)
      * @param emailAddresses a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint
      * @param emailDomains a list of email domains of users authenticated by identity provider who are allowed access to the endpoint
-     * @param teams a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the 'slug' format qualified with the org name, e.g. <code>org-name/team-name</code>
-     * @param organizations a list of github org identifiers. users who are members of any of the listed organizations will be allowed access. identifiers should be the organization's 'slug'
+     * @param teams a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the &#39;slug&#39; format qualified with the org name, e.g. <code>org-name/team-name</code>
+     * @param organizations a list of github org identifiers. users who are members of any of the listed organizations will be allowed access. identifiers should be the organization&#39;s &#39;slug&#39;
      */
     @JsonCreator
     private EndpointOAuthGitHub(
@@ -287,15 +289,15 @@ public class EndpointOAuthGitHub {
     ) {
         this.clientId = clientId != null ? clientId : Optional.empty();
         this.clientSecret = clientSecret != null ? clientSecret : Optional.empty();
-        this.scopes = Objects.requireNonNull(scopes, "scopes is required");
-        this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required");
-        this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required");
-        this.teams = Objects.requireNonNull(teams, "teams is required");
-        this.organizations = Objects.requireNonNull(organizations, "organizations is required");
+        this.scopes = scopes != null ? scopes : java.util.Collections.emptyList();
+        this.emailAddresses = emailAddresses != null ? emailAddresses : java.util.Collections.emptyList();
+        this.emailDomains = emailDomains != null ? emailDomains : java.util.Collections.emptyList();
+        this.teams = teams != null ? teams : java.util.Collections.emptyList();
+        this.organizations = organizations != null ? organizations : java.util.Collections.emptyList();
     }
 
     /**
-     * the OAuth app client ID. retrieve it from the identity provider's dashboard
+     * the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard
      * where you created your own OAuth app. optional. if unspecified, ngrok will use
      * its own managed oauth application which has additional restrictions. see the
      * OAuth module docs for more details. if present, client_secret must be present as
@@ -308,9 +310,9 @@ public class EndpointOAuthGitHub {
     }
 
     /**
-     * the OAuth app client secret. retrieve if from the identity provider's dashboard
-     * where you created your own OAuth app. optional, see all of the caveats in the
-     * docs for <code>client_id</code>.
+     * the OAuth app client secret. retrieve if from the identity provider&#39;s
+     * dashboard where you created your own OAuth app. optional, see all of the caveats
+     * in the docs for <code>client_id</code>.
      *
      * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
@@ -324,7 +326,7 @@ public class EndpointOAuthGitHub {
      * oauth app (i.e. you must pass both <code>client_id</code> and
      * <code>client_secret</code> to set scopes)
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getScopes() {
         return this.scopes;
@@ -334,7 +336,7 @@ public class EndpointOAuthGitHub {
      * a list of email addresses of users authenticated by identity provider who are
      * allowed access to the endpoint
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getEmailAddresses() {
         return this.emailAddresses;
@@ -344,7 +346,7 @@ public class EndpointOAuthGitHub {
      * a list of email domains of users authenticated by identity provider who are
      * allowed access to the endpoint
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getEmailDomains() {
         return this.emailDomains;
@@ -352,10 +354,11 @@ public class EndpointOAuthGitHub {
 
     /**
      * a list of github teams identifiers. users will be allowed access to the endpoint
-     * if they are a member of any of these teams. identifiers should be in the 'slug'
-     * format qualified with the org name, e.g. <code>org-name/team-name</code>
+     * if they are a member of any of these teams. identifiers should be in the
+     * &#39;slug&#39; format qualified with the org name, e.g.
+     * <code>org-name/team-name</code>
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getTeams() {
         return this.teams;
@@ -363,10 +366,10 @@ public class EndpointOAuthGitHub {
 
     /**
      * a list of github org identifiers. users who are members of any of the listed
-     * organizations will be allowed access. identifiers should be the organization's
-     * 'slug'
+     * organizations will be allowed access. identifiers should be the
+     * organization&#39;s &#39;slug&#39;
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getOrganizations() {
         return this.organizations;

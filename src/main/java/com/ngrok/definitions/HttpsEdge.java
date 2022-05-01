@@ -24,10 +24,10 @@ public class HttpsEdge {
     private final String metadata;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String createdAt;
+    private final java.time.OffsetDateTime createdAt;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String uri;
+    private final java.net.URI uri;
     @JsonProperty("hostports")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<java.util.List<String>> hostports;
@@ -59,8 +59,8 @@ public class HttpsEdge {
         @JsonProperty("id") final String id,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
-        @JsonProperty("created_at") final String createdAt,
-        @JsonProperty("uri") final String uri,
+        @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
+        @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("hostports") final Optional<java.util.List<String>> hostports,
         @JsonProperty("mutual_tls") final Optional<EndpointMutualTls> mutualTls,
         @JsonProperty("tls_termination") final Optional<EndpointTlsTermination> tlsTermination,
@@ -74,7 +74,7 @@ public class HttpsEdge {
         this.hostports = hostports != null ? hostports : Optional.empty();
         this.mutualTls = mutualTls != null ? mutualTls : Optional.empty();
         this.tlsTermination = tlsTermination != null ? tlsTermination : Optional.empty();
-        this.routes = Objects.requireNonNull(routes, "routes is required");
+        this.routes = routes != null ? routes : java.util.Collections.emptyList();
     }
 
     /**
@@ -109,25 +109,25 @@ public class HttpsEdge {
     /**
      * timestamp when the edge configuration was created, RFC 3339 format
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.time.OffsetDateTime}
      */
-    public String getCreatedAt() {
+    public java.time.OffsetDateTime getCreatedAt() {
         return this.createdAt;
     }
 
     /**
      * URI of the edge API resource
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.net.URI}
      */
-    public String getUri() {
+    public java.net.URI getUri() {
         return this.uri;
     }
 
     /**
      * hostports served by this edge
      *
-     * @return the value of the property as a {@link java.util.List<String>} wrapped in an {@link Optional}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
     public Optional<java.util.List<String>> getHostports() {
         return this.hostports;
@@ -154,7 +154,7 @@ public class HttpsEdge {
     /**
      * routes
      *
-     * @return the value of the property as a {@link java.util.List<HttpsEdgeRoute>}
+     * @return the value of the property as a {@link java.util.List} of {@link HttpsEdgeRoute}
      */
     public java.util.List<HttpsEdgeRoute> getRoutes() {
         return this.routes;

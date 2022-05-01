@@ -67,12 +67,12 @@ public class Example {
     public static void main(final String[] args) {
         final var ngrok = Ngrok.createDefault();
 
-        ngrok.ipPolicies().create("allow").call().thenCompose(policy ->
+        ngrok.ipPolicies().create().call().thenCompose(policy ->
             CompletableFuture.allOf(
                 Stream.of("24.0.0.0/8", "12.0.0.0/8")
                     .map(cidr ->
                         ngrok.ipPolicyRules()
-                            .create(cidr, policy.getId())
+                            .create(cidr, policy.getId(), "allow")
                             .call()
                             .toCompletableFuture()
                     )

@@ -36,7 +36,7 @@ public class IpRestrictionList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.ipRestrictions = Objects.requireNonNull(ipRestrictions, "ipRestrictions is required");
+        this.ipRestrictions = ipRestrictions != null ? ipRestrictions : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class IpRestrictionList implements Pageable {
     /**
      * the list of all IP restrictions on this account
      *
-     * @return the value of the property as a {@link java.util.List<IpRestriction>}
+     * @return the value of the property as a {@link java.util.List} of {@link IpRestriction}
      */
     public java.util.List<IpRestriction> getIpRestrictions() {
         return this.ipRestrictions;

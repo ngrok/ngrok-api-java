@@ -27,10 +27,10 @@ public class EventTarget {
 
         /**
          * Configuration used to send events to Amazon Kinesis Data Firehose.
-		 *
-		 * @param firehose the value of the <code>firehose</code> parameter as a {@link EventTargetFirehose}
-		 * @return this builder instance
-		 */
+         *
+         * @param firehose the value of the <code>firehose</code> parameter as a {@link EventTargetFirehose}
+         * @return this builder instance
+         */
         public Builder firehose(final EventTargetFirehose firehose) {
             this.firehose = Optional.of(Objects.requireNonNull(firehose, "firehose is required"));
             return this;
@@ -38,10 +38,10 @@ public class EventTarget {
 
         /**
          * Configuration used to send events to Amazon Kinesis Data Firehose.
-		 *
-		 * @param firehose the value of the <code>firehose</code> parameter as a {@link EventTargetFirehose}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param firehose the value of the <code>firehose</code> parameter as a {@link EventTargetFirehose}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder firehose(final Optional<EventTargetFirehose> firehose) {
             this.firehose = Objects.requireNonNull(firehose, "firehose is required");
             return this;
@@ -49,10 +49,10 @@ public class EventTarget {
 
         /**
          * Configuration used to send events to Amazon Kinesis.
-		 *
-		 * @param kinesis the value of the <code>kinesis</code> parameter as a {@link EventTargetKinesis}
-		 * @return this builder instance
-		 */
+         *
+         * @param kinesis the value of the <code>kinesis</code> parameter as a {@link EventTargetKinesis}
+         * @return this builder instance
+         */
         public Builder kinesis(final EventTargetKinesis kinesis) {
             this.kinesis = Optional.of(Objects.requireNonNull(kinesis, "kinesis is required"));
             return this;
@@ -60,10 +60,10 @@ public class EventTarget {
 
         /**
          * Configuration used to send events to Amazon Kinesis.
-		 *
-		 * @param kinesis the value of the <code>kinesis</code> parameter as a {@link EventTargetKinesis}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param kinesis the value of the <code>kinesis</code> parameter as a {@link EventTargetKinesis}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder kinesis(final Optional<EventTargetKinesis> kinesis) {
             this.kinesis = Objects.requireNonNull(kinesis, "kinesis is required");
             return this;
@@ -71,10 +71,10 @@ public class EventTarget {
 
         /**
          * Configuration used to send events to Amazon CloudWatch Logs.
-		 *
-		 * @param cloudwatchLogs the value of the <code>cloudwatch_logs</code> parameter as a {@link EventTargetCloudwatchLogs}
-		 * @return this builder instance
-		 */
+         *
+         * @param cloudwatchLogs the value of the <code>cloudwatch_logs</code> parameter as a {@link EventTargetCloudwatchLogs}
+         * @return this builder instance
+         */
         public Builder cloudwatchLogs(final EventTargetCloudwatchLogs cloudwatchLogs) {
             this.cloudwatchLogs = Optional.of(Objects.requireNonNull(cloudwatchLogs, "cloudwatchLogs is required"));
             return this;
@@ -82,10 +82,10 @@ public class EventTarget {
 
         /**
          * Configuration used to send events to Amazon CloudWatch Logs.
-		 *
-		 * @param cloudwatchLogs the value of the <code>cloudwatch_logs</code> parameter as a {@link EventTargetCloudwatchLogs}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param cloudwatchLogs the value of the <code>cloudwatch_logs</code> parameter as a {@link EventTargetCloudwatchLogs}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder cloudwatchLogs(final Optional<EventTargetCloudwatchLogs> cloudwatchLogs) {
             this.cloudwatchLogs = Objects.requireNonNull(cloudwatchLogs, "cloudwatchLogs is required");
             return this;

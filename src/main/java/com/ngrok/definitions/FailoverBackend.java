@@ -18,7 +18,7 @@ public class FailoverBackend {
     private final String id;
     @JsonProperty("uri")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String uri;
+    private final java.net.URI uri;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
@@ -45,7 +45,7 @@ public class FailoverBackend {
     @JsonCreator
     public FailoverBackend(
         @JsonProperty("id") final String id,
-        @JsonProperty("uri") final String uri,
+        @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
@@ -56,7 +56,7 @@ public class FailoverBackend {
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-        this.backends = Objects.requireNonNull(backends, "backends is required");
+        this.backends = backends != null ? backends : java.util.Collections.emptyList();
     }
 
     /**
@@ -71,9 +71,9 @@ public class FailoverBackend {
     /**
      * URI of the FailoverBackend API resource
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.net.URI}
      */
-    public String getUri() {
+    public java.net.URI getUri() {
         return this.uri;
     }
 
@@ -107,7 +107,7 @@ public class FailoverBackend {
     /**
      * the ids of the child backends in order
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getBackends() {
         return this.backends;

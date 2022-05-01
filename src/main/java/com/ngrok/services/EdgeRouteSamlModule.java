@@ -34,7 +34,7 @@ public class EdgeRouteSamlModule {
     public class ReplaceCallBuilder {
         private final String edgeId;
         private final String id;
-        private EndpointSamlMutate module = null;
+        private Optional<EndpointSamlMutate> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String edgeId,
@@ -51,7 +51,7 @@ public class EdgeRouteSamlModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointSamlMutate module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -62,7 +62,7 @@ public class EdgeRouteSamlModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointSamlMutate> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -77,7 +77,7 @@ public class EdgeRouteSamlModule {
                 "/edges/https/" + this.edgeId + "/routes/" + this.id + "/saml",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointSaml.class)
             );

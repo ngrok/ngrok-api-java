@@ -36,7 +36,7 @@ public class AgentIngress {
     private final java.util.List<String> regionDomains;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String createdAt;
+    private final java.time.OffsetDateTime createdAt;
 
     /**
      * Creates a new instance of {@link AgentIngress}.
@@ -59,15 +59,15 @@ public class AgentIngress {
         @JsonProperty("domain") final String domain,
         @JsonProperty("ns_targets") final java.util.List<String> nsTargets,
         @JsonProperty("region_domains") final java.util.List<String> regionDomains,
-        @JsonProperty("created_at") final String createdAt
+        @JsonProperty("created_at") final java.time.OffsetDateTime createdAt
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.description = Objects.requireNonNull(description, "description is required");
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.domain = Objects.requireNonNull(domain, "domain is required");
-        this.nsTargets = Objects.requireNonNull(nsTargets, "nsTargets is required");
-        this.regionDomains = Objects.requireNonNull(regionDomains, "regionDomains is required");
+        this.nsTargets = nsTargets != null ? nsTargets : java.util.Collections.emptyList();
+        this.regionDomains = regionDomains != null ? regionDomains : java.util.Collections.emptyList();
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
     }
 
@@ -123,7 +123,7 @@ public class AgentIngress {
      * a list of target values to use as the values of NS records for the domain
      * property these values will delegate control over the domain to ngrok
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getNsTargets() {
         return this.nsTargets;
@@ -133,7 +133,7 @@ public class AgentIngress {
      * a list of regional agent ingress domains that are subdomains of the value of
      * domain this value may increase over time as ngrok adds more regions
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getRegionDomains() {
         return this.regionDomains;
@@ -142,9 +142,9 @@ public class AgentIngress {
     /**
      * timestamp when the Agent Ingress was created, RFC 3339 format
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link java.time.OffsetDateTime}
      */
-    public String getCreatedAt() {
+    public java.time.OffsetDateTime getCreatedAt() {
         return this.createdAt;
     }
 

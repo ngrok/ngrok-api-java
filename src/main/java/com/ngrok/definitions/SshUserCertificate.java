@@ -69,7 +69,7 @@ public class SshUserCertificate {
      * @param sshCertificateAuthorityId the ssh certificate authority that is used to sign this ssh user certificate
      * @param principals the list of principals included in the ssh user certificate. This is the list of usernames that the certificate holder may sign in as on a machine authorizing the signing certificate authority. Dangerously, if no principals are specified, this certificate may be used to log in as any user.
      * @param criticalOptions A map of critical options included in the certificate. Only two critical options are currently defined by OpenSSH: <code>force-command</code> and <code>source-address</code>. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details.
-     * @param extensions A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: <code>{"permit-pty": "", "permit-user-rc": ""}</code> OpenSSH understands a number of predefined extensions. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details.
+     * @param extensions A map of extensions included in the certificate. Extensions are additional metadata that can be interpreted by the SSH server for any purpose. These can be used to permit or deny the ability to open a terminal, do port forwarding, x11 forwarding, and more. If unspecified, the certificate will include limited permissions with the following extension map: <code>{&#34;permit-pty&#34;: &#34;&#34;, &#34;permit-user-rc&#34;: &#34;&#34;}</code> OpenSSH understands a number of predefined extensions. See <a href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the OpenSSH certificate protocol spec</a> for additional details.
      * @param validAfter the time when the ssh host certificate becomes valid, in RFC 3339 format.
      * @param validUntil the time after which the ssh host certificate becomes invalid, in RFC 3339 format. the OpenSSH certificates RFC calls this <code>valid_before</code>.
      * @param certificate the signed SSH certificate in OpenSSH Authorized Keys Format. this value should be placed in a <code>-cert.pub</code> certificate file on disk that should be referenced in your <code>sshd_config</code> configuration file with a <code>HostCertificate</code> directive
@@ -99,9 +99,9 @@ public class SshUserCertificate {
         this.publicKey = Objects.requireNonNull(publicKey, "publicKey is required");
         this.keyType = Objects.requireNonNull(keyType, "keyType is required");
         this.sshCertificateAuthorityId = Objects.requireNonNull(sshCertificateAuthorityId, "sshCertificateAuthorityId is required");
-        this.principals = Objects.requireNonNull(principals, "principals is required");
-        this.criticalOptions = Objects.requireNonNull(criticalOptions, "criticalOptions is required");
-        this.extensions = Objects.requireNonNull(extensions, "extensions is required");
+        this.principals = principals != null ? principals : java.util.Collections.emptyList();
+        this.criticalOptions = criticalOptions != null ? criticalOptions : java.util.Collections.emptyMap();
+        this.extensions = extensions != null ? extensions : java.util.Collections.emptyMap();
         this.validAfter = Objects.requireNonNull(validAfter, "validAfter is required");
         this.validUntil = Objects.requireNonNull(validUntil, "validUntil is required");
         this.certificate = Objects.requireNonNull(certificate, "certificate is required");
@@ -189,7 +189,7 @@ public class SshUserCertificate {
      * the signing certificate authority. Dangerously, if no principals are specified,
      * this certificate may be used to log in as any user.
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getPrincipals() {
         return this.principals;
@@ -202,7 +202,7 @@ public class SshUserCertificate {
      * href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the
      * OpenSSH certificate protocol spec</a> for additional details.
      *
-     * @return the value of the property as a {@link java.util.Map<String, String>}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
      */
     public java.util.Map<String, String> getCriticalOptions() {
         return this.criticalOptions;
@@ -213,13 +213,13 @@ public class SshUserCertificate {
      * metadata that can be interpreted by the SSH server for any purpose. These can be
      * used to permit or deny the ability to open a terminal, do port forwarding, x11
      * forwarding, and more. If unspecified, the certificate will include limited
-     * permissions with the following extension map: <code>{"permit-pty": "",
-     * "permit-user-rc": ""}</code> OpenSSH understands a number of predefined
-     * extensions. See <a
+     * permissions with the following extension map: <code>{&#34;permit-pty&#34;:
+     * &#34;&#34;, &#34;permit-user-rc&#34;: &#34;&#34;}</code> OpenSSH understands a
+     * number of predefined extensions. See <a
      * href="https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys">the
      * OpenSSH certificate protocol spec</a> for additional details.
      *
-     * @return the value of the property as a {@link java.util.Map<String, String>}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
      */
     public java.util.Map<String, String> getExtensions() {
         return this.extensions;

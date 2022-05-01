@@ -18,8 +18,8 @@ public class EndpointResponseHeaders {
      */
     public static class Builder {
         private Optional<Boolean> enabled = Optional.empty();
-        private Optional<java.util.Map<String, String>> add = Optional.empty();
-        private Optional<java.util.List<String>> remove = Optional.empty();
+        private java.util.Map<String, String> add = java.util.Collections.emptyMap();
+        private java.util.List<String> remove = java.util.Collections.emptyList();
 
         private Builder(
         ) {
@@ -28,10 +28,10 @@ public class EndpointResponseHeaders {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}
+         * @return this builder instance
+         */
         public Builder enabled(final boolean enabled) {
             this.enabled = Optional.of(Objects.requireNonNull(enabled, "enabled is required"));
             return this;
@@ -40,10 +40,10 @@ public class EndpointResponseHeaders {
         /**
          * <code>true</code> if the module will be applied to traffic, <code>false</code>
          * to disable. default <code>true</code> if unspecified
-		 *
-		 * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param enabled the value of the <code>enabled</code> parameter as a {@link boolean}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder enabled(final Optional<Boolean> enabled) {
             this.enabled = Objects.requireNonNull(enabled, "enabled is required");
             return this;
@@ -52,48 +52,48 @@ public class EndpointResponseHeaders {
         /**
          * a map of header key to header value that will be injected into the HTTP Response
          * returned to the HTTP client
-		 *
-		 * @param add the value of the <code>add</code> parameter as a {@link java.util.Map<String, String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param add the value of the <code>add</code> parameter as a {@link java.util.Map} of {@link String} to {@link String}
+         * @return this builder instance
+         */
         public Builder add(final java.util.Map<String, String> add) {
-            this.add = Optional.of(Objects.requireNonNull(add, "add is required"));
+            this.add = Objects.requireNonNull(add, "add is required");
             return this;
         }
 
         /**
          * a map of header key to header value that will be injected into the HTTP Response
          * returned to the HTTP client
-		 *
-		 * @param add the value of the <code>add</code> parameter as a {@link java.util.Map<String, String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param add the value of the <code>add</code> parameter as a {@link java.util.Map} of {@link String} to {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder add(final Optional<java.util.Map<String, String>> add) {
-            this.add = Objects.requireNonNull(add, "add is required");
+            this.add = Objects.requireNonNull(add, "add is required").orElse(java.util.Collections.emptyMap());
             return this;
         }
 
         /**
          * a list of header names that will be removed from the HTTP Response returned to
          * the HTTP client
-		 *
-		 * @param remove the value of the <code>remove</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param remove the value of the <code>remove</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder remove(final java.util.List<String> remove) {
-            this.remove = Optional.of(Objects.requireNonNull(remove, "remove is required"));
+            this.remove = Objects.requireNonNull(remove, "remove is required");
             return this;
         }
 
         /**
          * a list of header names that will be removed from the HTTP Response returned to
          * the HTTP client
-		 *
-		 * @param remove the value of the <code>remove</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param remove the value of the <code>remove</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder remove(final Optional<java.util.List<String>> remove) {
-            this.remove = Objects.requireNonNull(remove, "remove is required");
+            this.remove = Objects.requireNonNull(remove, "remove is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
@@ -105,8 +105,8 @@ public class EndpointResponseHeaders {
         public EndpointResponseHeaders build() {
             return new EndpointResponseHeaders(
                 this.enabled,
-                this.add.orElse(java.util.Collections.emptyMap()),
-                this.remove.orElse(java.util.Collections.emptyList())
+                this.add,
+                this.remove
             );
         }
     }
@@ -146,8 +146,8 @@ public class EndpointResponseHeaders {
         @JsonProperty("remove") final java.util.List<String> remove
     ) {
         this.enabled = enabled != null ? enabled : Optional.empty();
-        this.add = Objects.requireNonNull(add, "add is required");
-        this.remove = Objects.requireNonNull(remove, "remove is required");
+        this.add = add != null ? add : java.util.Collections.emptyMap();
+        this.remove = remove != null ? remove : java.util.Collections.emptyList();
     }
 
     /**
@@ -164,7 +164,7 @@ public class EndpointResponseHeaders {
      * a map of header key to header value that will be injected into the HTTP Response
      * returned to the HTTP client
      *
-     * @return the value of the property as a {@link java.util.Map<String, String>}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
      */
     public java.util.Map<String, String> getAdd() {
         return this.add;
@@ -174,7 +174,7 @@ public class EndpointResponseHeaders {
      * a list of header names that will be removed from the HTTP Response returned to
      * the HTTP client
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getRemove() {
         return this.remove;

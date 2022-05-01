@@ -27,10 +27,10 @@ public class AwsAuth {
         /**
          * A role for ngrok to assume on your behalf to deposit events into your AWS
          * account.
-		 *
-		 * @param role the value of the <code>role</code> parameter as a {@link AwsRole}
-		 * @return this builder instance
-		 */
+         *
+         * @param role the value of the <code>role</code> parameter as a {@link AwsRole}
+         * @return this builder instance
+         */
         public Builder role(final AwsRole role) {
             this.role = Optional.of(Objects.requireNonNull(role, "role is required"));
             return this;
@@ -39,10 +39,10 @@ public class AwsAuth {
         /**
          * A role for ngrok to assume on your behalf to deposit events into your AWS
          * account.
-		 *
-		 * @param role the value of the <code>role</code> parameter as a {@link AwsRole}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param role the value of the <code>role</code> parameter as a {@link AwsRole}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder role(final Optional<AwsRole> role) {
             this.role = Objects.requireNonNull(role, "role is required");
             return this;
@@ -51,10 +51,10 @@ public class AwsAuth {
         /**
          * Credentials to your AWS account if you prefer ngrok to sign in with long-term
          * access keys.
-		 *
-		 * @param creds the value of the <code>creds</code> parameter as a {@link AwsCredentials}
-		 * @return this builder instance
-		 */
+         *
+         * @param creds the value of the <code>creds</code> parameter as a {@link AwsCredentials}
+         * @return this builder instance
+         */
         public Builder creds(final AwsCredentials creds) {
             this.creds = Optional.of(Objects.requireNonNull(creds, "creds is required"));
             return this;
@@ -63,10 +63,10 @@ public class AwsAuth {
         /**
          * Credentials to your AWS account if you prefer ngrok to sign in with long-term
          * access keys.
-		 *
-		 * @param creds the value of the <code>creds</code> parameter as a {@link AwsCredentials}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param creds the value of the <code>creds</code> parameter as a {@link AwsCredentials}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder creds(final Optional<AwsCredentials> creds) {
             this.creds = Objects.requireNonNull(creds, "creds is required");
             return this;

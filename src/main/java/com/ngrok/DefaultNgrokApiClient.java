@@ -30,6 +30,8 @@ import static java.util.Objects.requireNonNull;
  * Default implementation of {@link NgrokApiClient} based on the Armeria HTTP client.
  */
 public class DefaultNgrokApiClient implements NgrokApiClient {
+    private static String JAVA_VERSION = System.getProperty("java.version");
+
     /**
      * Builder class for the default API client.
      */
@@ -282,7 +284,7 @@ public class DefaultNgrokApiClient implements NgrokApiClient {
                                                final Optional<Class<O>> responseClass)
     {
         request
-            .header(HttpHeaderNames.USER_AGENT, "ngrok-api-client-java/" + Version.CLIENT_VERSION)
+            .header(HttpHeaderNames.USER_AGENT, "ngrok-api-java/" + Version.CLIENT_VERSION + "/" + JAVA_VERSION)
             .header("ngrok-version", Version.API_VERSION)
             .header(HttpHeaderNames.AUTHORIZATION, "Bearer " + this.apiKey);
         return maybeBody

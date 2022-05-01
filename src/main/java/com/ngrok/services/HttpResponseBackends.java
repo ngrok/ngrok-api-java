@@ -32,9 +32,9 @@ public class HttpResponseBackends {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private String description = "";
-        private String metadata = "";
-        private String body = "";
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private Optional<String> body = Optional.empty();
         private java.util.Map<String, String> headers = java.util.Collections.emptyMap();
         private Optional<Integer> statusCode = Optional.empty();
 
@@ -49,7 +49,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final String description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -60,7 +60,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required").orElse("");
+            this.description = Objects.requireNonNull(description, "description is required");
             return this;
         }
         
@@ -71,7 +71,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -82,7 +82,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required").orElse("");
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
             return this;
         }
         
@@ -93,7 +93,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder body(final String body) {
-            this.body = Objects.requireNonNull(body, "body is required");
+            this.body = Optional.of(Objects.requireNonNull(body, "body is required"));
             return this;
         }
 
@@ -104,14 +104,14 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder body(final Optional<String> body) {
-            this.body = Objects.requireNonNull(body, "body is required").orElse("");
+            this.body = Objects.requireNonNull(body, "body is required");
             return this;
         }
         
         /**
          * headers to return
          *
-         * @param headers the value of the headers parameter as a {@link java.util.Map<String, String>}
+         * @param headers the value of the headers parameter as a {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder headers(final java.util.Map<String, String> headers) {
@@ -122,7 +122,7 @@ public class HttpResponseBackends {
         /**
          * headers to return
          *
-         * @param headers the value of the headers parameter as an {@link Optional} of {@link java.util.Map<String, String>}
+         * @param headers the value of the headers parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder headers(final Optional<java.util.Map<String, String>> headers) {
@@ -137,7 +137,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public CreateCallBuilder statusCode(final int statusCode) {
-            this.statusCode = Optional.ofNullable(statusCode);
+            this.statusCode = Optional.of(Objects.requireNonNull(statusCode, "statusCode is required"));
             return this;
         }
 
@@ -163,10 +163,10 @@ public class HttpResponseBackends {
                 "/backends/http_response",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", Optional.of(this.description)),
-                    new AbstractMap.SimpleEntry<>("metadata", Optional.of(this.metadata)),
-                    new AbstractMap.SimpleEntry<>("body", Optional.of(this.body)),
-                    new AbstractMap.SimpleEntry<>("headers", Optional.of(this.headers)),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("body", this.body.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("headers", Optional.of(this.headers).filter(headers -> !headers.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("status_code", this.statusCode.map(Function.identity()))
                 ),
                 Optional.of(HttpResponseBackend.class)
@@ -334,7 +334,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -356,7 +356,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 
@@ -425,7 +425,7 @@ public class HttpResponseBackends {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<String> body = Optional.empty();
-        private Optional<java.util.Map<String, String>> headers = Optional.empty();
+        private java.util.Map<String, String> headers = java.util.Collections.emptyMap();
         private Optional<Integer> statusCode = Optional.empty();
 
         private UpdateCallBuilder(
@@ -441,7 +441,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder description(final String description) {
-            this.description = Optional.ofNullable(description);
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
             return this;
         }
 
@@ -463,7 +463,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.ofNullable(metadata);
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
             return this;
         }
 
@@ -485,7 +485,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder body(final String body) {
-            this.body = Optional.ofNullable(body);
+            this.body = Optional.of(Objects.requireNonNull(body, "body is required"));
             return this;
         }
 
@@ -503,22 +503,22 @@ public class HttpResponseBackends {
         /**
          * headers to return
          *
-         * @param headers the value of the headers parameter as a {@link java.util.Map<String, String>}
+         * @param headers the value of the headers parameter as a {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder headers(final java.util.Map<String, String> headers) {
-            this.headers = Optional.ofNullable(headers);
+            this.headers = Objects.requireNonNull(headers, "headers is required");
             return this;
         }
 
         /**
          * headers to return
          *
-         * @param headers the value of the headers parameter as an {@link Optional} of {@link java.util.Map<String, String>}
+         * @param headers the value of the headers parameter as an {@link Optional} of {@link java.util.Map} of {@link String} to {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder headers(final Optional<java.util.Map<String, String>> headers) {
-            this.headers = Objects.requireNonNull(headers, "headers is required");
+            this.headers = Objects.requireNonNull(headers, "headers is required").orElse(java.util.Collections.emptyMap());
             return this;
         }
         
@@ -529,7 +529,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder statusCode(final int statusCode) {
-            this.statusCode = Optional.ofNullable(statusCode);
+            this.statusCode = Optional.of(Objects.requireNonNull(statusCode, "statusCode is required"));
             return this;
         }
 
@@ -558,7 +558,7 @@ public class HttpResponseBackends {
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("body", this.body.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("headers", this.headers.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("headers", Optional.of(this.headers).filter(headers -> !headers.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("status_code", this.statusCode.map(Function.identity()))
                 ),
                 Optional.of(HttpResponseBackend.class)

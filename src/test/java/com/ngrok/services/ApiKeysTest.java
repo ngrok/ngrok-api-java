@@ -77,7 +77,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
         wireMock.stubFor(
             post(urlPathEqualTo("/api_keys"))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
                 .withRequestBody(equalToJson(MAPPER.writeValueAsString(API_KEY_CREATE)))
@@ -89,7 +89,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
         wireMock.stubFor(
             get(urlPathEqualTo("/api_keys/" + API_KEY.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(ok(MAPPER.writeValueAsString(API_KEY_NO_TOKEN))
                     .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), "application/json")
@@ -100,7 +100,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
             get(urlPathEqualTo("/api_keys"))
                 .withQueryParam("limit", equalTo("10"))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(ok(MAPPER.writeValueAsString(API_KEY_LIST))
                     .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), "application/json")
@@ -110,7 +110,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
         wireMock.stubFor(
             patch(urlPathEqualTo("/api_keys/" + API_KEY.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .withHeader(HttpHeaderNames.CONTENT_TYPE.toString(), containing("application/json"))
                 .withRequestBody(equalToJson(MAPPER.writeValueAsString(API_KEY_UPDATE)))
@@ -122,7 +122,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
         wireMock.stubFor(
             delete(urlPathEqualTo("/api_keys/" + API_KEY.getId()))
                 .withHeader(HttpHeaderNames.AUTHORIZATION.toString(), equalTo("Bearer " + FAKE_API_SECRET))
-                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo("ngrok-api-client-java/" + Version.CLIENT_VERSION))
+                .withHeader(HttpHeaderNames.USER_AGENT.toString(), equalTo(USER_AGENT))
                 .withHeader("ngrok-version", equalTo(Version.API_VERSION))
                 .willReturn(noContent())
         );

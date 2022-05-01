@@ -33,7 +33,7 @@ public class TlsEdgeMutualTlsModule {
      */
     public class ReplaceCallBuilder {
         private final String id;
-        private EndpointMutualTlsMutate module = null;
+        private Optional<EndpointMutualTlsMutate> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String id
@@ -48,7 +48,7 @@ public class TlsEdgeMutualTlsModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointMutualTlsMutate module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -59,7 +59,7 @@ public class TlsEdgeMutualTlsModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointMutualTlsMutate> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -74,7 +74,7 @@ public class TlsEdgeMutualTlsModule {
                 "/edges/tls/" + this.id + "/mutual_tls",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointMutualTls.class)
             );

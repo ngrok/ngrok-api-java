@@ -19,65 +19,65 @@ public class EndpointOAuthFacebook {
     public static class Builder {
         private Optional<String> clientId = Optional.empty();
         private Optional<String> clientSecret = Optional.empty();
-        private Optional<java.util.List<String>> scopes = Optional.empty();
-        private Optional<java.util.List<String>> emailAddresses = Optional.empty();
-        private Optional<java.util.List<String>> emailDomains = Optional.empty();
+        private java.util.List<String> scopes = java.util.Collections.emptyList();
+        private java.util.List<String> emailAddresses = java.util.Collections.emptyList();
+        private java.util.List<String> emailDomains = java.util.Collections.emptyList();
 
         private Builder(
         ) {
         }
 
         /**
-         * the OAuth app client ID. retrieve it from the identity provider's dashboard
+         * the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard
          * where you created your own OAuth app. optional. if unspecified, ngrok will use
          * its own managed oauth application which has additional restrictions. see the
          * OAuth module docs for more details. if present, client_secret must be present as
          * well.
-		 *
-		 * @param clientId the value of the <code>client_id</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param clientId the value of the <code>client_id</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder clientId(final String clientId) {
             this.clientId = Optional.of(Objects.requireNonNull(clientId, "clientId is required"));
             return this;
         }
 
         /**
-         * the OAuth app client ID. retrieve it from the identity provider's dashboard
+         * the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard
          * where you created your own OAuth app. optional. if unspecified, ngrok will use
          * its own managed oauth application which has additional restrictions. see the
          * OAuth module docs for more details. if present, client_secret must be present as
          * well.
-		 *
-		 * @param clientId the value of the <code>client_id</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param clientId the value of the <code>client_id</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder clientId(final Optional<String> clientId) {
             this.clientId = Objects.requireNonNull(clientId, "clientId is required");
             return this;
         }
 
         /**
-         * the OAuth app client secret. retrieve if from the identity provider's dashboard
-         * where you created your own OAuth app. optional, see all of the caveats in the
-         * docs for <code>client_id</code>.
-		 *
-		 * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         * the OAuth app client secret. retrieve if from the identity provider&#39;s
+         * dashboard where you created your own OAuth app. optional, see all of the caveats
+         * in the docs for <code>client_id</code>.
+         *
+         * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder clientSecret(final String clientSecret) {
             this.clientSecret = Optional.of(Objects.requireNonNull(clientSecret, "clientSecret is required"));
             return this;
         }
 
         /**
-         * the OAuth app client secret. retrieve if from the identity provider's dashboard
-         * where you created your own OAuth app. optional, see all of the caveats in the
-         * docs for <code>client_id</code>.
-		 *
-		 * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         * the OAuth app client secret. retrieve if from the identity provider&#39;s
+         * dashboard where you created your own OAuth app. optional, see all of the caveats
+         * in the docs for <code>client_id</code>.
+         *
+         * @param clientSecret the value of the <code>client_secret</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder clientSecret(final Optional<String> clientSecret) {
             this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret is required");
             return this;
@@ -88,12 +88,12 @@ public class EndpointOAuthFacebook {
          * would like to ask for. these may not be set if you are using the ngrok-managed
          * oauth app (i.e. you must pass both <code>client_id</code> and
          * <code>client_secret</code> to set scopes)
-		 *
-		 * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder scopes(final java.util.List<String> scopes) {
-            this.scopes = Optional.of(Objects.requireNonNull(scopes, "scopes is required"));
+            this.scopes = Objects.requireNonNull(scopes, "scopes is required");
             return this;
         }
 
@@ -102,60 +102,60 @@ public class EndpointOAuthFacebook {
          * would like to ask for. these may not be set if you are using the ngrok-managed
          * oauth app (i.e. you must pass both <code>client_id</code> and
          * <code>client_secret</code> to set scopes)
-		 *
-		 * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param scopes the value of the <code>scopes</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder scopes(final Optional<java.util.List<String>> scopes) {
-            this.scopes = Objects.requireNonNull(scopes, "scopes is required");
+            this.scopes = Objects.requireNonNull(scopes, "scopes is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
         /**
          * a list of email addresses of users authenticated by identity provider who are
          * allowed access to the endpoint
-		 *
-		 * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
+         *
+         * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
         public Builder emailAddresses(final java.util.List<String> emailAddresses) {
-            this.emailAddresses = Optional.of(Objects.requireNonNull(emailAddresses, "emailAddresses is required"));
-            return this;
-        }
-
-        /**
-         * a list of email addresses of users authenticated by identity provider who are
-         * allowed access to the endpoint
-		 *
-		 * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
-        public Builder emailAddresses(final Optional<java.util.List<String>> emailAddresses) {
             this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required");
             return this;
         }
 
         /**
-         * a list of email domains of users authenticated by identity provider who are
+         * a list of email addresses of users authenticated by identity provider who are
          * allowed access to the endpoint
-		 *
-		 * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List<String>}
-		 * @return this builder instance
-		 */
-        public Builder emailDomains(final java.util.List<String> emailDomains) {
-            this.emailDomains = Optional.of(Objects.requireNonNull(emailDomains, "emailDomains is required"));
+         *
+         * @param emailAddresses the value of the <code>email_addresses</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder emailAddresses(final Optional<java.util.List<String>> emailAddresses) {
+            this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
         /**
          * a list of email domains of users authenticated by identity provider who are
          * allowed access to the endpoint
-		 *
-		 * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List<String>}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
-        public Builder emailDomains(final Optional<java.util.List<String>> emailDomains) {
+         *
+         * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List} of {@link String}
+         * @return this builder instance
+         */
+        public Builder emailDomains(final java.util.List<String> emailDomains) {
             this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required");
+            return this;
+        }
+
+        /**
+         * a list of email domains of users authenticated by identity provider who are
+         * allowed access to the endpoint
+         *
+         * @param emailDomains the value of the <code>email_domains</code> parameter as a {@link java.util.List} of {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder emailDomains(final Optional<java.util.List<String>> emailDomains) {
+            this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required").orElse(java.util.Collections.emptyList());
             return this;
         }
 
@@ -168,9 +168,9 @@ public class EndpointOAuthFacebook {
             return new EndpointOAuthFacebook(
                 this.clientId,
                 this.clientSecret,
-                this.scopes.orElse(java.util.Collections.emptyList()),
-                this.emailAddresses.orElse(java.util.Collections.emptyList()),
-                this.emailDomains.orElse(java.util.Collections.emptyList())
+                this.scopes,
+                this.emailAddresses,
+                this.emailDomains
             );
         }
     }
@@ -205,8 +205,8 @@ public class EndpointOAuthFacebook {
     /**
      * Creates a new instance of {@link EndpointOAuthFacebook}.
      *
-     * @param clientId the OAuth app client ID. retrieve it from the identity provider's dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well.
-     * @param clientSecret the OAuth app client secret. retrieve if from the identity provider's dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>.
+     * @param clientId the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard where you created your own OAuth app. optional. if unspecified, ngrok will use its own managed oauth application which has additional restrictions. see the OAuth module docs for more details. if present, client_secret must be present as well.
+     * @param clientSecret the OAuth app client secret. retrieve if from the identity provider&#39;s dashboard where you created your own OAuth app. optional, see all of the caveats in the docs for <code>client_id</code>.
      * @param scopes a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both <code>client_id</code> and <code>client_secret</code> to set scopes)
      * @param emailAddresses a list of email addresses of users authenticated by identity provider who are allowed access to the endpoint
      * @param emailDomains a list of email domains of users authenticated by identity provider who are allowed access to the endpoint
@@ -221,13 +221,13 @@ public class EndpointOAuthFacebook {
     ) {
         this.clientId = clientId != null ? clientId : Optional.empty();
         this.clientSecret = clientSecret != null ? clientSecret : Optional.empty();
-        this.scopes = Objects.requireNonNull(scopes, "scopes is required");
-        this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required");
-        this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required");
+        this.scopes = scopes != null ? scopes : java.util.Collections.emptyList();
+        this.emailAddresses = emailAddresses != null ? emailAddresses : java.util.Collections.emptyList();
+        this.emailDomains = emailDomains != null ? emailDomains : java.util.Collections.emptyList();
     }
 
     /**
-     * the OAuth app client ID. retrieve it from the identity provider's dashboard
+     * the OAuth app client ID. retrieve it from the identity provider&#39;s dashboard
      * where you created your own OAuth app. optional. if unspecified, ngrok will use
      * its own managed oauth application which has additional restrictions. see the
      * OAuth module docs for more details. if present, client_secret must be present as
@@ -240,9 +240,9 @@ public class EndpointOAuthFacebook {
     }
 
     /**
-     * the OAuth app client secret. retrieve if from the identity provider's dashboard
-     * where you created your own OAuth app. optional, see all of the caveats in the
-     * docs for <code>client_id</code>.
+     * the OAuth app client secret. retrieve if from the identity provider&#39;s
+     * dashboard where you created your own OAuth app. optional, see all of the caveats
+     * in the docs for <code>client_id</code>.
      *
      * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
@@ -256,7 +256,7 @@ public class EndpointOAuthFacebook {
      * oauth app (i.e. you must pass both <code>client_id</code> and
      * <code>client_secret</code> to set scopes)
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getScopes() {
         return this.scopes;
@@ -266,7 +266,7 @@ public class EndpointOAuthFacebook {
      * a list of email addresses of users authenticated by identity provider who are
      * allowed access to the endpoint
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getEmailAddresses() {
         return this.emailAddresses;
@@ -276,7 +276,7 @@ public class EndpointOAuthFacebook {
      * a list of email domains of users authenticated by identity provider who are
      * allowed access to the endpoint
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getEmailDomains() {
         return this.emailDomains;

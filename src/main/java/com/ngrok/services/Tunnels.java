@@ -47,7 +47,7 @@ public class Tunnels {
          * @return the call builder instance
          */
         public ListCallBuilder beforeId(final String beforeId) {
-            this.beforeId = Optional.ofNullable(beforeId);
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
             return this;
         }
 
@@ -69,7 +69,7 @@ public class Tunnels {
          * @return the call builder instance
          */
         public ListCallBuilder limit(final String limit) {
-            this.limit = Optional.ofNullable(limit);
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
             return this;
         }
 

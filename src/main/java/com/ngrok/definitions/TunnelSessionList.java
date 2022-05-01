@@ -36,7 +36,7 @@ public class TunnelSessionList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.tunnelSessions = Objects.requireNonNull(tunnelSessions, "tunnelSessions is required");
+        this.tunnelSessions = tunnelSessions != null ? tunnelSessions : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class TunnelSessionList implements Pageable {
     /**
      * list of all tunnel sessions on this account
      *
-     * @return the value of the property as a {@link java.util.List<TunnelSession>}
+     * @return the value of the property as a {@link java.util.List} of {@link TunnelSession}
      */
     public java.util.List<TunnelSession> getTunnelSessions() {
         return this.tunnelSessions;

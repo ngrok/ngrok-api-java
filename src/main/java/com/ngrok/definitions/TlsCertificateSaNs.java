@@ -31,15 +31,15 @@ public class TlsCertificateSaNs {
         @JsonProperty("dns_names") final java.util.List<String> dnsNames,
         @JsonProperty("ips") final java.util.List<String> ips
     ) {
-        this.dnsNames = Objects.requireNonNull(dnsNames, "dnsNames is required");
-        this.ips = Objects.requireNonNull(ips, "ips is required");
+        this.dnsNames = dnsNames != null ? dnsNames : java.util.Collections.emptyList();
+        this.ips = ips != null ? ips : java.util.Collections.emptyList();
     }
 
     /**
      * set of additional domains (including wildcards) this TLS certificate is valid
      * for
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getDnsNames() {
         return this.dnsNames;
@@ -48,7 +48,7 @@ public class TlsCertificateSaNs {
     /**
      * set of IP addresses this TLS certificate is also valid for
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getIps() {
         return this.ips;

@@ -36,7 +36,7 @@ public class TlsEdgeList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.tlsEdges = Objects.requireNonNull(tlsEdges, "tlsEdges is required");
+        this.tlsEdges = tlsEdges != null ? tlsEdges : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class TlsEdgeList implements Pageable {
     /**
      * the list of all TLS Edges on this account
      *
-     * @return the value of the property as a {@link java.util.List<TlsEdge>}
+     * @return the value of the property as a {@link java.util.List} of {@link TlsEdge}
      */
     public java.util.List<TlsEdge> getTlsEdges() {
         return this.tlsEdges;

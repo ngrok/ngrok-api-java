@@ -51,7 +51,7 @@ public class Tunnel {
      * Creates a new instance of {@link Tunnel}.
      *
      * @param id unique tunnel resource identifier
-     * @param publicUrl URL of the ephemeral tunnel's public endpoint
+     * @param publicUrl URL of the ephemeral tunnel&#39;s public endpoint
      * @param startedAt timestamp when the tunnel was initiated in RFC 3339 format
      * @param metadata user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel <a href="https://ngrok.com/docs#tunnel-definitions-metadata">metadata configuration option</a> In API version 0, this value was instead pulled from the top-level <a href="https://ngrok.com/docs#config_metadata">metadata configuration option</a>.
      * @param proto tunnel protocol for ephemeral tunnels. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code>
@@ -84,7 +84,7 @@ public class Tunnel {
         this.region = Objects.requireNonNull(region, "region is required");
         this.tunnelSession = Objects.requireNonNull(tunnelSession, "tunnelSession is required");
         this.endpoint = endpoint != null ? endpoint : Optional.empty();
-        this.labels = Objects.requireNonNull(labels, "labels is required");
+        this.labels = labels != null ? labels : java.util.Collections.emptyMap();
         this.backends = backends != null ? backends : Optional.empty();
         this.forwardsTo = Objects.requireNonNull(forwardsTo, "forwardsTo is required");
     }
@@ -99,7 +99,7 @@ public class Tunnel {
     }
 
     /**
-     * URL of the ephemeral tunnel's public endpoint
+     * URL of the ephemeral tunnel&#39;s public endpoint
      *
      * @return the value of the property as a {@link java.net.URI}
      */
@@ -171,7 +171,7 @@ public class Tunnel {
      * the labels the tunnel group backends will match against, if this is a backend
      * tunnel
      *
-     * @return the value of the property as a {@link java.util.Map<String, String>}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
      */
     public java.util.Map<String, String> getLabels() {
         return this.labels;
@@ -180,7 +180,7 @@ public class Tunnel {
     /**
      * tunnel group backends served by this backend tunnel
      *
-     * @return the value of the property as a {@link java.util.List<Ref>} wrapped in an {@link Optional}
+     * @return the value of the property as a {@link java.util.List} of {@link Ref} wrapped in an {@link Optional}
      */
     public Optional<java.util.List<Ref>> getBackends() {
         return this.backends;

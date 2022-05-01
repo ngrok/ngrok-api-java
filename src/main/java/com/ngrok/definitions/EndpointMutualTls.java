@@ -32,7 +32,7 @@ public class EndpointMutualTls {
         @JsonProperty("certificate_authorities") final java.util.List<Ref> certificateAuthorities
     ) {
         this.enabled = enabled != null ? enabled : Optional.empty();
-        this.certificateAuthorities = Objects.requireNonNull(certificateAuthorities, "certificateAuthorities is required");
+        this.certificateAuthorities = certificateAuthorities != null ? certificateAuthorities : java.util.Collections.emptyList();
     }
 
     /**
@@ -49,7 +49,7 @@ public class EndpointMutualTls {
      * PEM-encoded CA certificates that will be used to validate. Multiple CAs may be
      * provided by concatenating them together.
      *
-     * @return the value of the property as a {@link java.util.List<Ref>}
+     * @return the value of the property as a {@link java.util.List} of {@link Ref}
      */
     public java.util.List<Ref> getCertificateAuthorities() {
         return this.certificateAuthorities;

@@ -34,7 +34,7 @@ public class EdgeRouteCompressionModule {
     public class ReplaceCallBuilder {
         private final String edgeId;
         private final String id;
-        private EndpointCompression module = null;
+        private Optional<EndpointCompression> module = Optional.empty();
 
         private ReplaceCallBuilder(
             final String edgeId,
@@ -51,7 +51,7 @@ public class EdgeRouteCompressionModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final EndpointCompression module) {
-            this.module = Objects.requireNonNull(module, "module is required");
+            this.module = Optional.of(Objects.requireNonNull(module, "module is required"));
             return this;
         }
 
@@ -62,7 +62,7 @@ public class EdgeRouteCompressionModule {
          * @return the call builder instance
          */
         public ReplaceCallBuilder module(final Optional<EndpointCompression> module) {
-            this.module = Objects.requireNonNull(module, "module is required").orElse(null);
+            this.module = Objects.requireNonNull(module, "module is required");
             return this;
         }
         
@@ -77,7 +77,7 @@ public class EdgeRouteCompressionModule {
                 "/edges/https/" + this.edgeId + "/routes/" + this.id + "/compression",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("module", Optional.of(this.module))
+                    new AbstractMap.SimpleEntry<>("module", this.module.map(Function.identity()))
                 ),
                 Optional.of(EndpointCompression.class)
             );

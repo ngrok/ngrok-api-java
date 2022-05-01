@@ -27,10 +27,10 @@ public class ReservedDomainCertPolicy {
         /**
          * certificate authority to request certificates from. The only supported value is
          * letsencrypt.
-		 *
-		 * @param authority the value of the <code>authority</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param authority the value of the <code>authority</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder authority(final String authority) {
             this.authority = Optional.of(Objects.requireNonNull(authority, "authority is required"));
             return this;
@@ -39,10 +39,10 @@ public class ReservedDomainCertPolicy {
         /**
          * certificate authority to request certificates from. The only supported value is
          * letsencrypt.
-		 *
-		 * @param authority the value of the <code>authority</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param authority the value of the <code>authority</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder authority(final Optional<String> authority) {
             this.authority = Objects.requireNonNull(authority, "authority is required");
             return this;
@@ -51,10 +51,10 @@ public class ReservedDomainCertPolicy {
         /**
          * type of private key to use when requesting certificates. Defaults to rsa, can be
          * either rsa or ecdsa.
-		 *
-		 * @param privateKeyType the value of the <code>private_key_type</code> parameter as a {@link String}
-		 * @return this builder instance
-		 */
+         *
+         * @param privateKeyType the value of the <code>private_key_type</code> parameter as a {@link String}
+         * @return this builder instance
+         */
         public Builder privateKeyType(final String privateKeyType) {
             this.privateKeyType = Optional.of(Objects.requireNonNull(privateKeyType, "privateKeyType is required"));
             return this;
@@ -63,10 +63,10 @@ public class ReservedDomainCertPolicy {
         /**
          * type of private key to use when requesting certificates. Defaults to rsa, can be
          * either rsa or ecdsa.
-		 *
-		 * @param privateKeyType the value of the <code>private_key_type</code> parameter as a {@link String}, wrapped in an {@link Optional}
-		 * @return this builder instance
-		 */
+         *
+         * @param privateKeyType the value of the <code>private_key_type</code> parameter as a {@link String}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
         public Builder privateKeyType(final Optional<String> privateKeyType) {
             this.privateKeyType = Objects.requireNonNull(privateKeyType, "privateKeyType is required");
             return this;

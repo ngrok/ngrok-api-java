@@ -137,8 +137,8 @@ public class TlsCertificate {
         this.issuedAt = issuedAt != null ? issuedAt : Optional.empty();
         this.notBefore = Objects.requireNonNull(notBefore, "notBefore is required");
         this.notAfter = Objects.requireNonNull(notAfter, "notAfter is required");
-        this.keyUsages = Objects.requireNonNull(keyUsages, "keyUsages is required");
-        this.extendedKeyUsages = Objects.requireNonNull(extendedKeyUsages, "extendedKeyUsages is required");
+        this.keyUsages = keyUsages != null ? keyUsages : java.util.Collections.emptyList();
+        this.extendedKeyUsages = extendedKeyUsages != null ? extendedKeyUsages : java.util.Collections.emptyList();
         this.privateKeyType = Objects.requireNonNull(privateKeyType, "privateKeyType is required");
         this.issuerCommonName = Objects.requireNonNull(issuerCommonName, "issuerCommonName is required");
         this.serialNumber = Objects.requireNonNull(serialNumber, "serialNumber is required");
@@ -254,7 +254,7 @@ public class TlsCertificate {
     /**
      * set of actions the private key of this TLS certificate can be used for
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getKeyUsages() {
         return this.keyUsages;
@@ -263,7 +263,7 @@ public class TlsCertificate {
     /**
      * extended set of actions the private key of this TLS certificate can be used for
      *
-     * @return the value of the property as a {@link java.util.List<String>}
+     * @return the value of the property as a {@link java.util.List} of {@link String}
      */
     public java.util.List<String> getExtendedKeyUsages() {
         return this.extendedKeyUsages;

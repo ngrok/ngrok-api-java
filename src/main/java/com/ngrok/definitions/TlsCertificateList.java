@@ -36,7 +36,7 @@ public class TlsCertificateList implements Pageable {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("next_page_uri") final Optional<java.net.URI> nextPageUri
     ) {
-        this.tlsCertificates = Objects.requireNonNull(tlsCertificates, "tlsCertificates is required");
+        this.tlsCertificates = tlsCertificates != null ? tlsCertificates : java.util.Collections.emptyList();
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.nextPageUri = nextPageUri != null ? nextPageUri : Optional.empty();
     }
@@ -44,7 +44,7 @@ public class TlsCertificateList implements Pageable {
     /**
      * the list of all TLS certificates on this account
      *
-     * @return the value of the property as a {@link java.util.List<TlsCertificate>}
+     * @return the value of the property as a {@link java.util.List} of {@link TlsCertificate}
      */
     public java.util.List<TlsCertificate> getTlsCertificates() {
         return this.tlsCertificates;
