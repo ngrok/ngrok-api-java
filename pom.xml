@@ -4,7 +4,7 @@
 
   <groupId>com.ngrok</groupId>
   <artifactId>ngrok-api-java</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1-SNAPSHOT</version>
 
   <name>ngrok Java API client</name>
   <description>ngrok API client for Java applications</description>
@@ -28,7 +28,7 @@
     <connection>scm:git:https://github.com/ngrok/ngrok-api-java</connection>
     <developerConnection>scm:git:git@github.com:ngrok/ngrok-api-java.git</developerConnection>
     <url>https://github.com/ngrok/ngrok-api-java</url>
-    <tag>0.6.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
