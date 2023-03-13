@@ -1,6 +1,7 @@
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.Ngrok;
 import com.ngrok.TestBase;
@@ -49,7 +50,7 @@ public class IpPolicyRulesTest extends TestBase {
     ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     private Ngrok ngrok() {
         return TestBase.ngrok(wireMock.getBaseUri());

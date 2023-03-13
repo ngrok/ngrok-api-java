@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// Test
 public abstract class ApiKeyTestBase extends TestBase {
     public static ApiKey API_KEY = new ApiKey(
         "abcdef123456",
@@ -19,7 +20,8 @@ public abstract class ApiKeyTestBase extends TestBase {
         "this is a great API key",
         "this API key is quite meta",
         OffsetDateTime.parse("2021-06-08T21:09:00-07:00"),
-        Optional.of("qwertyuiop")
+        Optional.of("qwertyuiop"),
+        Optional.of("usr_abcdefghijklmnopqrstuvwxyz0")
     );
 
     public static ApiKey API_KEY_NO_TOKEN = new ApiKey(
@@ -28,7 +30,8 @@ public abstract class ApiKeyTestBase extends TestBase {
         API_KEY.getDescription(),
         API_KEY.getMetadata(),
         API_KEY.getCreatedAt(),
-        Optional.empty()
+        Optional.empty(),
+		API_KEY.getOwnerId()
     );
 
     public static final Map<String, Object> API_KEY_JSON_FIELDS = Stream.of(

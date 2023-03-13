@@ -41,7 +41,7 @@ public class IpRestrictions {
         private Optional<String> metadata = Optional.empty();
         private Optional<Boolean> enforced = Optional.empty();
         private final String type;
-        private java.util.List<String> ipPolicyIds = java.util.Collections.emptyList();
+        private final java.util.List<String> ipPolicyIds;
 
         private CreateCallBuilder(
             final String type,

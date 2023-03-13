@@ -1,6 +1,7 @@
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.EventSubscriptionTestBase;
 import com.ngrok.Ngrok;
@@ -26,7 +27,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class EventSubscriptionsTest extends EventSubscriptionTestBase {
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     public static final Map<String, Object> EVENT_DESTINATION_CREATE = Stream.of(
         entry("description", EVENT_DESTINATION.getDescription()),

@@ -1,6 +1,7 @@
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.ApiKeyTestBase;
 import com.ngrok.Ngrok;
@@ -37,7 +38,8 @@ public class ApiKeysTest extends ApiKeyTestBase {
         "",
         "",
         OffsetDateTime.now(),
-        Optional.of("12345")
+        Optional.of("12345"),
+        Optional.of("usr_abcdefghijklmnopqrstuvwxyz0")
     );
 
     private static final ApiKeyList API_KEY_LIST = new ApiKeyList(
@@ -52,7 +54,8 @@ public class ApiKeysTest extends ApiKeyTestBase {
         "this is an UPDATED description",
         API_KEY.getMetadata(),
         API_KEY.getCreatedAt(),
-        Optional.empty()
+        Optional.empty(),
+        Optional.of("usr_abcdefghijklmnopqrstuvwxyz0")
     );
 
     private static final Map<String, Object> API_KEY_UPDATE = Stream.of(
@@ -60,7 +63,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
     ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     private Ngrok ngrok() {
         return TestBase.ngrok(wireMock.getBaseUri());

@@ -34,7 +34,7 @@ public class EdgesHttps {
     public class CreateCallBuilder {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private java.util.List<String> hostports = java.util.Collections.emptyList();
+        private Optional<java.util.List<String>> hostports = Optional.empty();
         private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
         private Optional<EndpointTlsTerminationAtEdge> tlsTermination = Optional.empty();
 
@@ -97,7 +97,7 @@ public class EdgesHttps {
          * @return the call builder instance
          */
         public CreateCallBuilder hostports(final java.util.List<String> hostports) {
-            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            this.hostports = Optional.of(Objects.requireNonNull(hostports, "hostports is required"));
             return this;
         }
 
@@ -108,7 +108,7 @@ public class EdgesHttps {
          * @return the call builder instance
          */
         public CreateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
-            this.hostports = Objects.requireNonNull(hostports, "hostports is required").orElse(java.util.Collections.emptyList());
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
             return this;
         }
         
@@ -371,7 +371,7 @@ public class EdgesHttps {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private java.util.List<String> hostports = java.util.Collections.emptyList();
+        private Optional<java.util.List<String>> hostports = Optional.empty();
         private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
         private Optional<EndpointTlsTerminationAtEdge> tlsTermination = Optional.empty();
 
@@ -436,7 +436,7 @@ public class EdgesHttps {
          * @return the call builder instance
          */
         public UpdateCallBuilder hostports(final java.util.List<String> hostports) {
-            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
+            this.hostports = Optional.of(Objects.requireNonNull(hostports, "hostports is required"));
             return this;
         }
 
@@ -447,7 +447,7 @@ public class EdgesHttps {
          * @return the call builder instance
          */
         public UpdateCallBuilder hostports(final Optional<java.util.List<String>> hostports) {
-            this.hostports = Objects.requireNonNull(hostports, "hostports is required").orElse(java.util.Collections.emptyList());
+            this.hostports = Objects.requireNonNull(hostports, "hostports is required");
             return this;
         }
         
