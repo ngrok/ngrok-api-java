@@ -29,6 +29,10 @@ In your Maven `pom.xml` file, add:
 
 See the above URL for the latest version of the API client.
 
+## Support
+
+The best place to get support using this library is through the [ngrok Slack Community](https://ngrok.com/slack). If you find any bugs, please contribute by opening a [new GitHub issue](https://github.com/ngrok/ngrok-api-java/issues/new/choose).
+
 ## Documentation
 
 All objects, methods and properties are documented with Javadoc for

@@ -51,10 +51,8 @@ public class EndpointWebhookValidation {
 
         /**
          * a string indicating which webhook provider will be sending webhooks to this
-         * endpoint. Value must be one of the supported providers: <code>SLACK</code>,
-         * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
-         * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
-         * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
+         * endpoint. Value must be one of the supported providers defined at <a
+         * href="https://ngrok.com/docs/cloud-edge/modules/webhook">https://ngrok.com/docs/cloud-edge/modules/webhook</a>
          *
          * @param provider the value of the <code>provider</code> parameter as a {@link String}
          * @return this builder instance
@@ -66,10 +64,8 @@ public class EndpointWebhookValidation {
 
         /**
          * a string indicating which webhook provider will be sending webhooks to this
-         * endpoint. Value must be one of the supported providers: <code>SLACK</code>,
-         * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
-         * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
-         * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
+         * endpoint. Value must be one of the supported providers defined at <a
+         * href="https://ngrok.com/docs/cloud-edge/modules/webhook">https://ngrok.com/docs/cloud-edge/modules/webhook</a>
          *
          * @param provider the value of the <code>provider</code> parameter as a {@link String}, wrapped in an {@link Optional}
          * @return this builder instance
@@ -142,7 +138,7 @@ public class EndpointWebhookValidation {
      * Creates a new instance of {@link EndpointWebhookValidation}.
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
-     * @param provider a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers: <code>SLACK</code>, <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>, <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>, <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
+     * @param provider a string indicating which webhook provider will be sending webhooks to this endpoint. Value must be one of the supported providers defined at <a href="https://ngrok.com/docs/cloud-edge/modules/webhook">https://ngrok.com/docs/cloud-edge/modules/webhook</a>
      * @param secret a string secret used to validate requests from the given provider. All providers except AWS SNS require a secret
      */
     @JsonCreator
@@ -168,10 +164,8 @@ public class EndpointWebhookValidation {
 
     /**
      * a string indicating which webhook provider will be sending webhooks to this
-     * endpoint. Value must be one of the supported providers: <code>SLACK</code>,
-     * <code>SNS</code>, <code>STRIPE</code>, <code>GITHUB</code>, <code>TWILIO</code>,
-     * <code>SHOPIFY</code>, <code>GITLAB</code>, <code>INTERCOM</code>,
-     * <code>SENDGRID</code>, <code>XERO</code>, <code>PAGERDUTY</code>.
+     * endpoint. Value must be one of the supported providers defined at <a
+     * href="https://ngrok.com/docs/cloud-edge/modules/webhook">https://ngrok.com/docs/cloud-edge/modules/webhook</a>
      *
      * @return the value of the property as a {@link String}
      */

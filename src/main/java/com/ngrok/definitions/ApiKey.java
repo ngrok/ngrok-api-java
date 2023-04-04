@@ -31,6 +31,9 @@ public class ApiKey {
     @JsonProperty("token")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> token;
+    @JsonProperty("owner_id")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<String> ownerId;
 
     /**
      * Creates a new instance of {@link ApiKey}.
@@ -41,6 +44,7 @@ public class ApiKey {
      * @param metadata arbitrary user-defined data of this API key. optional, max 4096 bytes
      * @param createdAt timestamp when the api key was created, RFC 3339 format
      * @param token the bearer token that can be placed into the Authorization header to authenticate request to the ngrok API. <strong>This value is only available one time, on the API response from key creation. Otherwise it is null.</strong>
+     * @param ownerId If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot.
      */
     @JsonCreator
     public ApiKey(
@@ -49,7 +53,8 @@ public class ApiKey {
         @JsonProperty("description") final String description,
         @JsonProperty("metadata") final String metadata,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("token") final Optional<String> token
+        @JsonProperty("token") final Optional<String> token,
+        @JsonProperty("owner_id") final Optional<String> ownerId
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
@@ -57,6 +62,7 @@ public class ApiKey {
         this.metadata = Objects.requireNonNull(metadata, "metadata is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.token = token != null ? token : Optional.empty();
+        this.ownerId = ownerId != null ? ownerId : Optional.empty();
     }
 
     /**
@@ -116,6 +122,17 @@ public class ApiKey {
         return this.token;
     }
 
+    /**
+     * If supplied at credential creation, ownership will be assigned to the specified
+     * User or Bot. Only admins may specify an owner other than themselves. Defaults to
+     * the authenticated User or Bot.
+     *
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
+     */
+    public Optional<String> getOwnerId() {
+        return this.ownerId;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -132,7 +149,8 @@ public class ApiKey {
             this.description.equals(other.description)&&
             this.metadata.equals(other.metadata)&&
             this.createdAt.equals(other.createdAt)&&
-            this.token.equals(other.token);
+            this.token.equals(other.token)&&
+            this.ownerId.equals(other.ownerId);
         
     }
 
@@ -144,7 +162,8 @@ public class ApiKey {
             this.description,
             this.metadata,
             this.createdAt,
-            this.token
+            this.token,
+            this.ownerId
         );
     }
 
@@ -157,6 +176,7 @@ public class ApiKey {
             "', metadata='" + this.metadata +
             "', createdAt='" + this.createdAt +
             "', token='" + this.token.orElse("(null)") +
+            "', ownerId='" + this.ownerId.orElse("(null)") +
             "'}";
     }
 }

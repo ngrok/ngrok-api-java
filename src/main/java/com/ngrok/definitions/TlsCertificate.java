@@ -85,7 +85,7 @@ public class TlsCertificate {
      * @param createdAt timestamp when the TLS certificate was created, RFC 3339 format
      * @param description human-readable description of this TLS certificate. optional, max 255 bytes.
      * @param metadata arbitrary user-defined machine-readable data of this TLS certificate. optional, max 4096 bytes.
-     * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="https://ngrok.com/docs/api#tls-certificates-pem">Certificate Bundles</a>.
+     * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="/cloud-edge/endpoints#certificate-chains">Certificate Bundles</a>.
      * @param subjectCommonName subject common name from the leaf of this TLS certificate
      * @param subjectAlternativeNames subject alternative names (SANs) from the leaf of this TLS certificate
      * @param issuedAt timestamp (in RFC 3339 format) when this TLS certificate was issued automatically, or null if this certificate was user-uploaded
@@ -197,7 +197,7 @@ public class TlsCertificate {
 
     /**
      * chain of PEM-encoded certificates, leaf first. See <a
-     * href="https://ngrok.com/docs/api#tls-certificates-pem">Certificate Bundles</a>.
+     * href="/cloud-edge/endpoints#certificate-chains">Certificate Bundles</a>.
      *
      * @return the value of the property as a {@link String}
      */

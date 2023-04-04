@@ -39,7 +39,7 @@ public class Tunnel {
     private final Optional<Ref> endpoint;
     @JsonProperty("labels")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.Map<String, String> labels;
+    private final Optional<java.util.Map<String, String>> labels;
     @JsonProperty("backends")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<java.util.List<Ref>> backends;
@@ -53,7 +53,7 @@ public class Tunnel {
      * @param id unique tunnel resource identifier
      * @param publicUrl URL of the ephemeral tunnel&#39;s public endpoint
      * @param startedAt timestamp when the tunnel was initiated in RFC 3339 format
-     * @param metadata user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel <a href="https://ngrok.com/docs#tunnel-definitions-metadata">metadata configuration option</a> In API version 0, this value was instead pulled from the top-level <a href="https://ngrok.com/docs#config_metadata">metadata configuration option</a>.
+     * @param metadata user-supplied metadata for the tunnel defined in the ngrok configuration file. See the tunnel <a href="/ngrok-agent/config#common-tunnel-configuration-properties">metadata configuration option</a> In API version 0, this value was instead pulled from the top-level <a href="/ngrok-agent/config#metadata">metadata configuration option</a>.
      * @param proto tunnel protocol for ephemeral tunnels. one of <code>http</code>, <code>https</code>, <code>tcp</code> or <code>tls</code>
      * @param region identifier of tune region where the tunnel is running
      * @param tunnelSession reference object pointing to the tunnel session on which this tunnel was started
@@ -72,7 +72,7 @@ public class Tunnel {
         @JsonProperty("region") final String region,
         @JsonProperty("tunnel_session") final Ref tunnelSession,
         @JsonProperty("endpoint") final Optional<Ref> endpoint,
-        @JsonProperty("labels") final java.util.Map<String, String> labels,
+        @JsonProperty("labels") final Optional<java.util.Map<String, String>> labels,
         @JsonProperty("backends") final Optional<java.util.List<Ref>> backends,
         @JsonProperty("forwards_to") final String forwardsTo
     ) {
@@ -84,7 +84,7 @@ public class Tunnel {
         this.region = Objects.requireNonNull(region, "region is required");
         this.tunnelSession = Objects.requireNonNull(tunnelSession, "tunnelSession is required");
         this.endpoint = endpoint != null ? endpoint : Optional.empty();
-        this.labels = labels != null ? labels : java.util.Collections.emptyMap();
+        this.labels = labels != null ? labels : Optional.empty();
         this.backends = backends != null ? backends : Optional.empty();
         this.forwardsTo = Objects.requireNonNull(forwardsTo, "forwardsTo is required");
     }
@@ -119,9 +119,10 @@ public class Tunnel {
     /**
      * user-supplied metadata for the tunnel defined in the ngrok configuration file.
      * See the tunnel <a
-     * href="https://ngrok.com/docs#tunnel-definitions-metadata">metadata configuration
-     * option</a> In API version 0, this value was instead pulled from the top-level <a
-     * href="https://ngrok.com/docs#config_metadata">metadata configuration option</a>.
+     * href="/ngrok-agent/config#common-tunnel-configuration-properties">metadata
+     * configuration option</a> In API version 0, this value was instead pulled from
+     * the top-level <a href="/ngrok-agent/config#metadata">metadata configuration
+     * option</a>.
      *
      * @return the value of the property as a {@link String}
      */
@@ -171,9 +172,9 @@ public class Tunnel {
      * the labels the tunnel group backends will match against, if this is a backend
      * tunnel
      *
-     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String}
+     * @return the value of the property as a {@link java.util.Map} of {@link String} to {@link String} wrapped in an {@link Optional}
      */
-    public java.util.Map<String, String> getLabels() {
+    public Optional<java.util.Map<String, String>> getLabels() {
         return this.labels;
     }
 
@@ -249,7 +250,7 @@ public class Tunnel {
             "', region='" + this.region +
             "', tunnelSession='" + this.tunnelSession +
             "', endpoint='" + this.endpoint.map(Object::toString).orElse("(null)") +
-            "', labels='" + this.labels +
+            "', labels='" + this.labels.map(Object::toString).orElse("(null)") +
             "', backends='" + this.backends.map(Object::toString).orElse("(null)") +
             "', forwardsTo='" + this.forwardsTo +
             "'}";
