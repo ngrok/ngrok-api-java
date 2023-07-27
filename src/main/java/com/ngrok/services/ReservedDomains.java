@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -35,7 +37,8 @@ public class ReservedDomains {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private final String name;
+        private Optional<String> name = Optional.empty();
+        private Optional<String> domain = Optional.empty();
         private Optional<String> region = Optional.empty();
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
@@ -43,9 +46,55 @@ public class ReservedDomains {
         private Optional<ReservedDomainCertPolicy> certificateManagementPolicy = Optional.empty();
 
         private CreateCallBuilder(
-            final String name
         ) {
+        }
+        
+        /**
+         * the domain name to reserve. It may be a full domain name like app.example.com.
+         * If the name does not contain a &#39;.&#39; it will reserve that subdomain on
+         * ngrok.io.
+         *
+         * @param name the value of the name parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder name(final String name) {
+            this.name = Optional.of(Objects.requireNonNull(name, "name is required"));
+            return this;
+        }
+
+        /**
+         * the domain name to reserve. It may be a full domain name like app.example.com.
+         * If the name does not contain a &#39;.&#39; it will reserve that subdomain on
+         * ngrok.io.
+         *
+         * @param name the value of the name parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder name(final Optional<String> name) {
             this.name = Objects.requireNonNull(name, "name is required");
+            return this;
+        }
+        
+        /**
+         * hostname of the reserved domain
+         *
+         * @param domain the value of the domain parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder domain(final String domain) {
+            this.domain = Optional.of(Objects.requireNonNull(domain, "domain is required"));
+            return this;
+        }
+
+        /**
+         * hostname of the reserved domain
+         *
+         * @param domain the value of the domain parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder domain(final Optional<String> domain) {
+            this.domain = Objects.requireNonNull(domain, "domain is required");
+            return this;
         }
         
         /**
@@ -181,7 +230,8 @@ public class ReservedDomains {
                 "/reserved_domains",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("name", Optional.of(this.name)),
+                    new AbstractMap.SimpleEntry<>("name", this.name.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("domain", this.domain.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("region", this.region.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
@@ -212,14 +262,11 @@ public class ReservedDomains {
      *
      * See also <a href="https://ngrok.com/docs/api#api-reserved-domains-create">https://ngrok.com/docs/api#api-reserved-domains-create</a>.
      *
-     * @param name the domain name to reserve. It may be a full domain name like app.example.com. If the name does not contain a &#39;.&#39; it will reserve that subdomain on ngrok.io.
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
-        final String name
     ) {
         return new CreateCallBuilder(
-            name
         );
     }
     

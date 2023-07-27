@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -425,7 +427,7 @@ public class HttpResponseBackends {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<String> body = Optional.empty();
-        private java.util.Map<String, String> headers = java.util.Collections.emptyMap();
+        private Optional<java.util.Map<String, String>> headers = Optional.empty();
         private Optional<Integer> statusCode = Optional.empty();
 
         private UpdateCallBuilder(
@@ -507,7 +509,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder headers(final java.util.Map<String, String> headers) {
-            this.headers = Objects.requireNonNull(headers, "headers is required");
+            this.headers = Optional.of(Objects.requireNonNull(headers, "headers is required"));
             return this;
         }
 
@@ -518,7 +520,7 @@ public class HttpResponseBackends {
          * @return the call builder instance
          */
         public UpdateCallBuilder headers(final Optional<java.util.Map<String, String>> headers) {
-            this.headers = Objects.requireNonNull(headers, "headers is required").orElse(java.util.Collections.emptyMap());
+            this.headers = Objects.requireNonNull(headers, "headers is required");
             return this;
         }
         

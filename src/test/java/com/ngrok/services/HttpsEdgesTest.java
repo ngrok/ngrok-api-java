@@ -1,6 +1,9 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.Ngrok;
 import com.ngrok.TestBase;
@@ -30,8 +33,8 @@ public class HttpsEdgesTest extends TestBase {
 
     private static final HttpsEdge MOCK_EDGE = new HttpsEdge(
         "some-id",
-        "",
-        "test scala client",
+        Optional.of(""),
+        Optional.of("test scala client"),
         OffsetDateTime.now(),
         URI.create("https://api.ngrok.com/edges/https/some-id"),
         Optional.of(Collections.singletonList(TEST_HOSTPORT)),
@@ -63,7 +66,7 @@ public class HttpsEdgesTest extends TestBase {
     }
 
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     private Ngrok ngrok() {
         return TestBase.ngrok(wireMock.getBaseUri());

@@ -1,6 +1,9 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.ApiKeyTestBase;
 import com.ngrok.Ngrok;
@@ -34,10 +37,11 @@ public class ApiKeysTest extends ApiKeyTestBase {
     private static final ApiKey OTHER_API_KEY = new ApiKey(
         "asdadsda",
         URI.create("https://api.ngrok.com/api_keys/asdasdsda"),
-        "",
-        "",
+        Optional.of(""),
+        Optional.of(""),
         OffsetDateTime.now(),
-        Optional.of("12345")
+        Optional.of("12345"),
+        Optional.of("usr_abcdefghijklmnopqrstuvwxyz0")
     );
 
     private static final ApiKeyList API_KEY_LIST = new ApiKeyList(
@@ -49,10 +53,11 @@ public class ApiKeysTest extends ApiKeyTestBase {
     private static final ApiKey UPDATED_API_KEY = new ApiKey(
         API_KEY.getId(),
         API_KEY.getUri(),
-        "this is an UPDATED description",
+        Optional.of("this is an UPDATED description"),
         API_KEY.getMetadata(),
         API_KEY.getCreatedAt(),
-        Optional.empty()
+        Optional.empty(),
+        Optional.of("usr_abcdefghijklmnopqrstuvwxyz0")
     );
 
     private static final Map<String, Object> API_KEY_UPDATE = Stream.of(
@@ -60,7 +65,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
     ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     private Ngrok ngrok() {
         return TestBase.ngrok(wireMock.getBaseUri());
@@ -148,8 +153,8 @@ public class ApiKeysTest extends ApiKeyTestBase {
     private String testCreateApiKey() throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
         final ApiKey apiKey = apiKeys.create()
-            .description((String) API_KEY_CREATE.get("description"))
-            .metadata((String) API_KEY_CREATE.get("metadata"))
+            .description((Optional<String>) API_KEY_CREATE.get("description"))
+            .metadata((Optional<String>) API_KEY_CREATE.get("metadata"))
             .blockingCall();
         assertApiKeyFields(apiKey);
         return apiKey.getId();
@@ -186,7 +191,7 @@ public class ApiKeysTest extends ApiKeyTestBase {
     private void testUpdateApiKey(final String id) throws InterruptedException {
         final ApiKeys apiKeys = ngrok().apiKeys();
         final ApiKey apiKey = apiKeys.update(id)
-            .description((String) API_KEY_UPDATE.get("description"))
+            .description((Optional<String>) API_KEY_UPDATE.get("description"))
             .blockingCall();
         assertApiKeyFields(apiKey, UPDATED_API_KEY.getDescription(), false);
     }

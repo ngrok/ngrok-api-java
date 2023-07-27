@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -135,8 +137,8 @@ public class TlsCertificates {
      *
      * See also <a href="https://ngrok.com/docs/api#api-tls-certificates-create">https://ngrok.com/docs/api#api-tls-certificates-create</a>.
      *
-     * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="https://ngrok.com/docs/api#tls-certificates-pem">Certificate Bundles</a>.
-     * @param privateKeyPem private key for the TLS certificate, PEM-encoded. See <a href="https://ngrok.com/docs/ngrok-link#tls-certificates-key">Private Keys</a>.
+     * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="/cloud-edge/endpoints#certificate-chains">Certificate Bundles</a>.
+     * @param privateKeyPem private key for the TLS certificate, PEM-encoded. See <a href="/cloud-edge/endpoints#private-keys">Private Keys</a>.
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(

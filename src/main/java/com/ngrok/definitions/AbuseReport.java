@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -27,7 +29,7 @@ public class AbuseReport {
     private final java.util.List<java.net.URI> urls;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("status")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String status;
@@ -52,7 +54,7 @@ public class AbuseReport {
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("urls") final java.util.List<java.net.URI> urls,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("status") final String status,
         @JsonProperty("hostnames") final java.util.List<AbuseReportHostname> hostnames
     ) {
@@ -60,7 +62,7 @@ public class AbuseReport {
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.urls = urls != null ? urls : java.util.Collections.emptyList();
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.status = Objects.requireNonNull(status, "status is required");
         this.hostnames = hostnames != null ? hostnames : java.util.Collections.emptyList();
     }
@@ -104,9 +106,9 @@ public class AbuseReport {
     /**
      * arbitrary user-defined data about this abuse report. Optional, max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -171,7 +173,7 @@ public class AbuseReport {
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
             "', urls='" + this.urls +
-            "', metadata='" + this.metadata +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', status='" + this.status +
             "', hostnames='" + this.hostnames +
             "'}";

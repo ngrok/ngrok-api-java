@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class TlsCertificate {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("certificate_pem")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String certificatePem;
@@ -85,7 +87,7 @@ public class TlsCertificate {
      * @param createdAt timestamp when the TLS certificate was created, RFC 3339 format
      * @param description human-readable description of this TLS certificate. optional, max 255 bytes.
      * @param metadata arbitrary user-defined machine-readable data of this TLS certificate. optional, max 4096 bytes.
-     * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="https://ngrok.com/docs/api#tls-certificates-pem">Certificate Bundles</a>.
+     * @param certificatePem chain of PEM-encoded certificates, leaf first. See <a href="/cloud-edge/endpoints#certificate-chains">Certificate Bundles</a>.
      * @param subjectCommonName subject common name from the leaf of this TLS certificate
      * @param subjectAlternativeNames subject alternative names (SANs) from the leaf of this TLS certificate
      * @param issuedAt timestamp (in RFC 3339 format) when this TLS certificate was issued automatically, or null if this certificate was user-uploaded
@@ -107,8 +109,8 @@ public class TlsCertificate {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("certificate_pem") final String certificatePem,
         @JsonProperty("subject_common_name") final String subjectCommonName,
         @JsonProperty("subject_alternative_names") final TlsCertificateSaNs subjectAlternativeNames,
@@ -129,8 +131,8 @@ public class TlsCertificate {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.certificatePem = Objects.requireNonNull(certificatePem, "certificatePem is required");
         this.subjectCommonName = Objects.requireNonNull(subjectCommonName, "subjectCommonName is required");
         this.subjectAlternativeNames = Objects.requireNonNull(subjectAlternativeNames, "subjectAlternativeNames is required");
@@ -179,9 +181,9 @@ public class TlsCertificate {
     /**
      * human-readable description of this TLS certificate. optional, max 255 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -189,15 +191,15 @@ public class TlsCertificate {
      * arbitrary user-defined machine-readable data of this TLS certificate. optional,
      * max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
     /**
      * chain of PEM-encoded certificates, leaf first. See <a
-     * href="https://ngrok.com/docs/api#tls-certificates-pem">Certificate Bundles</a>.
+     * href="/cloud-edge/endpoints#certificate-chains">Certificate Bundles</a>.
      *
      * @return the value of the property as a {@link String}
      */
@@ -409,8 +411,8 @@ public class TlsCertificate {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', certificatePem='" + this.certificatePem +
             "', subjectCommonName='" + this.subjectCommonName +
             "', subjectAlternativeNames='" + this.subjectAlternativeNames +
