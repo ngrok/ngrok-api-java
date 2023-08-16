@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -19,11 +21,11 @@ public class EndpointOAuthGitHub {
     public static class Builder {
         private Optional<String> clientId = Optional.empty();
         private Optional<String> clientSecret = Optional.empty();
-        private java.util.List<String> scopes = java.util.Collections.emptyList();
-        private java.util.List<String> emailAddresses = java.util.Collections.emptyList();
-        private java.util.List<String> emailDomains = java.util.Collections.emptyList();
-        private java.util.List<String> teams = java.util.Collections.emptyList();
-        private java.util.List<String> organizations = java.util.Collections.emptyList();
+        private Optional<java.util.List<String>> scopes = Optional.empty();
+        private Optional<java.util.List<String>> emailAddresses = Optional.empty();
+        private Optional<java.util.List<String>> emailDomains = Optional.empty();
+        private Optional<java.util.List<String>> teams = Optional.empty();
+        private Optional<java.util.List<String>> organizations = Optional.empty();
 
         private Builder(
         ) {
@@ -95,7 +97,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder scopes(final java.util.List<String> scopes) {
-            this.scopes = Objects.requireNonNull(scopes, "scopes is required");
+            this.scopes = Optional.of(Objects.requireNonNull(scopes, "scopes is required"));
             return this;
         }
 
@@ -109,7 +111,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder scopes(final Optional<java.util.List<String>> scopes) {
-            this.scopes = Objects.requireNonNull(scopes, "scopes is required").orElse(java.util.Collections.emptyList());
+            this.scopes = Objects.requireNonNull(scopes, "scopes is required");
             return this;
         }
 
@@ -121,7 +123,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder emailAddresses(final java.util.List<String> emailAddresses) {
-            this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required");
+            this.emailAddresses = Optional.of(Objects.requireNonNull(emailAddresses, "emailAddresses is required"));
             return this;
         }
 
@@ -133,7 +135,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder emailAddresses(final Optional<java.util.List<String>> emailAddresses) {
-            this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required").orElse(java.util.Collections.emptyList());
+            this.emailAddresses = Objects.requireNonNull(emailAddresses, "emailAddresses is required");
             return this;
         }
 
@@ -145,7 +147,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder emailDomains(final java.util.List<String> emailDomains) {
-            this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required");
+            this.emailDomains = Optional.of(Objects.requireNonNull(emailDomains, "emailDomains is required"));
             return this;
         }
 
@@ -157,7 +159,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder emailDomains(final Optional<java.util.List<String>> emailDomains) {
-            this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required").orElse(java.util.Collections.emptyList());
+            this.emailDomains = Objects.requireNonNull(emailDomains, "emailDomains is required");
             return this;
         }
 
@@ -171,7 +173,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder teams(final java.util.List<String> teams) {
-            this.teams = Objects.requireNonNull(teams, "teams is required");
+            this.teams = Optional.of(Objects.requireNonNull(teams, "teams is required"));
             return this;
         }
 
@@ -185,7 +187,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder teams(final Optional<java.util.List<String>> teams) {
-            this.teams = Objects.requireNonNull(teams, "teams is required").orElse(java.util.Collections.emptyList());
+            this.teams = Objects.requireNonNull(teams, "teams is required");
             return this;
         }
 
@@ -198,7 +200,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder organizations(final java.util.List<String> organizations) {
-            this.organizations = Objects.requireNonNull(organizations, "organizations is required");
+            this.organizations = Optional.of(Objects.requireNonNull(organizations, "organizations is required"));
             return this;
         }
 
@@ -211,7 +213,7 @@ public class EndpointOAuthGitHub {
          * @return this builder instance
          */
         public Builder organizations(final Optional<java.util.List<String>> organizations) {
-            this.organizations = Objects.requireNonNull(organizations, "organizations is required").orElse(java.util.Collections.emptyList());
+            this.organizations = Objects.requireNonNull(organizations, "organizations is required");
             return this;
         }
 
@@ -252,19 +254,19 @@ public class EndpointOAuthGitHub {
     private final Optional<String> clientSecret;
     @JsonProperty("scopes")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.List<String> scopes;
+    private final Optional<java.util.List<String>> scopes;
     @JsonProperty("email_addresses")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.List<String> emailAddresses;
+    private final Optional<java.util.List<String>> emailAddresses;
     @JsonProperty("email_domains")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.List<String> emailDomains;
+    private final Optional<java.util.List<String>> emailDomains;
     @JsonProperty("teams")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.List<String> teams;
+    private final Optional<java.util.List<String>> teams;
     @JsonProperty("organizations")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.util.List<String> organizations;
+    private final Optional<java.util.List<String>> organizations;
 
     /**
      * Creates a new instance of {@link EndpointOAuthGitHub}.
@@ -281,19 +283,19 @@ public class EndpointOAuthGitHub {
     private EndpointOAuthGitHub(
         @JsonProperty("client_id") final Optional<String> clientId,
         @JsonProperty("client_secret") final Optional<String> clientSecret,
-        @JsonProperty("scopes") final java.util.List<String> scopes,
-        @JsonProperty("email_addresses") final java.util.List<String> emailAddresses,
-        @JsonProperty("email_domains") final java.util.List<String> emailDomains,
-        @JsonProperty("teams") final java.util.List<String> teams,
-        @JsonProperty("organizations") final java.util.List<String> organizations
+        @JsonProperty("scopes") final Optional<java.util.List<String>> scopes,
+        @JsonProperty("email_addresses") final Optional<java.util.List<String>> emailAddresses,
+        @JsonProperty("email_domains") final Optional<java.util.List<String>> emailDomains,
+        @JsonProperty("teams") final Optional<java.util.List<String>> teams,
+        @JsonProperty("organizations") final Optional<java.util.List<String>> organizations
     ) {
         this.clientId = clientId != null ? clientId : Optional.empty();
         this.clientSecret = clientSecret != null ? clientSecret : Optional.empty();
-        this.scopes = scopes != null ? scopes : java.util.Collections.emptyList();
-        this.emailAddresses = emailAddresses != null ? emailAddresses : java.util.Collections.emptyList();
-        this.emailDomains = emailDomains != null ? emailDomains : java.util.Collections.emptyList();
-        this.teams = teams != null ? teams : java.util.Collections.emptyList();
-        this.organizations = organizations != null ? organizations : java.util.Collections.emptyList();
+        this.scopes = scopes != null ? scopes : Optional.empty();
+        this.emailAddresses = emailAddresses != null ? emailAddresses : Optional.empty();
+        this.emailDomains = emailDomains != null ? emailDomains : Optional.empty();
+        this.teams = teams != null ? teams : Optional.empty();
+        this.organizations = organizations != null ? organizations : Optional.empty();
     }
 
     /**
@@ -326,9 +328,9 @@ public class EndpointOAuthGitHub {
      * oauth app (i.e. you must pass both <code>client_id</code> and
      * <code>client_secret</code> to set scopes)
      *
-     * @return the value of the property as a {@link java.util.List} of {@link String}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
-    public java.util.List<String> getScopes() {
+    public Optional<java.util.List<String>> getScopes() {
         return this.scopes;
     }
 
@@ -336,9 +338,9 @@ public class EndpointOAuthGitHub {
      * a list of email addresses of users authenticated by identity provider who are
      * allowed access to the endpoint
      *
-     * @return the value of the property as a {@link java.util.List} of {@link String}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
-    public java.util.List<String> getEmailAddresses() {
+    public Optional<java.util.List<String>> getEmailAddresses() {
         return this.emailAddresses;
     }
 
@@ -346,9 +348,9 @@ public class EndpointOAuthGitHub {
      * a list of email domains of users authenticated by identity provider who are
      * allowed access to the endpoint
      *
-     * @return the value of the property as a {@link java.util.List} of {@link String}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
-    public java.util.List<String> getEmailDomains() {
+    public Optional<java.util.List<String>> getEmailDomains() {
         return this.emailDomains;
     }
 
@@ -358,9 +360,9 @@ public class EndpointOAuthGitHub {
      * &#39;slug&#39; format qualified with the org name, e.g.
      * <code>org-name/team-name</code>
      *
-     * @return the value of the property as a {@link java.util.List} of {@link String}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
-    public java.util.List<String> getTeams() {
+    public Optional<java.util.List<String>> getTeams() {
         return this.teams;
     }
 
@@ -369,9 +371,9 @@ public class EndpointOAuthGitHub {
      * organizations will be allowed access. identifiers should be the
      * organization&#39;s &#39;slug&#39;
      *
-     * @return the value of the property as a {@link java.util.List} of {@link String}
+     * @return the value of the property as a {@link java.util.List} of {@link String} wrapped in an {@link Optional}
      */
-    public java.util.List<String> getOrganizations() {
+    public Optional<java.util.List<String>> getOrganizations() {
         return this.organizations;
     }
 
@@ -414,11 +416,11 @@ public class EndpointOAuthGitHub {
         return "EndpointOAuthGitHub{" +
             "clientId='" + this.clientId.orElse("(null)") +
             "', clientSecret='" + this.clientSecret.orElse("(null)") +
-            "', scopes='" + this.scopes +
-            "', emailAddresses='" + this.emailAddresses +
-            "', emailDomains='" + this.emailDomains +
-            "', teams='" + this.teams +
-            "', organizations='" + this.organizations +
+            "', scopes='" + this.scopes.map(Object::toString).orElse("(null)") +
+            "', emailAddresses='" + this.emailAddresses.map(Object::toString).orElse("(null)") +
+            "', emailDomains='" + this.emailDomains.map(Object::toString).orElse("(null)") +
+            "', teams='" + this.teams.map(Object::toString).orElse("(null)") +
+            "', organizations='" + this.organizations.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

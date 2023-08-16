@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,13 +20,13 @@ public class Endpoint {
     private final String id;
     @JsonProperty("region")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String region;
+    private final Optional<String> region;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.time.OffsetDateTime createdAt;
+    private final Optional<java.time.OffsetDateTime> createdAt;
     @JsonProperty("updated_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final java.time.OffsetDateTime updatedAt;
+    private final Optional<java.time.OffsetDateTime> updatedAt;
     @JsonProperty("public_url")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.net.URI publicUrl;
@@ -39,7 +41,7 @@ public class Endpoint {
     private final String type;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("domain")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Ref> domain;
@@ -73,28 +75,28 @@ public class Endpoint {
     @JsonCreator
     public Endpoint(
         @JsonProperty("id") final String id,
-        @JsonProperty("region") final String region,
-        @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("updated_at") final java.time.OffsetDateTime updatedAt,
+        @JsonProperty("region") final Optional<String> region,
+        @JsonProperty("created_at") final Optional<java.time.OffsetDateTime> createdAt,
+        @JsonProperty("updated_at") final Optional<java.time.OffsetDateTime> updatedAt,
         @JsonProperty("public_url") final java.net.URI publicUrl,
         @JsonProperty("proto") final String proto,
         @JsonProperty("hostport") final String hostport,
         @JsonProperty("type") final String type,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("domain") final Optional<Ref> domain,
         @JsonProperty("tcp_addr") final Optional<Ref> tcpAddr,
         @JsonProperty("tunnel") final Optional<Ref> tunnel,
         @JsonProperty("edge") final Optional<Ref> edge
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
-        this.region = Objects.requireNonNull(region, "region is required");
-        this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt is required");
+        this.region = region != null ? region : Optional.empty();
+        this.createdAt = createdAt != null ? createdAt : Optional.empty();
+        this.updatedAt = updatedAt != null ? updatedAt : Optional.empty();
         this.publicUrl = Objects.requireNonNull(publicUrl, "publicUrl is required");
         this.proto = Objects.requireNonNull(proto, "proto is required");
         this.hostport = Objects.requireNonNull(hostport, "hostport is required");
         this.type = Objects.requireNonNull(type, "type is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.domain = domain != null ? domain : Optional.empty();
         this.tcpAddr = tcpAddr != null ? tcpAddr : Optional.empty();
         this.tunnel = tunnel != null ? tunnel : Optional.empty();
@@ -113,27 +115,27 @@ public class Endpoint {
     /**
      * identifier of the region this endpoint belongs to
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getRegion() {
+    public Optional<String> getRegion() {
         return this.region;
     }
 
     /**
      * timestamp when the endpoint was created in RFC 3339 format
      *
-     * @return the value of the property as a {@link java.time.OffsetDateTime}
+     * @return the value of the property as a {@link java.time.OffsetDateTime} wrapped in an {@link Optional}
      */
-    public java.time.OffsetDateTime getCreatedAt() {
+    public Optional<java.time.OffsetDateTime> getCreatedAt() {
         return this.createdAt;
     }
 
     /**
      * timestamp when the endpoint was updated in RFC 3339 format
      *
-     * @return the value of the property as a {@link java.time.OffsetDateTime}
+     * @return the value of the property as a {@link java.time.OffsetDateTime} wrapped in an {@link Optional}
      */
-    public java.time.OffsetDateTime getUpdatedAt() {
+    public Optional<java.time.OffsetDateTime> getUpdatedAt() {
         return this.updatedAt;
     }
 
@@ -178,9 +180,9 @@ public class Endpoint {
     /**
      * user-supplied metadata of the associated tunnel or edge object
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -270,14 +272,14 @@ public class Endpoint {
     public String toString() {
         return "Endpoint{" +
             "id='" + this.id +
-            "', region='" + this.region +
-            "', createdAt='" + this.createdAt +
-            "', updatedAt='" + this.updatedAt +
+            "', region='" + this.region.orElse("(null)") +
+            "', createdAt='" + this.createdAt.map(Object::toString).orElse("(null)") +
+            "', updatedAt='" + this.updatedAt.map(Object::toString).orElse("(null)") +
             "', publicUrl='" + this.publicUrl +
             "', proto='" + this.proto +
             "', hostport='" + this.hostport +
             "', type='" + this.type +
-            "', metadata='" + this.metadata +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', domain='" + this.domain.map(Object::toString).orElse("(null)") +
             "', tcpAddr='" + this.tcpAddr.map(Object::toString).orElse("(null)") +
             "', tunnel='" + this.tunnel.map(Object::toString).orElse("(null)") +

@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,7 +26,7 @@ public class EndpointIpPolicy {
      * Creates a new instance of {@link EndpointIpPolicy}.
      *
      * @param enabled <code>true</code> if the module will be applied to traffic, <code>false</code> to disable. default <code>true</code> if unspecified
-     * @param ipPolicies the value of the <code>ip_policies</code> parameter as a {@link java.util.List} of {@link Ref}
+     * @param ipPolicies list of all IP policies that will be used to check if a source IP is allowed access to the endpoint
      */
     @JsonCreator
     public EndpointIpPolicy(
@@ -46,7 +48,8 @@ public class EndpointIpPolicy {
     }
 
     /**
-     * Fetches the value of the <code>ipPolicies</code> property.
+     * list of all IP policies that will be used to check if a source IP is allowed
+     * access to the endpoint
      *
      * @return the value of the property as a {@link java.util.List} of {@link Ref}
      */

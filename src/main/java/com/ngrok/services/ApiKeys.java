@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -41,6 +43,7 @@ public class ApiKeys {
     public class CreateCallBuilder {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
+        private Optional<String> ownerId = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -93,6 +96,32 @@ public class ApiKeys {
         }
         
         /**
+         * If supplied at credential creation, ownership will be assigned to the specified
+         * User or Bot. Only admins may specify an owner other than themselves. Defaults to
+         * the authenticated User or Bot.
+         *
+         * @param ownerId the value of the owner_id parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder ownerId(final String ownerId) {
+            this.ownerId = Optional.of(Objects.requireNonNull(ownerId, "ownerId is required"));
+            return this;
+        }
+
+        /**
+         * If supplied at credential creation, ownership will be assigned to the specified
+         * User or Bot. Only admins may specify an owner other than themselves. Defaults to
+         * the authenticated User or Bot.
+         *
+         * @param ownerId the value of the owner_id parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder ownerId(final Optional<String> ownerId) {
+            this.ownerId = Objects.requireNonNull(ownerId, "ownerId is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link ApiKey}
@@ -104,7 +133,8 @@ public class ApiKeys {
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("owner_id", this.ownerId.map(Function.identity()))
                 ),
                 Optional.of(ApiKey.class)
             );

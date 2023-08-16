@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -21,6 +23,10 @@ public class EndpointOAuthProvider {
         private Optional<EndpointOAuthFacebook> facebook = Optional.empty();
         private Optional<EndpointOAuthMicrosoft> microsoft = Optional.empty();
         private Optional<EndpointOAuthGoogle> google = Optional.empty();
+        private Optional<EndpointOAuthLinkedIn> linkedin = Optional.empty();
+        private Optional<EndpointOAuthGitLab> gitlab = Optional.empty();
+        private Optional<EndpointOAuthTwitch> twitch = Optional.empty();
+        private Optional<EndpointOAuthAmazon> amazon = Optional.empty();
 
         private Builder(
         ) {
@@ -115,6 +121,94 @@ public class EndpointOAuthProvider {
         }
 
         /**
+         * configuration for using linkedin as the identity provider
+         *
+         * @param linkedin the value of the <code>linkedin</code> parameter as a {@link EndpointOAuthLinkedIn}
+         * @return this builder instance
+         */
+        public Builder linkedin(final EndpointOAuthLinkedIn linkedin) {
+            this.linkedin = Optional.of(Objects.requireNonNull(linkedin, "linkedin is required"));
+            return this;
+        }
+
+        /**
+         * configuration for using linkedin as the identity provider
+         *
+         * @param linkedin the value of the <code>linkedin</code> parameter as a {@link EndpointOAuthLinkedIn}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder linkedin(final Optional<EndpointOAuthLinkedIn> linkedin) {
+            this.linkedin = Objects.requireNonNull(linkedin, "linkedin is required");
+            return this;
+        }
+
+        /**
+         * configuration for using gitlab as the identity provider
+         *
+         * @param gitlab the value of the <code>gitlab</code> parameter as a {@link EndpointOAuthGitLab}
+         * @return this builder instance
+         */
+        public Builder gitlab(final EndpointOAuthGitLab gitlab) {
+            this.gitlab = Optional.of(Objects.requireNonNull(gitlab, "gitlab is required"));
+            return this;
+        }
+
+        /**
+         * configuration for using gitlab as the identity provider
+         *
+         * @param gitlab the value of the <code>gitlab</code> parameter as a {@link EndpointOAuthGitLab}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder gitlab(final Optional<EndpointOAuthGitLab> gitlab) {
+            this.gitlab = Objects.requireNonNull(gitlab, "gitlab is required");
+            return this;
+        }
+
+        /**
+         * configuration for using twitch as the identity provider
+         *
+         * @param twitch the value of the <code>twitch</code> parameter as a {@link EndpointOAuthTwitch}
+         * @return this builder instance
+         */
+        public Builder twitch(final EndpointOAuthTwitch twitch) {
+            this.twitch = Optional.of(Objects.requireNonNull(twitch, "twitch is required"));
+            return this;
+        }
+
+        /**
+         * configuration for using twitch as the identity provider
+         *
+         * @param twitch the value of the <code>twitch</code> parameter as a {@link EndpointOAuthTwitch}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder twitch(final Optional<EndpointOAuthTwitch> twitch) {
+            this.twitch = Objects.requireNonNull(twitch, "twitch is required");
+            return this;
+        }
+
+        /**
+         * configuration for using amazon as the identity provider
+         *
+         * @param amazon the value of the <code>amazon</code> parameter as a {@link EndpointOAuthAmazon}
+         * @return this builder instance
+         */
+        public Builder amazon(final EndpointOAuthAmazon amazon) {
+            this.amazon = Optional.of(Objects.requireNonNull(amazon, "amazon is required"));
+            return this;
+        }
+
+        /**
+         * configuration for using amazon as the identity provider
+         *
+         * @param amazon the value of the <code>amazon</code> parameter as a {@link EndpointOAuthAmazon}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder amazon(final Optional<EndpointOAuthAmazon> amazon) {
+            this.amazon = Objects.requireNonNull(amazon, "amazon is required");
+            return this;
+        }
+
+        /**
          * Constructs the {@link EndpointOAuthProvider} instance.
          *
          * @return a new {@link EndpointOAuthProvider}
@@ -124,7 +218,11 @@ public class EndpointOAuthProvider {
                 this.github,
                 this.facebook,
                 this.microsoft,
-                this.google
+                this.google,
+                this.linkedin,
+                this.gitlab,
+                this.twitch,
+                this.amazon
             );
         }
     }
@@ -152,6 +250,18 @@ public class EndpointOAuthProvider {
     @JsonProperty("google")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointOAuthGoogle> google;
+    @JsonProperty("linkedin")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointOAuthLinkedIn> linkedin;
+    @JsonProperty("gitlab")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointOAuthGitLab> gitlab;
+    @JsonProperty("twitch")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointOAuthTwitch> twitch;
+    @JsonProperty("amazon")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointOAuthAmazon> amazon;
 
     /**
      * Creates a new instance of {@link EndpointOAuthProvider}.
@@ -160,18 +270,30 @@ public class EndpointOAuthProvider {
      * @param facebook configuration for using facebook as the identity provider
      * @param microsoft configuration for using microsoft as the identity provider
      * @param google configuration for using google as the identity provider
+     * @param linkedin configuration for using linkedin as the identity provider
+     * @param gitlab configuration for using gitlab as the identity provider
+     * @param twitch configuration for using twitch as the identity provider
+     * @param amazon configuration for using amazon as the identity provider
      */
     @JsonCreator
     private EndpointOAuthProvider(
         @JsonProperty("github") final Optional<EndpointOAuthGitHub> github,
         @JsonProperty("facebook") final Optional<EndpointOAuthFacebook> facebook,
         @JsonProperty("microsoft") final Optional<EndpointOAuthMicrosoft> microsoft,
-        @JsonProperty("google") final Optional<EndpointOAuthGoogle> google
+        @JsonProperty("google") final Optional<EndpointOAuthGoogle> google,
+        @JsonProperty("linkedin") final Optional<EndpointOAuthLinkedIn> linkedin,
+        @JsonProperty("gitlab") final Optional<EndpointOAuthGitLab> gitlab,
+        @JsonProperty("twitch") final Optional<EndpointOAuthTwitch> twitch,
+        @JsonProperty("amazon") final Optional<EndpointOAuthAmazon> amazon
     ) {
         this.github = github != null ? github : Optional.empty();
         this.facebook = facebook != null ? facebook : Optional.empty();
         this.microsoft = microsoft != null ? microsoft : Optional.empty();
         this.google = google != null ? google : Optional.empty();
+        this.linkedin = linkedin != null ? linkedin : Optional.empty();
+        this.gitlab = gitlab != null ? gitlab : Optional.empty();
+        this.twitch = twitch != null ? twitch : Optional.empty();
+        this.amazon = amazon != null ? amazon : Optional.empty();
     }
 
     /**
@@ -210,6 +332,42 @@ public class EndpointOAuthProvider {
         return this.google;
     }
 
+    /**
+     * configuration for using linkedin as the identity provider
+     *
+     * @return the value of the property as a {@link EndpointOAuthLinkedIn} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointOAuthLinkedIn> getLinkedin() {
+        return this.linkedin;
+    }
+
+    /**
+     * configuration for using gitlab as the identity provider
+     *
+     * @return the value of the property as a {@link EndpointOAuthGitLab} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointOAuthGitLab> getGitlab() {
+        return this.gitlab;
+    }
+
+    /**
+     * configuration for using twitch as the identity provider
+     *
+     * @return the value of the property as a {@link EndpointOAuthTwitch} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointOAuthTwitch> getTwitch() {
+        return this.twitch;
+    }
+
+    /**
+     * configuration for using amazon as the identity provider
+     *
+     * @return the value of the property as a {@link EndpointOAuthAmazon} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointOAuthAmazon> getAmazon() {
+        return this.amazon;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -224,7 +382,11 @@ public class EndpointOAuthProvider {
             this.github.equals(other.github)&&
             this.facebook.equals(other.facebook)&&
             this.microsoft.equals(other.microsoft)&&
-            this.google.equals(other.google);
+            this.google.equals(other.google)&&
+            this.linkedin.equals(other.linkedin)&&
+            this.gitlab.equals(other.gitlab)&&
+            this.twitch.equals(other.twitch)&&
+            this.amazon.equals(other.amazon);
         
     }
 
@@ -234,7 +396,11 @@ public class EndpointOAuthProvider {
             this.github,
             this.facebook,
             this.microsoft,
-            this.google
+            this.google,
+            this.linkedin,
+            this.gitlab,
+            this.twitch,
+            this.amazon
         );
     }
 
@@ -245,6 +411,10 @@ public class EndpointOAuthProvider {
             "', facebook='" + this.facebook.map(Object::toString).orElse("(null)") +
             "', microsoft='" + this.microsoft.map(Object::toString).orElse("(null)") +
             "', google='" + this.google.map(Object::toString).orElse("(null)") +
+            "', linkedin='" + this.linkedin.map(Object::toString).orElse("(null)") +
+            "', gitlab='" + this.gitlab.map(Object::toString).orElse("(null)") +
+            "', twitch='" + this.twitch.map(Object::toString).orElse("(null)") +
+            "', amazon='" + this.amazon.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class IpPolicyRule {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("cidr")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String cidr;
@@ -55,8 +57,8 @@ public class IpPolicyRule {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("cidr") final String cidr,
         @JsonProperty("ip_policy") final Ref ipPolicy,
         @JsonProperty("action") final String action
@@ -64,8 +66,8 @@ public class IpPolicyRule {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.cidr = Objects.requireNonNull(cidr, "cidr is required");
         this.ipPolicy = Objects.requireNonNull(ipPolicy, "ipPolicy is required");
         this.action = Objects.requireNonNull(action, "action is required");
@@ -102,9 +104,9 @@ public class IpPolicyRule {
      * human-readable description of the source IPs of this IP rule. optional, max 255
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -112,9 +114,9 @@ public class IpPolicyRule {
      * arbitrary user-defined machine-readable data of this IP policy rule. optional,
      * max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -188,8 +190,8 @@ public class IpPolicyRule {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', cidr='" + this.cidr +
             "', ipPolicy='" + this.ipPolicy +
             "', action='" + this.action +

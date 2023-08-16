@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok;
 
 import com.ngrok.definitions.ApiKey;
@@ -12,14 +14,16 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// Test
 public abstract class ApiKeyTestBase extends TestBase {
     public static ApiKey API_KEY = new ApiKey(
         "abcdef123456",
         URI.create("https://api.ngrok.com/api_keys/abcdef123456"),
-        "this is a great API key",
-        "this API key is quite meta",
+        Optional.of("this is a great API key"),
+        Optional.of("this API key is quite meta"),
         OffsetDateTime.parse("2021-06-08T21:09:00-07:00"),
-        Optional.of("qwertyuiop")
+        Optional.of("qwertyuiop"),
+        Optional.of("usr_abcdefghijklmnopqrstuvwxyz0")
     );
 
     public static ApiKey API_KEY_NO_TOKEN = new ApiKey(
@@ -28,7 +32,8 @@ public abstract class ApiKeyTestBase extends TestBase {
         API_KEY.getDescription(),
         API_KEY.getMetadata(),
         API_KEY.getCreatedAt(),
-        Optional.empty()
+        Optional.empty(),
+		API_KEY.getOwnerId()
     );
 
     public static final Map<String, Object> API_KEY_JSON_FIELDS = Stream.of(
@@ -41,7 +46,7 @@ public abstract class ApiKeyTestBase extends TestBase {
     ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 
-    public static void assertApiKeyFields(final ApiKey apiKey, final String expectedDescription, boolean shouldHaveToken) {
+    public static void assertApiKeyFields(final ApiKey apiKey, final Optional<String> expectedDescription, boolean shouldHaveToken) {
         assertThat(apiKey).isNotNull();
 
         if (USE_LIVE_API) {

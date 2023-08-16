@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -33,7 +35,7 @@ public class AbuseReports {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private java.util.List<java.net.URI> urls = java.util.Collections.emptyList();
+        private final java.util.List<java.net.URI> urls;
         private Optional<String> metadata = Optional.empty();
 
         private CreateCallBuilder(
