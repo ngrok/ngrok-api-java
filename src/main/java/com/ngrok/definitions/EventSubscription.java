@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class EventSubscription {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("sources")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.util.List<EventSource> sources;
@@ -51,16 +53,16 @@ public class EventSubscription {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("metadata") final String metadata,
-        @JsonProperty("description") final String description,
+        @JsonProperty("metadata") final Optional<String> metadata,
+        @JsonProperty("description") final Optional<String> description,
         @JsonProperty("sources") final java.util.List<EventSource> sources,
         @JsonProperty("destinations") final java.util.List<Ref> destinations
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
-        this.description = Objects.requireNonNull(description, "description is required");
+        this.metadata = metadata != null ? metadata : Optional.empty();
+        this.description = description != null ? description : Optional.empty();
         this.sources = sources != null ? sources : java.util.Collections.emptyList();
         this.destinations = destinations != null ? destinations : java.util.Collections.emptyList();
     }
@@ -96,9 +98,9 @@ public class EventSubscription {
      * Arbitrary customer supplied information intended to be machine readable.
      * Optional, max 4096 chars.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -106,9 +108,9 @@ public class EventSubscription {
      * Arbitrary customer supplied information intended to be human readable. Optional,
      * max 255 chars.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -170,8 +172,8 @@ public class EventSubscription {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', metadata='" + this.metadata +
-            "', description='" + this.description +
+            "', metadata='" + this.metadata.orElse("(null)") +
+            "', description='" + this.description.orElse("(null)") +
             "', sources='" + this.sources +
             "', destinations='" + this.destinations +
             "'}";

@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,13 +20,13 @@ public class EventDestination {
     private final String id;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("format")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String format;
@@ -49,17 +51,17 @@ public class EventDestination {
     @JsonCreator
     public EventDestination(
         @JsonProperty("id") final String id,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
+        @JsonProperty("description") final Optional<String> description,
         @JsonProperty("format") final String format,
         @JsonProperty("target") final EventTarget target,
         @JsonProperty("uri") final java.net.URI uri
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
+        this.description = description != null ? description : Optional.empty();
         this.format = Objects.requireNonNull(format, "format is required");
         this.target = Objects.requireNonNull(target, "target is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
@@ -78,9 +80,9 @@ public class EventDestination {
      * Arbitrary user-defined machine-readable data of this Event Destination.
      * Optional, max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -96,9 +98,9 @@ public class EventDestination {
     /**
      * Human-readable description of the Event Destination. Optional, max 255 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -171,9 +173,9 @@ public class EventDestination {
     public String toString() {
         return "EventDestination{" +
             "id='" + this.id +
-            "', metadata='" + this.metadata +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
+            "', description='" + this.description.orElse("(null)") +
             "', format='" + this.format +
             "', target='" + this.target +
             "', uri='" + this.uri +
