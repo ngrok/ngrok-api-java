@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok;
 
 import com.ngrok.services.*;
@@ -80,6 +82,41 @@ public class Ngrok {
      */
     public ApiKeys apiKeys() {
         return new ApiKeys(this.apiClient);
+    }
+    
+    /**
+     * Creates a service client for ApplicationSessions.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-application-sessions">https://ngrok.com/docs/api#api-application-sessions</a>.
+     *
+     * @return a service client
+     */
+    public ApplicationSessions applicationSessions() {
+        return new ApplicationSessions(this.apiClient);
+    }
+    
+    /**
+     * Creates a service client for ApplicationUsers.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-application-users">https://ngrok.com/docs/api#api-application-users</a>.
+     *
+     * @return a service client
+     */
+    public ApplicationUsers applicationUsers() {
+        return new ApplicationUsers(this.apiClient);
+    }
+    
+    /**
+     * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
+     *  sessions that are running and connected to the ngrok service. Each tunnel
+     *  session can include one or more Tunnels.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions">https://ngrok.com/docs/api#api-tunnel-sessions</a>.
+     *
+     * @return a service client
+     */
+    public TunnelSessions tunnelSessions() {
+        return new TunnelSessions(this.apiClient);
     }
     
     /**
@@ -291,19 +328,6 @@ public class Ngrok {
      */
     public TlsCertificates tlsCertificates() {
         return new TlsCertificates(this.apiClient);
-    }
-    
-    /**
-     * Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
-     *  sessions that are running and connected to the ngrok service. Each tunnel
-     *  session can include one or more Tunnels.
-     *
-     * See also <a href="https://ngrok.com/docs/api#api-tunnel-sessions">https://ngrok.com/docs/api#api-tunnel-sessions</a>.
-     *
-     * @return a service client
-     */
-    public TunnelSessions tunnelSessions() {
-        return new TunnelSessions(this.apiClient);
     }
     
     /**

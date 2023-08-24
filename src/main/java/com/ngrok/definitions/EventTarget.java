@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,6 +22,7 @@ public class EventTarget {
         private Optional<EventTargetFirehose> firehose = Optional.empty();
         private Optional<EventTargetKinesis> kinesis = Optional.empty();
         private Optional<EventTargetCloudwatchLogs> cloudwatchLogs = Optional.empty();
+        private Optional<EventTargetDatadog> datadog = Optional.empty();
 
         private Builder(
         ) {
@@ -92,6 +95,28 @@ public class EventTarget {
         }
 
         /**
+         * Configuration used to send events to Datadog.
+         *
+         * @param datadog the value of the <code>datadog</code> parameter as a {@link EventTargetDatadog}
+         * @return this builder instance
+         */
+        public Builder datadog(final EventTargetDatadog datadog) {
+            this.datadog = Optional.of(Objects.requireNonNull(datadog, "datadog is required"));
+            return this;
+        }
+
+        /**
+         * Configuration used to send events to Datadog.
+         *
+         * @param datadog the value of the <code>datadog</code> parameter as a {@link EventTargetDatadog}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder datadog(final Optional<EventTargetDatadog> datadog) {
+            this.datadog = Objects.requireNonNull(datadog, "datadog is required");
+            return this;
+        }
+
+        /**
          * Constructs the {@link EventTarget} instance.
          *
          * @return a new {@link EventTarget}
@@ -100,7 +125,8 @@ public class EventTarget {
             return new EventTarget(
                 this.firehose,
                 this.kinesis,
-                this.cloudwatchLogs
+                this.cloudwatchLogs,
+                this.datadog
             );
         }
     }
@@ -125,6 +151,9 @@ public class EventTarget {
     @JsonProperty("cloudwatch_logs")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EventTargetCloudwatchLogs> cloudwatchLogs;
+    @JsonProperty("datadog")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EventTargetDatadog> datadog;
 
     /**
      * Creates a new instance of {@link EventTarget}.
@@ -132,16 +161,19 @@ public class EventTarget {
      * @param firehose Configuration used to send events to Amazon Kinesis Data Firehose.
      * @param kinesis Configuration used to send events to Amazon Kinesis.
      * @param cloudwatchLogs Configuration used to send events to Amazon CloudWatch Logs.
+     * @param datadog Configuration used to send events to Datadog.
      */
     @JsonCreator
     private EventTarget(
         @JsonProperty("firehose") final Optional<EventTargetFirehose> firehose,
         @JsonProperty("kinesis") final Optional<EventTargetKinesis> kinesis,
-        @JsonProperty("cloudwatch_logs") final Optional<EventTargetCloudwatchLogs> cloudwatchLogs
+        @JsonProperty("cloudwatch_logs") final Optional<EventTargetCloudwatchLogs> cloudwatchLogs,
+        @JsonProperty("datadog") final Optional<EventTargetDatadog> datadog
     ) {
         this.firehose = firehose != null ? firehose : Optional.empty();
         this.kinesis = kinesis != null ? kinesis : Optional.empty();
         this.cloudwatchLogs = cloudwatchLogs != null ? cloudwatchLogs : Optional.empty();
+        this.datadog = datadog != null ? datadog : Optional.empty();
     }
 
     /**
@@ -171,6 +203,15 @@ public class EventTarget {
         return this.cloudwatchLogs;
     }
 
+    /**
+     * Configuration used to send events to Datadog.
+     *
+     * @return the value of the property as a {@link EventTargetDatadog} wrapped in an {@link Optional}
+     */
+    public Optional<EventTargetDatadog> getDatadog() {
+        return this.datadog;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -184,7 +225,8 @@ public class EventTarget {
         return
             this.firehose.equals(other.firehose)&&
             this.kinesis.equals(other.kinesis)&&
-            this.cloudwatchLogs.equals(other.cloudwatchLogs);
+            this.cloudwatchLogs.equals(other.cloudwatchLogs)&&
+            this.datadog.equals(other.datadog);
         
     }
 
@@ -193,7 +235,8 @@ public class EventTarget {
         return Objects.hash(
             this.firehose,
             this.kinesis,
-            this.cloudwatchLogs
+            this.cloudwatchLogs,
+            this.datadog
         );
     }
 
@@ -203,6 +246,7 @@ public class EventTarget {
             "firehose='" + this.firehose.map(Object::toString).orElse("(null)") +
             "', kinesis='" + this.kinesis.map(Object::toString).orElse("(null)") +
             "', cloudwatchLogs='" + this.cloudwatchLogs.map(Object::toString).orElse("(null)") +
+            "', datadog='" + this.datadog.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }
