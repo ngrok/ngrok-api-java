@@ -1,3 +1,5 @@
+<!-- Code generated for API Clients. DO NOT EDIT. -->
+
 # Unstable
 
 This library is currently unstable. We know of rough edges
@@ -28,6 +30,10 @@ In your Maven `pom.xml` file, add:
 ```
 
 See the above URL for the latest version of the API client.
+
+## Support
+
+The best place to get support using this library is through the [ngrok Slack Community](https://ngrok.com/slack). If you find any bugs, please contribute by opening a [new GitHub issue](https://github.com/ngrok/ngrok-api-java/issues/new/choose).
 
 ## Documentation
 

@@ -1,6 +1,9 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.EventSubscriptionTestBase;
 import com.ngrok.Ngrok;
@@ -26,7 +29,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class EventSubscriptionsTest extends EventSubscriptionTestBase {
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     public static final Map<String, Object> EVENT_DESTINATION_CREATE = Stream.of(
         entry("description", EVENT_DESTINATION.getDescription()),
@@ -56,7 +59,7 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
         EVENT_SUBSCRIPTION.getUri(),
         EVENT_SUBSCRIPTION.getCreatedAt(),
         EVENT_SUBSCRIPTION.getMetadata(),
-        "some updated description",
+        Optional.of("some updated description"),
         EVENT_SUBSCRIPTION.getSources(),
         EVENT_SUBSCRIPTION.getDestinations()
     );
@@ -188,8 +191,8 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
     @SuppressWarnings("unchecked")
     private String testCreateEventSubscription(final List<String> eventDestinationIds) throws InterruptedException {
         final EventSubscription eventSubscription = ngrok().eventSubscriptions().create()
-            .description((String) EVENT_SUBSCRIPTION_CREATE.get("description"))
-            .metadata((String) EVENT_SUBSCRIPTION_CREATE.get("metadata"))
+            .description((Optional<String>) EVENT_SUBSCRIPTION_CREATE.get("description"))
+            .metadata((Optional<String>) EVENT_SUBSCRIPTION_CREATE.get("metadata"))
             .sources((List<EventSourceReplace>) EVENT_SUBSCRIPTION_CREATE.get("sources"))
             .destinationIds(eventDestinationIds)
             .blockingCall();
@@ -225,9 +228,9 @@ public class EventSubscriptionsTest extends EventSubscriptionTestBase {
 
     private void testUpdateEventSubscription(final String id, final List<String> eventDestinationIds) throws InterruptedException {
         final EventSubscription eventSubscription = ngrok().eventSubscriptions().update(id)
-            .description((String) EVENT_SUBSCRIPTION_UPDATE.get("description"))
+            .description((Optional<String>) EVENT_SUBSCRIPTION_UPDATE.get("description"))
             .blockingCall();
-        assertEventSubscriptionFields(eventSubscription, (String) EVENT_SUBSCRIPTION_UPDATE.get("description"), eventDestinationIds);
+        assertEventSubscriptionFields(eventSubscription, (Optional<String>) EVENT_SUBSCRIPTION_UPDATE.get("description"), eventDestinationIds);
     }
 
     private void testDeleteEventSubscription(final String id) throws InterruptedException {

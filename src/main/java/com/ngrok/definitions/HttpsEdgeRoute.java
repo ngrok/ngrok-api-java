@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -33,10 +35,10 @@ public class HttpsEdgeRoute {
     private final java.net.URI uri;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("backend")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointBackend> backend;
@@ -102,8 +104,8 @@ public class HttpsEdgeRoute {
         @JsonProperty("match_type") final String matchType,
         @JsonProperty("match") final String match,
         @JsonProperty("uri") final java.net.URI uri,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("backend") final Optional<EndpointBackend> backend,
         @JsonProperty("ip_restriction") final Optional<EndpointIpPolicy> ipRestriction,
         @JsonProperty("circuit_breaker") final Optional<EndpointCircuitBreaker> circuitBreaker,
@@ -122,8 +124,8 @@ public class HttpsEdgeRoute {
         this.matchType = Objects.requireNonNull(matchType, "matchType is required");
         this.match = Objects.requireNonNull(match, "match is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.backend = backend != null ? backend : Optional.empty();
         this.ipRestriction = ipRestriction != null ? ipRestriction : Optional.empty();
         this.circuitBreaker = circuitBreaker != null ? circuitBreaker : Optional.empty();
@@ -197,9 +199,9 @@ public class HttpsEdgeRoute {
      * human-readable description of what this edge will be used for; optional, max 255
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -207,9 +209,9 @@ public class HttpsEdgeRoute {
      * arbitrary user-defined machine-readable data of this edge. Optional, max 4096
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -379,8 +381,8 @@ public class HttpsEdgeRoute {
             "', matchType='" + this.matchType +
             "', match='" + this.match +
             "', uri='" + this.uri +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', backend='" + this.backend.map(Object::toString).orElse("(null)") +
             "', ipRestriction='" + this.ipRestriction.map(Object::toString).orElse("(null)") +
             "', circuitBreaker='" + this.circuitBreaker.map(Object::toString).orElse("(null)") +

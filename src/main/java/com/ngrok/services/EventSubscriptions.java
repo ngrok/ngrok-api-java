@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -406,8 +408,8 @@ public class EventSubscriptions {
         private final String id;
         private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
-        private java.util.List<EventSourceReplace> sources = java.util.Collections.emptyList();
-        private java.util.List<String> destinationIds = java.util.Collections.emptyList();
+        private Optional<java.util.List<EventSourceReplace>> sources = Optional.empty();
+        private Optional<java.util.List<String>> destinationIds = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -470,7 +472,7 @@ public class EventSubscriptions {
          * @return the call builder instance
          */
         public UpdateCallBuilder sources(final java.util.List<EventSourceReplace> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required");
+            this.sources = Optional.of(Objects.requireNonNull(sources, "sources is required"));
             return this;
         }
 
@@ -481,7 +483,7 @@ public class EventSubscriptions {
          * @return the call builder instance
          */
         public UpdateCallBuilder sources(final Optional<java.util.List<EventSourceReplace>> sources) {
-            this.sources = Objects.requireNonNull(sources, "sources is required").orElse(java.util.Collections.emptyList());
+            this.sources = Objects.requireNonNull(sources, "sources is required");
             return this;
         }
         
@@ -493,7 +495,7 @@ public class EventSubscriptions {
          * @return the call builder instance
          */
         public UpdateCallBuilder destinationIds(final java.util.List<String> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
+            this.destinationIds = Optional.of(Objects.requireNonNull(destinationIds, "destinationIds is required"));
             return this;
         }
 
@@ -505,7 +507,7 @@ public class EventSubscriptions {
          * @return the call builder instance
          */
         public UpdateCallBuilder destinationIds(final Optional<java.util.List<String>> destinationIds) {
-            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required").orElse(java.util.Collections.emptyList());
+            this.destinationIds = Objects.requireNonNull(destinationIds, "destinationIds is required");
             return this;
         }
         

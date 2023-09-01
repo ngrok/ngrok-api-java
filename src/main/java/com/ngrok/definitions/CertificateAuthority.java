@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class CertificateAuthority {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("ca_pem")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String caPem;
@@ -67,8 +69,8 @@ public class CertificateAuthority {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("ca_pem") final String caPem,
         @JsonProperty("subject_common_name") final String subjectCommonName,
         @JsonProperty("not_before") final java.time.OffsetDateTime notBefore,
@@ -79,8 +81,8 @@ public class CertificateAuthority {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.caPem = Objects.requireNonNull(caPem, "caPem is required");
         this.subjectCommonName = Objects.requireNonNull(subjectCommonName, "subjectCommonName is required");
         this.notBefore = Objects.requireNonNull(notBefore, "notBefore is required");
@@ -120,9 +122,9 @@ public class CertificateAuthority {
      * human-readable description of this Certificate Authority. optional, max 255
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -130,9 +132,9 @@ public class CertificateAuthority {
      * arbitrary user-defined machine-readable data of this Certificate Authority.
      * optional, max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -239,8 +241,8 @@ public class CertificateAuthority {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', caPem='" + this.caPem +
             "', subjectCommonName='" + this.subjectCommonName +
             "', notBefore='" + this.notBefore +

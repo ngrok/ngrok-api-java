@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class SshCertificateAuthority {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("public_key")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String publicKey;
@@ -51,16 +53,16 @@ public class SshCertificateAuthority {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("public_key") final String publicKey,
         @JsonProperty("key_type") final String keyType
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.publicKey = Objects.requireNonNull(publicKey, "publicKey is required");
         this.keyType = Objects.requireNonNull(keyType, "keyType is required");
     }
@@ -97,9 +99,9 @@ public class SshCertificateAuthority {
      * human-readable description of this SSH Certificate Authority. optional, max 255
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -107,9 +109,9 @@ public class SshCertificateAuthority {
      * arbitrary user-defined machine-readable data of this SSH Certificate Authority.
      * optional, max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -171,8 +173,8 @@ public class SshCertificateAuthority {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', publicKey='" + this.publicKey +
             "', keyType='" + this.keyType +
             "'}";

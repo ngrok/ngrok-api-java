@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class IpRestriction {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("enforced")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final boolean enforced;
@@ -55,8 +57,8 @@ public class IpRestriction {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("enforced") final Boolean enforced,
         @JsonProperty("type") final String type,
         @JsonProperty("ip_policies") final java.util.List<Ref> ipPolicies
@@ -64,8 +66,8 @@ public class IpRestriction {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.enforced = Objects.requireNonNull(enforced, "enforced is required");
         this.type = Objects.requireNonNull(type, "type is required");
         this.ipPolicies = ipPolicies != null ? ipPolicies : java.util.Collections.emptyList();
@@ -101,9 +103,9 @@ public class IpRestriction {
     /**
      * human-readable description of this IP restriction. optional, max 255 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -111,9 +113,9 @@ public class IpRestriction {
      * arbitrary user-defined machine-readable data of this IP restriction. optional,
      * max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -190,8 +192,8 @@ public class IpRestriction {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', enforced='" + this.enforced +
             "', type='" + this.type +
             "', ipPolicies='" + this.ipPolicies +

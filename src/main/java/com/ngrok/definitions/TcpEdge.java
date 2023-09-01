@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,10 +20,10 @@ public class TcpEdge {
     private final String id;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
@@ -53,8 +55,8 @@ public class TcpEdge {
     @JsonCreator
     public TcpEdge(
         @JsonProperty("id") final String id,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("hostports") final Optional<java.util.List<String>> hostports,
@@ -62,8 +64,8 @@ public class TcpEdge {
         @JsonProperty("ip_restriction") final Optional<EndpointIpPolicy> ipRestriction
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.hostports = hostports != null ? hostports : Optional.empty();
@@ -84,9 +86,9 @@ public class TcpEdge {
      * human-readable description of what this edge will be used for; optional, max 255
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -94,9 +96,9 @@ public class TcpEdge {
      * arbitrary user-defined machine-readable data of this edge. Optional, max 4096
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -185,8 +187,8 @@ public class TcpEdge {
     public String toString() {
         return "TcpEdge{" +
             "id='" + this.id +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', createdAt='" + this.createdAt +
             "', uri='" + this.uri +
             "', hostports='" + this.hostports.map(Object::toString).orElse("(null)") +

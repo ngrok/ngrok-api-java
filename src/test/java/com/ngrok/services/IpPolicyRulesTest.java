@@ -1,6 +1,9 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.linecorp.armeria.common.HttpHeaderNames;
 import com.ngrok.Ngrok;
 import com.ngrok.TestBase;
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,16 +31,16 @@ public class IpPolicyRulesTest extends TestBase {
         "some-id",
         URI.create("https://api.ngrok.com/ip_policies/some-id"),
         OffsetDateTime.now(),
-        "",
-        ""
+        Optional.of(""),
+        Optional.of("")
     );
 
     private static final IpPolicyRule MOCK_IP_POLICY_RULE = new IpPolicyRule(
         "some-rule-id",
         URI.create("https://api.ngrok.com/ip_policy_rules/some-rule-id"),
         OffsetDateTime.now(),
-        "",
-        "",
+        Optional.of(""),
+        Optional.of(""),
         "10.1.2.0/24",
         new Ref("some-id", URI.create("https://api.ngrok.com/ip_policy/some-id")),
         "allow"
@@ -49,7 +53,7 @@ public class IpPolicyRulesTest extends TestBase {
     ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     @RegisterExtension
-    final WireMockExtension wireMock = new WireMockExtension();
+    final WireMockExtension wireMock = new WireMockExtension(new WireMockConfiguration().dynamicPort().dynamicHttpsPort());
 
     private Ngrok ngrok() {
         return TestBase.ngrok(wireMock.getBaseUri());
