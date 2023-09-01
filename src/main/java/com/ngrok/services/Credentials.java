@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -39,6 +41,7 @@ public class Credentials {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private java.util.List<String> acl = java.util.Collections.emptyList();
+        private Optional<String> ownerId = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -95,15 +98,18 @@ public class Credentials {
         /**
          * optional list of ACL rules. If unspecified, the credential will have no
          * restrictions. The only allowed ACL rule at this time is the <code>bind</code>
-         * rule. The <code>bind</code> rule allows the caller to restrict what domains and
-         * addresses the token is allowed to bind. For example, to allow the token to open
-         * a tunnel on example.ngrok.io your ACL would include the rule
-         * <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to
-         * match multiple domains with a common suffix. For example, you may specify a rule
-         * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
-         * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
-         * permit all actions.
+         * rule. The <code>bind</code> rule allows the caller to restrict what domains,
+         * addresses, and labels the token is allowed to bind. For example, to allow the
+         * token to open a tunnel on example.ngrok.io your ACL would include the rule
+         * <code>bind:example.ngrok.io</code>. Bind rules for domains may specify a leading
+         * wildcard to match multiple domains with a common suffix. For example, you may
+         * specify a rule of <code>bind:*.example.com</code> which will allow
+         * <code>x.example.com</code>, <code>y.example.com</code>,
+         * <code>*.example.com</code>, etc. Bind rules for labels may specify a wildcard
+         * key and/or value to match multiple labels. For example, you may specify a rule
+         * of <code>bind:*=example</code> which will allow <code>x=example</code>,
+         * <code>y=example</code>, etc. A rule of <code>&#39;*&#39;</code> is equivalent to
+         * no acl at all and will explicitly permit all actions.
          *
          * @param acl the value of the acl parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
@@ -116,21 +122,50 @@ public class Credentials {
         /**
          * optional list of ACL rules. If unspecified, the credential will have no
          * restrictions. The only allowed ACL rule at this time is the <code>bind</code>
-         * rule. The <code>bind</code> rule allows the caller to restrict what domains and
-         * addresses the token is allowed to bind. For example, to allow the token to open
-         * a tunnel on example.ngrok.io your ACL would include the rule
-         * <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to
-         * match multiple domains with a common suffix. For example, you may specify a rule
-         * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
-         * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
-         * permit all actions.
+         * rule. The <code>bind</code> rule allows the caller to restrict what domains,
+         * addresses, and labels the token is allowed to bind. For example, to allow the
+         * token to open a tunnel on example.ngrok.io your ACL would include the rule
+         * <code>bind:example.ngrok.io</code>. Bind rules for domains may specify a leading
+         * wildcard to match multiple domains with a common suffix. For example, you may
+         * specify a rule of <code>bind:*.example.com</code> which will allow
+         * <code>x.example.com</code>, <code>y.example.com</code>,
+         * <code>*.example.com</code>, etc. Bind rules for labels may specify a wildcard
+         * key and/or value to match multiple labels. For example, you may specify a rule
+         * of <code>bind:*=example</code> which will allow <code>x=example</code>,
+         * <code>y=example</code>, etc. A rule of <code>&#39;*&#39;</code> is equivalent to
+         * no acl at all and will explicitly permit all actions.
          *
          * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public CreateCallBuilder acl(final Optional<java.util.List<String>> acl) {
             this.acl = Objects.requireNonNull(acl, "acl is required").orElse(java.util.Collections.emptyList());
+            return this;
+        }
+        
+        /**
+         * If supplied at credential creation, ownership will be assigned to the specified
+         * User or Bot. Only admins may specify an owner other than themselves. Defaults to
+         * the authenticated User or Bot.
+         *
+         * @param ownerId the value of the owner_id parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder ownerId(final String ownerId) {
+            this.ownerId = Optional.of(Objects.requireNonNull(ownerId, "ownerId is required"));
+            return this;
+        }
+
+        /**
+         * If supplied at credential creation, ownership will be assigned to the specified
+         * User or Bot. Only admins may specify an owner other than themselves. Defaults to
+         * the authenticated User or Bot.
+         *
+         * @param ownerId the value of the owner_id parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder ownerId(final Optional<String> ownerId) {
+            this.ownerId = Objects.requireNonNull(ownerId, "ownerId is required");
             return this;
         }
         
@@ -147,7 +182,8 @@ public class Credentials {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl).filter(acl -> !acl.isEmpty()).map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("acl", Optional.of(this.acl).filter(acl -> !acl.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("owner_id", this.ownerId.map(Function.identity()))
                 ),
                 Optional.of(Credential.class)
             );
@@ -407,7 +443,7 @@ public class Credentials {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
-        private java.util.List<String> acl = java.util.Collections.emptyList();
+        private Optional<java.util.List<String>> acl = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -466,42 +502,48 @@ public class Credentials {
         /**
          * optional list of ACL rules. If unspecified, the credential will have no
          * restrictions. The only allowed ACL rule at this time is the <code>bind</code>
-         * rule. The <code>bind</code> rule allows the caller to restrict what domains and
-         * addresses the token is allowed to bind. For example, to allow the token to open
-         * a tunnel on example.ngrok.io your ACL would include the rule
-         * <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to
-         * match multiple domains with a common suffix. For example, you may specify a rule
-         * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
-         * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
-         * permit all actions.
+         * rule. The <code>bind</code> rule allows the caller to restrict what domains,
+         * addresses, and labels the token is allowed to bind. For example, to allow the
+         * token to open a tunnel on example.ngrok.io your ACL would include the rule
+         * <code>bind:example.ngrok.io</code>. Bind rules for domains may specify a leading
+         * wildcard to match multiple domains with a common suffix. For example, you may
+         * specify a rule of <code>bind:*.example.com</code> which will allow
+         * <code>x.example.com</code>, <code>y.example.com</code>,
+         * <code>*.example.com</code>, etc. Bind rules for labels may specify a wildcard
+         * key and/or value to match multiple labels. For example, you may specify a rule
+         * of <code>bind:*=example</code> which will allow <code>x=example</code>,
+         * <code>y=example</code>, etc. A rule of <code>&#39;*&#39;</code> is equivalent to
+         * no acl at all and will explicitly permit all actions.
          *
          * @param acl the value of the acl parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder acl(final java.util.List<String> acl) {
-            this.acl = Objects.requireNonNull(acl, "acl is required");
+            this.acl = Optional.of(Objects.requireNonNull(acl, "acl is required"));
             return this;
         }
 
         /**
          * optional list of ACL rules. If unspecified, the credential will have no
          * restrictions. The only allowed ACL rule at this time is the <code>bind</code>
-         * rule. The <code>bind</code> rule allows the caller to restrict what domains and
-         * addresses the token is allowed to bind. For example, to allow the token to open
-         * a tunnel on example.ngrok.io your ACL would include the rule
-         * <code>bind:example.ngrok.io</code>. Bind rules may specify a leading wildcard to
-         * match multiple domains with a common suffix. For example, you may specify a rule
-         * of <code>bind:*.example.com</code> which will allow <code>x.example.com</code>,
-         * <code>y.example.com</code>, <code>*.example.com</code>, etc. A rule of
-         * <code>&#39;*&#39;</code> is equivalent to no acl at all and will explicitly
-         * permit all actions.
+         * rule. The <code>bind</code> rule allows the caller to restrict what domains,
+         * addresses, and labels the token is allowed to bind. For example, to allow the
+         * token to open a tunnel on example.ngrok.io your ACL would include the rule
+         * <code>bind:example.ngrok.io</code>. Bind rules for domains may specify a leading
+         * wildcard to match multiple domains with a common suffix. For example, you may
+         * specify a rule of <code>bind:*.example.com</code> which will allow
+         * <code>x.example.com</code>, <code>y.example.com</code>,
+         * <code>*.example.com</code>, etc. Bind rules for labels may specify a wildcard
+         * key and/or value to match multiple labels. For example, you may specify a rule
+         * of <code>bind:*=example</code> which will allow <code>x=example</code>,
+         * <code>y=example</code>, etc. A rule of <code>&#39;*&#39;</code> is equivalent to
+         * no acl at all and will explicitly permit all actions.
          *
          * @param acl the value of the acl parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
         public UpdateCallBuilder acl(final Optional<java.util.List<String>> acl) {
-            this.acl = Objects.requireNonNull(acl, "acl is required").orElse(java.util.Collections.emptyList());
+            this.acl = Objects.requireNonNull(acl, "acl is required");
             return this;
         }
         

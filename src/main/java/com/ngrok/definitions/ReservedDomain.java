@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,10 +26,10 @@ public class ReservedDomain {
     private final java.time.OffsetDateTime createdAt;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("domain")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String domain;
@@ -71,8 +73,8 @@ public class ReservedDomain {
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
         @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("domain") final String domain,
         @JsonProperty("region") final String region,
         @JsonProperty("cname_target") final Optional<String> cnameTarget,
@@ -84,8 +86,8 @@ public class ReservedDomain {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.domain = Objects.requireNonNull(domain, "domain is required");
         this.region = Objects.requireNonNull(region, "region is required");
         this.cnameTarget = cnameTarget != null ? cnameTarget : Optional.empty();
@@ -125,9 +127,9 @@ public class ReservedDomain {
     /**
      * human-readable description of what this reserved domain will be used for
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -135,9 +137,9 @@ public class ReservedDomain {
      * arbitrary user-defined machine-readable data of this reserved domain. Optional,
      * max 4096 bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -263,8 +265,8 @@ public class ReservedDomain {
             "id='" + this.id +
             "', uri='" + this.uri +
             "', createdAt='" + this.createdAt +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', domain='" + this.domain +
             "', region='" + this.region +
             "', cnameTarget='" + this.cnameTarget.orElse("(null)") +

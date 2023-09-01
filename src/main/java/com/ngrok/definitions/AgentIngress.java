@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -21,10 +23,10 @@ public class AgentIngress {
     private final java.net.URI uri;
     @JsonProperty("description")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String description;
+    private final Optional<String> description;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("domain")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String domain;
@@ -37,6 +39,12 @@ public class AgentIngress {
     @JsonProperty("created_at")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final java.time.OffsetDateTime createdAt;
+    @JsonProperty("certificate_management_policy")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<AgentIngressCertPolicy> certificateManagementPolicy;
+    @JsonProperty("certificate_management_status")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<AgentIngressCertStatus> certificateManagementStatus;
 
     /**
      * Creates a new instance of {@link AgentIngress}.
@@ -49,26 +57,32 @@ public class AgentIngress {
      * @param nsTargets a list of target values to use as the values of NS records for the domain property these values will delegate control over the domain to ngrok
      * @param regionDomains a list of regional agent ingress domains that are subdomains of the value of domain this value may increase over time as ngrok adds more regions
      * @param createdAt timestamp when the Agent Ingress was created, RFC 3339 format
+     * @param certificateManagementPolicy configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled
+     * @param certificateManagementStatus status of the automatic certificate management for this domain, or null if automatic management is disabled
      */
     @JsonCreator
     public AgentIngress(
         @JsonProperty("id") final String id,
         @JsonProperty("uri") final java.net.URI uri,
-        @JsonProperty("description") final String description,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("description") final Optional<String> description,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("domain") final String domain,
         @JsonProperty("ns_targets") final java.util.List<String> nsTargets,
         @JsonProperty("region_domains") final java.util.List<String> regionDomains,
-        @JsonProperty("created_at") final java.time.OffsetDateTime createdAt
+        @JsonProperty("created_at") final java.time.OffsetDateTime createdAt,
+        @JsonProperty("certificate_management_policy") final Optional<AgentIngressCertPolicy> certificateManagementPolicy,
+        @JsonProperty("certificate_management_status") final Optional<AgentIngressCertStatus> certificateManagementStatus
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
-        this.description = Objects.requireNonNull(description, "description is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.description = description != null ? description : Optional.empty();
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.domain = Objects.requireNonNull(domain, "domain is required");
         this.nsTargets = nsTargets != null ? nsTargets : java.util.Collections.emptyList();
         this.regionDomains = regionDomains != null ? regionDomains : java.util.Collections.emptyList();
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt is required");
+        this.certificateManagementPolicy = certificateManagementPolicy != null ? certificateManagementPolicy : Optional.empty();
+        this.certificateManagementStatus = certificateManagementStatus != null ? certificateManagementStatus : Optional.empty();
     }
 
     /**
@@ -93,9 +107,9 @@ public class AgentIngress {
      * human-readable description of the use of this Agent Ingress. optional, max 255
      * bytes.
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getDescription() {
+    public Optional<String> getDescription() {
         return this.description;
     }
 
@@ -103,9 +117,9 @@ public class AgentIngress {
      * arbitrary user-defined machine-readable data of this Agent Ingress. optional,
      * max 4096 bytes
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -148,6 +162,26 @@ public class AgentIngress {
         return this.createdAt;
     }
 
+    /**
+     * configuration for automatic management of TLS certificates for this domain, or
+     * null if automatic management is disabled
+     *
+     * @return the value of the property as a {@link AgentIngressCertPolicy} wrapped in an {@link Optional}
+     */
+    public Optional<AgentIngressCertPolicy> getCertificateManagementPolicy() {
+        return this.certificateManagementPolicy;
+    }
+
+    /**
+     * status of the automatic certificate management for this domain, or null if
+     * automatic management is disabled
+     *
+     * @return the value of the property as a {@link AgentIngressCertStatus} wrapped in an {@link Optional}
+     */
+    public Optional<AgentIngressCertStatus> getCertificateManagementStatus() {
+        return this.certificateManagementStatus;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -166,7 +200,9 @@ public class AgentIngress {
             this.domain.equals(other.domain)&&
             this.nsTargets.equals(other.nsTargets)&&
             this.regionDomains.equals(other.regionDomains)&&
-            this.createdAt.equals(other.createdAt);
+            this.createdAt.equals(other.createdAt)&&
+            this.certificateManagementPolicy.equals(other.certificateManagementPolicy)&&
+            this.certificateManagementStatus.equals(other.certificateManagementStatus);
         
     }
 
@@ -180,7 +216,9 @@ public class AgentIngress {
             this.domain,
             this.nsTargets,
             this.regionDomains,
-            this.createdAt
+            this.createdAt,
+            this.certificateManagementPolicy,
+            this.certificateManagementStatus
         );
     }
 
@@ -189,12 +227,14 @@ public class AgentIngress {
         return "AgentIngress{" +
             "id='" + this.id +
             "', uri='" + this.uri +
-            "', description='" + this.description +
-            "', metadata='" + this.metadata +
+            "', description='" + this.description.orElse("(null)") +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', domain='" + this.domain +
             "', nsTargets='" + this.nsTargets +
             "', regionDomains='" + this.regionDomains +
             "', createdAt='" + this.createdAt +
+            "', certificateManagementPolicy='" + this.certificateManagementPolicy.map(Object::toString).orElse("(null)") +
+            "', certificateManagementStatus='" + this.certificateManagementStatus.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

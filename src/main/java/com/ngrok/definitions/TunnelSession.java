@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.definitions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -27,7 +29,7 @@ public class TunnelSession {
     private final String ip;
     @JsonProperty("metadata")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final String metadata;
+    private final Optional<String> metadata;
     @JsonProperty("os")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final String os;
@@ -64,7 +66,7 @@ public class TunnelSession {
         @JsonProperty("credential") final Ref credential,
         @JsonProperty("id") final String id,
         @JsonProperty("ip") final String ip,
-        @JsonProperty("metadata") final String metadata,
+        @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("os") final String os,
         @JsonProperty("region") final String region,
         @JsonProperty("started_at") final java.time.OffsetDateTime startedAt,
@@ -75,7 +77,7 @@ public class TunnelSession {
         this.credential = Objects.requireNonNull(credential, "credential is required");
         this.id = Objects.requireNonNull(id, "id is required");
         this.ip = Objects.requireNonNull(ip, "ip is required");
-        this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        this.metadata = metadata != null ? metadata : Optional.empty();
         this.os = Objects.requireNonNull(os, "os is required");
         this.region = Objects.requireNonNull(region, "region is required");
         this.startedAt = Objects.requireNonNull(startedAt, "startedAt is required");
@@ -124,9 +126,9 @@ public class TunnelSession {
      * arbitrary user-defined data specified in the metadata property in the ngrok
      * configuration file. See the metadata configuration option
      *
-     * @return the value of the property as a {@link String}
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public String getMetadata() {
+    public Optional<String> getMetadata() {
         return this.metadata;
     }
 
@@ -223,7 +225,7 @@ public class TunnelSession {
             "', credential='" + this.credential +
             "', id='" + this.id +
             "', ip='" + this.ip +
-            "', metadata='" + this.metadata +
+            "', metadata='" + this.metadata.orElse("(null)") +
             "', os='" + this.os +
             "', region='" + this.region +
             "', startedAt='" + this.startedAt +

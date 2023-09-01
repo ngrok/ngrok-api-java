@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok.services;
 
 import com.ngrok.NgrokApiClient;
@@ -35,6 +37,7 @@ public class AgentIngresses {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private final String domain;
+        private Optional<AgentIngressCertPolicy> certificateManagementPolicy = Optional.empty();
 
         private CreateCallBuilder(
             final String domain
@@ -91,6 +94,30 @@ public class AgentIngresses {
         }
         
         /**
+         * configuration for automatic management of TLS certificates for this domain, or
+         * null if automatic management is disabled. Optional.
+         *
+         * @param certificateManagementPolicy the value of the certificate_management_policy parameter as a {@link AgentIngressCertPolicy}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder certificateManagementPolicy(final AgentIngressCertPolicy certificateManagementPolicy) {
+            this.certificateManagementPolicy = Optional.of(Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required"));
+            return this;
+        }
+
+        /**
+         * configuration for automatic management of TLS certificates for this domain, or
+         * null if automatic management is disabled. Optional.
+         *
+         * @param certificateManagementPolicy the value of the certificate_management_policy parameter as an {@link Optional} of {@link AgentIngressCertPolicy}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder certificateManagementPolicy(final Optional<AgentIngressCertPolicy> certificateManagementPolicy) {
+            this.certificateManagementPolicy = Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link AgentIngress}
@@ -103,7 +130,8 @@ public class AgentIngresses {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("domain", Optional.of(this.domain))
+                    new AbstractMap.SimpleEntry<>("domain", Optional.of(this.domain)),
+                    new AbstractMap.SimpleEntry<>("certificate_management_policy", this.certificateManagementPolicy.map(Function.identity()))
                 ),
                 Optional.of(AgentIngress.class)
             );
@@ -364,6 +392,7 @@ public class AgentIngresses {
         private final String id;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
+        private Optional<AgentIngressCertPolicy> certificateManagementPolicy = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -420,6 +449,30 @@ public class AgentIngresses {
         }
         
         /**
+         * configuration for automatic management of TLS certificates for this domain, or
+         * null if automatic management is disabled. Optional.
+         *
+         * @param certificateManagementPolicy the value of the certificate_management_policy parameter as a {@link AgentIngressCertPolicy}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder certificateManagementPolicy(final AgentIngressCertPolicy certificateManagementPolicy) {
+            this.certificateManagementPolicy = Optional.of(Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required"));
+            return this;
+        }
+
+        /**
+         * configuration for automatic management of TLS certificates for this domain, or
+         * null if automatic management is disabled. Optional.
+         *
+         * @param certificateManagementPolicy the value of the certificate_management_policy parameter as an {@link Optional} of {@link AgentIngressCertPolicy}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder certificateManagementPolicy(final Optional<AgentIngressCertPolicy> certificateManagementPolicy) {
+            this.certificateManagementPolicy = Objects.requireNonNull(certificateManagementPolicy, "certificateManagementPolicy is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link AgentIngress}
@@ -431,7 +484,8 @@ public class AgentIngresses {
                 Stream.empty(),
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("certificate_management_policy", this.certificateManagementPolicy.map(Function.identity()))
                 ),
                 Optional.of(AgentIngress.class)
             );

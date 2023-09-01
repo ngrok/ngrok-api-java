@@ -1,3 +1,5 @@
+/* Code generated for API Clients. DO NOT EDIT. */
+
 package com.ngrok;
 
 import com.ngrok.definitions.AwsAuth;
@@ -15,6 +17,7 @@ import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,9 +26,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class EventSubscriptionTestBase extends TestBase {
     public static final EventDestination EVENT_DESTINATION = new EventDestination(
         "9876543abcdefg",
-        "Some extra metadata about this destination",
+        Optional.of("Some extra metadata about this destination"),
         OffsetDateTime.now(),
-        "This is a cool destination",
+        Optional.of("This is a cool destination"),
         "json",
         EventTarget.newBuilder()
             .cloudwatchLogs(
@@ -62,8 +65,8 @@ public abstract class EventSubscriptionTestBase extends TestBase {
         "abcdef123456",
         URI.create("https://api.ngrok.com/event_subscriptions/abcdef123456"),
         OffsetDateTime.parse("2021-06-08T21:09:00-07:00"),
-        "this event subscription is quite meta",
-        "this is a great event subscription",
+        Optional.of("this event subscription is quite meta"),
+        Optional.of("this is a great event subscription"),
         Collections.singletonList(EVENT_SOURCE),
         USE_LIVE_API ? Collections.emptyList() : Collections.singletonList(EVENT_DESTINATION_REF)
     );
@@ -78,7 +81,7 @@ public abstract class EventSubscriptionTestBase extends TestBase {
         entry("created_at", EVENT_SUBSCRIPTION.getCreatedAt())
     ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    public static void assertEventSubscriptionFields(final EventSubscription eventSubscription, final String expectedDescription, final List<String> expectedEventDestinationIds) {
+    public static void assertEventSubscriptionFields(final EventSubscription eventSubscription, final Optional<String> expectedDescription, final List<String> expectedEventDestinationIds) {
         assertThat(eventSubscription).isNotNull();
 
         if (USE_LIVE_API) {
@@ -102,7 +105,7 @@ public abstract class EventSubscriptionTestBase extends TestBase {
         assertEventSubscriptionFields(eventSubscription, EVENT_SUBSCRIPTION.getDescription(), expectedEventDestinationIds);
     }
 
-    public static void assertEventSubscriptionFields(final EventSubscription eventSubscription, final String expectedDescription) {
+    public static void assertEventSubscriptionFields(final EventSubscription eventSubscription, final Optional<String> expectedDescription) {
         assertEventSubscriptionFields(eventSubscription, expectedDescription, EVENT_SUBSCRIPTION.getDestinations().stream().map(Ref::getId).collect(Collectors.toList()));
     }
 
