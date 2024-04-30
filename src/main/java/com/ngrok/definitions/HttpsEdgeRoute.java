@@ -72,6 +72,12 @@ public class HttpsEdgeRoute {
     @JsonProperty("websocket_tcp_converter")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointWebsocketTcpConverter> websocketTcpConverter;
+    @JsonProperty("user_agent_filter")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointUserAgentFilter> userAgentFilter;
+    @JsonProperty("policy")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointPolicy> policy;
 
     /**
      * Creates a new instance of {@link HttpsEdgeRoute}.
@@ -95,6 +101,8 @@ public class HttpsEdgeRoute {
      * @param saml saml module configuration or <code>null</code>
      * @param oidc oidc module configuration or <code>null</code>
      * @param websocketTcpConverter websocket to tcp adapter configuration or <code>null</code>
+     * @param userAgentFilter the value of the <code>user_agent_filter</code> parameter as a {@link EndpointUserAgentFilter}
+     * @param policy the traffic policy associated with this edge or null
      */
     @JsonCreator
     public HttpsEdgeRoute(
@@ -116,7 +124,9 @@ public class HttpsEdgeRoute {
         @JsonProperty("oauth") final Optional<EndpointOAuth> oauth,
         @JsonProperty("saml") final Optional<EndpointSaml> saml,
         @JsonProperty("oidc") final Optional<EndpointOidc> oidc,
-        @JsonProperty("websocket_tcp_converter") final Optional<EndpointWebsocketTcpConverter> websocketTcpConverter
+        @JsonProperty("websocket_tcp_converter") final Optional<EndpointWebsocketTcpConverter> websocketTcpConverter,
+        @JsonProperty("user_agent_filter") final Optional<EndpointUserAgentFilter> userAgentFilter,
+        @JsonProperty("policy") final Optional<EndpointPolicy> policy
     ) {
         this.edgeId = Objects.requireNonNull(edgeId, "edgeId is required");
         this.id = Objects.requireNonNull(id, "id is required");
@@ -137,6 +147,8 @@ public class HttpsEdgeRoute {
         this.saml = saml != null ? saml : Optional.empty();
         this.oidc = oidc != null ? oidc : Optional.empty();
         this.websocketTcpConverter = websocketTcpConverter != null ? websocketTcpConverter : Optional.empty();
+        this.userAgentFilter = userAgentFilter != null ? userAgentFilter : Optional.empty();
+        this.policy = policy != null ? policy : Optional.empty();
     }
 
     /**
@@ -314,6 +326,24 @@ public class HttpsEdgeRoute {
         return this.websocketTcpConverter;
     }
 
+    /**
+     * Fetches the value of the <code>userAgentFilter</code> property.
+     *
+     * @return the value of the property as a {@link EndpointUserAgentFilter} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointUserAgentFilter> getUserAgentFilter() {
+        return this.userAgentFilter;
+    }
+
+    /**
+     * the traffic policy associated with this edge or null
+     *
+     * @return the value of the property as a {@link EndpointPolicy} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointPolicy> getPolicy() {
+        return this.policy;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -343,7 +373,9 @@ public class HttpsEdgeRoute {
             this.oauth.equals(other.oauth)&&
             this.saml.equals(other.saml)&&
             this.oidc.equals(other.oidc)&&
-            this.websocketTcpConverter.equals(other.websocketTcpConverter);
+            this.websocketTcpConverter.equals(other.websocketTcpConverter)&&
+            this.userAgentFilter.equals(other.userAgentFilter)&&
+            this.policy.equals(other.policy);
         
     }
 
@@ -368,7 +400,9 @@ public class HttpsEdgeRoute {
             this.oauth,
             this.saml,
             this.oidc,
-            this.websocketTcpConverter
+            this.websocketTcpConverter,
+            this.userAgentFilter,
+            this.policy
         );
     }
 
@@ -394,6 +428,8 @@ public class HttpsEdgeRoute {
             "', saml='" + this.saml.map(Object::toString).orElse("(null)") +
             "', oidc='" + this.oidc.map(Object::toString).orElse("(null)") +
             "', websocketTcpConverter='" + this.websocketTcpConverter.map(Object::toString).orElse("(null)") +
+            "', userAgentFilter='" + this.userAgentFilter.map(Object::toString).orElse("(null)") +
+            "', policy='" + this.policy.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

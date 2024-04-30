@@ -61,8 +61,8 @@ public class ReservedDomain {
      * @param description human-readable description of what this reserved domain will be used for
      * @param metadata arbitrary user-defined machine-readable data of this reserved domain. Optional, max 4096 bytes.
      * @param domain hostname of the reserved domain
-     * @param region reserve the domain in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa)
-     * @param cnameTarget DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of *.ngrok.io
+     * @param region deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (au, eu, ap, us, jp, in, sa)
+     * @param cnameTarget DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of an ngrok owned domain (e.g. *.ngrok.app)
      * @param certificate object referencing the TLS certificate used for connections to this domain. This can be either a user-uploaded certificate, the most recently issued automatic one, or null otherwise.
      * @param certificateManagementPolicy configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled
      * @param certificateManagementStatus status of the automatic certificate management for this domain, or null if automatic management is disabled
@@ -153,8 +153,10 @@ public class ReservedDomain {
     }
 
     /**
-     * reserve the domain in this geographic ngrok datacenter. Optional, default is us.
-     * (au, eu, ap, us, jp, in, sa)
+     * deprecated: With the launch of the ngrok Global Network domains traffic is now
+     * handled globally. This field applied only to endpoints. Note that agents may
+     * still connect to specific regions. Optional, null by default. (au, eu, ap, us,
+     * jp, in, sa)
      *
      * @return the value of the property as a {@link String}
      */
@@ -164,7 +166,7 @@ public class ReservedDomain {
 
     /**
      * DNS CNAME target for a custom hostname, or null if the reserved domain is a
-     * subdomain of *.ngrok.io
+     * subdomain of an ngrok owned domain (e.g. *.ngrok.app)
      *
      * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */

@@ -50,6 +50,8 @@ public class EdgesHttpsRoutes {
         private Optional<EndpointSamlMutate> saml = Optional.empty();
         private Optional<EndpointOidc> oidc = Optional.empty();
         private Optional<EndpointWebsocketTcpConverter> websocketTcpConverter = Optional.empty();
+        private Optional<EndpointUserAgentFilter> userAgentFilter = Optional.empty();
+        private Optional<EndpointPolicy> policy = Optional.empty();
 
         private CreateCallBuilder(
             final String edgeId,
@@ -352,6 +354,50 @@ public class EdgesHttpsRoutes {
         }
         
         /**
+         * Sets the <code>user_agent_filter</code> parameter.
+         *
+         * @param userAgentFilter the value of the user_agent_filter parameter as a {@link EndpointUserAgentFilter}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder userAgentFilter(final EndpointUserAgentFilter userAgentFilter) {
+            this.userAgentFilter = Optional.of(Objects.requireNonNull(userAgentFilter, "userAgentFilter is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>user_agent_filter</code> parameter.
+         *
+         * @param userAgentFilter the value of the user_agent_filter parameter as an {@link Optional} of {@link EndpointUserAgentFilter}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder userAgentFilter(final Optional<EndpointUserAgentFilter> userAgentFilter) {
+            this.userAgentFilter = Objects.requireNonNull(userAgentFilter, "userAgentFilter is required");
+            return this;
+        }
+        
+        /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder policy(final EndpointPolicy policy) {
+            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+            return this;
+        }
+
+        /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder policy(final Optional<EndpointPolicy> policy) {
+            this.policy = Objects.requireNonNull(policy, "policy is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link HttpsEdgeRoute}
@@ -376,7 +422,9 @@ public class EdgesHttpsRoutes {
                     new AbstractMap.SimpleEntry<>("oauth", this.oauth.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("saml", this.saml.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("oidc", this.oidc.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("websocket_tcp_converter", this.websocketTcpConverter.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("websocket_tcp_converter", this.websocketTcpConverter.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("user_agent_filter", this.userAgentFilter.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
                 ),
                 Optional.of(HttpsEdgeRoute.class)
             );
@@ -504,6 +552,8 @@ public class EdgesHttpsRoutes {
         private Optional<EndpointSamlMutate> saml = Optional.empty();
         private Optional<EndpointOidc> oidc = Optional.empty();
         private Optional<EndpointWebsocketTcpConverter> websocketTcpConverter = Optional.empty();
+        private Optional<EndpointUserAgentFilter> userAgentFilter = Optional.empty();
+        private Optional<EndpointPolicy> policy = Optional.empty();
 
         private UpdateCallBuilder(
             final String edgeId,
@@ -852,6 +902,50 @@ public class EdgesHttpsRoutes {
         }
         
         /**
+         * Sets the <code>user_agent_filter</code> parameter.
+         *
+         * @param userAgentFilter the value of the user_agent_filter parameter as a {@link EndpointUserAgentFilter}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder userAgentFilter(final EndpointUserAgentFilter userAgentFilter) {
+            this.userAgentFilter = Optional.of(Objects.requireNonNull(userAgentFilter, "userAgentFilter is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>user_agent_filter</code> parameter.
+         *
+         * @param userAgentFilter the value of the user_agent_filter parameter as an {@link Optional} of {@link EndpointUserAgentFilter}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder userAgentFilter(final Optional<EndpointUserAgentFilter> userAgentFilter) {
+            this.userAgentFilter = Objects.requireNonNull(userAgentFilter, "userAgentFilter is required");
+            return this;
+        }
+        
+        /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder policy(final EndpointPolicy policy) {
+            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+            return this;
+        }
+
+        /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder policy(final Optional<EndpointPolicy> policy) {
+            this.policy = Objects.requireNonNull(policy, "policy is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link HttpsEdgeRoute}
@@ -876,7 +970,9 @@ public class EdgesHttpsRoutes {
                     new AbstractMap.SimpleEntry<>("oauth", this.oauth.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("saml", this.saml.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("oidc", this.oidc.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("websocket_tcp_converter", this.websocketTcpConverter.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("websocket_tcp_converter", this.websocketTcpConverter.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("user_agent_filter", this.userAgentFilter.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
                 ),
                 Optional.of(HttpsEdgeRoute.class)
             );

@@ -39,6 +39,7 @@ public class EdgesTcp {
         private Optional<java.util.List<String>> hostports = Optional.empty();
         private Optional<EndpointBackendMutate> backend = Optional.empty();
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
+        private Optional<EndpointPolicy> policy = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -159,6 +160,28 @@ public class EdgesTcp {
         }
         
         /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder policy(final EndpointPolicy policy) {
+            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+            return this;
+        }
+
+        /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder policy(final Optional<EndpointPolicy> policy) {
+            this.policy = Objects.requireNonNull(policy, "policy is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link TcpEdge}
@@ -173,7 +196,8 @@ public class EdgesTcp {
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("hostports", Optional.of(this.hostports).filter(hostports -> !hostports.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
                 ),
                 Optional.of(TcpEdge.class)
             );
@@ -376,6 +400,7 @@ public class EdgesTcp {
         private Optional<java.util.List<String>> hostports = Optional.empty();
         private Optional<EndpointBackendMutate> backend = Optional.empty();
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
+        private Optional<EndpointPolicy> policy = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -498,6 +523,28 @@ public class EdgesTcp {
         }
         
         /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder policy(final EndpointPolicy policy) {
+            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+            return this;
+        }
+
+        /**
+         * the traffic policy associated with this edge or null
+         *
+         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder policy(final Optional<EndpointPolicy> policy) {
+            this.policy = Objects.requireNonNull(policy, "policy is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link TcpEdge}
@@ -512,7 +559,8 @@ public class EdgesTcp {
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("hostports", Optional.of(this.hostports).filter(hostports -> !hostports.isEmpty()).map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("backend", this.backend.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
                 ),
                 Optional.of(TcpEdge.class)
             );

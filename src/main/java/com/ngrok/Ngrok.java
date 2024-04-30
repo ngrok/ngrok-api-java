@@ -120,6 +120,17 @@ public class Ngrok {
     }
     
     /**
+     * Creates a service client for BotUsers.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-bot-users">https://ngrok.com/docs/api#api-bot-users</a>.
+     *
+     * @return a service client
+     */
+    public BotUsers botUsers() {
+        return new BotUsers(this.apiClient);
+    }
+    
+    /**
      * Certificate Authorities are x509 certificates that are used to sign other
      *  x509 certificates. Attach a Certificate Authority to the Mutual TLS module
      *  to verify that the TLS certificate presented by a client has been signed by
@@ -401,6 +412,18 @@ public class Ngrok {
         }
         
         /**
+         * A static backend sends traffic to a TCP address (hostname and port) that
+         *  is reachable on the public internet.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-static-backends">https://ngrok.com/docs/api#api-static-backends</a>
+         *
+         * @return a service client
+         */
+        public StaticBackends staticAddress() {
+            return new StaticBackends(Ngrok.this.apiClient);
+        }
+        
+        /**
          * A Tunnel Group Backend balances traffic among all online tunnels that match
          *  a label selector.
          *
@@ -625,6 +648,17 @@ public class Ngrok {
          */
         public EdgeRouteWebsocketTcpConverterModule httpsEdgeRouteWebsocketTcpConverter() {
             return new EdgeRouteWebsocketTcpConverterModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link EdgeRouteUserAgentFilterModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-user-agent-filter-module">https://ngrok.com/docs/api#api-edge-route-user-agent-filter-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteUserAgentFilterModule httpsEdgeRouteUserAgentFilter() {
+            return new EdgeRouteUserAgentFilterModule(Ngrok.this.apiClient);
         }
         
         /**
