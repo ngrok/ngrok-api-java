@@ -45,6 +45,9 @@ public class TlsEdge {
     @JsonProperty("tls_termination")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointTlsTermination> tlsTermination;
+    @JsonProperty("policy")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EndpointPolicy> policy;
 
     /**
      * Creates a new instance of {@link TlsEdge}.
@@ -59,6 +62,7 @@ public class TlsEdge {
      * @param ipRestriction the value of the <code>ip_restriction</code> parameter as a {@link EndpointIpPolicy}
      * @param mutualTls the value of the <code>mutual_tls</code> parameter as a {@link EndpointMutualTls}
      * @param tlsTermination the value of the <code>tls_termination</code> parameter as a {@link EndpointTlsTermination}
+     * @param policy the traffic policy associated with this edge or null
      */
     @JsonCreator
     public TlsEdge(
@@ -71,7 +75,8 @@ public class TlsEdge {
         @JsonProperty("backend") final Optional<EndpointBackend> backend,
         @JsonProperty("ip_restriction") final Optional<EndpointIpPolicy> ipRestriction,
         @JsonProperty("mutual_tls") final Optional<EndpointMutualTls> mutualTls,
-        @JsonProperty("tls_termination") final Optional<EndpointTlsTermination> tlsTermination
+        @JsonProperty("tls_termination") final Optional<EndpointTlsTermination> tlsTermination,
+        @JsonProperty("policy") final Optional<EndpointPolicy> policy
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.description = description != null ? description : Optional.empty();
@@ -83,6 +88,7 @@ public class TlsEdge {
         this.ipRestriction = ipRestriction != null ? ipRestriction : Optional.empty();
         this.mutualTls = mutualTls != null ? mutualTls : Optional.empty();
         this.tlsTermination = tlsTermination != null ? tlsTermination : Optional.empty();
+        this.policy = policy != null ? policy : Optional.empty();
     }
 
     /**
@@ -177,6 +183,15 @@ public class TlsEdge {
         return this.tlsTermination;
     }
 
+    /**
+     * the traffic policy associated with this edge or null
+     *
+     * @return the value of the property as a {@link EndpointPolicy} wrapped in an {@link Optional}
+     */
+    public Optional<EndpointPolicy> getPolicy() {
+        return this.policy;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -197,7 +212,8 @@ public class TlsEdge {
             this.backend.equals(other.backend)&&
             this.ipRestriction.equals(other.ipRestriction)&&
             this.mutualTls.equals(other.mutualTls)&&
-            this.tlsTermination.equals(other.tlsTermination);
+            this.tlsTermination.equals(other.tlsTermination)&&
+            this.policy.equals(other.policy);
         
     }
 
@@ -213,7 +229,8 @@ public class TlsEdge {
             this.backend,
             this.ipRestriction,
             this.mutualTls,
-            this.tlsTermination
+            this.tlsTermination,
+            this.policy
         );
     }
 
@@ -230,6 +247,7 @@ public class TlsEdge {
             "', ipRestriction='" + this.ipRestriction.map(Object::toString).orElse("(null)") +
             "', mutualTls='" + this.mutualTls.map(Object::toString).orElse("(null)") +
             "', tlsTermination='" + this.tlsTermination.map(Object::toString).orElse("(null)") +
+            "', policy='" + this.policy.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

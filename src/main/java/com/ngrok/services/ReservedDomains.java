@@ -71,8 +71,10 @@ public class ReservedDomains {
         }
         
         /**
-         * reserve the domain in this geographic ngrok datacenter. Optional, default is us.
-         * (au, eu, ap, us, jp, in, sa)
+         * deprecated: With the launch of the ngrok Global Network domains traffic is now
+         * handled globally. This field applied only to endpoints. Note that agents may
+         * still connect to specific regions. Optional, null by default. (au, eu, ap, us,
+         * jp, in, sa)
          *
          * @param region the value of the region parameter as a {@link String}
          * @return the call builder instance
@@ -83,8 +85,10 @@ public class ReservedDomains {
         }
 
         /**
-         * reserve the domain in this geographic ngrok datacenter. Optional, default is us.
-         * (au, eu, ap, us, jp, in, sa)
+         * deprecated: With the launch of the ngrok Global Network domains traffic is now
+         * handled globally. This field applied only to endpoints. Note that agents may
+         * still connect to specific regions. Optional, null by default. (au, eu, ap, us,
+         * jp, in, sa)
          *
          * @param region the value of the region parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
