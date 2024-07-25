@@ -75,9 +75,9 @@ public class HttpsEdgeRoute {
     @JsonProperty("user_agent_filter")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointUserAgentFilter> userAgentFilter;
-    @JsonProperty("policy")
+    @JsonProperty("traffic_policy")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<EndpointPolicy> policy;
+    private final Optional<EndpointTrafficPolicy> trafficPolicy;
 
     /**
      * Creates a new instance of {@link HttpsEdgeRoute}.
@@ -102,7 +102,7 @@ public class HttpsEdgeRoute {
      * @param oidc oidc module configuration or <code>null</code>
      * @param websocketTcpConverter websocket to tcp adapter configuration or <code>null</code>
      * @param userAgentFilter the value of the <code>user_agent_filter</code> parameter as a {@link EndpointUserAgentFilter}
-     * @param policy the traffic policy associated with this edge or null
+     * @param trafficPolicy the traffic policy associated with this edge or null
      */
     @JsonCreator
     public HttpsEdgeRoute(
@@ -126,7 +126,7 @@ public class HttpsEdgeRoute {
         @JsonProperty("oidc") final Optional<EndpointOidc> oidc,
         @JsonProperty("websocket_tcp_converter") final Optional<EndpointWebsocketTcpConverter> websocketTcpConverter,
         @JsonProperty("user_agent_filter") final Optional<EndpointUserAgentFilter> userAgentFilter,
-        @JsonProperty("policy") final Optional<EndpointPolicy> policy
+        @JsonProperty("traffic_policy") final Optional<EndpointTrafficPolicy> trafficPolicy
     ) {
         this.edgeId = Objects.requireNonNull(edgeId, "edgeId is required");
         this.id = Objects.requireNonNull(id, "id is required");
@@ -148,7 +148,7 @@ public class HttpsEdgeRoute {
         this.oidc = oidc != null ? oidc : Optional.empty();
         this.websocketTcpConverter = websocketTcpConverter != null ? websocketTcpConverter : Optional.empty();
         this.userAgentFilter = userAgentFilter != null ? userAgentFilter : Optional.empty();
-        this.policy = policy != null ? policy : Optional.empty();
+        this.trafficPolicy = trafficPolicy != null ? trafficPolicy : Optional.empty();
     }
 
     /**
@@ -338,10 +338,10 @@ public class HttpsEdgeRoute {
     /**
      * the traffic policy associated with this edge or null
      *
-     * @return the value of the property as a {@link EndpointPolicy} wrapped in an {@link Optional}
+     * @return the value of the property as a {@link EndpointTrafficPolicy} wrapped in an {@link Optional}
      */
-    public Optional<EndpointPolicy> getPolicy() {
-        return this.policy;
+    public Optional<EndpointTrafficPolicy> getTrafficPolicy() {
+        return this.trafficPolicy;
     }
 
     @Override
@@ -375,7 +375,7 @@ public class HttpsEdgeRoute {
             this.oidc.equals(other.oidc)&&
             this.websocketTcpConverter.equals(other.websocketTcpConverter)&&
             this.userAgentFilter.equals(other.userAgentFilter)&&
-            this.policy.equals(other.policy);
+            this.trafficPolicy.equals(other.trafficPolicy);
         
     }
 
@@ -402,7 +402,7 @@ public class HttpsEdgeRoute {
             this.oidc,
             this.websocketTcpConverter,
             this.userAgentFilter,
-            this.policy
+            this.trafficPolicy
         );
     }
 
@@ -429,7 +429,7 @@ public class HttpsEdgeRoute {
             "', oidc='" + this.oidc.map(Object::toString).orElse("(null)") +
             "', websocketTcpConverter='" + this.websocketTcpConverter.map(Object::toString).orElse("(null)") +
             "', userAgentFilter='" + this.userAgentFilter.map(Object::toString).orElse("(null)") +
-            "', policy='" + this.policy.map(Object::toString).orElse("(null)") +
+            "', trafficPolicy='" + this.trafficPolicy.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

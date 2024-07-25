@@ -41,7 +41,7 @@ public class EdgesTls {
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
         private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
         private Optional<EndpointTlsTermination> tlsTermination = Optional.empty();
-        private Optional<EndpointPolicy> policy = Optional.empty();
+        private Optional<EndpointTrafficPolicy> trafficPolicy = Optional.empty();
 
         private CreateCallBuilder(
         ) {
@@ -208,22 +208,22 @@ public class EdgesTls {
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as a {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public CreateCallBuilder policy(final EndpointPolicy policy) {
-            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+        public CreateCallBuilder trafficPolicy(final EndpointTrafficPolicy trafficPolicy) {
+            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
             return this;
         }
 
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public CreateCallBuilder policy(final Optional<EndpointPolicy> policy) {
-            this.policy = Objects.requireNonNull(policy, "policy is required");
+        public CreateCallBuilder trafficPolicy(final Optional<EndpointTrafficPolicy> trafficPolicy) {
+            this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
             return this;
         }
         
@@ -245,7 +245,7 @@ public class EdgesTls {
                     new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("mutual_tls", this.mutualTls.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("tls_termination", this.tlsTermination.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity()))
                 ),
                 Optional.of(TlsEdge.class)
             );
@@ -450,7 +450,7 @@ public class EdgesTls {
         private Optional<EndpointIpPolicyMutate> ipRestriction = Optional.empty();
         private Optional<EndpointMutualTlsMutate> mutualTls = Optional.empty();
         private Optional<EndpointTlsTermination> tlsTermination = Optional.empty();
-        private Optional<EndpointPolicy> policy = Optional.empty();
+        private Optional<EndpointTrafficPolicy> trafficPolicy = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -619,22 +619,22 @@ public class EdgesTls {
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as a {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public UpdateCallBuilder policy(final EndpointPolicy policy) {
-            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+        public UpdateCallBuilder trafficPolicy(final EndpointTrafficPolicy trafficPolicy) {
+            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
             return this;
         }
 
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public UpdateCallBuilder policy(final Optional<EndpointPolicy> policy) {
-            this.policy = Objects.requireNonNull(policy, "policy is required");
+        public UpdateCallBuilder trafficPolicy(final Optional<EndpointTrafficPolicy> trafficPolicy) {
+            this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
             return this;
         }
         
@@ -656,7 +656,7 @@ public class EdgesTls {
                     new AbstractMap.SimpleEntry<>("ip_restriction", this.ipRestriction.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("mutual_tls", this.mutualTls.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("tls_termination", this.tlsTermination.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity()))
                 ),
                 Optional.of(TlsEdge.class)
             );

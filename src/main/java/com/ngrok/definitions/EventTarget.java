@@ -23,6 +23,7 @@ public class EventTarget {
         private Optional<EventTargetKinesis> kinesis = Optional.empty();
         private Optional<EventTargetCloudwatchLogs> cloudwatchLogs = Optional.empty();
         private Optional<EventTargetDatadog> datadog = Optional.empty();
+        private Optional<EventTargetAzureLogsIngestion> azureLogsIngestion = Optional.empty();
 
         private Builder(
         ) {
@@ -117,6 +118,28 @@ public class EventTarget {
         }
 
         /**
+         * Sets the azure_logs_ingestion property
+         *
+         * @param azureLogsIngestion the value of the <code>azure_logs_ingestion</code> parameter as a {@link EventTargetAzureLogsIngestion}
+         * @return this builder instance
+         */
+        public Builder azureLogsIngestion(final EventTargetAzureLogsIngestion azureLogsIngestion) {
+            this.azureLogsIngestion = Optional.of(Objects.requireNonNull(azureLogsIngestion, "azureLogsIngestion is required"));
+            return this;
+        }
+
+        /**
+         * Sets the azure_logs_ingestion property
+         *
+         * @param azureLogsIngestion the value of the <code>azure_logs_ingestion</code> parameter as a {@link EventTargetAzureLogsIngestion}, wrapped in an {@link Optional}
+         * @return this builder instance
+         */
+        public Builder azureLogsIngestion(final Optional<EventTargetAzureLogsIngestion> azureLogsIngestion) {
+            this.azureLogsIngestion = Objects.requireNonNull(azureLogsIngestion, "azureLogsIngestion is required");
+            return this;
+        }
+
+        /**
          * Constructs the {@link EventTarget} instance.
          *
          * @return a new {@link EventTarget}
@@ -126,7 +149,8 @@ public class EventTarget {
                 this.firehose,
                 this.kinesis,
                 this.cloudwatchLogs,
-                this.datadog
+                this.datadog,
+                this.azureLogsIngestion
             );
         }
     }
@@ -154,6 +178,9 @@ public class EventTarget {
     @JsonProperty("datadog")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EventTargetDatadog> datadog;
+    @JsonProperty("azure_logs_ingestion")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<EventTargetAzureLogsIngestion> azureLogsIngestion;
 
     /**
      * Creates a new instance of {@link EventTarget}.
@@ -162,18 +189,21 @@ public class EventTarget {
      * @param kinesis Configuration used to send events to Amazon Kinesis.
      * @param cloudwatchLogs Configuration used to send events to Amazon CloudWatch Logs.
      * @param datadog Configuration used to send events to Datadog.
+     * @param azureLogsIngestion the value of the <code>azure_logs_ingestion</code> parameter as a {@link EventTargetAzureLogsIngestion}
      */
     @JsonCreator
     private EventTarget(
         @JsonProperty("firehose") final Optional<EventTargetFirehose> firehose,
         @JsonProperty("kinesis") final Optional<EventTargetKinesis> kinesis,
         @JsonProperty("cloudwatch_logs") final Optional<EventTargetCloudwatchLogs> cloudwatchLogs,
-        @JsonProperty("datadog") final Optional<EventTargetDatadog> datadog
+        @JsonProperty("datadog") final Optional<EventTargetDatadog> datadog,
+        @JsonProperty("azure_logs_ingestion") final Optional<EventTargetAzureLogsIngestion> azureLogsIngestion
     ) {
         this.firehose = firehose != null ? firehose : Optional.empty();
         this.kinesis = kinesis != null ? kinesis : Optional.empty();
         this.cloudwatchLogs = cloudwatchLogs != null ? cloudwatchLogs : Optional.empty();
         this.datadog = datadog != null ? datadog : Optional.empty();
+        this.azureLogsIngestion = azureLogsIngestion != null ? azureLogsIngestion : Optional.empty();
     }
 
     /**
@@ -212,6 +242,15 @@ public class EventTarget {
         return this.datadog;
     }
 
+    /**
+     * Fetches the value of the <code>azureLogsIngestion</code> property.
+     *
+     * @return the value of the property as a {@link EventTargetAzureLogsIngestion} wrapped in an {@link Optional}
+     */
+    public Optional<EventTargetAzureLogsIngestion> getAzureLogsIngestion() {
+        return this.azureLogsIngestion;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -226,7 +265,8 @@ public class EventTarget {
             this.firehose.equals(other.firehose)&&
             this.kinesis.equals(other.kinesis)&&
             this.cloudwatchLogs.equals(other.cloudwatchLogs)&&
-            this.datadog.equals(other.datadog);
+            this.datadog.equals(other.datadog)&&
+            this.azureLogsIngestion.equals(other.azureLogsIngestion);
         
     }
 
@@ -236,7 +276,8 @@ public class EventTarget {
             this.firehose,
             this.kinesis,
             this.cloudwatchLogs,
-            this.datadog
+            this.datadog,
+            this.azureLogsIngestion
         );
     }
 
@@ -247,6 +288,7 @@ public class EventTarget {
             "', kinesis='" + this.kinesis.map(Object::toString).orElse("(null)") +
             "', cloudwatchLogs='" + this.cloudwatchLogs.map(Object::toString).orElse("(null)") +
             "', datadog='" + this.datadog.map(Object::toString).orElse("(null)") +
+            "', azureLogsIngestion='" + this.azureLogsIngestion.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }

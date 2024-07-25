@@ -39,9 +39,9 @@ public class TcpEdge {
     @JsonProperty("ip_restriction")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<EndpointIpPolicy> ipRestriction;
-    @JsonProperty("policy")
+    @JsonProperty("traffic_policy")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<EndpointPolicy> policy;
+    private final Optional<EndpointTrafficPolicy> trafficPolicy;
 
     /**
      * Creates a new instance of {@link TcpEdge}.
@@ -54,7 +54,7 @@ public class TcpEdge {
      * @param hostports hostports served by this edge
      * @param backend edge modules
      * @param ipRestriction the value of the <code>ip_restriction</code> parameter as a {@link EndpointIpPolicy}
-     * @param policy the traffic policy associated with this edge or null
+     * @param trafficPolicy the traffic policy associated with this edge or null
      */
     @JsonCreator
     public TcpEdge(
@@ -66,7 +66,7 @@ public class TcpEdge {
         @JsonProperty("hostports") final Optional<java.util.List<String>> hostports,
         @JsonProperty("backend") final Optional<EndpointBackend> backend,
         @JsonProperty("ip_restriction") final Optional<EndpointIpPolicy> ipRestriction,
-        @JsonProperty("policy") final Optional<EndpointPolicy> policy
+        @JsonProperty("traffic_policy") final Optional<EndpointTrafficPolicy> trafficPolicy
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.description = description != null ? description : Optional.empty();
@@ -76,7 +76,7 @@ public class TcpEdge {
         this.hostports = hostports != null ? hostports : Optional.empty();
         this.backend = backend != null ? backend : Optional.empty();
         this.ipRestriction = ipRestriction != null ? ipRestriction : Optional.empty();
-        this.policy = policy != null ? policy : Optional.empty();
+        this.trafficPolicy = trafficPolicy != null ? trafficPolicy : Optional.empty();
     }
 
     /**
@@ -156,10 +156,10 @@ public class TcpEdge {
     /**
      * the traffic policy associated with this edge or null
      *
-     * @return the value of the property as a {@link EndpointPolicy} wrapped in an {@link Optional}
+     * @return the value of the property as a {@link EndpointTrafficPolicy} wrapped in an {@link Optional}
      */
-    public Optional<EndpointPolicy> getPolicy() {
-        return this.policy;
+    public Optional<EndpointTrafficPolicy> getTrafficPolicy() {
+        return this.trafficPolicy;
     }
 
     @Override
@@ -181,7 +181,7 @@ public class TcpEdge {
             this.hostports.equals(other.hostports)&&
             this.backend.equals(other.backend)&&
             this.ipRestriction.equals(other.ipRestriction)&&
-            this.policy.equals(other.policy);
+            this.trafficPolicy.equals(other.trafficPolicy);
         
     }
 
@@ -196,7 +196,7 @@ public class TcpEdge {
             this.hostports,
             this.backend,
             this.ipRestriction,
-            this.policy
+            this.trafficPolicy
         );
     }
 
@@ -211,7 +211,7 @@ public class TcpEdge {
             "', hostports='" + this.hostports.map(Object::toString).orElse("(null)") +
             "', backend='" + this.backend.map(Object::toString).orElse("(null)") +
             "', ipRestriction='" + this.ipRestriction.map(Object::toString).orElse("(null)") +
-            "', policy='" + this.policy.map(Object::toString).orElse("(null)") +
+            "', trafficPolicy='" + this.trafficPolicy.map(Object::toString).orElse("(null)") +
             "'}";
     }
 }
