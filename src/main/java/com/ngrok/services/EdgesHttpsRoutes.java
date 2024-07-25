@@ -51,7 +51,7 @@ public class EdgesHttpsRoutes {
         private Optional<EndpointOidc> oidc = Optional.empty();
         private Optional<EndpointWebsocketTcpConverter> websocketTcpConverter = Optional.empty();
         private Optional<EndpointUserAgentFilter> userAgentFilter = Optional.empty();
-        private Optional<EndpointPolicy> policy = Optional.empty();
+        private Optional<EndpointTrafficPolicy> trafficPolicy = Optional.empty();
 
         private CreateCallBuilder(
             final String edgeId,
@@ -378,22 +378,22 @@ public class EdgesHttpsRoutes {
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as a {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public CreateCallBuilder policy(final EndpointPolicy policy) {
-            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+        public CreateCallBuilder trafficPolicy(final EndpointTrafficPolicy trafficPolicy) {
+            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
             return this;
         }
 
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public CreateCallBuilder policy(final Optional<EndpointPolicy> policy) {
-            this.policy = Objects.requireNonNull(policy, "policy is required");
+        public CreateCallBuilder trafficPolicy(final Optional<EndpointTrafficPolicy> trafficPolicy) {
+            this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
             return this;
         }
         
@@ -424,7 +424,7 @@ public class EdgesHttpsRoutes {
                     new AbstractMap.SimpleEntry<>("oidc", this.oidc.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("websocket_tcp_converter", this.websocketTcpConverter.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("user_agent_filter", this.userAgentFilter.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity()))
                 ),
                 Optional.of(HttpsEdgeRoute.class)
             );
@@ -553,7 +553,7 @@ public class EdgesHttpsRoutes {
         private Optional<EndpointOidc> oidc = Optional.empty();
         private Optional<EndpointWebsocketTcpConverter> websocketTcpConverter = Optional.empty();
         private Optional<EndpointUserAgentFilter> userAgentFilter = Optional.empty();
-        private Optional<EndpointPolicy> policy = Optional.empty();
+        private Optional<EndpointTrafficPolicy> trafficPolicy = Optional.empty();
 
         private UpdateCallBuilder(
             final String edgeId,
@@ -926,22 +926,22 @@ public class EdgesHttpsRoutes {
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as a {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as a {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public UpdateCallBuilder policy(final EndpointPolicy policy) {
-            this.policy = Optional.of(Objects.requireNonNull(policy, "policy is required"));
+        public UpdateCallBuilder trafficPolicy(final EndpointTrafficPolicy trafficPolicy) {
+            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
             return this;
         }
 
         /**
          * the traffic policy associated with this edge or null
          *
-         * @param policy the value of the policy parameter as an {@link Optional} of {@link EndpointPolicy}
+         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link EndpointTrafficPolicy}
          * @return the call builder instance
          */
-        public UpdateCallBuilder policy(final Optional<EndpointPolicy> policy) {
-            this.policy = Objects.requireNonNull(policy, "policy is required");
+        public UpdateCallBuilder trafficPolicy(final Optional<EndpointTrafficPolicy> trafficPolicy) {
+            this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
             return this;
         }
         
@@ -972,7 +972,7 @@ public class EdgesHttpsRoutes {
                     new AbstractMap.SimpleEntry<>("oidc", this.oidc.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("websocket_tcp_converter", this.websocketTcpConverter.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("user_agent_filter", this.userAgentFilter.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("policy", this.policy.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity()))
                 ),
                 Optional.of(HttpsEdgeRoute.class)
             );
