@@ -662,6 +662,17 @@ public class Ngrok {
         }
         
         /**
+         * Creates a service client for {@link EdgeRouteTrafficPolicyModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-edge-route-traffic-policy-module">https://ngrok.com/docs/api#api-edge-route-traffic-policy-module</a>
+         *
+         * @return a service client
+         */
+        public EdgeRouteTrafficPolicyModule httpsEdgeRouteTrafficPolicy() {
+            return new EdgeRouteTrafficPolicyModule(Ngrok.this.apiClient);
+        }
+        
+        /**
          * Creates a service client for {@link TcpEdgeBackendModule}.
          *
          * See also <a href="https://ngrok.com/docs/api#api-tcp-edge-backend-module">https://ngrok.com/docs/api#api-tcp-edge-backend-module</a>
@@ -681,6 +692,17 @@ public class Ngrok {
          */
         public TcpEdgeIpRestrictionModule tcpEdgeIpRestriction() {
             return new TcpEdgeIpRestrictionModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TcpEdgeTrafficPolicyModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tcp-edge-traffic-policy-module">https://ngrok.com/docs/api#api-tcp-edge-traffic-policy-module</a>
+         *
+         * @return a service client
+         */
+        public TcpEdgeTrafficPolicyModule tcpEdgeTrafficPolicy() {
+            return new TcpEdgeTrafficPolicyModule(Ngrok.this.apiClient);
         }
         
         /**
@@ -725,6 +747,17 @@ public class Ngrok {
          */
         public TlsEdgeTlsTerminationModule tlsEdgeTlsTermination() {
             return new TlsEdgeTlsTerminationModule(Ngrok.this.apiClient);
+        }
+        
+        /**
+         * Creates a service client for {@link TlsEdgeTrafficPolicyModule}.
+         *
+         * See also <a href="https://ngrok.com/docs/api#api-tls-edge-traffic-policy-module">https://ngrok.com/docs/api#api-tls-edge-traffic-policy-module</a>
+         *
+         * @return a service client
+         */
+        public TlsEdgeTrafficPolicyModule tlsEdgeTrafficPolicy() {
+            return new TlsEdgeTrafficPolicyModule(Ngrok.this.apiClient);
         }
         
     }

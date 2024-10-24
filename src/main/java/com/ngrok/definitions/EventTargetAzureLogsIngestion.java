@@ -67,7 +67,7 @@ public class EventTargetAzureLogsIngestion {
      * @param clientSecret Client Secret for the application client
      * @param logsIngestionUri Data collection endpoint logs ingestion URI
      * @param dataCollectionRuleId Data collection rule immutable ID
-     * @param dataCollectionStreamName Data collection stream name to use as destination, located instide the DCR
+     * @param dataCollectionStreamName Data collection stream name to use as destination, located inside the DCR
      * @return a new {@link Builder}
      */
     public static Builder newBuilder(
@@ -115,7 +115,7 @@ public class EventTargetAzureLogsIngestion {
      * @param clientSecret Client Secret for the application client
      * @param logsIngestionUri Data collection endpoint logs ingestion URI
      * @param dataCollectionRuleId Data collection rule immutable ID
-     * @param dataCollectionStreamName Data collection stream name to use as destination, located instide the DCR
+     * @param dataCollectionStreamName Data collection stream name to use as destination, located inside the DCR
      */
     @JsonCreator
     private EventTargetAzureLogsIngestion(
@@ -180,7 +180,7 @@ public class EventTargetAzureLogsIngestion {
     }
 
     /**
-     * Data collection stream name to use as destination, located instide the DCR
+     * Data collection stream name to use as destination, located inside the DCR
      *
      * @return the value of the property as a {@link String}
      */
