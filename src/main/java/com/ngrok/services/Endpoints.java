@@ -33,6 +33,207 @@ public class Endpoints {
     }
     
     /**
+     * A builder object encapsulating state for an unsent Create API call.
+     */
+    public class CreateCallBuilder {
+        private Optional<String> url = Optional.empty();
+        private Optional<String> type = Optional.empty();
+        private Optional<String> trafficPolicy = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private Optional<java.util.List<String>> bindings = Optional.empty();
+
+        private CreateCallBuilder(
+        ) {
+        }
+        
+        /**
+         * the url of the endpoint
+         *
+         * @param url the value of the url parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder url(final String url) {
+            this.url = Optional.of(Objects.requireNonNull(url, "url is required"));
+            return this;
+        }
+
+        /**
+         * the url of the endpoint
+         *
+         * @param url the value of the url parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder url(final Optional<String> url) {
+            this.url = Objects.requireNonNull(url, "url is required");
+            return this;
+        }
+        
+        /**
+         * whether the endpoint is <code>ephemeral</code> (served directly by an
+         * agent-initiated tunnel) or <code>edge</code> (served by an edge) or <code>cloud
+         * (represents a cloud endpoint)</code>
+         *
+         * @param type the value of the type parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder type(final String type) {
+            this.type = Optional.of(Objects.requireNonNull(type, "type is required"));
+            return this;
+        }
+
+        /**
+         * whether the endpoint is <code>ephemeral</code> (served directly by an
+         * agent-initiated tunnel) or <code>edge</code> (served by an edge) or <code>cloud
+         * (represents a cloud endpoint)</code>
+         *
+         * @param type the value of the type parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder type(final Optional<String> type) {
+            this.type = Objects.requireNonNull(type, "type is required");
+            return this;
+        }
+        
+        /**
+         * The traffic policy attached to this endpoint
+         *
+         * @param trafficPolicy the value of the traffic_policy parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder trafficPolicy(final String trafficPolicy) {
+            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
+            return this;
+        }
+
+        /**
+         * The traffic policy attached to this endpoint
+         *
+         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder trafficPolicy(final Optional<String> trafficPolicy) {
+            this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
+            return this;
+        }
+        
+        /**
+         * user-supplied description of the associated tunnel
+         *
+         * @param description the value of the description parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder description(final String description) {
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
+            return this;
+        }
+
+        /**
+         * user-supplied description of the associated tunnel
+         *
+         * @param description the value of the description parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder description(final Optional<String> description) {
+            this.description = Objects.requireNonNull(description, "description is required");
+            return this;
+        }
+        
+        /**
+         * user-supplied metadata of the associated tunnel or edge object
+         *
+         * @param metadata the value of the metadata parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder metadata(final String metadata) {
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
+            return this;
+        }
+
+        /**
+         * user-supplied metadata of the associated tunnel or edge object
+         *
+         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder metadata(final Optional<String> metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            return this;
+        }
+        
+        /**
+         * the bindings associated with this endpoint
+         *
+         * @param bindings the value of the bindings parameter as a {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder bindings(final java.util.List<String> bindings) {
+            this.bindings = Optional.of(Objects.requireNonNull(bindings, "bindings is required"));
+            return this;
+        }
+
+        /**
+         * the bindings associated with this endpoint
+         *
+         * @param bindings the value of the bindings parameter as an {@link Optional} of {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder bindings(final Optional<java.util.List<String>> bindings) {
+            this.bindings = Objects.requireNonNull(bindings, "bindings is required");
+            return this;
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of {@link Endpoint}
+         */
+        public CompletionStage<Endpoint> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.POST,
+                "/endpoints",
+                Stream.empty(),
+                Stream.of(
+                    new AbstractMap.SimpleEntry<>("url", this.url.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("type", this.type.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("bindings", Optional.of(this.bindings).filter(bindings -> !bindings.isEmpty()).map(Function.identity()))
+                ),
+                Optional.of(Endpoint.class)
+            );
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @return {@link Endpoint}
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public Endpoint blockingCall() throws InterruptedException {
+            try {
+                return call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Create an endpoint, currently available only for cloud endpoints
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoints-create">https://ngrok.com/docs/api#api-endpoints-create</a>.
+     *
+     * @return a call builder for this API call
+     */
+    public CreateCallBuilder create(
+    ) {
+        return new CreateCallBuilder(
+        );
+    }
+    
+    /**
      * A builder object encapsulating state for an unsent List API call.
      */
     public class ListCallBuilder {
@@ -187,6 +388,242 @@ public class Endpoints {
         final String id
     ) {
         return new GetCallBuilder(
+            id
+        );
+    }
+    
+    /**
+     * A builder object encapsulating state for an unsent Update API call.
+     */
+    public class UpdateCallBuilder {
+        private final String id;
+        private Optional<String> url = Optional.empty();
+        private Optional<String> trafficPolicy = Optional.empty();
+        private Optional<String> description = Optional.empty();
+        private Optional<String> metadata = Optional.empty();
+        private Optional<java.util.List<String>> bindings = Optional.empty();
+
+        private UpdateCallBuilder(
+            final String id
+        ) {
+            this.id = Objects.requireNonNull(id, "id is required");
+        }
+        
+        /**
+         * the url of the endpoint
+         *
+         * @param url the value of the url parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder url(final String url) {
+            this.url = Optional.of(Objects.requireNonNull(url, "url is required"));
+            return this;
+        }
+
+        /**
+         * the url of the endpoint
+         *
+         * @param url the value of the url parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder url(final Optional<String> url) {
+            this.url = Objects.requireNonNull(url, "url is required");
+            return this;
+        }
+        
+        /**
+         * The traffic policy attached to this endpoint
+         *
+         * @param trafficPolicy the value of the traffic_policy parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder trafficPolicy(final String trafficPolicy) {
+            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
+            return this;
+        }
+
+        /**
+         * The traffic policy attached to this endpoint
+         *
+         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder trafficPolicy(final Optional<String> trafficPolicy) {
+            this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
+            return this;
+        }
+        
+        /**
+         * user-supplied description of the associated tunnel
+         *
+         * @param description the value of the description parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder description(final String description) {
+            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
+            return this;
+        }
+
+        /**
+         * user-supplied description of the associated tunnel
+         *
+         * @param description the value of the description parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder description(final Optional<String> description) {
+            this.description = Objects.requireNonNull(description, "description is required");
+            return this;
+        }
+        
+        /**
+         * user-supplied metadata of the associated tunnel or edge object
+         *
+         * @param metadata the value of the metadata parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder metadata(final String metadata) {
+            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
+            return this;
+        }
+
+        /**
+         * user-supplied metadata of the associated tunnel or edge object
+         *
+         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder metadata(final Optional<String> metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+            return this;
+        }
+        
+        /**
+         * the bindings associated with this endpoint
+         *
+         * @param bindings the value of the bindings parameter as a {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder bindings(final java.util.List<String> bindings) {
+            this.bindings = Optional.of(Objects.requireNonNull(bindings, "bindings is required"));
+            return this;
+        }
+
+        /**
+         * the bindings associated with this endpoint
+         *
+         * @param bindings the value of the bindings parameter as an {@link Optional} of {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder bindings(final Optional<java.util.List<String>> bindings) {
+            this.bindings = Objects.requireNonNull(bindings, "bindings is required");
+            return this;
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of {@link Endpoint}
+         */
+        public CompletionStage<Endpoint> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.PATCH,
+                "/endpoints/" + this.id,
+                Stream.empty(),
+                Stream.of(
+                    new AbstractMap.SimpleEntry<>("url", this.url.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("bindings", Optional.of(this.bindings).filter(bindings -> !bindings.isEmpty()).map(Function.identity()))
+                ),
+                Optional.of(Endpoint.class)
+            );
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @return {@link Endpoint}
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public Endpoint blockingCall() throws InterruptedException {
+            try {
+                return call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Update an Endpoint by ID, currently available only for cloud endpoints
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoints-update">https://ngrok.com/docs/api#api-endpoints-update</a>.
+     *
+     * @param id unique endpoint resource identifier
+     * @return a call builder for this API call
+     */
+    public UpdateCallBuilder update(
+        final String id
+    ) {
+        return new UpdateCallBuilder(
+            id
+        );
+    }
+    
+    /**
+     * A builder object encapsulating state for an unsent Delete API call.
+     */
+    public class DeleteCallBuilder {
+        private final String id;
+
+        private DeleteCallBuilder(
+            final String id
+        ) {
+            this.id = Objects.requireNonNull(id, "id is required");
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of {@link Void}
+         */
+        public CompletionStage<Void> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.DELETE,
+                "/endpoints/" + this.id,
+                Stream.empty(),
+                Stream.empty(),
+                Optional.empty()
+            );
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public void blockingCall() throws InterruptedException {
+            try {
+                call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Delete an Endpoint by ID, currently available only for cloud endpoints
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-endpoints-delete">https://ngrok.com/docs/api#api-endpoints-delete</a>.
+     *
+     * @param id a resource identifier
+     * @return a call builder for this API call
+     */
+    public DeleteCallBuilder delete(
+        final String id
+    ) {
+        return new DeleteCallBuilder(
             id
         );
     }
