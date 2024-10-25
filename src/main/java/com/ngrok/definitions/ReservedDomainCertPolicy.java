@@ -51,8 +51,8 @@ public class ReservedDomainCertPolicy {
         }
 
         /**
-         * type of private key to use when requesting certificates. Defaults to rsa, can be
-         * either rsa or ecdsa.
+         * type of private key to use when requesting certificates. Defaults to ecdsa, can
+         * be either rsa or ecdsa.
          *
          * @param privateKeyType the value of the <code>private_key_type</code> parameter as a {@link String}
          * @return this builder instance
@@ -63,8 +63,8 @@ public class ReservedDomainCertPolicy {
         }
 
         /**
-         * type of private key to use when requesting certificates. Defaults to rsa, can be
-         * either rsa or ecdsa.
+         * type of private key to use when requesting certificates. Defaults to ecdsa, can
+         * be either rsa or ecdsa.
          *
          * @param privateKeyType the value of the <code>private_key_type</code> parameter as a {@link String}, wrapped in an {@link Optional}
          * @return this builder instance
@@ -109,7 +109,7 @@ public class ReservedDomainCertPolicy {
      * Creates a new instance of {@link ReservedDomainCertPolicy}.
      *
      * @param authority certificate authority to request certificates from. The only supported value is letsencrypt.
-     * @param privateKeyType type of private key to use when requesting certificates. Defaults to rsa, can be either rsa or ecdsa.
+     * @param privateKeyType type of private key to use when requesting certificates. Defaults to ecdsa, can be either rsa or ecdsa.
      */
     @JsonCreator
     private ReservedDomainCertPolicy(
@@ -131,8 +131,8 @@ public class ReservedDomainCertPolicy {
     }
 
     /**
-     * type of private key to use when requesting certificates. Defaults to rsa, can be
-     * either rsa or ecdsa.
+     * type of private key to use when requesting certificates. Defaults to ecdsa, can
+     * be either rsa or ecdsa.
      *
      * @return the value of the property as a {@link String}
      */
