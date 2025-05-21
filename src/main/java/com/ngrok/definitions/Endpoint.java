@@ -69,18 +69,15 @@ public class Endpoint {
     @JsonProperty("upstream_url")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> upstreamUrl;
-    @JsonProperty("upstream_proto")
+    @JsonProperty("upstream_protocol")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<String> upstreamProto;
+    private final Optional<String> upstreamProtocol;
     @JsonProperty("url")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> url;
     @JsonProperty("principal")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<Ref> principal;
-    @JsonProperty("principal_id")
-    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
-    private final Optional<Ref> principalId;
     @JsonProperty("traffic_policy")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> trafficPolicy;
@@ -96,6 +93,9 @@ public class Endpoint {
     @JsonProperty("name")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Optional<String> name;
+    @JsonProperty("pooling_enabled")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final boolean poolingEnabled;
 
     /**
      * Creates a new instance of {@link Endpoint}.
@@ -118,15 +118,15 @@ public class Endpoint {
      * @param tunnel the tunnel serving requests to this endpoint, if this is an ephemeral endpoint
      * @param edge the edge serving requests to this endpoint, if this is an edge endpoint
      * @param upstreamUrl the local address the tunnel forwards to
-     * @param upstreamProto the protocol the agent uses to forward with
+     * @param upstreamProtocol the protocol the agent uses to forward with
      * @param url the url of the endpoint
      * @param principal The ID of the owner (bot or user) that owns this endpoint
-     * @param principalId TODO: deprecate me!
      * @param trafficPolicy The traffic policy attached to this endpoint
      * @param bindings the bindings associated with this endpoint
      * @param tunnelSession The tunnel session of the agent for this endpoint
      * @param uri URI of the clep API resource
      * @param name user supplied name for the endpoint
+     * @param poolingEnabled whether the endpoint allows pooling
      */
     @JsonCreator
     public Endpoint(
@@ -148,15 +148,15 @@ public class Endpoint {
         @JsonProperty("tunnel") final Optional<Ref> tunnel,
         @JsonProperty("edge") final Optional<Ref> edge,
         @JsonProperty("upstream_url") final Optional<String> upstreamUrl,
-        @JsonProperty("upstream_proto") final Optional<String> upstreamProto,
+        @JsonProperty("upstream_protocol") final Optional<String> upstreamProtocol,
         @JsonProperty("url") final Optional<String> url,
         @JsonProperty("principal") final Optional<Ref> principal,
-        @JsonProperty("principal_id") final Optional<Ref> principalId,
         @JsonProperty("traffic_policy") final Optional<String> trafficPolicy,
         @JsonProperty("bindings") final Optional<java.util.List<String>> bindings,
         @JsonProperty("tunnel_session") final Optional<Ref> tunnelSession,
         @JsonProperty("uri") final Optional<java.net.URI> uri,
-        @JsonProperty("name") final Optional<String> name
+        @JsonProperty("name") final Optional<String> name,
+        @JsonProperty("pooling_enabled") final Boolean poolingEnabled
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.region = region != null ? region : Optional.empty();
@@ -176,15 +176,15 @@ public class Endpoint {
         this.tunnel = tunnel != null ? tunnel : Optional.empty();
         this.edge = edge != null ? edge : Optional.empty();
         this.upstreamUrl = upstreamUrl != null ? upstreamUrl : Optional.empty();
-        this.upstreamProto = upstreamProto != null ? upstreamProto : Optional.empty();
+        this.upstreamProtocol = upstreamProtocol != null ? upstreamProtocol : Optional.empty();
         this.url = url != null ? url : Optional.empty();
         this.principal = principal != null ? principal : Optional.empty();
-        this.principalId = principalId != null ? principalId : Optional.empty();
         this.trafficPolicy = trafficPolicy != null ? trafficPolicy : Optional.empty();
         this.bindings = bindings != null ? bindings : Optional.empty();
         this.tunnelSession = tunnelSession != null ? tunnelSession : Optional.empty();
         this.uri = uri != null ? uri : Optional.empty();
         this.name = name != null ? name : Optional.empty();
+        this.poolingEnabled = Objects.requireNonNull(poolingEnabled, "poolingEnabled is required");
     }
 
     /**
@@ -357,8 +357,8 @@ public class Endpoint {
      *
      * @return the value of the property as a {@link String} wrapped in an {@link Optional}
      */
-    public Optional<String> getUpstreamProto() {
-        return this.upstreamProto;
+    public Optional<String> getUpstreamProtocol() {
+        return this.upstreamProtocol;
     }
 
     /**
@@ -377,15 +377,6 @@ public class Endpoint {
      */
     public Optional<Ref> getPrincipal() {
         return this.principal;
-    }
-
-    /**
-     * TODO: deprecate me!
-     *
-     * @return the value of the property as a {@link Ref} wrapped in an {@link Optional}
-     */
-    public Optional<Ref> getPrincipalId() {
-        return this.principalId;
     }
 
     /**
@@ -433,6 +424,15 @@ public class Endpoint {
         return this.name;
     }
 
+    /**
+     * whether the endpoint allows pooling
+     *
+     * @return the value of the property as a {@link boolean}
+     */
+    public boolean getPoolingEnabled() {
+        return this.poolingEnabled;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -462,15 +462,15 @@ public class Endpoint {
             this.tunnel.equals(other.tunnel)&&
             this.edge.equals(other.edge)&&
             this.upstreamUrl.equals(other.upstreamUrl)&&
-            this.upstreamProto.equals(other.upstreamProto)&&
+            this.upstreamProtocol.equals(other.upstreamProtocol)&&
             this.url.equals(other.url)&&
             this.principal.equals(other.principal)&&
-            this.principalId.equals(other.principalId)&&
             this.trafficPolicy.equals(other.trafficPolicy)&&
             this.bindings.equals(other.bindings)&&
             this.tunnelSession.equals(other.tunnelSession)&&
             this.uri.equals(other.uri)&&
-            this.name.equals(other.name);
+            this.name.equals(other.name)&&
+            this.poolingEnabled == other.poolingEnabled;
         
     }
 
@@ -495,15 +495,15 @@ public class Endpoint {
             this.tunnel,
             this.edge,
             this.upstreamUrl,
-            this.upstreamProto,
+            this.upstreamProtocol,
             this.url,
             this.principal,
-            this.principalId,
             this.trafficPolicy,
             this.bindings,
             this.tunnelSession,
             this.uri,
-            this.name
+            this.name,
+            this.poolingEnabled
         );
     }
 
@@ -528,15 +528,15 @@ public class Endpoint {
             "', tunnel='" + this.tunnel.map(Object::toString).orElse("(null)") +
             "', edge='" + this.edge.map(Object::toString).orElse("(null)") +
             "', upstreamUrl='" + this.upstreamUrl.orElse("(null)") +
-            "', upstreamProto='" + this.upstreamProto.orElse("(null)") +
+            "', upstreamProtocol='" + this.upstreamProtocol.orElse("(null)") +
             "', url='" + this.url.orElse("(null)") +
             "', principal='" + this.principal.map(Object::toString).orElse("(null)") +
-            "', principalId='" + this.principalId.map(Object::toString).orElse("(null)") +
             "', trafficPolicy='" + this.trafficPolicy.orElse("(null)") +
             "', bindings='" + this.bindings.map(Object::toString).orElse("(null)") +
             "', tunnelSession='" + this.tunnelSession.map(Object::toString).orElse("(null)") +
             "', uri='" + this.uri.map(Object::toString).orElse("(null)") +
             "', name='" + this.name.orElse("(null)") +
+            "', poolingEnabled='" + this.poolingEnabled +
             "'}";
     }
 }
