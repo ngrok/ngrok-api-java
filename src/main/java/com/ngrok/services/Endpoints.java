@@ -36,85 +36,22 @@ public class Endpoints {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private Optional<String> url = Optional.empty();
-        private Optional<String> type = Optional.empty();
-        private Optional<String> trafficPolicy = Optional.empty();
+        private final String url;
+        private final String type;
+        private final String trafficPolicy;
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<java.util.List<String>> bindings = Optional.empty();
+        private Optional<Boolean> poolingEnabled = Optional.empty();
 
         private CreateCallBuilder(
+            final String url,
+            final String type,
+            final String trafficPolicy
         ) {
-        }
-        
-        /**
-         * the url of the endpoint
-         *
-         * @param url the value of the url parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder url(final String url) {
-            this.url = Optional.of(Objects.requireNonNull(url, "url is required"));
-            return this;
-        }
-
-        /**
-         * the url of the endpoint
-         *
-         * @param url the value of the url parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder url(final Optional<String> url) {
             this.url = Objects.requireNonNull(url, "url is required");
-            return this;
-        }
-        
-        /**
-         * whether the endpoint is <code>ephemeral</code> (served directly by an
-         * agent-initiated tunnel) or <code>edge</code> (served by an edge) or <code>cloud
-         * (represents a cloud endpoint)</code>
-         *
-         * @param type the value of the type parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder type(final String type) {
-            this.type = Optional.of(Objects.requireNonNull(type, "type is required"));
-            return this;
-        }
-
-        /**
-         * whether the endpoint is <code>ephemeral</code> (served directly by an
-         * agent-initiated tunnel) or <code>edge</code> (served by an edge) or <code>cloud
-         * (represents a cloud endpoint)</code>
-         *
-         * @param type the value of the type parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder type(final Optional<String> type) {
             this.type = Objects.requireNonNull(type, "type is required");
-            return this;
-        }
-        
-        /**
-         * The traffic policy attached to this endpoint
-         *
-         * @param trafficPolicy the value of the traffic_policy parameter as a {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder trafficPolicy(final String trafficPolicy) {
-            this.trafficPolicy = Optional.of(Objects.requireNonNull(trafficPolicy, "trafficPolicy is required"));
-            return this;
-        }
-
-        /**
-         * The traffic policy attached to this endpoint
-         *
-         * @param trafficPolicy the value of the traffic_policy parameter as an {@link Optional} of {@link String}
-         * @return the call builder instance
-         */
-        public CreateCallBuilder trafficPolicy(final Optional<String> trafficPolicy) {
             this.trafficPolicy = Objects.requireNonNull(trafficPolicy, "trafficPolicy is required");
-            return this;
         }
         
         /**
@@ -184,6 +121,28 @@ public class Endpoints {
         }
         
         /**
+         * Sets the <code>pooling_enabled</code> parameter.
+         *
+         * @param poolingEnabled the value of the pooling_enabled parameter as a {@link boolean}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder poolingEnabled(final boolean poolingEnabled) {
+            this.poolingEnabled = Optional.of(Objects.requireNonNull(poolingEnabled, "poolingEnabled is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>pooling_enabled</code> parameter.
+         *
+         * @param poolingEnabled the value of the pooling_enabled parameter as an {@link Optional} of {@link boolean}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder poolingEnabled(final Optional<Boolean> poolingEnabled) {
+            this.poolingEnabled = Objects.requireNonNull(poolingEnabled, "poolingEnabled is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link Endpoint}
@@ -194,12 +153,13 @@ public class Endpoints {
                 "/endpoints",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("url", this.url.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("type", this.type.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("url", Optional.of(this.url)),
+                    new AbstractMap.SimpleEntry<>("type", Optional.of(this.type)),
+                    new AbstractMap.SimpleEntry<>("traffic_policy", Optional.of(this.trafficPolicy)),
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("bindings", Optional.of(this.bindings).filter(bindings -> !bindings.isEmpty()).map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("bindings", Optional.of(this.bindings).filter(bindings -> !bindings.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("pooling_enabled", this.poolingEnabled.map(Function.identity()))
                 ),
                 Optional.of(Endpoint.class)
             );
@@ -225,11 +185,20 @@ public class Endpoints {
      *
      * See also <a href="https://ngrok.com/docs/api#api-endpoints-create">https://ngrok.com/docs/api#api-endpoints-create</a>.
      *
+     * @param url the url of the endpoint
+     * @param type Type of endpoint. Only &#39;cloud&#39; is currently supported (represents a cloud endpoint). Defaults to &#39;cloud&#39; if not specified.
+     * @param trafficPolicy The traffic policy attached to this endpoint
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
+        final String url,
+        final String type,
+        final String trafficPolicy
     ) {
         return new CreateCallBuilder(
+            url,
+            type,
+            trafficPolicy
         );
     }
     
@@ -402,6 +371,7 @@ public class Endpoints {
         private Optional<String> description = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<java.util.List<String>> bindings = Optional.empty();
+        private Optional<Boolean> poolingEnabled = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -520,6 +490,28 @@ public class Endpoints {
         }
         
         /**
+         * Sets the <code>pooling_enabled</code> parameter.
+         *
+         * @param poolingEnabled the value of the pooling_enabled parameter as a {@link boolean}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder poolingEnabled(final boolean poolingEnabled) {
+            this.poolingEnabled = Optional.of(Objects.requireNonNull(poolingEnabled, "poolingEnabled is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>pooling_enabled</code> parameter.
+         *
+         * @param poolingEnabled the value of the pooling_enabled parameter as an {@link Optional} of {@link boolean}
+         * @return the call builder instance
+         */
+        public UpdateCallBuilder poolingEnabled(final Optional<Boolean> poolingEnabled) {
+            this.poolingEnabled = Objects.requireNonNull(poolingEnabled, "poolingEnabled is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link Endpoint}
@@ -534,7 +526,8 @@ public class Endpoints {
                     new AbstractMap.SimpleEntry<>("traffic_policy", this.trafficPolicy.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("bindings", Optional.of(this.bindings).filter(bindings -> !bindings.isEmpty()).map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("bindings", Optional.of(this.bindings).filter(bindings -> !bindings.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("pooling_enabled", this.poolingEnabled.map(Function.identity()))
                 ),
                 Optional.of(Endpoint.class)
             );
