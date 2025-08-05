@@ -1,4 +1,8 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## 0.12.0
+* Add support for `vaults`
+* Add support for `secrets`
+
 ## 0.11.0
 * Added support for Cloud Endpoints (currently in private beta).
 * Renamed `upstream_proto` to `upstream_protocol` for `endpoint` resources

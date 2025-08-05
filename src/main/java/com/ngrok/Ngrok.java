@@ -277,6 +277,18 @@ public class Ngrok {
     }
     
     /**
+     * Secrets is an api service for securely storing and managing sensitive data such
+     * as secrets, credentials, and tokens.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-secrets">https://ngrok.com/docs/api#api-secrets</a>.
+     *
+     * @return a service client
+     */
+    public Secrets secrets() {
+        return new Secrets(this.apiClient);
+    }
+    
+    /**
      * An SSH Certificate Authority is a pair of an SSH Certificate and its private
      *  key that can be used to sign other SSH host and user certificates.
      *
@@ -351,6 +363,18 @@ public class Ngrok {
      */
     public Tunnels tunnels() {
         return new Tunnels(this.apiClient);
+    }
+    
+    /**
+     * Vaults is an api service for securely storing and managing sensitive data such
+     * as secrets, credentials, and tokens.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-vaults">https://ngrok.com/docs/api#api-vaults</a>.
+     *
+     * @return a service client
+     */
+    public Vaults vaults() {
+        return new Vaults(this.apiClient);
     }
     
     /**
