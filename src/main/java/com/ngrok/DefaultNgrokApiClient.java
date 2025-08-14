@@ -194,6 +194,15 @@ public class DefaultNgrokApiClient implements NgrokApiClient {
         }
     }
 
+    private static Stream<Map.Entry<String, String>> expandQueryParam(final String key, final Object value) {
+        if (value instanceof List) {
+            final List<?> list = (List<?>) value;
+            return list.stream().map(item -> new AbstractMap.SimpleEntry<>(key, queryParamToString(item)));
+        } else {
+            return Stream.of(new AbstractMap.SimpleEntry<>(key, queryParamToString(value)));
+        }
+    }
+
     private static <T> CompletionStage<T> failedFuture(final Throwable t) {
         final CompletableFuture<T> failed = new CompletableFuture<>();
         failed.completeExceptionally(t);
@@ -259,7 +268,7 @@ public class DefaultNgrokApiClient implements NgrokApiClient {
             .path(this.baseUri.toString() + endpoint)
             .queryParams(
                 queryParams.flatMap(entry -> entry.getValue()
-                    .map(value -> Stream.of(new AbstractMap.SimpleEntry<>(entry.getKey(), queryParamToString(value))))
+                    .map(value -> expandQueryParam(entry.getKey(), value))
                     .orElse(Stream.empty())
                 ).collect(Collectors.toList())
             );
