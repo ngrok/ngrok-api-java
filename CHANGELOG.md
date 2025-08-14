@@ -1,4 +1,7 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## 0.13.0 
+* Add support for `ids` and `urls` query parameters when listing endpoint resources. 
+
 ## 0.12.0
 * Add support for `vaults`
 * Add support for `secrets`
