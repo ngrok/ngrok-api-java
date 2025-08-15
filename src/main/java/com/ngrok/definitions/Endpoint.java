@@ -124,7 +124,7 @@ public class Endpoint {
      * @param trafficPolicy The traffic policy attached to this endpoint
      * @param bindings the bindings associated with this endpoint
      * @param tunnelSession The tunnel session of the agent for this endpoint
-     * @param uri URI of the clep API resource
+     * @param uri URI of the Cloud Endpoint API resource
      * @param name user supplied name for the endpoint
      * @param poolingEnabled whether the endpoint allows pooling
      */
@@ -407,7 +407,7 @@ public class Endpoint {
     }
 
     /**
-     * URI of the clep API resource
+     * URI of the Cloud Endpoint API resource
      *
      * @return the value of the property as a {@link java.net.URI} wrapped in an {@link Optional}
      */

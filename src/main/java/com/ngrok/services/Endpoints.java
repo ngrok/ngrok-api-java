@@ -208,6 +208,8 @@ public class Endpoints {
     public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
+        private Optional<java.util.List<String>> ids = Optional.empty();
+        private Optional<java.util.List<String>> urls = Optional.empty();
 
         private ListCallBuilder(
         ) {
@@ -258,6 +260,50 @@ public class Endpoints {
         }
         
         /**
+         * Sets the <code>ids</code> parameter.
+         *
+         * @param ids the value of the ids parameter as a {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder ids(final java.util.List<String> ids) {
+            this.ids = Optional.of(Objects.requireNonNull(ids, "ids is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>ids</code> parameter.
+         *
+         * @param ids the value of the ids parameter as an {@link Optional} of {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder ids(final Optional<java.util.List<String>> ids) {
+            this.ids = Objects.requireNonNull(ids, "ids is required");
+            return this;
+        }
+        
+        /**
+         * Sets the <code>urls</code> parameter.
+         *
+         * @param urls the value of the urls parameter as a {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder urls(final java.util.List<String> urls) {
+            this.urls = Optional.of(Objects.requireNonNull(urls, "urls is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>urls</code> parameter.
+         *
+         * @param urls the value of the urls parameter as an {@link Optional} of {@link java.util.List} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder urls(final Optional<java.util.List<String>> urls) {
+            this.urls = Objects.requireNonNull(urls, "urls is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of a {@link Page} of {@link EndpointList}
@@ -268,7 +314,9 @@ public class Endpoints {
                 "/endpoints",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("ids", Optional.of(this.ids).filter(ids -> !ids.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("urls", Optional.of(this.urls).filter(urls -> !urls.isEmpty()).map(Function.identity()))
                 ),
                 Stream.empty(),
                 Optional.of(EndpointList.class)
