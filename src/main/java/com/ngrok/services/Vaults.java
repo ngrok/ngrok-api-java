@@ -403,6 +403,113 @@ public class Vaults {
     }
     
     /**
+     * A builder object encapsulating state for an unsent GetSecretsByVault API call.
+     */
+    public class GetSecretsByVaultCallBuilder {
+        private final String id;
+        private Optional<String> beforeId = Optional.empty();
+        private Optional<String> limit = Optional.empty();
+
+        private GetSecretsByVaultCallBuilder(
+            final String id
+        ) {
+            this.id = Objects.requireNonNull(id, "id is required");
+        }
+        
+        /**
+         * Sets the <code>before_id</code> parameter.
+         *
+         * @param beforeId the value of the before_id parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public GetSecretsByVaultCallBuilder beforeId(final String beforeId) {
+            this.beforeId = Optional.of(Objects.requireNonNull(beforeId, "beforeId is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>before_id</code> parameter.
+         *
+         * @param beforeId the value of the before_id parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public GetSecretsByVaultCallBuilder beforeId(final Optional<String> beforeId) {
+            this.beforeId = Objects.requireNonNull(beforeId, "beforeId is required");
+            return this;
+        }
+        
+        /**
+         * Sets the <code>limit</code> parameter.
+         *
+         * @param limit the value of the limit parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public GetSecretsByVaultCallBuilder limit(final String limit) {
+            this.limit = Optional.of(Objects.requireNonNull(limit, "limit is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>limit</code> parameter.
+         *
+         * @param limit the value of the limit parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public GetSecretsByVaultCallBuilder limit(final Optional<String> limit) {
+            this.limit = Objects.requireNonNull(limit, "limit is required");
+            return this;
+        }
+        
+        /**
+         * Initiates the API call asynchronously.
+         *
+         * @return a {@link CompletionStage} of a {@link Page} of {@link SecretList}
+         */
+        public CompletionStage<Page<SecretList>> call() {
+            return apiClient.sendRequest(
+                NgrokApiClient.HttpMethod.GET,
+                "/vaults/" + this.id + "/secrets",
+                Stream.of(
+                    new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
+                ),
+                Stream.empty(),
+                Optional.of(SecretList.class)
+            ).thenApply(list -> new Page<>(apiClient, list));
+        }
+
+        /**
+         * Initiates the API call and blocks until it returns.
+         *
+         * @return a {@link Page} of {@link SecretList}
+         * @throws InterruptedException if the thread was interrupted during the call
+         */
+        public Page<SecretList> blockingCall() throws InterruptedException {
+            try {
+                return call().toCompletableFuture().get();
+            } catch (final ExecutionException e) {
+                throw e.getCause() instanceof RuntimeException ? (RuntimeException) e.getCause() : new RuntimeException(e.getCause().getMessage(), e.getCause());
+            }
+        }
+    }
+
+    /**
+     * Get Secrets by Vault ID
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-vaults-get-secrets-by-vault">https://ngrok.com/docs/api#api-vaults-get-secrets-by-vault</a>.
+     *
+     * @param id a resource identifier
+     * @return a call builder for this API call
+     */
+    public GetSecretsByVaultCallBuilder getSecretsByVault(
+        final String id
+    ) {
+        return new GetSecretsByVaultCallBuilder(
+            id
+        );
+    }
+    
+    /**
      * A builder object encapsulating state for an unsent List API call.
      */
     public class ListCallBuilder {
