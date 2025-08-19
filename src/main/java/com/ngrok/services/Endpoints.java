@@ -208,8 +208,8 @@ public class Endpoints {
     public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
-        private Optional<java.util.List<String>> ids = Optional.empty();
-        private Optional<java.util.List<String>> urls = Optional.empty();
+        private Optional<java.util.List<String>> id = Optional.empty();
+        private Optional<java.util.List<String>> url = Optional.empty();
 
         private ListCallBuilder(
         ) {
@@ -260,46 +260,46 @@ public class Endpoints {
         }
         
         /**
-         * Sets the <code>ids</code> parameter.
+         * Sets the <code>id</code> parameter.
          *
-         * @param ids the value of the ids parameter as a {@link java.util.List} of {@link String}
+         * @param id the value of the id parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
-        public ListCallBuilder ids(final java.util.List<String> ids) {
-            this.ids = Optional.of(Objects.requireNonNull(ids, "ids is required"));
+        public ListCallBuilder id(final java.util.List<String> id) {
+            this.id = Optional.of(Objects.requireNonNull(id, "id is required"));
             return this;
         }
 
         /**
-         * Sets (or unsets) the <code>ids</code> parameter.
+         * Sets (or unsets) the <code>id</code> parameter.
          *
-         * @param ids the value of the ids parameter as an {@link Optional} of {@link java.util.List} of {@link String}
+         * @param id the value of the id parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
-        public ListCallBuilder ids(final Optional<java.util.List<String>> ids) {
-            this.ids = Objects.requireNonNull(ids, "ids is required");
+        public ListCallBuilder id(final Optional<java.util.List<String>> id) {
+            this.id = Objects.requireNonNull(id, "id is required");
             return this;
         }
         
         /**
-         * Sets the <code>urls</code> parameter.
+         * Sets the <code>url</code> parameter.
          *
-         * @param urls the value of the urls parameter as a {@link java.util.List} of {@link String}
+         * @param url the value of the url parameter as a {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
-        public ListCallBuilder urls(final java.util.List<String> urls) {
-            this.urls = Optional.of(Objects.requireNonNull(urls, "urls is required"));
+        public ListCallBuilder url(final java.util.List<String> url) {
+            this.url = Optional.of(Objects.requireNonNull(url, "url is required"));
             return this;
         }
 
         /**
-         * Sets (or unsets) the <code>urls</code> parameter.
+         * Sets (or unsets) the <code>url</code> parameter.
          *
-         * @param urls the value of the urls parameter as an {@link Optional} of {@link java.util.List} of {@link String}
+         * @param url the value of the url parameter as an {@link Optional} of {@link java.util.List} of {@link String}
          * @return the call builder instance
          */
-        public ListCallBuilder urls(final Optional<java.util.List<String>> urls) {
-            this.urls = Objects.requireNonNull(urls, "urls is required");
+        public ListCallBuilder url(final Optional<java.util.List<String>> url) {
+            this.url = Objects.requireNonNull(url, "url is required");
             return this;
         }
         
@@ -315,8 +315,8 @@ public class Endpoints {
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("ids", Optional.of(this.ids).filter(ids -> !ids.isEmpty()).map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("urls", Optional.of(this.urls).filter(urls -> !urls.isEmpty()).map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("id", Optional.of(this.id).filter(id -> !id.isEmpty()).map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("url", Optional.of(this.url).filter(url -> !url.isEmpty()).map(Function.identity()))
                 ),
                 Stream.empty(),
                 Optional.of(EndpointList.class)
