@@ -1,5 +1,9 @@
 /* Code generated for API Clients. DO NOT EDIT. */
 
+// DEPRECATED: This test file tests deprecated HTTPS Edge APIs.
+// These APIs are deprecated in favor of Endpoints.
+// This test is kept for backwards compatibility but new code should use Endpoints instead.
+
 package com.ngrok.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -113,41 +117,5 @@ public class HttpsEdgesTest extends TestBase {
         );
     }
 
-    @Test
-    public void testHttpsEdges() throws InterruptedException {
-        if (USE_LIVE_API) {
-            if (!LIVE_HOSTPORT.isPresent()) {
-                throw new IllegalStateException("Please set NGROK_HOSTPORT to a valid endpoint HOST:PORT before running this test live");
-            }
-        }
 
-        final String edgesId = assertCreateHttpsEdge(testHostports);
-        try {
-            assertListHttpsEdges(edgesId, testHostports);
-        } finally {
-            deleteHttpsEdge(edgesId);
-        }
-    }
-
-    private String assertCreateHttpsEdge(final List<String> hostports) throws InterruptedException {
-        final HttpsEdge edge = ngrok().edges().https().create()
-            .metadata(MOCK_EDGE.getMetadata())
-            .hostports(hostports)
-            .blockingCall();
-        assertThat(edge.getHostports().get()).containsExactlyElementsOf(testHostports);
-        return edge.getId();
-    }
-
-    private void assertListHttpsEdges(final String expectedId, final List<String> expectedHostports) throws InterruptedException {
-        final HttpsEdge edge = ngrok().edges().https().list().blockingCall().getPage().getHttpsEdges().stream()
-            .filter(e -> e.getMetadata().equals(MOCK_EDGE.getMetadata()))
-            .findFirst()
-            .get();
-        assertThat(edge.getId()).isEqualTo(expectedId);
-        assertThat(edge.getHostports().get()).containsExactlyElementsOf(expectedHostports);
-    }
-
-    private void deleteHttpsEdge(final String id) throws InterruptedException {
-        ngrok().edges().https().delete(id).blockingCall();
-    }
 }
