@@ -312,7 +312,7 @@ public class SshCertificateAuthorities {
     }
 
     /**
-     * Get detailed information about an SSH Certficate Authority
+     * Get detailed information about an SSH Certificate Authority
      *
      * See also <a href="https://ngrok.com/docs/api#api-ssh-certificate-authorities-get">https://ngrok.com/docs/api#api-ssh-certificate-authorities-get</a>.
      *
@@ -333,6 +333,7 @@ public class SshCertificateAuthorities {
     public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
+        private Optional<String> filter = Optional.empty();
 
         private ListCallBuilder(
         ) {
@@ -383,6 +384,28 @@ public class SshCertificateAuthorities {
         }
         
         /**
+         * Sets the <code>filter</code> parameter.
+         *
+         * @param filter the value of the filter parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder filter(final String filter) {
+            this.filter = Optional.of(Objects.requireNonNull(filter, "filter is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>filter</code> parameter.
+         *
+         * @param filter the value of the filter parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder filter(final Optional<String> filter) {
+            this.filter = Objects.requireNonNull(filter, "filter is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of a {@link Page} of {@link SshCertificateAuthorityList}
@@ -393,7 +416,8 @@ public class SshCertificateAuthorities {
                 "/ssh_certificate_authorities",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("filter", this.filter.map(Function.identity()))
                 ),
                 Stream.empty(),
                 Optional.of(SshCertificateAuthorityList.class)

@@ -14,23 +14,19 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * IP Policies are reusable groups of CIDR ranges with an <code>allow</code> or
- * <code>deny</code>
- *  action. They can be attached to endpoints via the Endpoint Configuration IP
- *  Policy module. They can also be used with IP Restrictions to control source
- *  IP ranges that can start tunnel sessions and connect to the API and dashboard.
+ * An API client for {@link ServiceUsers}.
  *
- * See also <a href="https://ngrok.com/docs/api#api-ip-policies">https://ngrok.com/docs/api#api-ip-policies</a>.
+ * See also <a href="https://ngrok.com/docs/api#api-service-users">https://ngrok.com/docs/api#api-service-users</a>.
  */
-public class IpPolicies {
+public class ServiceUsers {
     private final NgrokApiClient apiClient;
 
     /**
-     * Creates a new sub-client for IpPolicies.
+     * Creates a new sub-client for ServiceUsers.
      *
      * @param apiClient an instance of {@link com.ngrok.NgrokApiClient}
      */
-    public IpPolicies(final NgrokApiClient apiClient) {
+    public ServiceUsers(final NgrokApiClient apiClient) {
         this.apiClient = Objects.requireNonNull(apiClient, "apiClient is required");
     }
     
@@ -38,86 +34,82 @@ public class IpPolicies {
      * A builder object encapsulating state for an unsent Create API call.
      */
     public class CreateCallBuilder {
-        private Optional<String> description = Optional.empty();
-        private Optional<String> metadata = Optional.empty();
+        private Optional<String> name = Optional.empty();
+        private Optional<Boolean> active = Optional.empty();
 
         private CreateCallBuilder(
         ) {
         }
         
         /**
-         * human-readable description of the source IPs of this IP policy. optional, max
-         * 255 bytes.
+         * human-readable name used to identify the service
          *
-         * @param description the value of the description parameter as a {@link String}
+         * @param name the value of the name parameter as a {@link String}
          * @return the call builder instance
          */
-        public CreateCallBuilder description(final String description) {
-            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
+        public CreateCallBuilder name(final String name) {
+            this.name = Optional.of(Objects.requireNonNull(name, "name is required"));
             return this;
         }
 
         /**
-         * human-readable description of the source IPs of this IP policy. optional, max
-         * 255 bytes.
+         * human-readable name used to identify the service
          *
-         * @param description the value of the description parameter as an {@link Optional} of {@link String}
+         * @param name the value of the name parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public CreateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+        public CreateCallBuilder name(final Optional<String> name) {
+            this.name = Objects.requireNonNull(name, "name is required");
             return this;
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP policy. optional, max
-         * 4096 bytes.
+         * whether or not the service is active
          *
-         * @param metadata the value of the metadata parameter as a {@link String}
+         * @param active the value of the active parameter as a {@link boolean}
          * @return the call builder instance
          */
-        public CreateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
+        public CreateCallBuilder active(final boolean active) {
+            this.active = Optional.of(Objects.requireNonNull(active, "active is required"));
             return this;
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP policy. optional, max
-         * 4096 bytes.
+         * whether or not the service is active
          *
-         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
+         * @param active the value of the active parameter as an {@link Optional} of {@link boolean}
          * @return the call builder instance
          */
-        public CreateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        public CreateCallBuilder active(final Optional<Boolean> active) {
+            this.active = Objects.requireNonNull(active, "active is required");
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpPolicy}
+         * @return a {@link CompletionStage} of {@link ServiceUser}
          */
-        public CompletionStage<IpPolicy> call() {
+        public CompletionStage<ServiceUser> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.POST,
-                "/ip_policies",
+                "/service_users",
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("name", this.name.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("active", this.active.map(Function.identity()))
                 ),
-                Optional.of(IpPolicy.class)
+                Optional.of(ServiceUser.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpPolicy}
+         * @return {@link ServiceUser}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpPolicy blockingCall() throws InterruptedException {
+        public ServiceUser blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -127,10 +119,9 @@ public class IpPolicies {
     }
 
     /**
-     * Create a new IP policy. It will not apply to any traffic until you associate to
-     * a traffic source via an endpoint configuration or IP restriction.
+     * Create a new service user
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-create">https://ngrok.com/docs/api#api-ip-policies-create</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-service-users-create">https://ngrok.com/docs/api#api-service-users-create</a>.
      *
      * @return a call builder for this API call
      */
@@ -160,7 +151,7 @@ public class IpPolicies {
         public CompletionStage<Void> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.DELETE,
-                "/ip_policies/" + this.id,
+                "/service_users/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
                 Optional.empty()
@@ -182,11 +173,9 @@ public class IpPolicies {
     }
 
     /**
-     * Delete an IP policy. If the IP policy is referenced by another object for the
-     * purposes of traffic restriction it will be treated as if the IP policy remains
-     * but has zero rules.
+     * Delete a service user by ID
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-delete">https://ngrok.com/docs/api#api-ip-policies-delete</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-service-users-delete">https://ngrok.com/docs/api#api-service-users-delete</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -214,25 +203,25 @@ public class IpPolicies {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpPolicy}
+         * @return a {@link CompletionStage} of {@link ServiceUser}
          */
-        public CompletionStage<IpPolicy> call() {
+        public CompletionStage<ServiceUser> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_policies/" + this.id,
+                "/service_users/" + this.id,
                 Stream.empty(),
                 Stream.empty(),
-                Optional.of(IpPolicy.class)
+                Optional.of(ServiceUser.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpPolicy}
+         * @return {@link ServiceUser}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpPolicy blockingCall() throws InterruptedException {
+        public ServiceUser blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -242,9 +231,9 @@ public class IpPolicies {
     }
 
     /**
-     * Get detailed information about an IP policy by ID.
+     * Get the details of a Bot User by ID.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-get">https://ngrok.com/docs/api#api-ip-policies-get</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-service-users-get">https://ngrok.com/docs/api#api-service-users-get</a>.
      *
      * @param id a resource identifier
      * @return a call builder for this API call
@@ -338,29 +327,29 @@ public class IpPolicies {
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of a {@link Page} of {@link IpPolicyList}
+         * @return a {@link CompletionStage} of a {@link Page} of {@link ServiceUserList}
          */
-        public CompletionStage<Page<IpPolicyList>> call() {
+        public CompletionStage<Page<ServiceUserList>> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.GET,
-                "/ip_policies",
+                "/service_users",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("filter", this.filter.map(Function.identity()))
                 ),
                 Stream.empty(),
-                Optional.of(IpPolicyList.class)
+                Optional.of(ServiceUserList.class)
             ).thenApply(list -> new Page<>(apiClient, list));
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return a {@link Page} of {@link IpPolicyList}
+         * @return a {@link Page} of {@link ServiceUserList}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public Page<IpPolicyList> blockingCall() throws InterruptedException {
+        public Page<ServiceUserList> blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -370,9 +359,9 @@ public class IpPolicies {
     }
 
     /**
-     * List all IP policies on this account
+     * List all service users in this account.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-list">https://ngrok.com/docs/api#api-ip-policies-list</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-service-users-list">https://ngrok.com/docs/api#api-service-users-list</a>.
      *
      * @return a call builder for this API call
      */
@@ -387,8 +376,8 @@ public class IpPolicies {
      */
     public class UpdateCallBuilder {
         private final String id;
-        private Optional<String> description = Optional.empty();
-        private Optional<String> metadata = Optional.empty();
+        private Optional<String> name = Optional.empty();
+        private Optional<Boolean> active = Optional.empty();
 
         private UpdateCallBuilder(
             final String id
@@ -397,78 +386,74 @@ public class IpPolicies {
         }
         
         /**
-         * human-readable description of the source IPs of this IP policy. optional, max
-         * 255 bytes.
+         * human-readable name used to identify the service
          *
-         * @param description the value of the description parameter as a {@link String}
+         * @param name the value of the name parameter as a {@link String}
          * @return the call builder instance
          */
-        public UpdateCallBuilder description(final String description) {
-            this.description = Optional.of(Objects.requireNonNull(description, "description is required"));
+        public UpdateCallBuilder name(final String name) {
+            this.name = Optional.of(Objects.requireNonNull(name, "name is required"));
             return this;
         }
 
         /**
-         * human-readable description of the source IPs of this IP policy. optional, max
-         * 255 bytes.
+         * human-readable name used to identify the service
          *
-         * @param description the value of the description parameter as an {@link Optional} of {@link String}
+         * @param name the value of the name parameter as an {@link Optional} of {@link String}
          * @return the call builder instance
          */
-        public UpdateCallBuilder description(final Optional<String> description) {
-            this.description = Objects.requireNonNull(description, "description is required");
+        public UpdateCallBuilder name(final Optional<String> name) {
+            this.name = Objects.requireNonNull(name, "name is required");
             return this;
         }
         
         /**
-         * arbitrary user-defined machine-readable data of this IP policy. optional, max
-         * 4096 bytes.
+         * whether or not the service is active
          *
-         * @param metadata the value of the metadata parameter as a {@link String}
+         * @param active the value of the active parameter as a {@link boolean}
          * @return the call builder instance
          */
-        public UpdateCallBuilder metadata(final String metadata) {
-            this.metadata = Optional.of(Objects.requireNonNull(metadata, "metadata is required"));
+        public UpdateCallBuilder active(final boolean active) {
+            this.active = Optional.of(Objects.requireNonNull(active, "active is required"));
             return this;
         }
 
         /**
-         * arbitrary user-defined machine-readable data of this IP policy. optional, max
-         * 4096 bytes.
+         * whether or not the service is active
          *
-         * @param metadata the value of the metadata parameter as an {@link Optional} of {@link String}
+         * @param active the value of the active parameter as an {@link Optional} of {@link boolean}
          * @return the call builder instance
          */
-        public UpdateCallBuilder metadata(final Optional<String> metadata) {
-            this.metadata = Objects.requireNonNull(metadata, "metadata is required");
+        public UpdateCallBuilder active(final Optional<Boolean> active) {
+            this.active = Objects.requireNonNull(active, "active is required");
             return this;
         }
         
         /**
          * Initiates the API call asynchronously.
          *
-         * @return a {@link CompletionStage} of {@link IpPolicy}
+         * @return a {@link CompletionStage} of {@link ServiceUser}
          */
-        public CompletionStage<IpPolicy> call() {
+        public CompletionStage<ServiceUser> call() {
             return apiClient.sendRequest(
                 NgrokApiClient.HttpMethod.PATCH,
-                "/ip_policies/" + this.id,
+                "/service_users/" + this.id,
                 Stream.empty(),
                 Stream.of(
-                    new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("name", this.name.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("active", this.active.map(Function.identity()))
                 ),
-                Optional.of(IpPolicy.class)
+                Optional.of(ServiceUser.class)
             );
         }
 
         /**
          * Initiates the API call and blocks until it returns.
          *
-         * @return {@link IpPolicy}
+         * @return {@link ServiceUser}
          * @throws InterruptedException if the thread was interrupted during the call
          */
-        public IpPolicy blockingCall() throws InterruptedException {
+        public ServiceUser blockingCall() throws InterruptedException {
             try {
                 return call().toCompletableFuture().get();
             } catch (final ExecutionException e) {
@@ -478,9 +463,9 @@ public class IpPolicies {
     }
 
     /**
-     * Update attributes of an IP policy by ID
+     * Update attributes of a service user by ID.
      *
-     * See also <a href="https://ngrok.com/docs/api#api-ip-policies-update">https://ngrok.com/docs/api#api-ip-policies-update</a>.
+     * See also <a href="https://ngrok.com/docs/api#api-service-users-update">https://ngrok.com/docs/api#api-service-users-update</a>.
      *
      * @param id the value of the <code>id</code> parameter as a {@link String}
      * @return a call builder for this API call

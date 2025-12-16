@@ -335,7 +335,7 @@ public class SshHostCertificates {
     }
 
     /**
-     * Get detailed information about an SSH Host Certficate
+     * Get detailed information about an SSH Host Certificate
      *
      * See also <a href="https://ngrok.com/docs/api#api-ssh-host-certificates-get">https://ngrok.com/docs/api#api-ssh-host-certificates-get</a>.
      *

@@ -312,6 +312,7 @@ public class EventDestinations {
     public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
+        private Optional<String> filter = Optional.empty();
 
         private ListCallBuilder(
         ) {
@@ -362,6 +363,28 @@ public class EventDestinations {
         }
         
         /**
+         * Sets the <code>filter</code> parameter.
+         *
+         * @param filter the value of the filter parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder filter(final String filter) {
+            this.filter = Optional.of(Objects.requireNonNull(filter, "filter is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>filter</code> parameter.
+         *
+         * @param filter the value of the filter parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder filter(final Optional<String> filter) {
+            this.filter = Objects.requireNonNull(filter, "filter is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of a {@link Page} of {@link EventDestinationList}
@@ -372,7 +395,8 @@ public class EventDestinations {
                 "/event_destinations",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("filter", this.filter.map(Function.identity()))
                 ),
                 Stream.empty(),
                 Optional.of(EventDestinationList.class)

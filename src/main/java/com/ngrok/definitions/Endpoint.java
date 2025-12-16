@@ -104,7 +104,7 @@ public class Endpoint {
      * @param region identifier of the region this endpoint belongs to
      * @param createdAt timestamp when the endpoint was created in RFC 3339 format
      * @param updatedAt timestamp when the endpoint was updated in RFC 3339 format
-     * @param publicUrl URL of the hostport served by this endpoint
+     * @param publicUrl deprecated [replaced by URL]: URL of the hostport served by this endpoint
      * @param proto protocol served by this endpoint. one of <code>http</code>, <code>https</code>, <code>tcp</code>, or <code>tls</code>
      * @param scheme the value of the <code>scheme</code> parameter as a {@link String}
      * @param hostport hostport served by this endpoint (hostname:port) -&gt; soon to be deprecated
@@ -224,7 +224,7 @@ public class Endpoint {
     }
 
     /**
-     * URL of the hostport served by this endpoint
+     * deprecated [replaced by URL]: URL of the hostport served by this endpoint
      *
      * @return the value of the property as a {@link java.net.URI}
      */
