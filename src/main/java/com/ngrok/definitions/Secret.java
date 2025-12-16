@@ -45,6 +45,9 @@ public class Secret {
     @JsonProperty("vault")
     @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
     private final Ref vault;
+    @JsonProperty("vault_name")
+    @JsonInclude(value = JsonInclude.Include.NON_ABSENT)
+    private final Optional<String> vaultName;
 
     /**
      * Creates a new instance of {@link Secret}.
@@ -59,6 +62,7 @@ public class Secret {
      * @param createdBy Reference to who created this Secret
      * @param lastUpdatedBy Reference to who created this Secret
      * @param vault Reference to the vault the secret is stored in
+     * @param vaultName Name of the vault the secret is stored in
      */
     @JsonCreator
     public Secret(
@@ -71,7 +75,8 @@ public class Secret {
         @JsonProperty("metadata") final Optional<String> metadata,
         @JsonProperty("created_by") final Ref createdBy,
         @JsonProperty("last_updated_by") final Ref lastUpdatedBy,
-        @JsonProperty("vault") final Ref vault
+        @JsonProperty("vault") final Ref vault,
+        @JsonProperty("vault_name") final Optional<String> vaultName
     ) {
         this.id = Objects.requireNonNull(id, "id is required");
         this.uri = Objects.requireNonNull(uri, "uri is required");
@@ -83,6 +88,7 @@ public class Secret {
         this.createdBy = Objects.requireNonNull(createdBy, "createdBy is required");
         this.lastUpdatedBy = Objects.requireNonNull(lastUpdatedBy, "lastUpdatedBy is required");
         this.vault = Objects.requireNonNull(vault, "vault is required");
+        this.vaultName = vaultName != null ? vaultName : Optional.empty();
     }
 
     /**
@@ -175,6 +181,15 @@ public class Secret {
         return this.vault;
     }
 
+    /**
+     * Name of the vault the secret is stored in
+     *
+     * @return the value of the property as a {@link String} wrapped in an {@link Optional}
+     */
+    public Optional<String> getVaultName() {
+        return this.vaultName;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -195,7 +210,8 @@ public class Secret {
             this.metadata.equals(other.metadata)&&
             this.createdBy.equals(other.createdBy)&&
             this.lastUpdatedBy.equals(other.lastUpdatedBy)&&
-            this.vault.equals(other.vault);
+            this.vault.equals(other.vault)&&
+            this.vaultName.equals(other.vaultName);
         
     }
 
@@ -211,7 +227,8 @@ public class Secret {
             this.metadata,
             this.createdBy,
             this.lastUpdatedBy,
-            this.vault
+            this.vault,
+            this.vaultName
         );
     }
 
@@ -228,6 +245,7 @@ public class Secret {
             "', createdBy='" + this.createdBy +
             "', lastUpdatedBy='" + this.lastUpdatedBy +
             "', vault='" + this.vault +
+            "', vaultName='" + this.vaultName.orElse("(null)") +
             "'}";
     }
 }

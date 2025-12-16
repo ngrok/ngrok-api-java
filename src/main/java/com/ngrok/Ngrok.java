@@ -289,6 +289,17 @@ public class Ngrok {
     }
     
     /**
+     * Creates a service client for ServiceUsers.
+     *
+     * See also <a href="https://ngrok.com/docs/api#api-service-users">https://ngrok.com/docs/api#api-service-users</a>.
+     *
+     * @return a service client
+     */
+    public ServiceUsers serviceUsers() {
+        return new ServiceUsers(this.apiClient);
+    }
+    
+    /**
      * An SSH Certificate Authority is a pair of an SSH Certificate and its private
      *  key that can be used to sign other SSH host and user certificates.
      *

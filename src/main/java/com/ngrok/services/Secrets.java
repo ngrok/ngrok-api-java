@@ -39,12 +39,11 @@ public class Secrets {
         private Optional<String> value = Optional.empty();
         private Optional<String> metadata = Optional.empty();
         private Optional<String> description = Optional.empty();
-        private final String vaultId;
+        private Optional<String> vaultId = Optional.empty();
+        private Optional<String> vaultName = Optional.empty();
 
         private CreateCallBuilder(
-            final String vaultId
         ) {
-            this.vaultId = Objects.requireNonNull(vaultId, "vaultId is required");
         }
         
         /**
@@ -136,6 +135,50 @@ public class Secrets {
         }
         
         /**
+         * unique identifier of the referenced vault
+         *
+         * @param vaultId the value of the vault_id parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder vaultId(final String vaultId) {
+            this.vaultId = Optional.of(Objects.requireNonNull(vaultId, "vaultId is required"));
+            return this;
+        }
+
+        /**
+         * unique identifier of the referenced vault
+         *
+         * @param vaultId the value of the vault_id parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder vaultId(final Optional<String> vaultId) {
+            this.vaultId = Objects.requireNonNull(vaultId, "vaultId is required");
+            return this;
+        }
+        
+        /**
+         * name of the referenced vault
+         *
+         * @param vaultName the value of the vault_name parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder vaultName(final String vaultName) {
+            this.vaultName = Optional.of(Objects.requireNonNull(vaultName, "vaultName is required"));
+            return this;
+        }
+
+        /**
+         * name of the referenced vault
+         *
+         * @param vaultName the value of the vault_name parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public CreateCallBuilder vaultName(final Optional<String> vaultName) {
+            this.vaultName = Objects.requireNonNull(vaultName, "vaultName is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of {@link Secret}
@@ -150,7 +193,8 @@ public class Secrets {
                     new AbstractMap.SimpleEntry<>("value", this.value.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("metadata", this.metadata.map(Function.identity())),
                     new AbstractMap.SimpleEntry<>("description", this.description.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("vault_id", Optional.of(this.vaultId))
+                    new AbstractMap.SimpleEntry<>("vault_id", this.vaultId.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("vault_name", this.vaultName.map(Function.identity()))
                 ),
                 Optional.of(Secret.class)
             );
@@ -176,14 +220,11 @@ public class Secrets {
      *
      * See also <a href="https://ngrok.com/docs/api#api-secrets-create">https://ngrok.com/docs/api#api-secrets-create</a>.
      *
-     * @param vaultId unique identifier of the referenced vault
      * @return a call builder for this API call
      */
     public CreateCallBuilder create(
-        final String vaultId
     ) {
         return new CreateCallBuilder(
-            vaultId
         );
     }
     
@@ -463,6 +504,7 @@ public class Secrets {
     public class ListCallBuilder {
         private Optional<String> beforeId = Optional.empty();
         private Optional<String> limit = Optional.empty();
+        private Optional<String> filter = Optional.empty();
 
         private ListCallBuilder(
         ) {
@@ -513,6 +555,28 @@ public class Secrets {
         }
         
         /**
+         * Sets the <code>filter</code> parameter.
+         *
+         * @param filter the value of the filter parameter as a {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder filter(final String filter) {
+            this.filter = Optional.of(Objects.requireNonNull(filter, "filter is required"));
+            return this;
+        }
+
+        /**
+         * Sets (or unsets) the <code>filter</code> parameter.
+         *
+         * @param filter the value of the filter parameter as an {@link Optional} of {@link String}
+         * @return the call builder instance
+         */
+        public ListCallBuilder filter(final Optional<String> filter) {
+            this.filter = Objects.requireNonNull(filter, "filter is required");
+            return this;
+        }
+        
+        /**
          * Initiates the API call asynchronously.
          *
          * @return a {@link CompletionStage} of a {@link Page} of {@link SecretList}
@@ -523,7 +587,8 @@ public class Secrets {
                 "/vault_secrets",
                 Stream.of(
                     new AbstractMap.SimpleEntry<>("before_id", this.beforeId.map(Function.identity())),
-                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity()))
+                    new AbstractMap.SimpleEntry<>("limit", this.limit.map(Function.identity())),
+                    new AbstractMap.SimpleEntry<>("filter", this.filter.map(Function.identity()))
                 ),
                 Stream.empty(),
                 Optional.of(SecretList.class)

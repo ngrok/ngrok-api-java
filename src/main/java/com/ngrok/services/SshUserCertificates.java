@@ -407,7 +407,7 @@ public class SshUserCertificates {
     }
 
     /**
-     * Get detailed information about an SSH User Certficate
+     * Get detailed information about an SSH User Certificate
      *
      * See also <a href="https://ngrok.com/docs/api#api-ssh-user-certificates-get">https://ngrok.com/docs/api#api-ssh-user-certificates-get</a>.
      *
